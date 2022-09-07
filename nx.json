@@ -1,0 +1,22 @@
+{
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "nx-squeezer",
+  "affected": {
+    "defaultBase": "master"
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "@nrwl/nx-cloud",
+      "options": {
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e"
+        ],
+        "accessToken": "ZWExYjBjNGQtMjIwMS00YzdlLThiYTEtNWRhZGJlNjEzMWI0fHJlYWQtd3JpdGU="
+      }
+    }
+  }
+}
