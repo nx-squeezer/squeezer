@@ -3,19 +3,15 @@
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "npmScope": "nx-squeezer",
   "affected": {
-    "defaultBase": "master"
+    "defaultBase": "main"
   },
   "tasksRunnerOptions": {
     "default": {
       "runner": "@nrwl/nx-cloud",
       "options": {
-        "cacheableOperations": [
-          "build",
-          "lint",
-          "test",
-          "e2e"
-        ],
-        "accessToken": "ZWExYjBjNGQtMjIwMS00YzdlLThiYTEtNWRhZGJlNjEzMWI0fHJlYWQtd3JpdGU="
+        "useDaemonProcess": false,
+        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "accessToken": "N2ZjNTViZjctOThhMS00OTk0LWE3NDItZDRlOTVmMGYwNTZlfHJlYWQtd3JpdGU="
       }
     }
   }
