@@ -9,6 +9,14 @@
         "target": "workspace:build",
         "jestConfig": "packages/workspace-e2e/jest.config.ts"
       }
+    },
+
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/workspace-e2e/**/*.ts"]
+      }
     }
   },
   "tags": [],

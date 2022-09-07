@@ -7,6 +7,11 @@
       "factory": "./src/generators/workspace/generator",
       "schema": "./src/generators/workspace/schema.json",
       "description": "workspace generator"
+    },
+    "prettier": {
+      "factory": "./src/generators/prettier/generator",
+      "schema": "./src/generators/prettier/schema.json",
+      "description": "Configure Prettier"
     }
   }
 }

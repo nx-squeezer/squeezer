@@ -4,7 +4,7 @@ import { Tree, readProjectConfiguration } from '@nrwl/devkit';
 import generator from './generator';
 import { WorkspaceGeneratorSchema } from './schema';
 
-describe('workspace generator', () => {
+describe('@nx-squeezer/workspace workspace generator', () => {
   let appTree: Tree;
   const options: WorkspaceGeneratorSchema = { name: 'test' };
 
