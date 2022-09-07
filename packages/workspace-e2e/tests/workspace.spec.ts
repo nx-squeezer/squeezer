@@ -49,10 +49,10 @@ describe('@nx-squeezer/workspace e2e', () => {
         await runNxCommandAsync(`generate @nx-squeezer/workspace:prettier`);
 
         const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
-        expect(eslintConfig.plugins.includes(prettierPlugin)).toBeTruthy();
+        expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
 
         const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
-        expect(packageJson.devDependencies[eslintPluginPrettier]).toBeDefined();
+        expect(packageJson.devDependencies?.[eslintPluginPrettier]).toBeDefined();
       },
       timeout
     );

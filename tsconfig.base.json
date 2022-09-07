@@ -16,7 +16,13 @@
     "baseUrl": ".",
     "paths": {
       "@nx-squeezer/workspace": ["packages/workspace/src/index.ts"]
-    }
+    },
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "strict": true
   },
   "exclude": ["node_modules", "tmp"]
 }

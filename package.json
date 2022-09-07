@@ -2,7 +2,10 @@
   "name": "nx-squeezer",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "lint": "nx run-many --target=lint --parallel=3 --all",
+    "lint:fix": "nx run-many --target=lint --parallel=3 --all --fix"
+  },
   "private": true,
   "devDependencies": {
     "@nrwl/cli": "14.6.5",
@@ -16,6 +19,7 @@
     "@nrwl/workspace": "14.6.5",
     "@schemastore/eslintrc": "^0.0.6",
     "@schemastore/package": "^0.0.6",
+    "@schemastore/prettierrc": "^0.0.9",
     "@swc-node/register": "^1.4.2",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",
