@@ -30,7 +30,7 @@ jobs:
 
 <% targets.forEach(function(target) { %>
   <%= target.name %>:
-    name: <%= target.name %>
+    name: <%= target.className %>
     needs: [npm]
     runs-on: ubuntu-latest
     env:
