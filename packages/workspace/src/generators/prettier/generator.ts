@@ -8,7 +8,7 @@ import {
 } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
-import { getNpmPackageVersion, lintWorkspaceTask } from '../core';
+import { formatWorkspaceTask, getNpmPackageVersion, lintWorkspaceTask } from '../core';
 import { prettierDefaultConfig } from './prettier-default-config';
 
 export const prettierPlugin = 'prettier';
@@ -38,6 +38,7 @@ export default async function (tree: Tree) {
   return () => {
     installPackagesTask(tree);
     lintWorkspaceTask(tree);
+    formatWorkspaceTask(tree);
   };
 }
 

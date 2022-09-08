@@ -27,7 +27,6 @@ jobs:
 
       - name: NPM
         uses: ng-easy/npm-setup@v2.0.10
-
 <% targets.forEach(function(target) { %>
   <%= target.name %>:
     name: <%= target.name %>

@@ -28,7 +28,6 @@ jobs:
       - name: NPM
         uses: ng-easy/npm-setup@v2.0.10
 
-
   build:
     name: build
     needs: [npm]
@@ -136,4 +135,3 @@ jobs:
           parallel: 'true'
           maxParallel: 3
           nxCloud: 'true'
-
