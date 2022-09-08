@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
   "cli": "nx",
-  "$id": "TsConfig",
+  "$id": "tsconfig",
   "title": "Configures tsconfig.base.json",
   "type": "object",
   "additionalProperties": false,

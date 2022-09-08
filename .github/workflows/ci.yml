@@ -1,0 +1,136 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  npm:
+    name: NPM
+    runs-on: ubuntu-latest
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}
+
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.0.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.10
+
+
+  build:
+    name: Build
+    needs: [npm]
+    runs-on: ubuntu-latest
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.10
+        with:
+          nx-key: build
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v2.2.7
+
+      - name: Build
+        uses: mansagroup/nrwl-nx-action@v2.1.0
+        with:
+          targets: build
+          affected: 'true'
+          parallel: 'true'
+          maxParallel: 3
+          nxCloud: 'true'
+
+  lint:
+    name: Lint
+    needs: [npm]
+    runs-on: ubuntu-latest
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.10
+        with:
+          nx-key: lint
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v2.2.7
+
+      - name: Lint
+        uses: mansagroup/nrwl-nx-action@v2.1.0
+        with:
+          targets: lint
+          affected: 'true'
+          parallel: 'true'
+          maxParallel: 3
+          nxCloud: 'true'
+
+  e2e:
+    name: E2e
+    needs: [npm]
+    runs-on: ubuntu-latest
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.10
+        with:
+          nx-key: e2e
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v2.2.7
+
+      - name: E2e
+        uses: mansagroup/nrwl-nx-action@v2.1.0
+        with:
+          targets: e2e
+          affected: 'true'
+          parallel: 'true'
+          maxParallel: 3
+          nxCloud: 'true'
+
