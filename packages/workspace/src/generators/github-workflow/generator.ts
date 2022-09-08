@@ -20,7 +20,11 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
     console.log();
   }
 
-  const targets = ['build', 'lint', 'e2e'].map((target) => names(target));
+  const targets = ['build', 'lint', 'e2e'].map((target) => {
+    const formattedNames = names(target);
+    formattedNames.className = formattedNames.className.replace(/e2e/, 'e2e');
+    return formattedNames;
+  });
   const templateOptions = { ...options, targets, tmpl: '' };
 
   generateFiles(tree, path.join(__dirname, 'files'), './.github/workflows', templateOptions);

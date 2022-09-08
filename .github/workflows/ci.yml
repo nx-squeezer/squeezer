@@ -29,7 +29,7 @@ jobs:
         uses: ng-easy/npm-setup@v2.0.10
 
   build:
-    name: build
+    name: Build
     needs: [npm]
     runs-on: ubuntu-latest
     env:
@@ -64,7 +64,7 @@ jobs:
           nxCloud: 'true'
 
   lint:
-    name: lint
+    name: Lint
     needs: [npm]
     runs-on: ubuntu-latest
     env:
@@ -127,7 +127,7 @@ jobs:
       - name: Nx Set SHAs
         uses: nrwl/nx-set-shas@v2.2.7
 
-      - name: E2e
+      - name: e2e
         uses: mansagroup/nrwl-nx-action@v2.1.0
         with:
           targets: e2e
