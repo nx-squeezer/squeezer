@@ -9,7 +9,7 @@ export const ciFile = './.github/workflows/ci.yml';
 export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchema) {
   if (tree.exists(ciFile)) {
     console.log(`GitHub workflow already existing at path: ${ciFile}`);
-    //return;
+    return;
   }
 
   if (options.useNxCloud) {
