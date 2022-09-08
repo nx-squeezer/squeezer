@@ -20,6 +20,7 @@
     "@schemastore/eslintrc": "^0.0.6",
     "@schemastore/package": "^0.0.6",
     "@schemastore/prettierrc": "^0.0.9",
+    "@schemastore/tsconfig": "^0.0.9",
     "@swc-node/register": "^1.4.2",
     "@swc/cli": "~0.1.55",
     "@swc/core": "^1.2.173",

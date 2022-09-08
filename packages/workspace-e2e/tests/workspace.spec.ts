@@ -1,6 +1,13 @@
+import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { ensureNxProject, readJson, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
-import { eslintConfigFile, eslintPluginPrettier, prettierPlugin } from '@nx-squeezer/workspace';
+import {
+  eslintConfigFile,
+  eslintPluginPrettier,
+  prettierPlugin,
+  tsConfigDefault,
+  tsConfigFile,
+} from '@nx-squeezer/workspace';
 
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
@@ -53,6 +60,22 @@ describe('@nx-squeezer/workspace e2e', () => {
 
         const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
         expect(packageJson.devDependencies?.[eslintPluginPrettier]).toBeDefined();
+      },
+      timeout
+    );
+  });
+
+  describe('tsconfig generator', () => {
+    it(
+      'should setup default compiler options',
+      async () => {
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:tsconfig`);
+
+        const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tsConfigFile);
+
+        for (const compilerOption in tsConfigDefault.compilerOptions) {
+          expect(tsConfig.compilerOptions?.[compilerOption]).toBe(tsConfigDefault.compilerOptions[compilerOption]);
+        }
       },
       timeout
     );

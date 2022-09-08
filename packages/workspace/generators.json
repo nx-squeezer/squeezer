@@ -12,6 +12,11 @@
       "factory": "./src/generators/prettier/generator",
       "schema": "./src/generators/prettier/schema.json",
       "description": "Configure Prettier"
+    },
+    "tsconfig": {
+      "factory": "./src/generators/tsconfig/generator",
+      "schema": "./src/generators/tsconfig/schema.json",
+      "description": "Configures tsconfig.base.json"
     }
   }
 }
