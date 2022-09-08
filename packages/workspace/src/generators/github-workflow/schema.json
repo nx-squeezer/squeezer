@@ -1,0 +1,30 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "github-workflow",
+  "title": "Configures GitHub CI Workflow",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "branch": {
+      "type": "string",
+      "description": "Base branch",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "default": "main",
+      "x-prompt": "What is your base branch?"
+    },
+    "useNxCloud": {
+      "type": "boolean",
+      "description": "Configure CI workflow to use Nx Cloud",
+      "default": true
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Overwrites existing CI workflow",
+      "default": false
+    }
+  }
+}

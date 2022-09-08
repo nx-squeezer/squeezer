@@ -1,7 +1,8 @@
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
-import { ensureNxProject, readJson, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist } from '@nrwl/nx-plugin/testing';
 import {
+  ciFile,
   eslintConfigFile,
   eslintPluginPrettier,
   prettierPlugin,
@@ -76,6 +77,21 @@ describe('@nx-squeezer/workspace e2e', () => {
         for (const compilerOption in tsConfigDefault.compilerOptions) {
           expect(tsConfig.compilerOptions?.[compilerOption]).toBe(tsConfigDefault.compilerOptions[compilerOption]);
         }
+      },
+      timeout
+    );
+  });
+
+  describe('github workflow generator', () => {
+    it(
+      'should setup GitHub CI workflow and add nx script to package.json',
+      async () => {
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:github-workflow`);
+
+        expect(() => checkFilesExist(ciFile)).not.toThrow();
+
+        const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
+        expect(packageJson.scripts?.nx).toBe('nx');
       },
       timeout
     );

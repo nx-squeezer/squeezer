@@ -17,6 +17,11 @@
       "factory": "./src/generators/tsconfig/generator",
       "schema": "./src/generators/tsconfig/schema.json",
       "description": "Configures tsconfig.base.json"
+    },
+    "github-workflow": {
+      "factory": "./src/generators/github-workflow/generator",
+      "schema": "./src/generators/github-workflow/schema.json",
+      "description": "Configures GitHub CI Workflow"
     }
   }
 }

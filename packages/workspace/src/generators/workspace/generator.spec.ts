@@ -5,16 +5,16 @@ import generator from './generator';
 import { WorkspaceGeneratorSchema } from './schema';
 
 describe('@nx-squeezer/workspace workspace generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
   const options: WorkspaceGeneratorSchema = { name: 'test' };
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace();
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, options);
-    const config = readProjectConfiguration(appTree, 'test');
+    await generator(tree, options);
+    const config = readProjectConfiguration(tree, 'test');
     expect(config).toBeDefined();
   });
 });

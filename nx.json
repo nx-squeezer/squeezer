@@ -10,8 +10,10 @@
       "runner": "@nrwl/nx-cloud",
       "options": {
         "useDaemonProcess": false,
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true,
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "N2ZjNTViZjctOThhMS00OTk0LWE3NDItZDRlOTVmMGYwNTZlfHJlYWQtd3JpdGU="
+        "accessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
       }
     }
   }
