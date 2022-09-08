@@ -99,6 +99,9 @@ jobs:
           maxParallel: 3
           nxCloud: 'true'
 
+      - name: lint workspace
+        run: npm run lint:workspace
+
   e2e:
     name: e2e
     needs: [npm]

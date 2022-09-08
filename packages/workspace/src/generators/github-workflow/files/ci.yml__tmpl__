@@ -62,5 +62,8 @@ jobs:
           affected: 'true'
           parallel: 'true'
           maxParallel: 3<% if (useNxCloud) { %>
-          nxCloud: 'true'<% } %>
+          nxCloud: 'true'<% } %><% if (target.name === 'lint') { %>
+
+      - name: lint workspace
+        run: npm run lint:workspace<% } %>
 <% }); %>

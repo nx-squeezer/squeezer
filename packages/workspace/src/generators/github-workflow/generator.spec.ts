@@ -12,7 +12,7 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree, { branch: 'main', useNxCloud: true });
+    await generator(tree, { branch: 'main', useNxCloud: true, force: true });
 
     const ciWorkflow = tree.read(ciFile)?.toString();
 
@@ -20,7 +20,7 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
   });
 
   it('should declare the nx script in package.json', async () => {
-    await generator(tree, { branch: 'main', useNxCloud: true });
+    await generator(tree, { branch: 'main', useNxCloud: true, force: true });
 
     const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');
 

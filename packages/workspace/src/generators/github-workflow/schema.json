@@ -18,7 +18,13 @@
     },
     "useNxCloud": {
       "type": "boolean",
+      "description": "Configure CI workflow to use Nx Cloud",
       "default": true
+    },
+    "force": {
+      "type": "boolean",
+      "description": "Overwrites existing CI workflow",
+      "default": false
     }
   }
 }

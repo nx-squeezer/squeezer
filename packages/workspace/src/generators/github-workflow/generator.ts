@@ -7,7 +7,7 @@ import { addScriptToPackageJson } from '../core';
 export const ciFile = './.github/workflows/ci.yml';
 
 export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchema) {
-  if (tree.exists(ciFile)) {
+  if (!options.force && tree.exists(ciFile)) {
     console.log(`GitHub workflow already existing at path: ${ciFile}`);
     return;
   }
@@ -25,4 +25,5 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
 
   generateFiles(tree, path.join(__dirname, 'files'), './.github/workflows', templateOptions);
   addScriptToPackageJson(tree, 'nx', 'nx');
+  addScriptToPackageJson(tree, 'lint:workspace', 'nx workspace-lint');
 }

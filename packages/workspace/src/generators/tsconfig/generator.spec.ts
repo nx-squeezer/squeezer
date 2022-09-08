@@ -1,5 +1,5 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readJson, writeJson } from '@nrwl/devkit';
+import { Tree, readJson } from '@nrwl/devkit';
 
 import generator, { tsConfigFile } from './generator';
 

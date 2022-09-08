@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "nx run-many --target=lint --parallel=3 --all",
     "lint:fix": "nx run-many --target=lint --parallel=3 --all --fix",
-    "nx": "nx"
+    "nx": "nx",
+    "lint:workspace": "nx workspace-lint"
   },
   "private": true,
   "devDependencies": {
