@@ -1,20 +1,29 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree } from '@nrwl/devkit';
+import { readJson, Tree } from '@nrwl/devkit';
 
 import generator, { ciFile } from './generator';
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
 describe('@nx-squeezer/workspace github workflow generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace();
   });
 
   it('should run successfully', async () => {
-    await generator(appTree, { branch: 'main', useNxCloud: true });
+    await generator(tree, { branch: 'main', useNxCloud: true });
 
-    const ciWorkflow = appTree.read(ciFile)?.toString();
+    const ciWorkflow = tree.read(ciFile)?.toString();
 
     expect(ciWorkflow).toBeDefined();
+  });
+
+  it('should declare the nx script in package.json', async () => {
+    await generator(tree, { branch: 'main', useNxCloud: true });
+
+    const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');
+
+    expect(packageJson.scripts?.nx).toBe('nx');
   });
 });

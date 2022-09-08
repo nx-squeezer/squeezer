@@ -84,11 +84,14 @@ describe('@nx-squeezer/workspace e2e', () => {
 
   describe('github workflow generator', () => {
     it(
-      'should setup GitHub CI workflow',
+      'should setup GitHub CI workflow and add nx script to package.json',
       async () => {
         await runNxCommandAsync(`generate @nx-squeezer/workspace:github-workflow`);
 
         expect(() => checkFilesExist(ciFile)).not.toThrow();
+
+        const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
+        expect(packageJson.scripts?.nx).toBe('nx');
       },
       timeout
     );

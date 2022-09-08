@@ -7,24 +7,24 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 import { tsConfigDefault } from './tsconfig-default-config';
 
 describe('@nx-squeezer/workspace tsconfig generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
+    tree = createTreeWithEmptyWorkspace();
   });
 
   it('should run successfully', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(appTree, tsConfigFile);
+    const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tree, tsConfigFile);
 
     expect(tsConfig).toBeDefined();
   });
 
   it('should set compiler options', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(appTree, tsConfigFile);
+    const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tree, tsConfigFile);
 
     for (const compilerOption in tsConfigDefault.compilerOptions) {
       expect(tsConfig.compilerOptions?.[compilerOption]).toBe(tsConfigDefault.compilerOptions[compilerOption]);

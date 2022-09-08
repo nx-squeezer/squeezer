@@ -30,7 +30,7 @@ jobs:
 
 
   build:
-    name: Build
+    name: build
     needs: [npm]
     runs-on: ubuntu-latest
     env:
@@ -65,7 +65,7 @@ jobs:
           nxCloud: 'true'
 
   lint:
-    name: Lint
+    name: lint
     needs: [npm]
     runs-on: ubuntu-latest
     env:
@@ -100,7 +100,7 @@ jobs:
           nxCloud: 'true'
 
   e2e:
-    name: E2e
+    name: e2e
     needs: [npm]
     runs-on: ubuntu-latest
     env:

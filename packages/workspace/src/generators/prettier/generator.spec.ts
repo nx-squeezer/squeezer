@@ -8,58 +8,58 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { prettierDefaultConfig } from './prettier-default-config';
 
 describe('@nx-squeezer/workspace prettier generator', () => {
-  let appTree: Tree;
+  let tree: Tree;
 
   beforeEach(() => {
-    appTree = createTreeWithEmptyWorkspace();
-    writeJson(appTree, eslintConfigFile, {});
+    tree = createTreeWithEmptyWorkspace();
+    writeJson(tree, eslintConfigFile, {});
   });
 
   it('should run successfully', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(appTree, eslintConfigFile);
+    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
 
     expect(eslintConfig).toBeDefined();
   });
 
   it('should add prettier to plugins', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(appTree, eslintConfigFile);
+    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
 
     expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
   });
 
   it('should add prettier to overrides', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(appTree, eslintConfigFile);
+    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
 
     expect(eslintConfig.overrides?.[0].extends).toStrictEqual(['plugin:prettier/recommended']);
   });
 
   it('should add eslint prettier dev dependency', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(appTree, 'package.json');
+    const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');
 
     expect(packageJson.devDependencies?.[eslintPluginPrettier]).toBeDefined();
   });
 
   it('should set default prettier config', async () => {
-    await generator(appTree);
+    await generator(tree);
 
-    const prettierConfig = readJson<Exclude<SchemaForPrettierrc, string>>(appTree, prettierConfigJsonFile);
+    const prettierConfig = readJson<Exclude<SchemaForPrettierrc, string>>(tree, prettierConfigJsonFile);
 
     expect(prettierConfig.printWidth).toBe(prettierDefaultConfig.printWidth);
   });
 
   it('should be idempotent', async () => {
-    await generator(appTree);
-    await generator(appTree);
+    await generator(tree);
+    await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(appTree, eslintConfigFile);
+    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
 
     expect(eslintConfig.plugins?.filter((plugin) => plugin === prettierPlugin).length).toBe(1);
   });
