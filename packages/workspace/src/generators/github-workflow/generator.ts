@@ -22,7 +22,7 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
 
   const targets = ['build', 'lint', 'e2e'].map((target) => {
     const formattedNames = names(target);
-    formattedNames.className = formattedNames.className.replace(/e2e/, 'e2e');
+    formattedNames.className = formattedNames.className.replace(/e2e/i, 'e2e');
     return formattedNames;
   });
   const templateOptions = { ...options, targets, tmpl: '' };
