@@ -9,7 +9,7 @@ import {
   writeEsLintConfig,
   isEsLintPluginPresent,
   addEsLintPlugin,
-  addDependencyToPackageJson,
+  addDevDependencyToPackageJson,
 } from '../core';
 
 import { prettierDefaultConfig } from './prettier-default-config';
@@ -35,7 +35,7 @@ export default async function (tree: Tree) {
 
   writeEsLintConfig(tree, eslintConfig);
 
-  addDependencyToPackageJson(tree, eslintPluginPrettier);
+  addDevDependencyToPackageJson(tree, eslintPluginPrettier);
   await formatFiles(tree);
 
   return () => {
