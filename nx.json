@@ -16,5 +16,8 @@
         "accessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
       }
     }
+  },
+  "implicitDependencies": {
+    ".github/workflows/*.yml": "*"
   }
 }

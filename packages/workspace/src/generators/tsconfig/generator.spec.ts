@@ -9,6 +9,10 @@ import { tsConfigDefault } from './tsconfig-default-config';
 describe('@nx-squeezer/workspace tsconfig generator', () => {
   let tree: Tree;
 
+  beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => null);
+  });
+
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
   });
