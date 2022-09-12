@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "eslint",
+  "title": "Configures ESLint with additional rules",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "eslintRecommended": {
+      "type": "boolean",
+      "description": "Applies eslint:recommended",
+      "default": true,
+      "x-prompt": "Do you want to apply eslint:recommended rules?"
+    }
+  }
+}
