@@ -1,7 +1,12 @@
 {
+  "env": {
+    "node": true,
+    "browser": true,
+    "es2022": true
+  },
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "prettier"],
+  "plugins": ["@nrwl/nx", "prettier", "sonarjs"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
@@ -10,6 +15,7 @@
     },
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["eslint:recommended", "plugin:sonarjs/recommended"],
       "rules": {
         "@nrwl/nx/enforce-module-boundaries": [
           "error",
@@ -33,7 +39,7 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript", "eslint:recommended"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     },
     {

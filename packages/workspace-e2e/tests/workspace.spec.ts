@@ -101,14 +101,15 @@ describe('@nx-squeezer/workspace e2e', () => {
     it(
       'should setup eslint config',
       async () => {
-        await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint --eslintRecommended`);
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint --eslintRecommended --sonarJs`);
 
         expect(() => checkFilesExist(ciFile)).not.toThrow();
 
         const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
+        expect(eslintConfig.plugins?.includes('sonarjs')).toBeTruthy();
         expect(eslintConfig.overrides?.[1]).toStrictEqual({
-          files: ['*.js', '*.jsx'],
-          extends: ['eslint:recommended'],
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+          extends: ['eslint:recommended', 'plugin:sonarjs/recommended'],
           rules: {},
         });
       },

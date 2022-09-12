@@ -1,6 +1,6 @@
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
-import { areSetsEqual, getSet } from './set';
+import { areSetsEqual, getSet, removeDuplicates } from './set';
 
 export const eslintConfigFile = '.eslintrc.json';
 
@@ -55,12 +55,16 @@ export function addEsLintRules(
   // Check if there is a rule with the existing file definition, if so merge it
   const newRuleFilesSet = getSet(rule.files);
   const existingRule = overrides.filter((override) => areSetsEqual(getSet(override.files), newRuleFilesSet))[0];
+  const existingRuleIndex = overrides.indexOf(existingRule);
 
   if (existingRule == null) {
     overrides.push(rule);
   } else {
-    existingRule.extends = [...(existingRule.extends ?? []), ...(rule.extends ?? [])];
-    existingRule.rules = { ...(existingRule.rules ?? []), ...(rule.rules ?? []) };
+    overrides[existingRuleIndex] = {
+      files: existingRule.files,
+      extends: removeDuplicates([...(existingRule.extends ?? []), ...(rule.extends ?? [])]),
+      rules: { ...(existingRule.rules ?? []), ...(rule.rules ?? []) },
+    };
   }
 
   newEslintConfig.overrides = overrides;

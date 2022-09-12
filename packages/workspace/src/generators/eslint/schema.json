@@ -11,6 +11,12 @@
       "description": "Applies eslint:recommended",
       "default": true,
       "x-prompt": "Do you want to apply eslint:recommended rules?"
+    },
+    "sonarJs": {
+      "type": "boolean",
+      "description": "Applies sonarjs:recommended",
+      "default": true,
+      "x-prompt": "Do you want to apply sonarjs:recommended rules?"
     }
   }
 }
