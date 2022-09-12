@@ -1,6 +1,13 @@
 import { formatFiles, installPackagesTask, Tree } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
-import { addEsLintRules, lintWorkspaceTask, readEsLintConfig, writeEsLintConfig } from '../core';
+import {
+  addDevDependencyToPackageJson,
+  addEsLintPlugin,
+  addEsLintRules,
+  lintWorkspaceTask,
+  readEsLintConfig,
+  writeEsLintConfig,
+} from '../core';
 import { EsLintGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: EsLintGeneratorSchema) {
@@ -10,13 +17,13 @@ export default async function (tree: Tree, options: EsLintGeneratorSchema) {
     eslintConfig = addEsLintRecommendedRules(eslintConfig);
   }
 
-  writeEsLintConfig(tree, eslintConfig);
+  if (options.sonarJs) {
+    addDevDependencyToPackageJson(tree, 'eslint-plugin-sonarjs');
+    eslintConfig = addEsLintPlugin(eslintConfig, 'sonarjs');
+    eslintConfig = addSonarJsRecommendedRules(eslintConfig);
+  }
 
-  /* addDependenciesToPackageJson(
-    tree,
-    {},
-    { [eslintPluginPrettier]: getNpmPackageVersion(eslintPluginPrettier) ?? ' latest' }
-  );*/
+  writeEsLintConfig(tree, eslintConfig);
   await formatFiles(tree);
 
   return () => {
@@ -29,10 +36,33 @@ function addEsLintRecommendedRules(
   eslintConfig: JSONSchemaForESLintConfigurationFiles
 ): JSONSchemaForESLintConfigurationFiles {
   let newEslintConfig: JSONSchemaForESLintConfigurationFiles = { ...eslintConfig };
+
+  const env: Exclude<JSONSchemaForESLintConfigurationFiles['env'], undefined> = { ...(eslintConfig.env, {}) };
+  env.node = true;
+  env.browser = true;
+  env.es2022 = true;
+
+  newEslintConfig = { env, ...newEslintConfig };
+
   newEslintConfig = addEsLintRules(newEslintConfig, {
-    files: ['*.js', '*.jsx'],
+    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
     extends: ['eslint:recommended'],
     rules: {},
   });
+
+  return newEslintConfig;
+}
+
+function addSonarJsRecommendedRules(
+  eslintConfig: JSONSchemaForESLintConfigurationFiles
+): JSONSchemaForESLintConfigurationFiles {
+  let newEslintConfig: JSONSchemaForESLintConfigurationFiles = { ...eslintConfig };
+
+  newEslintConfig = addEsLintRules(newEslintConfig, {
+    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+    extends: ['plugin:sonarjs/recommended'],
+    rules: {},
+  });
+
   return newEslintConfig;
 }

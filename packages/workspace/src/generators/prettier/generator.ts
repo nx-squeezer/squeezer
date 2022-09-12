@@ -1,22 +1,15 @@
-import {
-  addDependenciesToPackageJson,
-  formatFiles,
-  installPackagesTask,
-  readJson,
-  Tree,
-  writeJson,
-} from '@nrwl/devkit';
+import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import {
   addEsLintRules,
   formatWorkspaceTask,
-  getNpmPackageVersion,
   lintWorkspaceTask,
   readEsLintConfig,
   writeEsLintConfig,
   isEsLintPluginPresent,
   addEsLintPlugin,
+  addDevDependencyToPackageJson,
 } from '../core';
 
 import { prettierDefaultConfig } from './prettier-default-config';
@@ -42,11 +35,7 @@ export default async function (tree: Tree) {
 
   writeEsLintConfig(tree, eslintConfig);
 
-  addDependenciesToPackageJson(
-    tree,
-    {},
-    { [eslintPluginPrettier]: getNpmPackageVersion(eslintPluginPrettier) ?? ' latest' }
-  );
+  addDevDependencyToPackageJson(tree, eslintPluginPrettier);
   await formatFiles(tree);
 
   return () => {
