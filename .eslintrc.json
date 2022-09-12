@@ -4,7 +4,7 @@
   "plugins": ["@nrwl/nx", "prettier"],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md"],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
       "extends": ["plugin:prettier/recommended"],
       "rules": {}
     },
@@ -33,7 +33,7 @@
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nrwl/nx/javascript"],
+      "extends": ["plugin:@nrwl/nx/javascript", "eslint:recommended"],
       "rules": {}
     },
     {

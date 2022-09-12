@@ -1,11 +1,11 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { Tree, readJson, writeJson } from '@nrwl/devkit';
+import { Tree, readJson } from '@nrwl/devkit';
 
-import generator, { eslintConfigFile, eslintPluginPrettier, prettierConfigJsonFile, prettierPlugin } from './generator';
-import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
+import generator, { eslintPluginPrettier, prettierConfigJsonFile, prettierPlugin } from './generator';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { prettierDefaultConfig } from './prettier-default-config';
+import { readEsLintConfig, writeEsLintConfig } from '../core';
 
 describe('@nx-squeezer/workspace prettier generator', () => {
   let tree: Tree;
@@ -16,13 +16,13 @@ describe('@nx-squeezer/workspace prettier generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
-    writeJson(tree, eslintConfigFile, {});
+    writeEsLintConfig(tree, {});
   });
 
   it('should run successfully', async () => {
     await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
+    const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig).toBeDefined();
   });
@@ -30,7 +30,7 @@ describe('@nx-squeezer/workspace prettier generator', () => {
   it('should add prettier to plugins', async () => {
     await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
+    const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
   });
@@ -38,7 +38,7 @@ describe('@nx-squeezer/workspace prettier generator', () => {
   it('should add prettier to overrides', async () => {
     await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
+    const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig.overrides?.[0].extends).toStrictEqual(['plugin:prettier/recommended']);
   });
@@ -63,7 +63,7 @@ describe('@nx-squeezer/workspace prettier generator', () => {
     await generator(tree);
     await generator(tree);
 
-    const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
+    const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig.plugins?.filter((plugin) => plugin === prettierPlugin).length).toBe(1);
   });

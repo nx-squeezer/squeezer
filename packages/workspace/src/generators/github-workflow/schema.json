@@ -19,7 +19,8 @@
     "useNxCloud": {
       "type": "boolean",
       "description": "Configure CI workflow to use Nx Cloud",
-      "default": true
+      "default": true,
+      "x-prompt": "Do you want to use Nx Cloud?"
     },
     "force": {
       "type": "boolean",

@@ -22,6 +22,11 @@
       "factory": "./src/generators/github-workflow/generator",
       "schema": "./src/generators/github-workflow/schema.json",
       "description": "Configures GitHub CI Workflow"
+    },
+    "eslint": {
+      "factory": "./src/generators/eslint/generator",
+      "schema": "./src/generators/eslint/schema.json",
+      "description": "Configures ESLint with additional rules"
     }
   }
 }

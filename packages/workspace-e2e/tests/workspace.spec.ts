@@ -86,12 +86,31 @@ describe('@nx-squeezer/workspace e2e', () => {
     it(
       'should setup GitHub CI workflow and add nx script to package.json',
       async () => {
-        await runNxCommandAsync(`generate @nx-squeezer/workspace:github-workflow`);
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:github-workflow --useNxCloud`);
 
         expect(() => checkFilesExist(ciFile)).not.toThrow();
 
         const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
         expect(packageJson.scripts?.nx).toBe('nx');
+      },
+      timeout
+    );
+  });
+
+  describe('eslint workflow generator', () => {
+    it(
+      'should setup eslint config',
+      async () => {
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint --eslintRecommended`);
+
+        expect(() => checkFilesExist(ciFile)).not.toThrow();
+
+        const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
+        expect(eslintConfig.overrides?.[1]).toStrictEqual({
+          files: ['*.js', '*.jsx'],
+          extends: ['eslint:recommended'],
+          rules: {},
+        });
       },
       timeout
     );
