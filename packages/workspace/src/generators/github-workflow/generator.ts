@@ -2,7 +2,7 @@ import { GitHubWorkflowGeneratorSchema } from './schema';
 
 import * as path from 'path';
 import { formatFiles, generateFiles, names, Tree } from '@nrwl/devkit';
-import { addImplicitDependencyToNxConfig, addScriptToPackageJson } from '../core';
+import { addBadgeToReadme, addImplicitDependencyToNxConfig, addScriptToPackageJson, getGitRepo } from '../core';
 
 export const ciFile = './.github/workflows/ci.yml';
 
@@ -31,6 +31,19 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
   addImplicitDependencyToNxConfig(tree, { '.github/workflows/*.yml': '*' });
   addScriptToPackageJson(tree, 'nx', 'nx');
   addScriptToPackageJson(tree, 'lint:workspace', 'nx workspace-lint');
+
+  const gitRepo = getGitRepo(tree);
+  if (gitRepo == null) {
+    console.error(`Could not add badge to README, remote repo could not be detected.`);
+  } else {
+    addBadgeToReadme(
+      tree,
+      `${gitRepo}/actions/workflows/ci.yml/badge.svg`,
+      `${gitRepo}/actions/workflows/ci.yml`,
+      'CI',
+      true
+    );
+  }
 
   await formatFiles(tree);
 }
