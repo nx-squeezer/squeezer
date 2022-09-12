@@ -2,7 +2,7 @@ import { GitHubWorkflowGeneratorSchema } from './schema';
 
 import * as path from 'path';
 import { formatFiles, generateFiles, names, Tree } from '@nrwl/devkit';
-import { addScriptToPackageJson } from '../core';
+import { addImplicitDependencyToNxConfig, addScriptToPackageJson } from '../core';
 
 export const ciFile = './.github/workflows/ci.yml';
 
@@ -27,7 +27,8 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
   });
   const templateOptions = { ...options, targets, tmpl: '' };
 
-  generateFiles(tree, path.join(__dirname, 'files'), './.github/workflows', templateOptions);
+  generateFiles(tree, path.join(__dirname, 'files'), '.github/workflows', templateOptions);
+  addImplicitDependencyToNxConfig(tree, { '.github/workflows/*.yml': '*' });
   addScriptToPackageJson(tree, 'nx', 'nx');
   addScriptToPackageJson(tree, 'lint:workspace', 'nx workspace-lint');
 

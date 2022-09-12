@@ -8,6 +8,10 @@ describe('@nx-squeezer/workspace workspace generator', () => {
   let tree: Tree;
   const options: WorkspaceGeneratorSchema = { name: 'test' };
 
+  beforeAll(() => {
+    jest.spyOn(console, 'log').mockImplementation(() => null);
+  });
+
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
   });
