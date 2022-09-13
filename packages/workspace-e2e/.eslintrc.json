@@ -8,7 +8,10 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "rules": {}
+      "rules": {},
+      "parserOptions": {
+        "project": ["packages/workspace-e2e/tsconfig.*?.json"]
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

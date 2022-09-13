@@ -1,11 +1,12 @@
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
 
-import generator, { ciFile } from './generator';
+import generator from './generator';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { nxConfigFile } from '../core/nx';
 import { readmeFile } from '../core/add-badge-to-readme';
 import { getGitRepo } from '../core/get-git-repo';
+import { ciFile } from '../core';
 
 jest.mock('../core/get-git-repo');
 

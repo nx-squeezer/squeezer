@@ -17,6 +17,24 @@
       "description": "Applies sonarjs:recommended",
       "default": true,
       "x-prompt": "Do you want to apply sonarjs:recommended rules?"
+    },
+    "unusedImports": {
+      "type": "boolean",
+      "description": "Applies unused-imports",
+      "default": true,
+      "x-prompt": "Do you want to apply unused-imports rules?"
+    },
+    "typescriptRecommended": {
+      "type": "boolean",
+      "description": "Applies @typescript-eslint/recommended",
+      "default": true,
+      "x-prompt": "Do you want to apply @typescript-eslint/recommended rules?"
+    },
+    "deprecation": {
+      "type": "boolean",
+      "description": "Applies @delagen/deprecation",
+      "default": true,
+      "x-prompt": "Do you want to apply @delagen/deprecation rules?"
     }
   }
 }

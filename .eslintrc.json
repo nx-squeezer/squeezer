@@ -6,7 +6,7 @@
   },
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "prettier", "sonarjs"],
+  "plugins": ["@nrwl/nx", "prettier", "sonarjs", "unused-imports", "@typescript-eslint", "@delagen/deprecation"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
@@ -34,8 +34,20 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript"],
-      "rules": {}
+      "extends": ["plugin:@nrwl/nx/typescript", "plugin:sonarjs/recommended", "plugin:@typescript-eslint/recommended"],
+      "rules": {
+        "unused-imports/no-unused-imports": "error",
+        "@typescript-eslint/explicit-member-accessibility": [
+          "warn",
+          {
+            "accessibility": "no-public"
+          }
+        ],
+        "@typescript-eslint/no-explicit-any": ["off"],
+        "@typescript-eslint/explicit-module-boundary-types": ["off"],
+        "@typescript-eslint/ban-types": ["off"],
+        "@delagen/deprecation/deprecation": "error"
+      }
     },
     {
       "files": ["*.js", "*.jsx"],

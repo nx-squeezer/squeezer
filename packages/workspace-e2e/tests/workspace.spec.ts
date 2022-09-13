@@ -58,6 +58,11 @@ describe('@nx-squeezer/workspace e2e', () => {
 
         const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
         expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
+        expect(eslintConfig.overrides?.[0]).toStrictEqual({
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
+          extends: ['plugin:prettier/recommended'],
+          rules: {},
+        });
 
         const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
         expect(packageJson.devDependencies?.[eslintPluginPrettier]).toBeDefined();
@@ -101,7 +106,11 @@ describe('@nx-squeezer/workspace e2e', () => {
     it(
       'should setup eslint config',
       async () => {
-        await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint --eslintRecommended --sonarJs`);
+        const flags = ['eslintRecommended', 'sonarJs', 'unusedImports', 'typescriptRecommended', 'deprecation']
+          .map((flag) => `--${flag}`)
+          .join(' ');
+
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint ${flags}`);
 
         expect(() => checkFilesExist(ciFile)).not.toThrow();
 
@@ -111,6 +120,23 @@ describe('@nx-squeezer/workspace e2e', () => {
           files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
           extends: ['eslint:recommended', 'plugin:sonarjs/recommended'],
           rules: {},
+        });
+        expect(eslintConfig.overrides?.[2]).toStrictEqual({
+          files: ['*.ts', '*.tsx'],
+          extends: ['plugin:@typescript-eslint/recommended'],
+          rules: {
+            'unused-imports/no-unused-imports': 'error',
+            '@typescript-eslint/explicit-member-accessibility': [
+              'warn',
+              {
+                accessibility: 'no-public',
+              },
+            ],
+            '@typescript-eslint/no-explicit-any': ['off'],
+            '@typescript-eslint/explicit-module-boundary-types': ['off'],
+            '@typescript-eslint/ban-types': ['off'],
+            '@delagen/deprecation/deprecation': 'error',
+          },
         });
       },
       timeout
