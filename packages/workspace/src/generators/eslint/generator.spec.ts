@@ -1,8 +1,8 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree } from '@nrwl/devkit';
+import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import generator from './generator';
 import { readEsLintConfig, writeEsLintConfig } from '../core';
+import generator from './generator';
 
 describe('@nx-squeezer/workspace eslint generator', () => {
   let tree: Tree;
@@ -94,4 +94,46 @@ describe('@nx-squeezer/workspace eslint generator', () => {
       },
     });
   }, 10_000);
+
+  it('should apply import order', async () => {
+    await generator(tree, { importOrder: true });
+
+    const eslintConfig = readEsLintConfig(tree);
+
+    expect(eslintConfig.plugins?.includes('import')).toBeTruthy();
+    expect(eslintConfig.overrides?.[0]).toStrictEqual({
+      files: ['*.ts', '*.tsx'],
+      extends: ['plugin:import/recommended', 'plugin:import/typescript'],
+      rules: {
+        'import/order': [
+          'error',
+          {
+            pathGroups: [
+              {
+                pattern: '@nx-*/**',
+                group: 'internal',
+                position: 'before',
+              },
+            ],
+            groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+            pathGroupsExcludedImportTypes: [],
+            'newlines-between': 'always',
+            alphabetize: {
+              order: 'asc',
+              caseInsensitive: true,
+            },
+          },
+        ],
+        'import/no-unresolved': ['off'],
+      },
+      settings: {
+        'import/resolver': {
+          node: {
+            extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          },
+          typescript: {},
+        },
+      },
+    });
+  });
 });

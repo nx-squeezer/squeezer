@@ -35,6 +35,12 @@
       "description": "Applies @delagen/deprecation",
       "default": true,
       "x-prompt": "Do you want to apply @delagen/deprecation rules?"
+    },
+    "importOrder": {
+      "type": "boolean",
+      "description": "Applies import",
+      "default": true,
+      "x-prompt": "Do you want to apply import order rules?"
     }
   }
 }

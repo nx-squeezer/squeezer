@@ -1,5 +1,5 @@
-import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
 export function addScriptToPackageJson(tree: Tree, name: string, script: string) {
   const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');

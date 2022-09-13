@@ -1,6 +1,7 @@
-import { Tree } from '@nrwl/devkit';
 import { execSync } from 'child_process';
 import { join } from 'path';
+
+import { Tree } from '@nrwl/devkit';
 
 export function lintWorkspaceTask(tree: Tree): string | null {
   try {

@@ -4,4 +4,5 @@ export interface EsLintGeneratorSchema {
   unusedImports?: boolean;
   typescriptRecommended?: boolean;
   deprecation?: boolean;
+  importOrder?: boolean;
 }
