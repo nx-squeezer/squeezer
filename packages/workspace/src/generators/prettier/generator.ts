@@ -1,39 +1,32 @@
 import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
-import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import {
   addEsLintRules,
   formatWorkspaceTask,
   lintWorkspaceTask,
-  readEsLintConfig,
-  writeEsLintConfig,
   isEsLintPluginPresent,
   addEsLintPlugin,
   addDevDependencyToPackageJson,
+  prettierPlugin,
+  prettierConfigJsonFile,
+  prettierConfigFile,
+  eslintPluginPrettier,
 } from '../core';
 
 import { prettierDefaultConfig } from './prettier-default-config';
 
-export const prettierPlugin = 'prettier';
-export const eslintPluginPrettier = 'eslint-plugin-prettier';
-export const prettierConfigFile = '.prettierrc';
-export const prettierConfigJsonFile = '.prettierrc.json';
-
 export default async function (tree: Tree) {
   setPrettierConfig(tree);
 
-  let eslintConfig: JSONSchemaForESLintConfigurationFiles = readEsLintConfig(tree);
-  if (isEsLintPluginPresent(eslintConfig, prettierPlugin)) {
+  if (isEsLintPluginPresent(tree, prettierPlugin)) {
     return;
   }
-  eslintConfig = addEsLintPlugin(eslintConfig, prettierPlugin, '@nrwl/nx');
-  eslintConfig = addEsLintRules(eslintConfig, {
+  addEsLintPlugin(tree, prettierPlugin, '@nrwl/nx');
+  addEsLintRules(tree, {
     files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
     extends: ['plugin:prettier/recommended'],
     rules: {},
   });
-
-  writeEsLintConfig(tree, eslintConfig);
 
   addDevDependencyToPackageJson(tree, eslintPluginPrettier);
   await formatFiles(tree);

@@ -2,9 +2,7 @@ import { GitHubWorkflowGeneratorSchema } from './schema';
 
 import * as path from 'path';
 import { formatFiles, generateFiles, names, Tree } from '@nrwl/devkit';
-import { addBadgeToReadme, addImplicitDependencyToNxConfig, addScriptToPackageJson, getGitRepo } from '../core';
-
-export const ciFile = './.github/workflows/ci.yml';
+import { addBadgeToReadme, addImplicitDependencyToNxConfig, addScriptToPackageJson, ciFile, getGitRepo } from '../core';
 
 export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchema) {
   if (!options.force && tree.exists(ciFile)) {

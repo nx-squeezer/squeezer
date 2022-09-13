@@ -17,21 +17,22 @@ export function readEsLintConfig(tree: Tree): JSONSchemaForESLintConfigurationFi
   return readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
 }
 
-export function isEsLintPluginPresent(eslintConfig: JSONSchemaForESLintConfigurationFiles, plugin: string): boolean {
+export function writeEsLintConfig(tree: Tree, eslintConfig: JSONSchemaForESLintConfigurationFiles): void {
+  writeJson(tree, eslintConfigFile, eslintConfig);
+}
+
+export function isEsLintPluginPresent(tree: Tree, plugin: string): boolean {
+  const eslintConfig = readEsLintConfig(tree);
   return eslintConfig.plugins?.includes(plugin) ?? false;
 }
 
-export function addEsLintPlugin(
-  eslintConfig: JSONSchemaForESLintConfigurationFiles,
-  plugin: string,
-  after?: string
-): JSONSchemaForESLintConfigurationFiles {
-  if (isEsLintPluginPresent(eslintConfig, plugin)) {
-    return eslintConfig;
+export function addEsLintPlugin(tree: Tree, plugin: string, after?: string): void {
+  if (isEsLintPluginPresent(tree, plugin)) {
+    return;
   }
 
-  const newEslintConfig: JSONSchemaForESLintConfigurationFiles = { ...eslintConfig };
-  const plugins = [...(newEslintConfig.plugins ?? [])];
+  const eslintConfig = readEsLintConfig(tree);
+  const plugins = [...(eslintConfig.plugins ?? [])];
   const afterPluginIndex = plugins.indexOf(after ?? '');
 
   if (after == null || afterPluginIndex === -1) {
@@ -40,15 +41,12 @@ export function addEsLintPlugin(
     plugins.splice(afterPluginIndex + 1, 0, plugin);
   }
 
-  newEslintConfig.plugins = plugins;
-  return newEslintConfig;
+  eslintConfig.plugins = plugins;
+  writeEsLintConfig(tree, eslintConfig);
 }
 
-export function addEsLintRules(
-  eslintConfig: JSONSchemaForESLintConfigurationFiles,
-  rule: EsLintConfigurationOverrideRule
-): JSONSchemaForESLintConfigurationFiles {
-  const newEslintConfig: JSONSchemaForESLintConfigurationFiles = { ...eslintConfig };
+export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule): void {
+  const eslintConfig = readEsLintConfig(tree);
 
   const overrides = [...(eslintConfig.overrides ?? [])];
 
@@ -67,10 +65,6 @@ export function addEsLintRules(
     };
   }
 
-  newEslintConfig.overrides = overrides;
-  return newEslintConfig;
-}
-
-export function writeEsLintConfig(tree: Tree, eslintConfig: JSONSchemaForESLintConfigurationFiles): void {
-  writeJson(tree, eslintConfigFile, eslintConfig);
+  eslintConfig.overrides = overrides;
+  writeEsLintConfig(tree, eslintConfig);
 }
