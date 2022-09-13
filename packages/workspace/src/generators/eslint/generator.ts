@@ -1,5 +1,6 @@
-import { formatFiles, installPackagesTask, Tree } from '@nrwl/devkit';
+import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
+import { join } from 'path';
 import {
   addDevDependencyToPackageJson,
   addEsLintPlugin,
@@ -7,6 +8,9 @@ import {
   lintWorkspaceTask,
   readEsLintConfig,
   writeEsLintConfig,
+  eslintConfigFile,
+  EsLintConfigurationOverrideRule,
+  slash,
 } from '../core';
 import { EsLintGeneratorSchema } from './schema';
 
@@ -16,9 +20,19 @@ export default async function (tree: Tree, options: EsLintGeneratorSchema) {
   }
 
   if (options.sonarJs) {
-    addDevDependencyToPackageJson(tree, 'eslint-plugin-sonarjs');
-    addEsLintPlugin(tree, 'sonarjs');
     addSonarJsRecommendedRules(tree);
+  }
+
+  if (options.unusedImports) {
+    addUnusedImportsRules(tree);
+  }
+
+  if (options.typescriptRecommended) {
+    addTypescriptRecommendedRules(tree);
+  }
+
+  if (options.deprecation) {
+    addDeprecationRules(tree);
   }
 
   await formatFiles(tree);
@@ -47,9 +61,77 @@ function addEsLintRecommendedRules(tree: Tree): void {
 }
 
 function addSonarJsRecommendedRules(tree: Tree): void {
+  addDevDependencyToPackageJson(tree, 'eslint-plugin-sonarjs');
+  addEsLintPlugin(tree, 'sonarjs');
   addEsLintRules(tree, {
     files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
     extends: ['plugin:sonarjs/recommended'],
     rules: {},
+  });
+}
+
+function addUnusedImportsRules(tree: Tree): void {
+  addDevDependencyToPackageJson(tree, 'eslint-plugin-unused-imports');
+  addEsLintPlugin(tree, 'unused-imports');
+  addEsLintRules(tree, {
+    files: ['*.ts', '*.tsx'],
+    rules: {
+      'unused-imports/no-unused-imports': 'error',
+    },
+  });
+}
+
+function addTypescriptRecommendedRules(tree: Tree): void {
+  addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
+  addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
+  addEsLintPlugin(tree, '@typescript-eslint');
+  addEsLintRules(tree, {
+    files: ['*.ts', '*.tsx'],
+    extends: ['plugin:@typescript-eslint/recommended'],
+    rules: {
+      '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }],
+      '@typescript-eslint/no-explicit-any': ['off'],
+      '@typescript-eslint/explicit-module-boundary-types': ['off'],
+      '@typescript-eslint/ban-types': ['off'],
+    },
+  });
+  addParserOptionsToProjects(tree);
+}
+
+function addDeprecationRules(tree: Tree): void {
+  addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
+  addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
+  addDevDependencyToPackageJson(tree, '@delagen/eslint-plugin-deprecation');
+  addEsLintPlugin(tree, '@delagen/deprecation');
+  addEsLintRules(tree, {
+    files: ['*.ts', '*.tsx'],
+    rules: {
+      '@delagen/deprecation/deprecation': 'error',
+    },
+  });
+  addParserOptionsToProjects(tree);
+}
+
+function addParserOptionsToProjects(tree: Tree) {
+  updateEsLintProjectConfig(tree, (project) => ({
+    files: ['*.ts', '*.tsx'],
+    parserOptions: {
+      project: [slash(join(project.root, 'tsconfig.*?.json'))],
+    },
+  }));
+}
+
+function updateEsLintProjectConfig(
+  tree: Tree,
+  projectRule: (project: ProjectConfiguration) => EsLintConfigurationOverrideRule
+) {
+  const projects = getProjects(tree);
+  projects.forEach((project: ProjectConfiguration) => {
+    const eslintConfigProjectFile = join(project.root, eslintConfigFile);
+    if (!tree.exists(eslintConfigProjectFile)) {
+      return;
+    }
+
+    addEsLintRules(tree, projectRule(project), eslintConfigProjectFile);
   });
 }

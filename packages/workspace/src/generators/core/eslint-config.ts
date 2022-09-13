@@ -9,16 +9,20 @@ type ArrayElement<ArrayType> = ArrayType extends readonly (infer ElementType)[] 
 export type EsLintConfigurationOverrideRules = Exclude<JSONSchemaForESLintConfigurationFiles['overrides'], undefined>;
 export type EsLintConfigurationOverrideRule = ArrayElement<EsLintConfigurationOverrideRules>;
 
-export function readEsLintConfig(tree: Tree): JSONSchemaForESLintConfigurationFiles {
+export function readEsLintConfig(tree: Tree, path = eslintConfigFile): JSONSchemaForESLintConfigurationFiles {
   if (!tree.exists(eslintConfigFile)) {
     writeJson(tree, eslintConfigFile, { root: true, ignorePatterns: ['**/*'] });
   }
 
-  return readJson<JSONSchemaForESLintConfigurationFiles>(tree, eslintConfigFile);
+  return readJson<JSONSchemaForESLintConfigurationFiles>(tree, path);
 }
 
-export function writeEsLintConfig(tree: Tree, eslintConfig: JSONSchemaForESLintConfigurationFiles): void {
-  writeJson(tree, eslintConfigFile, eslintConfig);
+export function writeEsLintConfig(
+  tree: Tree,
+  eslintConfig: JSONSchemaForESLintConfigurationFiles,
+  path = eslintConfigFile
+): void {
+  writeJson(tree, path, eslintConfig);
 }
 
 export function isEsLintPluginPresent(tree: Tree, plugin: string): boolean {
@@ -45,8 +49,8 @@ export function addEsLintPlugin(tree: Tree, plugin: string, after?: string): voi
   writeEsLintConfig(tree, eslintConfig);
 }
 
-export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule): void {
-  const eslintConfig = readEsLintConfig(tree);
+export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule, path = eslintConfigFile): void {
+  const eslintConfig = readEsLintConfig(tree, path);
 
   const overrides = [...(eslintConfig.overrides ?? [])];
 
@@ -58,13 +62,21 @@ export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule
   if (existingRule == null) {
     overrides.push(rule);
   } else {
-    overrides[existingRuleIndex] = {
-      files: existingRule.files,
-      extends: removeDuplicates([...(existingRule.extends ?? []), ...(rule.extends ?? [])]),
-      rules: { ...(existingRule.rules ?? []), ...(rule.rules ?? []) },
-    };
+    const newRule: EsLintConfigurationOverrideRule = { files: existingRule.files };
+
+    if (rule.extends != null || existingRule.extends != null) {
+      newRule.extends = removeDuplicates([...(existingRule.extends ?? []), ...(rule.extends ?? [])]);
+    }
+
+    newRule.rules = { ...(existingRule.rules ?? {}), ...(rule.rules ?? {}) };
+
+    if (rule.parserOptions != null || existingRule.parserOptions != null) {
+      newRule.parserOptions = { ...(existingRule.parserOptions ?? {}), ...(rule.parserOptions ?? {}) };
+    }
+
+    overrides[existingRuleIndex] = newRule;
   }
 
   eslintConfig.overrides = overrides;
-  writeEsLintConfig(tree, eslintConfig);
+  writeEsLintConfig(tree, eslintConfig, path);
 }
