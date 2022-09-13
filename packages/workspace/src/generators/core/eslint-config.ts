@@ -1,5 +1,6 @@
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
+
 import { areSetsEqual, getSet, removeDuplicates } from './set';
 
 export const eslintConfigFile = '.eslintrc.json';
@@ -68,11 +69,12 @@ export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule
       newRule.extends = removeDuplicates([...(existingRule.extends ?? []), ...(rule.extends ?? [])]);
     }
 
-    newRule.rules = { ...(existingRule.rules ?? {}), ...(rule.rules ?? {}) };
-
-    if (rule.parserOptions != null || existingRule.parserOptions != null) {
-      newRule.parserOptions = { ...(existingRule.parserOptions ?? {}), ...(rule.parserOptions ?? {}) };
-    }
+    const mergedKeys = ['rules', 'parserOptions', 'settings'] as const;
+    mergedKeys.forEach((key) => {
+      if (rule[key] != null || existingRule[key] != null) {
+        newRule[key] = { ...(existingRule[key] ?? {}), ...(rule[key] ?? {}) };
+      }
+    });
 
     overrides[existingRuleIndex] = newRule;
   }

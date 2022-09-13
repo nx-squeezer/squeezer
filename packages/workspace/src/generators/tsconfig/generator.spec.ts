@@ -1,10 +1,9 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readJson } from '@nrwl/devkit';
-
-import generator from './generator';
-
+import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
+
 import { tsConfigDefault, tsConfigFile } from '../core';
+import generator from './generator';
 
 describe('@nx-squeezer/workspace tsconfig generator', () => {
   let tree: Tree;

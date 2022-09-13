@@ -1,5 +1,6 @@
 import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
+
 import {
   addEsLintRules,
   formatWorkspaceTask,
@@ -12,7 +13,6 @@ import {
   prettierConfigFile,
   eslintPluginPrettier,
 } from '../core';
-
 import { prettierDefaultConfig } from './prettier-default-config';
 
 export default async function (tree: Tree) {

@@ -6,7 +6,15 @@
   },
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "prettier", "sonarjs", "unused-imports", "@typescript-eslint", "@delagen/deprecation"],
+  "plugins": [
+    "@nrwl/nx",
+    "prettier",
+    "sonarjs",
+    "unused-imports",
+    "@typescript-eslint",
+    "@delagen/deprecation",
+    "import"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
@@ -34,7 +42,12 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nrwl/nx/typescript", "plugin:sonarjs/recommended", "plugin:@typescript-eslint/recommended"],
+      "extends": [
+        "plugin:@nrwl/nx/typescript",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:import/recommended",
+        "plugin:import/typescript"
+      ],
       "rules": {
         "unused-imports/no-unused-imports": "error",
         "@typescript-eslint/explicit-member-accessibility": [
@@ -46,7 +59,35 @@
         "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/ban-types": ["off"],
-        "@delagen/deprecation/deprecation": "error"
+        "@delagen/deprecation/deprecation": "error",
+        "import/order": [
+          "error",
+          {
+            "pathGroups": [
+              {
+                "pattern": "@nx-*/**",
+                "group": "internal",
+                "position": "before"
+              }
+            ],
+            "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"]],
+            "pathGroupsExcludedImportTypes": [],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ],
+        "import/no-unresolved": ["off"]
+      },
+      "settings": {
+        "import/resolver": {
+          "node": {
+            "extensions": [".js", ".jsx", ".ts", ".tsx"]
+          },
+          "typescript": {}
+        }
       }
     },
     {

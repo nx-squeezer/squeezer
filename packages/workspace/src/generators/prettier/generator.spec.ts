@@ -1,10 +1,8 @@
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { Tree, readJson } from '@nrwl/devkit';
-
-import generator from './generator';
+import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
-import { prettierDefaultConfig } from './prettier-default-config';
+
 import {
   eslintPluginPrettier,
   prettierConfigJsonFile,
@@ -12,6 +10,8 @@ import {
   readEsLintConfig,
   writeEsLintConfig,
 } from '../core';
+import generator from './generator';
+import { prettierDefaultConfig } from './prettier-default-config';
 
 describe('@nx-squeezer/workspace prettier generator', () => {
   let tree: Tree;

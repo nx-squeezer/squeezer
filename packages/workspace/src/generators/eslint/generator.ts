@@ -1,6 +1,8 @@
+import { join } from 'path';
+
 import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
-import { join } from 'path';
+
 import {
   addDevDependencyToPackageJson,
   addEsLintPlugin,
@@ -33,6 +35,10 @@ export default async function (tree: Tree, options: EsLintGeneratorSchema) {
 
   if (options.deprecation) {
     addDeprecationRules(tree);
+  }
+
+  if (options.importOrder) {
+    addImportOrderRules(tree);
   }
 
   await formatFiles(tree);
@@ -110,6 +116,35 @@ function addDeprecationRules(tree: Tree): void {
     },
   });
   addParserOptionsToProjects(tree);
+}
+
+function addImportOrderRules(tree: Tree): void {
+  addDevDependencyToPackageJson(tree, 'eslint-plugin-import');
+  addDevDependencyToPackageJson(tree, 'eslint-import-resolver-typescript');
+  addEsLintPlugin(tree, 'import');
+  addEsLintRules(tree, {
+    files: ['*.ts', '*.tsx'],
+    extends: ['plugin:import/recommended', 'plugin:import/typescript'],
+    rules: {
+      'import/order': [
+        'error',
+        {
+          pathGroups: [{ pattern: '@nx-*/**', group: 'internal', position: 'before' }],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+          pathGroupsExcludedImportTypes: [],
+          'newlines-between': 'always',
+          alphabetize: { order: 'asc', caseInsensitive: true },
+        },
+      ],
+      'import/no-unresolved': ['off'],
+    },
+    settings: {
+      'import/resolver': {
+        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
+        typescript: {},
+      },
+    },
+  });
 }
 
 function addParserOptionsToProjects(tree: Tree) {

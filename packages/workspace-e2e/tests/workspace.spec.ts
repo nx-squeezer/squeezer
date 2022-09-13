@@ -1,6 +1,8 @@
-import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
-import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist } from '@nrwl/nx-plugin/testing';
+import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
+import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
+
 import {
   ciFile,
   eslintConfigFile,
@@ -9,8 +11,6 @@ import {
   tsConfigDefault,
   tsConfigFile,
 } from '@nx-squeezer/workspace';
-
-import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
 const timeout = 120000;
 
@@ -106,7 +106,14 @@ describe('@nx-squeezer/workspace e2e', () => {
     it(
       'should setup eslint config',
       async () => {
-        const flags = ['eslintRecommended', 'sonarJs', 'unusedImports', 'typescriptRecommended', 'deprecation']
+        const flags = [
+          'eslintRecommended',
+          'sonarJs',
+          'unusedImports',
+          'typescriptRecommended',
+          'deprecation',
+          'importOrder',
+        ]
           .map((flag) => `--${flag}`)
           .join(' ');
 
@@ -123,7 +130,7 @@ describe('@nx-squeezer/workspace e2e', () => {
         });
         expect(eslintConfig.overrides?.[2]).toStrictEqual({
           files: ['*.ts', '*.tsx'],
-          extends: ['plugin:@typescript-eslint/recommended'],
+          extends: ['plugin:@typescript-eslint/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
           rules: {
             'unused-imports/no-unused-imports': 'error',
             '@typescript-eslint/explicit-member-accessibility': [
@@ -136,6 +143,34 @@ describe('@nx-squeezer/workspace e2e', () => {
             '@typescript-eslint/explicit-module-boundary-types': ['off'],
             '@typescript-eslint/ban-types': ['off'],
             '@delagen/deprecation/deprecation': 'error',
+            'import/order': [
+              'error',
+              {
+                pathGroups: [
+                  {
+                    pattern: '@nx-*/**',
+                    group: 'internal',
+                    position: 'before',
+                  },
+                ],
+                groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+                pathGroupsExcludedImportTypes: [],
+                'newlines-between': 'always',
+                alphabetize: {
+                  order: 'asc',
+                  caseInsensitive: true,
+                },
+              },
+            ],
+            'import/no-unresolved': ['off'],
+          },
+          settings: {
+            'import/resolver': {
+              node: {
+                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+              },
+              typescript: {},
+            },
           },
         });
       },
