@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "codecov",
+  "title": "Configures Codecov",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {}
+}

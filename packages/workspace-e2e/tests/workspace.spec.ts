@@ -5,6 +5,7 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 
 import {
   ciFile,
+  codecovHiddenFile,
   eslintConfigFile,
   eslintPluginPrettier,
   prettierPlugin,
@@ -41,14 +42,6 @@ describe('@nx-squeezer/workspace e2e', () => {
     },
     timeout
   );
-  /*
-  describe('--directory', () => {
-    it('should create src in the specified directory', async () => {
-      const project = uniq('workspace');
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:workspace ${project} --directory subdir`);
-      expect(() => checkFilesExist(`libs/subdir/${project}/src/index.ts`)).not.toThrow();
-    }, 120000);
-  }); */
 
   describe('prettier generator', () => {
     it(
@@ -173,6 +166,18 @@ describe('@nx-squeezer/workspace e2e', () => {
             },
           },
         });
+      },
+      timeout
+    );
+  });
+
+  describe('codecov workflow generator', () => {
+    it(
+      'should setup Codecov',
+      async () => {
+        await runNxCommandAsync(`generate @nx-squeezer/workspace:codecov`);
+
+        expect(() => checkFilesExist(codecovHiddenFile)).not.toThrow();
       },
       timeout
     );

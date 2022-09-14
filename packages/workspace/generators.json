@@ -27,6 +27,11 @@
       "factory": "./src/generators/eslint/generator",
       "schema": "./src/generators/eslint/schema.json",
       "description": "Configures ESLint with additional rules"
+    },
+    "codecov": {
+      "factory": "./src/generators/codecov/generator",
+      "schema": "./src/generators/codecov/schema.json",
+      "description": "Configures Codecov"
     }
   }
 }
