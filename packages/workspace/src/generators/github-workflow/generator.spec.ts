@@ -1,8 +1,7 @@
 import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
-import { ciFile } from '../core';
+import { ciFile, readPackageJson } from '../core';
 import { readmeFile } from '../core/add-badge-to-readme';
 import { getGitRepo } from '../core/get-git-repo';
 import { nxConfigFile } from '../core/nx';
@@ -33,7 +32,7 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
   it('should declare the nx script in package.json', async () => {
     await generator(tree, { branch: 'main', useNxCloud: true, force: true });
 
-    const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');
+    const packageJson = readPackageJson(tree);
 
     expect(packageJson.scripts?.nx).toBe('nx');
   });

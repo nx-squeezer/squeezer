@@ -1,8 +1,9 @@
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
-import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
+import { Tree } from '@nrwl/devkit';
+
+import { readPackageJson, writePackageJson } from './package-json';
 
 export function addScriptToPackageJson(tree: Tree, name: string, script: string) {
-  const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>(tree, 'package.json');
+  const packageJson = readPackageJson(tree);
 
   if (packageJson.scripts?.[name] != null) {
     console.log(`Skipping adding script to package.json: ${name}`);
@@ -11,5 +12,5 @@ export function addScriptToPackageJson(tree: Tree, name: string, script: string)
 
   packageJson.scripts = { ...packageJson.scripts, [name]: script };
 
-  writeJson(tree, 'package.json', packageJson);
+  writePackageJson(tree, packageJson);
 }

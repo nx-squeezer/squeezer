@@ -22,3 +22,7 @@ export function getGitRepo(tree: Tree): string | null {
   }
   return null;
 }
+
+export function getGitRepoSlug(tree: Tree): string | null {
+  return getGitRepo(tree)?.replace(/^https:\/\/github.com\//, '') ?? null;
+}

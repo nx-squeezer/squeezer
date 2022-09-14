@@ -2,10 +2,12 @@ import { formatFiles, Tree } from '@nrwl/devkit';
 import fetch from 'node-fetch-commonjs';
 
 import {
+  addBadgeToReadme,
   addImplicitDependencyToNxConfig,
   additHubCiJobStep,
   existsGitHubCiWorkflow,
   getCodecovFile,
+  getGitRepoSlug,
   readRawCodecov,
   writeProjectsToCodecov,
 } from '../core';
@@ -40,4 +42,16 @@ export default async function (tree: Tree) {
   }
 
   console.log(`You can configure the Codecov app at: https://github.com/apps/codecov`);
+
+  const gitRepoSlug = getGitRepoSlug(tree);
+  if (gitRepoSlug == null) {
+    console.error(`Could not add badge to README, remote repo could not be detected.`);
+  } else {
+    addBadgeToReadme(
+      tree,
+      `https://codecov.io/gh/${gitRepoSlug}/branch/main/graph/badge.svg`,
+      `https://codecov.io/gh/${gitRepoSlug}`,
+      'codecov'
+    );
+  }
 }
