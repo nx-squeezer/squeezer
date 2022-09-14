@@ -11,6 +11,7 @@ export * from './get-npm-package-version';
 export * from './github-workflow';
 export * from './lint-workspace-task';
 export * from './nx';
+export * from './package-json';
 export * from './prettier';
 export * from './set';
 export * from './slash';

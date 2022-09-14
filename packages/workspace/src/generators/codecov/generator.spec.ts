@@ -2,11 +2,12 @@ import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 
-import { nxConfigFile, readCodecov } from '../core';
+import { getGitRepoSlug, nxConfigFile, readCodecov, readmeFile } from '../core';
 import { codecovHiddenFile } from './../core/codecov';
 import generator from './generator';
 
 jest.mock('node-fetch-commonjs');
+jest.mock('../core/get-git-repo');
 
 describe('@nx-squeezer/workspace codecov generator', () => {
   let tree: Tree;
@@ -18,6 +19,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
     (fetch as jest.Mock).mockResolvedValue({ ok: true });
+    (getGitRepoSlug as jest.Mock).mockReturnValue('test/test');
   });
 
   it('should run successfully', async () => {
@@ -34,5 +36,14 @@ describe('@nx-squeezer/workspace codecov generator', () => {
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
     expect(nxConfig.implicitDependencies?.[codecovHiddenFile]).toBe('*');
+  });
+
+  it('should add a badge in readme', async () => {
+    tree.write(readmeFile, '# Readme\n');
+    await generator(tree);
+
+    const readme = tree.read(readmeFile)?.toString() ?? '';
+
+    expect(readme).toContain('[![codecov]');
   });
 });
