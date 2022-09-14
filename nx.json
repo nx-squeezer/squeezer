@@ -18,6 +18,7 @@
     }
   },
   "implicitDependencies": {
-    ".github/workflows/*.yml": "*"
+    ".github/workflows/*.yml": "*",
+    ".codecov.yml": "*"
   }
 }
