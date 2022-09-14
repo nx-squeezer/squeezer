@@ -101,6 +101,48 @@ jobs:
       - name: lint workspace
         run: npm run lint:workspace
 
+  test:
+    name: Test
+    needs: [npm]
+    runs-on: ubuntu-latest
+    env:
+      NX_RUN_GROUP: ${{ github.run_id }}
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.0.2
+        with:
+          fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.4.1
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.10
+        with:
+          nx-key: test
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v2.2.7
+
+      - name: Test
+        uses: mansagroup/nrwl-nx-action@v2.1.0
+        with:
+          targets: test
+          affected: 'true'
+          parallel: 'true'
+          maxParallel: 3
+          nxCloud: 'true'
+
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
+        if: hashFiles('coverage/**/*') != ''
+        with:
+          fail_ci_if_error: true
+          verbose: true
+
   e2e:
     name: e2e
     needs: [npm]

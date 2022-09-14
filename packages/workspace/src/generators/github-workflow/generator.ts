@@ -19,7 +19,7 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
     console.log();
   }
 
-  const targets = ['build', 'lint', 'e2e'].map((target) => {
+  const targets = ['build', 'lint', 'test', 'e2e'].map((target) => {
     const formattedNames = names(target);
     formattedNames.className = formattedNames.className.replace(/e2e/i, 'e2e');
     return formattedNames;

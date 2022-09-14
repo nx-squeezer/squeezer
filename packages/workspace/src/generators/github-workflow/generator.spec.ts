@@ -41,9 +41,9 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
   it('should declare the implicit dependency in nx.json', async () => {
     await generator(tree, { branch: 'main', useNxCloud: true, force: true });
 
-    const packageJson = readJson<NxJsonConfiguration>(tree, nxConfigFile);
+    const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
-    expect(packageJson.implicitDependencies?.['.github/workflows/*.yml']).toBe('*');
+    expect(nxConfig.implicitDependencies?.['.github/workflows/*.yml']).toBe('*');
   });
 
   it('should add a badge in readme', async () => {

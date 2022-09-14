@@ -8,5 +8,8 @@
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

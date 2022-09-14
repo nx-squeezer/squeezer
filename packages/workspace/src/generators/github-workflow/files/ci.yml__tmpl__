@@ -12,10 +12,9 @@ jobs:
     name: NPM
     runs-on: ubuntu-latest
     env:
-      NX_RUN_GROUP: ${{ github.run_id }}
-<% if (useNxCloud) { %>
-      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
-<% } %>
+      NX_RUN_GROUP: ${{ github.run_id }}<% if (useNxCloud) { %>
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}<% } %>
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3.0.2
@@ -31,7 +30,7 @@ jobs:
 <% targets.forEach(function(target) { %>
   <%= target.name %>:
     name: <%= target.className %>
-    needs: [npm]
+    needs: [ npm ]
     runs-on: ubuntu-latest
     env:
       NX_RUN_GROUP: ${{ github.run_id }}
