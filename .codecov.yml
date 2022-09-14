@@ -1,0 +1,24 @@
+comment:
+  layout: reach
+  behavior: new
+  require_changes: true
+coverage:
+  range: 0..100
+  round: nearest
+  precision: 1
+  status:
+    patch:
+      default:
+        target: 50%
+        threshold: 10%
+    project:
+      default:
+        target: 50%
+        threshold: 10%
+      workspace:
+        flags:
+          - workspace
+flags:
+  workspace:
+    paths:
+      - coverage/packages/workspace
