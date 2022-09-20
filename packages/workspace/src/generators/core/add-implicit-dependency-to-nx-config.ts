@@ -3,11 +3,11 @@ import { Tree, ImplicitDependencyEntry, NxJsonConfiguration, writeJson, readJson
 import { nxConfigFile } from './nx';
 
 export function addImplicitDependencyToNxConfig(tree: Tree, implicitDependencyEntry: ImplicitDependencyEntry) {
-  const nxConfig: NxJsonConfiguration | null = readJson<NxJsonConfiguration>(tree, nxConfigFile);
-  if (nxConfig == null) {
+  if (!tree.exists(nxConfigFile)) {
     return;
   }
 
+  const nxConfig: NxJsonConfiguration = readJson<NxJsonConfiguration>(tree, nxConfigFile);
   const implicitDependencies: ImplicitDependencyEntry = nxConfig.implicitDependencies ?? {};
   nxConfig.implicitDependencies = { ...implicitDependencies, ...implicitDependencyEntry };
 

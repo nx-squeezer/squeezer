@@ -3,7 +3,7 @@ import { createTree } from '@nrwl/devkit/testing';
 
 import { addBadgeToReadme, readmeFile } from './add-badge-to-readme';
 
-describe('@nx-squeezer/workspace eslint generator', () => {
+describe('@nx-squeezer/workspace addBadgeToReadme', () => {
   let tree: Tree;
   const badge = 'badge';
   const link = 'link';
