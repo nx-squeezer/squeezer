@@ -13,7 +13,7 @@ export function addBadgeToReadme(tree: Tree, badge: string, link: string, descri
     return;
   }
 
-  const readmeLines: string[] = readme.split('\n') ?? [];
+  const readmeLines: string[] = readme.split('\n');
 
   let titleLine = 0;
   let badgesLine = 0;
