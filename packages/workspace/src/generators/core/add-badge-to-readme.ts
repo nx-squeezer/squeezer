@@ -13,7 +13,7 @@ export function addBadgeToReadme(tree: Tree, badge: string, link: string, descri
     return;
   }
 
-  const readmeLines: string[] = readme.split('\n') ?? [];
+  const readmeLines: string[] = readme.split('\n');
 
   let titleLine = 0;
   let badgesLine = 0;
@@ -35,7 +35,7 @@ export function addBadgeToReadme(tree: Tree, badge: string, link: string, descri
   }
 
   // Add badge
-  if (badgesLine === titleLine) {
+  if (badgesLine === 0) {
     // Badges line not existing
     readmeLines.splice(titleLine + 1, 0, '', '');
     badgesLine = titleLine + 2;
@@ -44,6 +44,8 @@ export function addBadgeToReadme(tree: Tree, badge: string, link: string, descri
   readmeLines[badgesLine] = beginning
     ? `${badgeMarkdown} ${readmeLines[badgesLine]}`
     : `${readmeLines[badgesLine]} ${badgeMarkdown}`;
+
+  readmeLines[badgesLine] = readmeLines[badgesLine].trim();
 
   tree.write(readmeFile, readmeLines.join('\n'));
 }
