@@ -21,4 +21,4 @@ coverage:
 flags:
   workspace:
     paths:
-      - coverage/packages/workspace
+      - packages/workspace
