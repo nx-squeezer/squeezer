@@ -1,12 +1,10 @@
-import { join } from 'path';
-
 import { getProjects, ProjectConfiguration, Tree, updateProjectConfiguration } from '@nrwl/devkit';
 import { parse, stringify } from 'yaml';
 
 import { slash } from './slash';
 
 export const codecovFile = 'codecov.yml';
-export const codecovHiddenFile = '.codecov.yml';
+export const codecovDotFile = '.codecov.yml';
 
 export interface CodecovConfig {
   target?: string;
@@ -20,7 +18,7 @@ export interface Codecov {
     behavior: 'new';
     require_changes: boolean;
   };
-  coverage?: {
+  coverage: {
     range: string;
     round: 'nearest';
     precision: number;
@@ -69,7 +67,7 @@ export const codecovDefault: Codecov = {
 };
 
 export function getCodecovFile(tree: Tree): string {
-  return tree.exists(codecovFile) ? codecovFile : codecovHiddenFile;
+  return tree.exists(codecovFile) ? codecovFile : codecovDotFile;
 }
 
 export function readRawCodecov(tree: Tree): string {
@@ -128,22 +126,25 @@ export function writeProjectsToCodecov(tree: Tree): void {
   }
 
   testableProjects.forEach((project: ProjectConfiguration, name: string) => {
-    const flags = codecov.flags ?? {};
-    flags[name] = { paths: [slash(join('coverage', project.root))] };
-    codecov.flags = flags;
+    const newFlags: Codecov['flags'] = {};
+    newFlags[name] = { paths: [slash(project.root)] };
+    codecov.flags = { ...codecov.flags, ...newFlags };
 
-    if (codecov.coverage) {
-      codecov.coverage.status.project[name] = { flags: [name] };
-    }
+    codecov.coverage.status.project[name] = { flags: [name] };
   });
 
   writeCodecov(tree, codecov);
 }
 
 export function updateProjectJestCoverage(tree: Tree, jestConfigPath: string) {
-  const jestFileContent = tree.read(jestConfigPath)?.toString() ?? '';
+  const jestFileContent: string | undefined = tree.read(jestConfigPath)?.toString();
+
+  if (jestFileContent == null) {
+    throw new Error(`Jest config expected at path: ${jestConfigPath}`);
+  }
 
   if (jestFileContent.includes('coverageReporters')) {
+    console.log(`Coverage reporters already configured for file: ${jestConfigPath}`);
     return;
   }
 
@@ -151,6 +152,7 @@ export function updateProjectJestCoverage(tree: Tree, jestConfigPath: string) {
 
   for (let index = 0; index < jestLines.length; index++) {
     if (jestLines[index].includes('coverageDirectory')) {
+      jestLines[index] = `${jestLines[index]},`;
       jestLines.splice(index + 1, 0, `"coverageReporters": ["lcov"],`);
       break;
     }

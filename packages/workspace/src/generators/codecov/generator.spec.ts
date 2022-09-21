@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 
 import { getGitRepoSlug, nxConfigFile, readCodecov, readmeFile } from '../core';
-import { codecovHiddenFile } from './../core/codecov';
+import { codecovDotFile } from './../core/codecov';
 import generator from './generator';
 
 jest.mock('node-fetch-commonjs');
@@ -35,7 +35,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
 
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
-    expect(nxConfig.implicitDependencies?.[codecovHiddenFile]).toBe('*');
+    expect(nxConfig.implicitDependencies?.[codecovDotFile]).toBe('*');
   });
 
   it('should add a badge in readme', async () => {

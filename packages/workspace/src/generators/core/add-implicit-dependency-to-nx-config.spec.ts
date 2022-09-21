@@ -1,4 +1,4 @@
-import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
+import { NxJsonConfiguration, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { addImplicitDependencyToNxConfig } from './add-implicit-dependency-to-nx-config';
@@ -21,6 +21,9 @@ describe('@nx-squeezer/workspace addImplicitDependencyToNxConfig', () => {
 
   it('should add the implicit dependency', () => {
     tree = createTreeWithEmptyWorkspace();
+    const nx = readJson<NxJsonConfiguration>(tree, nxConfigFile);
+    nx.implicitDependencies = undefined;
+    writeJson(tree, nxConfigFile, nx);
 
     addImplicitDependencyToNxConfig(tree, { file: '*' });
 
@@ -32,6 +35,7 @@ describe('@nx-squeezer/workspace addImplicitDependencyToNxConfig', () => {
     tree = createTreeWithEmptyWorkspace();
     const nx = readJson<NxJsonConfiguration>(tree, nxConfigFile);
     nx.implicitDependencies = { file: ['project'] };
+    writeJson(tree, nxConfigFile, nx);
 
     addImplicitDependencyToNxConfig(tree, { file: '*' });
 
