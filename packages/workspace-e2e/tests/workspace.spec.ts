@@ -5,7 +5,7 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 
 import {
   ciFile,
-  codecovHiddenFile,
+  codecovDotFile,
   eslintConfigFile,
   eslintPluginPrettier,
   prettierPlugin,
@@ -177,7 +177,7 @@ describe('@nx-squeezer/workspace e2e', () => {
       async () => {
         await runNxCommandAsync(`generate @nx-squeezer/workspace:codecov`);
 
-        expect(() => checkFilesExist(codecovHiddenFile)).not.toThrow();
+        expect(() => checkFilesExist(codecovDotFile)).not.toThrow();
       },
       timeout
     );
