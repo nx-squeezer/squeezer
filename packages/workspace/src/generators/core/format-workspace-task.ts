@@ -1,12 +1,13 @@
 import { execSync } from 'child_process';
-import { join } from 'path';
 
 import { Tree } from '@nrwl/devkit';
+
+import { slash } from './slash';
 
 export function formatWorkspaceTask(tree: Tree): void {
   try {
     execSync('npx prettier . --write', {
-      cwd: join(tree.root, ''),
+      cwd: slash(tree.root),
       stdio: [0, 1, 2],
     });
   } catch (err) {

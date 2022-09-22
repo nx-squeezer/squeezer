@@ -24,7 +24,7 @@ describe('@nx-squeezer/workspace formatWorkspaceTask', () => {
 
     formatWorkspaceTask(tree);
 
-    expect(execSync).toHaveBeenCalledWith('npx prettier . --write', { cwd: '\\virtual', stdio: [0, 1, 2] });
+    expect(execSync).toHaveBeenCalledWith('npx prettier . --write', { cwd: '/virtual', stdio: [0, 1, 2] });
   });
 
   it('should not fail if exec sync fails', () => {

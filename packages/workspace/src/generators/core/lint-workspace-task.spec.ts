@@ -25,7 +25,7 @@ describe('@nx-squeezer/workspace lintWorkspaceTask', () => {
     lintWorkspaceTask(tree);
 
     expect(execSync).toHaveBeenCalledWith('npx nx run-many --target=lint --parallel=2 --all --fix', {
-      cwd: '\\virtual',
+      cwd: '/virtual',
       stdio: [0, 1, 2],
     });
   });
