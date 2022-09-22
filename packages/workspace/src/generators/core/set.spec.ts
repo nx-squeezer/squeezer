@@ -17,7 +17,7 @@ describe('@nx-squeezer/workspace set functions', () => {
     });
 
     it('create a set from a single element', () => {
-      expect(getSet([1]).size).toBe(1);
+      expect(getSet(1).size).toBe(1);
     });
   });
 

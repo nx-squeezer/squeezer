@@ -12,7 +12,7 @@ export type EsLintConfigurationOverrideRule = ArrayElement<EsLintConfigurationOv
 
 export function readEsLintConfig(tree: Tree, path = eslintConfigFile): JSONSchemaForESLintConfigurationFiles {
   if (!tree.exists(eslintConfigFile)) {
-    writeJson(tree, eslintConfigFile, { root: true, ignorePatterns: ['**/*'] });
+    writeEsLintConfig(tree, { root: true, ignorePatterns: ['**/*'] }, eslintConfigFile);
   }
 
   return readJson<JSONSchemaForESLintConfigurationFiles>(tree, path);
