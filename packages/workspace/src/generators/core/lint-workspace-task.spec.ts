@@ -10,13 +10,10 @@ jest.mock('child_process');
 describe('@nx-squeezer/workspace lintWorkspaceTask', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-    jest.spyOn(console, 'error').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTree();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
+    jest.spyOn(console, 'error').mockImplementation(() => null);
   });
 
   it('should execute lint command', () => {

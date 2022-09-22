@@ -18,7 +18,7 @@ describe('@nx-squeezer/workspace codecov', () => {
   let tree: Tree;
   const jestConfigPath = 'libs/lib1/jest.config.ts';
 
-  beforeAll(() => {
+  beforeEach(() => {
     jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 

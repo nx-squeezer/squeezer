@@ -12,12 +12,9 @@ describe('@nx-squeezer/workspace addBadgeToReadme', () => {
     expect(tree.read(readmeFile)?.toString().includes(`(${badge})`)).toBeTruthy();
   };
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTree();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
   it('should add the badge to an existing README file', () => {

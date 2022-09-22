@@ -8,12 +8,9 @@ import generator from './generator';
 describe('@nx-squeezer/workspace tsconfig generator', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
   it('should run successfully', async () => {

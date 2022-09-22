@@ -9,12 +9,9 @@ describe('@nx-squeezer/workspace addScriptToPackageJson', () => {
   const scriptName = 'test';
   const script = 'nx test';
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
   it('should add a script to package.json', () => {

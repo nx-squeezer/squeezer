@@ -7,7 +7,7 @@ import { nxConfigFile } from './nx';
 describe('@nx-squeezer/workspace addImplicitDependencyToNxConfig', () => {
   let tree: Tree;
 
-  beforeAll(() => {
+  beforeEach(() => {
     jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
