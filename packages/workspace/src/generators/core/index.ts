@@ -9,6 +9,7 @@ export * from './format-workspace-task';
 export * from './get-git-repo';
 export * from './get-npm-package-version';
 export * from './github-workflow';
+export * from './join-normalize';
 export * from './lint-workspace-task';
 export * from './nx';
 export * from './package-json';

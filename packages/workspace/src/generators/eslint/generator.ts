@@ -12,7 +12,7 @@ import {
   writeEsLintConfig,
   eslintConfigFile,
   EsLintConfigurationOverrideRule,
-  slash,
+  joinNormalize,
 } from '../core';
 import { EsLintGeneratorSchema } from './schema';
 
@@ -151,7 +151,7 @@ function addParserOptionsToProjects(tree: Tree) {
   updateEsLintProjectConfig(tree, (project) => ({
     files: ['*.ts', '*.tsx'],
     parserOptions: {
-      project: [slash(join(project.root, 'tsconfig.*?.json'))],
+      project: [joinNormalize(project.root, 'tsconfig.*?.json')],
     },
   }));
 }
