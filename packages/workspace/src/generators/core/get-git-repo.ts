@@ -1,13 +1,14 @@
 import { execSync } from 'child_process';
-import { join } from 'path';
 
 import { Tree } from '@nrwl/devkit';
+
+import { slash } from './slash';
 
 export function getGitRepo(tree: Tree): string | null {
   try {
     const output = execSync(`git config --get remote.origin.url`, {
       stdio: ['pipe', 'pipe', 'ignore'],
-      cwd: join(tree.root, ''),
+      cwd: slash(tree.root),
     });
 
     if (output) {
@@ -18,8 +19,9 @@ export function getGitRepo(tree: Tree): string | null {
         .replace(/\.git$/i, '');
     }
   } catch (err) {
-    return null;
+    console.error(err);
   }
+  console.error(`Could not resolve git repo remote url.`);
   return null;
 }
 

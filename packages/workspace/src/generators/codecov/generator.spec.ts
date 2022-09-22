@@ -12,14 +12,11 @@ jest.mock('../core/get-git-repo');
 describe('@nx-squeezer/workspace codecov generator', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
     (fetch as jest.Mock).mockResolvedValue({ ok: true });
     (getGitRepoSlug as jest.Mock).mockReturnValue('test/test');
+    jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
   it('should run successfully', async () => {

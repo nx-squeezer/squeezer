@@ -12,13 +12,10 @@ jest.mock('../core/get-git-repo');
 describe('@nx-squeezer/workspace github workflow generator', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-    (getGitRepo as jest.Mock).mockReturnValue('https://github.com/test/test');
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
+    (getGitRepo as jest.Mock).mockReturnValue('https://github.com/test/test');
   });
 
   it('should run successfully', async () => {

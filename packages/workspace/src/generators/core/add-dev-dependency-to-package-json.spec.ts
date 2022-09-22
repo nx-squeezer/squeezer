@@ -12,12 +12,9 @@ describe('@nx-squeezer/workspace addDevDependencyToPackageJson', () => {
   const packageName = 'package';
   const version = '1.0.0';
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
   });
 
   it('should add the dependency to package.json', () => {

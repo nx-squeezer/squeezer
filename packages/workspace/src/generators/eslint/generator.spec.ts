@@ -9,12 +9,9 @@ const timeout = 10_000;
 describe('@nx-squeezer/workspace eslint generator', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
     writeEsLintConfig(tree, {});
   });
 

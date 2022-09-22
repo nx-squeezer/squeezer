@@ -16,12 +16,9 @@ import { prettierDefaultConfig } from './prettier-default-config';
 describe('@nx-squeezer/workspace prettier generator', () => {
   let tree: Tree;
 
-  beforeAll(() => {
-    jest.spyOn(console, 'log').mockImplementation(() => null);
-  });
-
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    jest.spyOn(console, 'log').mockImplementation(() => null);
     writeEsLintConfig(tree, {});
   });
 

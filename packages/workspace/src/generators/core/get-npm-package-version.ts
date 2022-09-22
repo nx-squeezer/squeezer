@@ -13,7 +13,8 @@ export function getNpmPackageVersion(packageName: string): string | null {
         .replace(/^\n*|\n*$/g, '');
     }
   } catch (err) {
-    return null;
+    console.error(err);
   }
+  console.error(`Could not retrieve package version for "${packageName}"`);
   return null;
 }
