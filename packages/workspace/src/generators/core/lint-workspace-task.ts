@@ -2,12 +2,12 @@ import { execSync } from 'child_process';
 
 import { Tree } from '@nrwl/devkit';
 
-import { slash } from './slash';
+import { joinNormalize } from './join-normalize';
 
 export function lintWorkspaceTask(tree: Tree): void {
   try {
     execSync('npx nx run-many --target=lint --parallel=2 --all --fix', {
-      cwd: slash(tree.root),
+      cwd: joinNormalize(tree.root),
       stdio: [0, 1, 2],
     });
   } catch (err) {

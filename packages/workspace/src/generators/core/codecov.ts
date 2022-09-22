@@ -1,7 +1,7 @@
 import { getProjects, ProjectConfiguration, Tree, updateProjectConfiguration } from '@nrwl/devkit';
 import { parse, stringify } from 'yaml';
 
-import { slash } from './slash';
+import { joinNormalize } from './join-normalize';
 
 export const codecovFile = 'codecov.yml';
 export const codecovDotFile = '.codecov.yml';
@@ -127,7 +127,7 @@ export function writeProjectsToCodecov(tree: Tree): void {
 
   testableProjects.forEach((project: ProjectConfiguration, name: string) => {
     const newFlags: Codecov['flags'] = {};
-    newFlags[name] = { paths: [slash(project.root)] };
+    newFlags[name] = { paths: [joinNormalize(project.root)] };
     codecov.flags = { ...codecov.flags, ...newFlags };
 
     codecov.coverage.status.project[name] = { flags: [name] };

@@ -2,13 +2,13 @@ import { execSync } from 'child_process';
 
 import { Tree } from '@nrwl/devkit';
 
-import { slash } from './slash';
+import { joinNormalize } from './join-normalize';
 
 export function getGitRepo(tree: Tree): string | null {
   try {
     const output = execSync(`git config --get remote.origin.url`, {
       stdio: ['pipe', 'pipe', 'ignore'],
-      cwd: slash(tree.root),
+      cwd: joinNormalize(tree.root),
     });
 
     if (output) {
