@@ -82,6 +82,19 @@ describe('@nx-squeezer/workspace eslint-config', () => {
 
       expect(isEsLintPluginPresent(tree, pluginName)).toBeTruthy();
     });
+
+    it('should not add a plugin if already configured', () => {
+      const eslintConfig: JSONSchemaForESLintConfigurationFiles = {
+        root: true,
+        ignorePatterns: ['**/*'],
+        plugins: [pluginName],
+      };
+      writeEsLintConfig(tree, eslintConfig);
+
+      addEsLintPlugin(tree, pluginName);
+
+      expect(readEsLintConfig(tree).plugins).toStrictEqual([pluginName]);
+    });
   });
 
   describe('manage rules', () => {
@@ -146,6 +159,21 @@ describe('@nx-squeezer/workspace eslint-config', () => {
         root: true,
         ignorePatterns: ['**/*'],
         overrides: [{ ...basicRule, extends: [preset] }],
+      };
+      writeEsLintConfig(tree, eslintConfig);
+
+      addEsLintRules(tree, { ...newRule, extends: [preset] });
+
+      expect(readEsLintConfig(tree).overrides).toStrictEqual([
+        { files: '*.js', rules: { rule1: 'off', rule2: 'off' }, extends: [preset] },
+      ]);
+    });
+
+    it('merge extends property of rule when not previously existing', () => {
+      const eslintConfig: JSONSchemaForESLintConfigurationFiles = {
+        root: true,
+        ignorePatterns: ['**/*'],
+        overrides: [basicRule],
       };
       writeEsLintConfig(tree, eslintConfig);
 
