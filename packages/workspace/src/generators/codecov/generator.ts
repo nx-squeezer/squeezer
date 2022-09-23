@@ -4,7 +4,7 @@ import fetch from 'node-fetch-commonjs';
 import {
   addBadgeToReadme,
   addImplicitDependencyToNxConfig,
-  additHubCiJobStep,
+  addGitHubCiJobStep,
   existsGitHubCiWorkflow,
   getCodecovFile,
   getGitRepoSlug,
@@ -17,7 +17,7 @@ export default async function (tree: Tree) {
   addImplicitDependencyToNxConfig(tree, { [getCodecovFile(tree)]: '*' });
 
   if (existsGitHubCiWorkflow(tree)) {
-    additHubCiJobStep(tree, 'test', {
+    addGitHubCiJobStep(tree, 'test', {
       name: 'Codecov',
       uses: 'codecov/codecov-action@v3.1.0',
       if: `hashFiles('coverage/**/*') != ''`,
