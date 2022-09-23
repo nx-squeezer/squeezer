@@ -15,21 +15,21 @@ export function existsGitHubCiWorkflow(tree: Tree): boolean {
   return tree.exists(ciFile);
 }
 
-export function additHubCiJobStep(tree: Tree, job: string, step: GitHubActionJobStep) {
+export function addGitHubCiJobStep(tree: Tree, job: string, step: GitHubActionJobStep) {
   const ci = parseDocument(tree.read(ciFile)?.toString() ?? '');
-  const testSteps: YAMLSeq | undefined = ci.getIn(['jobs', 'test', 'steps']) as any;
+  const jobSteps: YAMLSeq | undefined = ci.getIn(['jobs', job, 'steps']) as any;
 
-  if (testSteps == null) {
-    console.log(`Could not find "${job}" job in file: ${ciFile}`);
+  if (jobSteps == null) {
+    console.error(`Could not find "${job}" job in file: ${ciFile}`);
     return;
   }
 
-  if (testSteps.items.some((item: any) => item.get('name') === step.name)) {
-    console.log(`Step "${step.name}" in "${job}" already present in file: ${ciFile}`);
+  if (jobSteps.items.some((item: any) => item.get('name') === step.name)) {
+    console.error(`Step "${step.name}" in "${job}" already present in file: ${ciFile}`);
     return;
   }
 
-  testSteps.add(step);
+  jobSteps.add(step);
 
   tree.write(ciFile, stringify(ci));
 }
