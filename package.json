@@ -6,7 +6,8 @@
     "lint": "nx run-many --target=lint --parallel=3 --all",
     "lint:fix": "nx run-many --target=lint --parallel=3 --all --fix",
     "nx": "nx",
-    "lint:workspace": "nx workspace-lint"
+    "lint:workspace": "nx workspace-lint",
+    "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g"
   },
   "private": true,
   "devDependencies": {
@@ -32,6 +33,7 @@
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "~5.33.1",
     "@typescript-eslint/parser": "~5.33.1",
+    "cross-env": "^7.0.3",
     "eslint": "~8.15.0",
     "eslint-config-prettier": "8.1.0",
     "eslint-import-resolver-typescript": "3.5.1",
