@@ -115,57 +115,76 @@ describe('@nx-squeezer/workspace e2e', () => {
         expect(() => checkFilesExist(ciFile)).not.toThrow();
 
         const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
-        expect(eslintConfig.plugins?.includes('sonarjs')).toBeTruthy();
-        expect(eslintConfig.overrides?.[1]).toStrictEqual({
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-          extends: ['eslint:recommended', 'plugin:sonarjs/recommended'],
-          rules: {},
+        expect(eslintConfig.plugins).toStrictEqual([
+          'prettier',
+          'sonarjs',
+          'unused-imports',
+          '@typescript-eslint',
+          '@delagen/deprecation',
+          'import',
+        ]);
+        expect(eslintConfig.env).toStrictEqual({
+          node: true,
+          browser: true,
+          es2022: true,
         });
-        expect(eslintConfig.overrides?.[2]).toStrictEqual({
-          files: ['*.ts', '*.tsx'],
-          extends: ['plugin:@typescript-eslint/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
-          rules: {
-            'unused-imports/no-unused-imports': 'error',
-            '@typescript-eslint/explicit-member-accessibility': [
-              'warn',
-              {
-                accessibility: 'no-public',
-              },
-            ],
-            '@typescript-eslint/no-explicit-any': ['off'],
-            '@typescript-eslint/explicit-module-boundary-types': ['off'],
-            '@typescript-eslint/ban-types': ['off'],
-            '@delagen/deprecation/deprecation': 'error',
-            'import/order': [
-              'error',
-              {
-                pathGroups: [
-                  {
-                    pattern: '@nx-*/**',
-                    group: 'internal',
-                    position: 'before',
-                  },
-                ],
-                groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
-                pathGroupsExcludedImportTypes: [],
-                'newlines-between': 'always',
-                alphabetize: {
-                  order: 'asc',
-                  caseInsensitive: true,
-                },
-              },
-            ],
-            'import/no-unresolved': ['off'],
+        expect(eslintConfig.overrides).toStrictEqual([
+          {
+            files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
+            extends: ['plugin:prettier/recommended'],
+            rules: {},
           },
-          settings: {
-            'import/resolver': {
-              node: {
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
+          {
+            files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+            extends: ['eslint:recommended', 'plugin:sonarjs/recommended'],
+            rules: {},
+          },
+          {
+            files: ['*.ts', '*.tsx'],
+            extends: ['plugin:@typescript-eslint/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
+            rules: {
+              'unused-imports/no-unused-imports': 'error',
+              '@typescript-eslint/explicit-member-accessibility': [
+                'warn',
+                {
+                  accessibility: 'no-public',
+                },
+              ],
+              '@typescript-eslint/no-explicit-any': ['off'],
+              '@typescript-eslint/explicit-module-boundary-types': ['off'],
+              '@typescript-eslint/ban-types': ['off'],
+              '@delagen/deprecation/deprecation': 'error',
+              'import/order': [
+                'error',
+                {
+                  pathGroups: [
+                    {
+                      pattern: '@nx-*/**',
+                      group: 'internal',
+                      position: 'before',
+                    },
+                  ],
+                  groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
+                  pathGroupsExcludedImportTypes: [],
+                  'newlines-between': 'always',
+                  alphabetize: {
+                    order: 'asc',
+                    caseInsensitive: true,
+                  },
+                },
+              ],
+              'import/no-unresolved': ['off'],
+            },
+            settings: {
+              'import/resolver': {
+                node: {
+                  extensions: ['.js', '.jsx', '.ts', '.tsx'],
+                },
+                typescript: {},
               },
-              typescript: {},
             },
           },
-        });
+        ]);
       },
       timeout
     );

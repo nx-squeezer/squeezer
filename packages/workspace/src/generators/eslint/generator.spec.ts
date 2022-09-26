@@ -1,10 +1,20 @@
-import { Tree } from '@nrwl/devkit';
+import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { readEsLintConfig, writeEsLintConfig } from '../core';
+import { eslintConfigFile, lintWorkspaceTask, readEsLintConfig, writeEsLintConfig } from '../core';
 import generator from './generator';
 
 const timeout = 10_000;
+
+jest.mock('../core', () => ({
+  ...jest.requireActual('../core'),
+  lintWorkspaceTask: jest.fn(),
+}));
+
+jest.mock('@nrwl/devkit', () => ({
+  ...jest.requireActual('@nrwl/devkit'),
+  installPackagesTask: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace eslint generator', () => {
   let tree: Tree;
@@ -16,11 +26,20 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree, { eslintRecommended: true });
+    await generator(tree, {});
 
     const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig).toBeDefined();
+  });
+
+  it('should run tasks', async () => {
+    const tasks = await generator(tree, {});
+
+    tasks();
+
+    expect(lintWorkspaceTask).toHaveBeenCalled();
+    expect(installPackagesTask).toHaveBeenCalled();
   });
 
   it('should apply eslint:recommended', async () => {
@@ -33,6 +52,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
       extends: ['eslint:recommended'],
       rules: {},
     });
+    expect(eslintConfig.env).toStrictEqual({ node: true, browser: true, es2022: true });
   });
 
   it('should apply sonarjs/recommended', async () => {
@@ -65,6 +85,8 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   it(
     'should apply @typescript-eslint/recommended',
     async () => {
+      addLibraries();
+
       await generator(tree, { typescriptRecommended: true });
 
       const eslintConfig = readEsLintConfig(tree);
@@ -80,6 +102,10 @@ describe('@nx-squeezer/workspace eslint generator', () => {
           '@typescript-eslint/ban-types': ['off'],
         },
       });
+      expect(readEsLintConfig(tree, `libs/lib1/${eslintConfigFile}`).overrides?.[0]).toStrictEqual({
+        files: ['*.ts', '*.tsx'],
+        parserOptions: { project: ['libs/lib1/tsconfig.*?.json'] },
+      });
     },
     timeout
   );
@@ -87,6 +113,8 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   it(
     'should apply @delagen/deprecation',
     async () => {
+      addLibraries();
+
       await generator(tree, { deprecation: true });
 
       const eslintConfig = readEsLintConfig(tree);
@@ -97,6 +125,10 @@ describe('@nx-squeezer/workspace eslint generator', () => {
         rules: {
           '@delagen/deprecation/deprecation': 'error',
         },
+      });
+      expect(readEsLintConfig(tree, `libs/lib1/${eslintConfigFile}`).overrides?.[0]).toStrictEqual({
+        files: ['*.ts', '*.tsx'],
+        parserOptions: { project: ['libs/lib1/tsconfig.*?.json'] },
       });
     },
     timeout
@@ -147,4 +179,17 @@ describe('@nx-squeezer/workspace eslint generator', () => {
     },
     timeout
   );
+
+  function addLibraries() {
+    addProjectConfiguration(tree, 'lib1', {
+      root: 'libs/lib1',
+      sourceRoot: 'libs/lib1/src',
+    });
+    writeEsLintConfig(tree, {}, `libs/lib1/${eslintConfigFile}`);
+
+    addProjectConfiguration(tree, 'lib2', {
+      root: 'libs/lib2',
+      sourceRoot: 'libs/lib2/src',
+    });
+  }
 });
