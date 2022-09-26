@@ -3,11 +3,6 @@
   "name": "workspace",
   "version": "0.0.1",
   "generators": {
-    "workspace": {
-      "factory": "./src/generators/workspace/generator",
-      "schema": "./src/generators/workspace/schema.json",
-      "description": "workspace generator"
-    },
     "prettier": {
       "factory": "./src/generators/prettier/generator",
       "schema": "./src/generators/prettier/schema.json",
