@@ -199,7 +199,7 @@ describe('@nx-squeezer/workspace e2e', () => {
 
         expect(() => checkFilesExist(codecovDotFile)).not.toThrow();
 
-        expect(parse(readFile(codecovDotFile))).toBe({
+        expect(parse(readFile(codecovDotFile))).toStrictEqual({
           comment: {
             layout: 'reach',
             behavior: 'new',
