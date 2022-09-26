@@ -1,3 +1,4 @@
+import { readJsonFile } from '@nrwl/devkit';
 import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
@@ -9,10 +10,13 @@ import {
   codecovDotFile,
   eslintConfigFile,
   eslintPluginPrettier,
+  prettierConfigJsonFile,
   prettierPlugin,
   tsConfigDefault,
   tsConfigFile,
 } from '@nx-squeezer/workspace';
+
+import { prettierDefaultConfig } from './../../workspace/src/generators/prettier/prettier-default-config';
 
 const timeout = 120000;
 
@@ -60,6 +64,8 @@ describe('@nx-squeezer/workspace e2e', () => {
 
         const packageJson = readJson<JSONSchemaForNPMPackageJsonFiles>('package.json');
         expect(packageJson.devDependencies?.[eslintPluginPrettier]).toBeDefined();
+
+        expect(readJsonFile(prettierConfigJsonFile)).toStrictEqual(prettierDefaultConfig);
       },
       timeout
     );
