@@ -1,7 +1,8 @@
-import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
+import { parse } from 'yaml';
 
 import {
   ciFile,
@@ -197,6 +198,33 @@ describe('@nx-squeezer/workspace e2e', () => {
         await runNxCommandAsync(`generate @nx-squeezer/workspace:codecov`);
 
         expect(() => checkFilesExist(codecovDotFile)).not.toThrow();
+
+        expect(parse(readFile(codecovDotFile))).toBe({
+          comment: {
+            layout: 'reach',
+            behavior: 'new',
+            require_changes: true,
+          },
+          coverage: {
+            range: '0..100',
+            round: 'nearest',
+            precision: 1,
+            status: {
+              patch: {
+                default: {
+                  target: '50%',
+                  threshold: '10%',
+                },
+              },
+              project: {
+                default: {
+                  target: '50%',
+                  threshold: '10%',
+                },
+              },
+            },
+          },
+        });
       },
       timeout
     );
