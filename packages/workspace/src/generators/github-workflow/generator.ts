@@ -1,8 +1,13 @@
-import * as path from 'path';
-
 import { formatFiles, generateFiles, names, Tree } from '@nrwl/devkit';
 
-import { addBadgeToReadme, addImplicitDependencyToNxConfig, addScriptToPackageJson, ciFile, getGitRepo } from '../core';
+import {
+  addBadgeToReadme,
+  addImplicitDependencyToNxConfig,
+  addScriptToPackageJson,
+  ciFile,
+  getGitRepo,
+  joinNormalize,
+} from '../core';
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchema) {
@@ -26,7 +31,7 @@ export default async function (tree: Tree, options: GitHubWorkflowGeneratorSchem
   });
   const templateOptions = { ...options, targets, tmpl: '' };
 
-  generateFiles(tree, path.join(__dirname, 'files'), '.github/workflows', templateOptions);
+  generateFiles(tree, joinNormalize(__dirname, 'files'), '.github/workflows', templateOptions);
   addImplicitDependencyToNxConfig(tree, { '.github/workflows/*.yml': '*' });
   addScriptToPackageJson(tree, 'nx', 'nx');
   addScriptToPackageJson(tree, 'lint:workspace', 'nx workspace-lint');

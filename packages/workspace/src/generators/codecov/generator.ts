@@ -27,8 +27,8 @@ export default async function (tree: Tree) {
       },
     });
   } else {
-    console.log(`Codecov needs to be called from a CI pipeline, but it could not be found.`);
-    console.log(`Try to generate it first using nx g @nx-squeezer/workspace:github-workflow`);
+    console.error(`Codecov needs to be called from a CI pipeline, but it could not be found.`);
+    console.error(`Try to generate it first using nx g @nx-squeezer/workspace:github-workflow`);
   }
 
   await formatFiles(tree);
