@@ -1,4 +1,4 @@
-import { ensureNxProject, readJson, runNxCommandAsync, uniq, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, readJson, runNxCommandAsync, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
@@ -34,17 +34,6 @@ describe('@nx-squeezer/workspace e2e', () => {
     // some work which can help clean up e2e leftovers
     runNxCommandAsync('reset');
   });
-
-  it(
-    'should create workspace',
-    async () => {
-      const project = uniq('workspace');
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:workspace ${project}`);
-      const result = await runNxCommandAsync(`build ${project}`);
-      expect(result.stdout).toContain('Executor ran');
-    },
-    timeout
-  );
 
   describe('prettier generator', () => {
     it(
