@@ -63,6 +63,8 @@ function addEsLintRecommendedRules(tree: Tree): void {
   env.browser = true;
   env.es2022 = true;
 
+  eslintConfig.env = env;
+
   writeEsLintConfig(tree, eslintConfig);
 }
 
