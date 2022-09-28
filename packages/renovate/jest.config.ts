@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'renovate',
   preset: '../../jest.preset.js',
@@ -12,4 +11,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: '../../coverage/packages/renovate',
+  coverageReporters: ['lcov'],
 };

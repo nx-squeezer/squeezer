@@ -18,7 +18,13 @@ coverage:
       workspace:
         flags:
           - workspace
+      renovate:
+        flags:
+          - renovate
 flags:
   workspace:
     paths:
       - packages/workspace
+  renovate:
+    paths:
+      - packages/renovate

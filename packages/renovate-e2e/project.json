@@ -9,6 +9,13 @@
         "target": "renovate:build",
         "jestConfig": "packages/renovate-e2e/jest.config.ts"
       }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/renovate-e2e/**/*.ts"]
+      }
     }
   },
   "tags": [],

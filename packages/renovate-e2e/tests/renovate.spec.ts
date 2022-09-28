@@ -1,4 +1,4 @@
-import { checkFilesExist, ensureNxProject, readJson, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
 
 describe('renovate e2e', () => {
   // Setting up individual workspaces per
@@ -17,28 +17,11 @@ describe('renovate e2e', () => {
     runNxCommandAsync('reset');
   });
 
-  it('should create renovate', async () => {
-    const project = uniq('renovate');
-    await runNxCommandAsync(`generate @nx-squeezer/renovate:renovate ${project}`);
-    const result = await runNxCommandAsync(`build ${project}`);
-    expect(result.stdout).toContain('Executor ran');
-  }, 120000);
-
   describe('--directory', () => {
     it('should create src in the specified directory', async () => {
       const project = uniq('renovate');
       await runNxCommandAsync(`generate @nx-squeezer/renovate:renovate ${project} --directory subdir`);
       expect(() => checkFilesExist(`libs/subdir/${project}/src/index.ts`)).not.toThrow();
-    }, 120000);
-  });
-
-  describe('--tags', () => {
-    it('should add tags to the project', async () => {
-      const projectName = uniq('renovate');
-      ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
-      await runNxCommandAsync(`generate @nx-squeezer/renovate:renovate ${projectName} --tags e2etag,e2ePackage`);
-      const project = readJson(`libs/${projectName}/project.json`);
-      expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
     }, 120000);
   });
 });

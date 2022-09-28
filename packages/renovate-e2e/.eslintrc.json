@@ -10,19 +10,12 @@
       "files": ["*.ts", "*.tsx"],
       "rules": {},
       "parserOptions": {
-        "project": ["packages/renovate/tsconfig.*?.json"]
+        "project": ["packages/renovate-e2e/tsconfig.*?.json"]
       }
     },
     {
       "files": ["*.js", "*.jsx"],
       "rules": {}
-    },
-    {
-      "files": ["./package.json", "./generators.json", "./executors.json"],
-      "parser": "jsonc-eslint-parser",
-      "rules": {
-        "@nrwl/nx/nx-plugin-checks": "error"
-      }
     }
   ]
 }

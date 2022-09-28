@@ -12,8 +12,14 @@ Create new library with [local plugins](https://nx.dev/plugin-features/create-yo
 nx g @nrwl/nx-plugin:plugin my-plugin --importPath @nx-squeezer/my-plugin
 ```
 
-### Running Local Generators
+After that, run the following commands to add additional tooling:
 
+```shell
+npm run g -- eslint
+npm run g -- codecov
+```
+
+### Running Local Generators
 
 ```shell
 npm run g -- generator

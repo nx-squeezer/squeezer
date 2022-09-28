@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'renovate-e2e',
   preset: '../../jest.preset.js',
