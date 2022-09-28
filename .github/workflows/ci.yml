@@ -175,4 +175,5 @@ jobs:
           targets: e2e
           affected: 'true'
           parallel: 'false'
-          nxCloud: 'true'
+          maxParallel: 1
+          nxCloud: 'false'
