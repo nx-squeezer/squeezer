@@ -17,7 +17,7 @@ export default async function (tree: Tree) {
 
 function setTsConfig(tree: Tree): boolean {
   if (!tree.exists(tsConfigFile)) {
-    console.log(`File ${tsConfigFile} not found`);
+    console.error(`File ${tsConfigFile} not found.`);
     return false;
   }
 
