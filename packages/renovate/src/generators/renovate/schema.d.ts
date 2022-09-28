@@ -1,5 +1,2 @@
-export interface RenovateGeneratorSchema {
-  name: string;
-  tags?: string;
-  directory?: string;
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface RenovateGeneratorSchema {}

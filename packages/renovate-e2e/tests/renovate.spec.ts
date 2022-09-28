@@ -1,4 +1,4 @@
-import { checkFilesExist, ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, runNxCommandAsync } from '@nrwl/nx-plugin/testing';
 
 describe('renovate e2e', () => {
   // Setting up individual workspaces per
@@ -7,22 +7,20 @@ describe('renovate e2e', () => {
   // consumes 1 workspace. The tests should each operate
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
-  beforeAll(() => {
-    runNxCommandAsync('reset');
+  beforeAll(async () => {
+    await runNxCommandAsync('reset');
     ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    runNxCommandAsync('reset');
+    await runNxCommandAsync('reset');
   });
 
   describe('--directory', () => {
     it('should create src in the specified directory', async () => {
-      const project = uniq('renovate');
-      await runNxCommandAsync(`generate @nx-squeezer/renovate:renovate ${project} --directory subdir`);
-      expect(() => checkFilesExist(`libs/subdir/${project}/src/index.ts`)).not.toThrow();
+      await expect(runNxCommandAsync(`generate @nx-squeezer/renovate:renovate`)).resolves.toBeTruthy();
     }, 120000);
   });
 });
