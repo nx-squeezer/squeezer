@@ -25,14 +25,15 @@ describe('@nx-squeezer/workspace e2e', () => {
   // consumes 1 workspace. The tests should each operate
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
-  beforeAll(() => {
+  beforeAll(async () => {
+    await runNxCommandAsync('reset');
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    runNxCommandAsync('reset');
+    await runNxCommandAsync('reset');
   });
 
   describe('prettier generator', () => {
