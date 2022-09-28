@@ -2,6 +2,8 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "renovate": "packages/renovate",
+    "renovate-e2e": "packages/renovate-e2e",
     "workspace": "packages/workspace",
     "workspace-e2e": "packages/workspace-e2e"
   }
