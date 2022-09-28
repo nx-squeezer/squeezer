@@ -7,8 +7,7 @@ describe('renovate e2e', () => {
   // consumes 1 workspace. The tests should each operate
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
-  beforeAll(async () => {
-    await runNxCommandAsync('reset');
+  beforeAll(() => {
     ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
   });
 
