@@ -18,9 +18,7 @@ describe('renovate e2e', () => {
     await runNxCommandAsync('reset');
   });
 
-  describe('--directory', () => {
-    it('should create src in the specified directory', async () => {
-      await expect(runNxCommandAsync(`generate @nx-squeezer/renovate:renovate`)).resolves.toBeTruthy();
-    }, 120000);
-  });
+  it('should execute successfully', async () => {
+    await expect(runNxCommandAsync(`generate @nx-squeezer/renovate:renovate`)).resolves.toBeTruthy();
+  }, 120000);
 });
