@@ -26,17 +26,13 @@ describe('@nx-squeezer/workspace e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
   beforeAll(async () => {
-    await wait(1000);
-    await runNxCommandAsync('reset');
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
-    await wait(1000);
   });
 
-  afterAll(async () => {
+  afterAll(() => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    await runNxCommandAsync('reset');
-    await wait(1000);
+    runNxCommandAsync('reset');
   });
 
   describe('prettier generator', () => {
@@ -214,7 +210,3 @@ describe('@nx-squeezer/workspace e2e', () => {
     });
   });
 });
-
-function wait(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
