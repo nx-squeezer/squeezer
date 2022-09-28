@@ -1,5 +1,7 @@
 import { ensureNxProject, runNxCommandAsync } from '@nrwl/nx-plugin/testing';
 
+jest.setTimeout(120_000);
+
 describe('renovate e2e', () => {
   // Setting up individual workspaces per
   // test can cause e2e runs to take a long time.
@@ -21,7 +23,7 @@ describe('renovate e2e', () => {
 
   it('should execute successfully', async () => {
     await expect(runNxCommandAsync(`generate @nx-squeezer/renovate:renovate`)).resolves.toBeTruthy();
-  }, 120000);
+  });
 });
 
 function wait(ms: number) {
