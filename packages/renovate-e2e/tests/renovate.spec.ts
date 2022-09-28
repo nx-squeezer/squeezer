@@ -10,6 +10,8 @@ describe('renovate e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
   beforeAll(async () => {
+    await wait(1000);
+    await runNxCommandAsync('reset');
     ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
     await wait(1000);
   });

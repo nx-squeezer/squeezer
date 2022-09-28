@@ -26,6 +26,8 @@ describe('@nx-squeezer/workspace e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
   beforeAll(async () => {
+    await wait(1000);
+    await runNxCommandAsync('reset');
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
     await wait(1000);
   });
