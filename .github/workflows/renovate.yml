@@ -15,6 +15,6 @@ jobs:
         env:
           NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
           LOG_LEVEL: debug
+          RENOVATE_CONFIG_FILE: config.js
         with:
-          configurationFile: ./config.js
           token: ${{ secrets.RENOVATE_TOKEN }}
