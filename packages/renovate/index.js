@@ -5,7 +5,7 @@ module.exports = {
   platform: 'github',
   includeForks: false,
   dependencyDashboard: true,
-  onboarding: false,
+  onboarding: true,
   autodiscover: false,
   allowCustomCrateRegistries: true,
   allowScripts: true,
