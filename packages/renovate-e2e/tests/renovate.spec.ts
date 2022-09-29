@@ -13,13 +13,13 @@ describe('renovate e2e', () => {
     ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    runNxCommandAsync('reset');
+    await runNxCommandAsync('reset');
   });
 
   it('should execute successfully', async () => {
-    expect(true).toBeTruthy();
+    await expect(runNxCommandAsync(`generate @nx-squeezer/renovate:renovate`)).resolves.toBeTruthy();
   });
 });

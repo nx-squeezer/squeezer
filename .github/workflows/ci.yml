@@ -176,4 +176,4 @@ jobs:
           affected: 'true'
           parallel: 'false'
           maxParallel: 1
-          nxCloud: 'false'
+          nxCloud: 'true'

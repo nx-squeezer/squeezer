@@ -29,10 +29,10 @@ describe('@nx-squeezer/workspace e2e', () => {
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
-    runNxCommandAsync('reset');
+    await runNxCommandAsync('reset');
   });
 
   describe('prettier generator', () => {
