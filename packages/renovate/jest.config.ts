@@ -1,5 +1,5 @@
 export default {
-  displayName: 'workspace-e2e',
+  displayName: 'renovate',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,5 +10,6 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/packages/workspace-e2e',
+  coverageDirectory: '../../coverage/packages/renovate',
+  coverageReporters: ['lcov'],
 };

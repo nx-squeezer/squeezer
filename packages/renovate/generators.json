@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "renovate",
+  "version": "0.0.1",
+  "generators": {
+    "renovate": {
+      "factory": "./src/generators/renovate/generator",
+      "schema": "./src/generators/renovate/schema.json",
+      "description": "renovate generator"
+    }
+  }
+}

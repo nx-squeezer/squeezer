@@ -152,7 +152,7 @@ export function updateProjectJestCoverage(tree: Tree, jestConfigPath: string) {
 
   for (let index = 0; index < jestLines.length; index++) {
     if (jestLines[index].includes('coverageDirectory')) {
-      jestLines[index] = `${jestLines[index]},`;
+      jestLines[index] = `${jestLines[index]},`.replace(/,,$/, ',');
       jestLines.splice(index + 1, 0, `"coverageReporters": ["lcov"],`);
       break;
     }

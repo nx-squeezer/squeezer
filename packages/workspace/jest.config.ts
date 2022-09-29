@@ -1,4 +1,3 @@
-/* eslint-disable */
 export default {
   displayName: 'workspace',
   preset: '../../jest.preset.js',

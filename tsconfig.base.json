@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@nx-squeezer/renovate": ["packages/renovate/src/index.ts"],
       "@nx-squeezer/workspace": ["packages/workspace/src/index.ts"]
     },
     "forceConsistentCasingInFileNames": true,

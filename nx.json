@@ -20,5 +20,11 @@
   "implicitDependencies": {
     ".github/workflows/*.yml": "*",
     ".codecov.yml": "*"
+  },
+  "generators": {
+    "@nrwl/js:library": {
+      "buildable": true,
+      "publishable": true
+    }
   }
 }
