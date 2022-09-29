@@ -8,7 +8,7 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/renovate",
-        "main": "packages/renovate/src/index.ts",
+        "main": "packages/renovate/index.js",
         "tsConfig": "packages/renovate/tsconfig.lib.json",
         "assets": [
           "packages/renovate/*.md",
@@ -30,6 +30,11 @@
           {
             "input": "./packages/renovate",
             "glob": "executors.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/renovate",
+            "glob": "index.js",
             "output": "."
           }
         ]
