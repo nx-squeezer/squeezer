@@ -1,4 +1,4 @@
 module.exports = {
-  ...require('./packages/renovate'),
+  ...require('../packages/renovate'),
   repositories: ['nx-squeezer/squeezer'],
 };
