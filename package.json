@@ -57,7 +57,7 @@
     "packages/**"
   ],
   "dependencies": {
-    "@swc/helpers": "~0.3.3",
-    "tslib": "^2.3.0"
+    "@swc/helpers": "~0.4.11",
+    "tslib": "^2.4.0"
   }
 }
