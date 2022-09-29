@@ -52,7 +52,7 @@ jobs:
           nx-key: build
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v2.2.7
+        uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Build
         uses: mansagroup/nrwl-nx-action@v2.1.0
@@ -87,7 +87,7 @@ jobs:
           nx-key: lint
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v2.2.7
+        uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Lint
         uses: mansagroup/nrwl-nx-action@v2.1.0
@@ -125,7 +125,7 @@ jobs:
           nx-key: test
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v2.2.7
+        uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Test
         uses: mansagroup/nrwl-nx-action@v2.1.0
@@ -167,7 +167,7 @@ jobs:
           nx-key: e2e
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v2.2.7
+        uses: nrwl/nx-set-shas@v3.0.0
 
       - name: e2e
         uses: mansagroup/nrwl-nx-action@v2.1.0
