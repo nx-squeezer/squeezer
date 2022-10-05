@@ -14,6 +14,7 @@ export * from './lint-workspace-task';
 export * from './nx';
 export * from './package-json';
 export * from './prettier';
+export * from './renovate';
 export * from './set';
 export * from './slash';
 export * from './tslint-config';

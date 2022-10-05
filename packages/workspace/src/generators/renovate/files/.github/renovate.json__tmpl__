@@ -1,0 +1,4 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base", ":label(dependencies)", "<% if (local) { %>local><%= gitRepoSlug %><% } else { %>github>nx-squeezer/squeezer<% } %>"<% if (assignee) { %>, ":assignee(<%= assignee %>)"<% } %>]
+}

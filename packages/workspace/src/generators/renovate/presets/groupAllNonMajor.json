@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "groupName": "all non-major dependencies",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": [".*"],
+      "matchDepTypes": ["dependencies", "peerDependencies", "optionalDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "bump"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "all non-major dev dependencies",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": [".*"],
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "bump"],
+      "semanticCommitType": "chore"
+    }
+  ]
+}
