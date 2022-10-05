@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import generator from './generator';
 
-describe('renovate generator', () => {
+describe('@nx-squeezer/workspace renovate generator', () => {
   let tree: Tree;
 
   beforeEach(() => {
