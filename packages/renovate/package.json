@@ -1,6 +1,0 @@
-{
-  "name": "@nx-squeezer/renovate",
-  "version": "0.0.1",
-  "main": "index.js",
-  "generators": "./generators.json"
-}

@@ -27,6 +27,11 @@
       "factory": "./src/generators/codecov/generator",
       "schema": "./src/generators/codecov/schema.json",
       "description": "Configures Codecov"
+    },
+    "renovate": {
+      "factory": "./src/generators/renovate/generator",
+      "schema": "./src/generators/renovate/schema.json",
+      "description": "renovate generator"
     }
   }
 }
