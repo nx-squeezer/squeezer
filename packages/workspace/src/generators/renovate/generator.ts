@@ -38,7 +38,8 @@ export default async function (tree: Tree, options: RenovateGeneratorSchema) {
     throw new Error(`Renovate needs a GitHub workflow CI file, none found at: ${ciFile}`);
   }
 
-  const ci = parseDocument(tree.read(ciFile)?.toString() ?? '');
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const ci = parseDocument(tree.read(ciFile)!.toString());
   const pushBranches: YAMLSeq<Scalar> = ci.getIn(['on', 'push', 'branches']) as YAMLSeq<Scalar>;
   if (!pushBranches.items.map((item) => item.value).includes(renovateBranch)) {
     pushBranches.add(new Scalar(renovateBranch));
