@@ -12,3 +12,4 @@ export const renovatePresets = [
   'npm.json',
   'nrwlWorkspace.json',
 ];
+export const renovateBranch = 'renovate-github/**';
