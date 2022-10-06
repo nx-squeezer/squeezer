@@ -14,6 +14,7 @@ import {
   writeEsLintConfig,
 } from '../core';
 import generator from './generator';
+import schematic from './generator.compat';
 import { prettierDefaultConfig } from './prettier-default-config';
 
 jest.mock('../core', () => ({
@@ -41,6 +42,10 @@ describe('@nx-squeezer/workspace prettier generator', () => {
 
     const eslintConfig = readEsLintConfig(tree);
     expect(eslintConfig).toBeDefined();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({})).toBe('function');
   });
 
   it('should run successfully even if there was no previous prettier config', async () => {

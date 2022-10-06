@@ -3,6 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { getGitRepoSlug, readmeFile } from '../core';
 import generator from './generator';
+import schematic from './generator.compat';
 
 jest.mock('../core/get-git-repo');
 
@@ -19,6 +20,10 @@ describe('@nx-squeezer/workspace contributors generator', () => {
 
   it('should run successfully', async () => {
     await generator(tree);
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({})).toBe('function');
   });
 
   it('should fail if Readme does not exist', async () => {

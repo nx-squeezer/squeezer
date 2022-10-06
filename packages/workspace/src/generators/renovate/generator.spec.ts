@@ -5,6 +5,7 @@ import { parse, stringify } from 'yaml';
 import { ciFile, renovateBranch, renovateCiFile, renovateConfigFile, renovateFile, renovatePresets } from '../core';
 import { getGitRepoSlug } from '../core/get-git-repo';
 import generator from './generator';
+import schematic from './generator.compat';
 
 jest.mock('../core/get-git-repo');
 
@@ -22,6 +23,10 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should run successfully', async () => {
     await generator(tree, { force: true, useNxCloud: true, local: true });
     expect(tree.exists(renovateCiFile)).toBeTruthy();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({ force: true, useNxCloud: true, local: true })).toBe('function');
   });
 
   it('should skip execution if a Renovate CI workflow already exists', async () => {

@@ -6,6 +6,7 @@ import { ciFile, existsGitHubCiWorkflow, readmeFile, readPackageJson } from '../
 import { getGitRepo } from '../core/get-git-repo';
 import { nxConfigFile } from '../core/nx';
 import generator from './generator';
+import schematic from './generator.compat';
 
 jest.mock('../core/get-git-repo');
 
@@ -23,6 +24,10 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
     await generator(tree, { branch: 'main', useNxCloud: true, force: true });
 
     expect(existsGitHubCiWorkflow(tree)).toBeTruthy();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({ branch: 'main', useNxCloud: true, force: true })).toBe('function');
   });
 
   it('should skip execution if a GitHub CI workflow already exists', async () => {

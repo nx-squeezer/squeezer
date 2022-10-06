@@ -5,6 +5,7 @@ import { parse, stringify } from 'yaml';
 
 import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../core';
 import generator from './generator';
+import schematic from './generator.compat';
 
 jest.mock('node-fetch-commonjs');
 jest.mock('../core/get-git-repo');
@@ -26,6 +27,10 @@ describe('@nx-squeezer/workspace codecov generator', () => {
     const codecov = readCodecov(tree);
 
     expect(codecov).toBeDefined();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({})).toBe('function');
   });
 
   it('should declare the implicit dependency in nx.json', async () => {

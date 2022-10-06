@@ -3,6 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { eslintConfigFile, lintWorkspaceTask, readEsLintConfig, writeEsLintConfig } from '../core';
 import generator from './generator';
+import schematic from './generator.compat';
 
 const timeout = 10_000;
 
@@ -31,6 +32,10 @@ describe('@nx-squeezer/workspace eslint generator', () => {
     const eslintConfig = readEsLintConfig(tree);
 
     expect(eslintConfig).toBeDefined();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({})).toBe('function');
   });
 
   it('should run tasks', async () => {
