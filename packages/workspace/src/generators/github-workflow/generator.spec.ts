@@ -311,7 +311,7 @@ const ciFileContent = () => ({
             targets: 'e2e',
             affected: 'true',
             parallel: 'true',
-            maxParallel: 3,
+            maxParallel: 1,
             nxCloud: 'true',
           },
         },
