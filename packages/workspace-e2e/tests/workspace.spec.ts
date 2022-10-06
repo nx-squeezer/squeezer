@@ -14,6 +14,10 @@ import {
   prettierPlugin,
   tsConfigDefault,
   tsConfigFile,
+  renovateCiFile,
+  renovateConfigFile,
+  renovatePresets,
+  renovateFile,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -206,6 +210,22 @@ describe('@nx-squeezer/workspace e2e', () => {
             },
           },
         },
+      });
+    });
+  });
+
+  describe('renovate workflow generator', () => {
+    it('should setup Renovate CI workflow and add presets', async () => {
+      await runNxCommandAsync(
+        `generate @nx-squeezer/workspace:renovate --useNxCloud --local --assignee=samuelfernandez`
+      );
+
+      expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
+      expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
+      expect(() => checkFilesExist(renovateFile)).not.toThrow();
+
+      renovatePresets.forEach((preset) => {
+        expect(() => checkFilesExist(preset)).not.toThrow();
       });
     });
   });
