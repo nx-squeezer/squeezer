@@ -1,8 +1,8 @@
 import { Tree, readJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
-import { parse } from 'yaml';
+import { parse, stringify } from 'yaml';
 
-import { renovateCiFile, renovateConfigFile, renovateFile, renovatePresets } from '../core';
+import { ciFile, renovateBranch, renovateCiFile, renovateConfigFile, renovateFile, renovatePresets } from '../core';
 import { getGitRepoSlug } from '../core/get-git-repo';
 import generator from './generator';
 
@@ -13,6 +13,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
+    tree.write(ciFile, stringify({ on: { push: { branches: ['main'] } } }));
     jest.spyOn(console, 'log').mockImplementation(() => null);
     jest.spyOn(console, 'error').mockImplementation(() => null);
     (getGitRepoSlug as jest.Mock).mockReturnValue('test/test');
@@ -50,7 +51,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should fail if repo can not be resolved', async () => {
     (getGitRepoSlug as jest.Mock).mockReturnValue(null);
 
-    expect(async () => await generator(tree, { force: false, useNxCloud: true, local: true })).rejects.toEqual(
+    await expect(async () => await generator(tree, { force: false, useNxCloud: true, local: true })).rejects.toEqual(
       new Error(`Could not identify GitHub repo slug.`)
     );
   });
@@ -94,6 +95,28 @@ describe('@nx-squeezer/workspace renovate generator', () => {
       expect(tree.exists(preset)).toBeFalsy();
     });
   });
+
+  it('should fail if can not find GitHub CI file', async () => {
+    tree.delete(ciFile);
+
+    await expect(async () => await generator(tree, { force: false, useNxCloud: true, local: true })).rejects.toEqual(
+      new Error(`Renovate needs a GitHub workflow CI file, none found at: ${ciFile}`)
+    );
+  });
+
+  it('should add renovate branch to push branches', async () => {
+    await generator(tree, { force: false, useNxCloud: true, local: false });
+
+    expect(parse(tree.read(ciFile)?.toString() ?? '').on.push.branches).toContain(renovateBranch);
+  });
+
+  it('should add renovate branch to push branches being idempotent', async () => {
+    await generator(tree, { force: true, useNxCloud: true, local: false });
+    await generator(tree, { force: true, useNxCloud: true, local: false });
+
+    const ci = parse(tree.read(ciFile)?.toString() ?? '');
+    expect(ci.on.push.branches.filter((branch: string) => branch === renovateBranch).length).toEqual(1);
+  });
 });
 
 const renovateFileContent = () => ({
@@ -110,11 +133,11 @@ const renovateFileContent = () => ({
       steps: [
         {
           name: 'Checkout repo',
-          uses: 'actions/checkout@v3.0.2',
+          uses: 'actions/checkout@v3.1.0',
         },
         {
           name: 'Self-hosted Renovate',
-          uses: 'renovatebot/github-action@v32.213.0',
+          uses: 'renovatebot/github-action@v32.217.0',
           env: {
             LOG_LEVEL: 'debug',
             NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',

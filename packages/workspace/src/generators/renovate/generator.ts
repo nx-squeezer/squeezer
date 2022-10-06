@@ -1,6 +1,7 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
+import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
-import { getGitRepoSlug, joinNormalize, renovateCiFile } from '../core';
+import { ciFile, getGitRepoSlug, joinNormalize, renovateBranch, renovateCiFile } from '../core';
 import { RenovateGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: RenovateGeneratorSchema) {
@@ -22,12 +23,27 @@ export default async function (tree: Tree, options: RenovateGeneratorSchema) {
     throw new Error(`Could not identify GitHub repo slug.`);
   }
 
+  // Generate files
+
   const templateOptions = { ...options, gitRepoSlug, assignee: options.assignee ?? '', tmpl: '' };
   generateFiles(tree, joinNormalize(__dirname, 'files'), '.', templateOptions);
 
   if (options.local) {
     generateFiles(tree, joinNormalize(__dirname, 'presets'), '.', templateOptions);
   }
+
+  // Update CI
+
+  if (!tree.exists(ciFile)) {
+    throw new Error(`Renovate needs a GitHub workflow CI file, none found at: ${ciFile}`);
+  }
+
+  const ci = parseDocument(tree.read(ciFile)?.toString() ?? '');
+  const pushBranches: YAMLSeq<Scalar> = ci.getIn(['on', 'push', 'branches']) as YAMLSeq<Scalar>;
+  if (!pushBranches.items.map((item) => item.value).includes(renovateBranch)) {
+    pushBranches.add(new Scalar(renovateBranch));
+  }
+  tree.write(ciFile, stringify(ci));
 
   await formatFiles(tree);
 }
