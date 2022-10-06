@@ -1,7 +1,8 @@
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
-import { addBadgeToReadme, readmeFile } from './add-badge-to-readme';
+import { addBadgeToReadme } from './add-badge-to-readme';
+import { readmeFile } from './readme';
 
 describe('@nx-squeezer/workspace addBadgeToReadme', () => {
   let tree: Tree;

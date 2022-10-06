@@ -31,7 +31,12 @@
     "renovate": {
       "factory": "./src/generators/renovate/generator",
       "schema": "./src/generators/renovate/schema.json",
-      "description": "renovate generator"
+      "description": "Configures Renovate"
+    },
+    "contributors": {
+      "factory": "./src/generators/contributors/generator",
+      "schema": "./src/generators/contributors/schema.json",
+      "description": "Adds contributors section to Readme.md"
     }
   }
 }
