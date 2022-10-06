@@ -2,8 +2,7 @@ import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse } from 'yaml';
 
-import { ciFile, existsGitHubCiWorkflow, readPackageJson } from '../core';
-import { readmeFile } from '../core/add-badge-to-readme';
+import { ciFile, existsGitHubCiWorkflow, readmeFile, readPackageJson } from '../core';
 import { getGitRepo } from '../core/get-git-repo';
 import { nxConfigFile } from '../core/nx';
 import generator from './generator';

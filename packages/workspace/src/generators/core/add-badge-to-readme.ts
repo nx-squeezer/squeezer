@@ -1,6 +1,7 @@
 import { Tree } from '@nrwl/devkit';
 
-export const readmeFile = 'README.md';
+import { readmeFile } from './readme';
+
 const titleRegex = /^#\s+/;
 const badgesRegex = /^\s*(\[!\[.+\]\(.+\)\]\(.+\)\s*)+/;
 

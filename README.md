@@ -26,3 +26,7 @@ npm run g -- generator
 ```
 
 > Workaround due to [Nx issue](https://github.com/nrwl/nx/issues/9823)
+
+## Contributors
+
+[![contributors](https://contrib.rocks/image?repo=nx-squeezer/squeezer)](https://github.com/nx-squeezer/squeezer/graphs/contributors)

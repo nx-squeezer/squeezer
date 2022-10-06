@@ -18,6 +18,7 @@ import {
   renovateConfigFile,
   renovatePresets,
   renovateFile,
+  readmeFile,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -227,6 +228,16 @@ describe('@nx-squeezer/workspace e2e', () => {
       renovatePresets.forEach((preset) => {
         expect(() => checkFilesExist(preset)).not.toThrow();
       });
+    });
+  });
+
+  describe('contributors workflow generator', () => {
+    it('should add contributors image to readme', async () => {
+      await runNxCommandAsync(`generate @nx-squeezer/workspace:contributors`);
+
+      const readme = readFile(readmeFile);
+
+      expect(readme).toContain(`## Contributors`);
     });
   });
 });
