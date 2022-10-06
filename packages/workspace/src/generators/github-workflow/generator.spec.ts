@@ -27,7 +27,7 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof schematic({ branch: 'main', useNxCloud: true, force: true })).toBe('function');
   });
 
   it('should skip execution if a GitHub CI workflow already exists', async () => {

@@ -26,7 +26,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof schematic({ force: true, useNxCloud: true, local: true })).toBe('function');
   });
 
   it('should skip execution if a Renovate CI workflow already exists', async () => {
