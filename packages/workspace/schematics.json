@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "workspace",
+  "version": "0.0.1",
+  "generators": {
+    "prettier": {
+      "factory": "./src/generators/prettier/generator.compat",
+      "schema": "./src/generators/prettier/schema.json",
+      "description": "Configure Prettier"
+    },
+    "tsconfig": {
+      "factory": "./src/generators/tsconfig/generator.compat",
+      "schema": "./src/generators/tsconfig/schema.json",
+      "description": "Configures tsconfig.base.json"
+    },
+    "github-workflow": {
+      "factory": "./src/generators/github-workflow/generator.compat",
+      "schema": "./src/generators/github-workflow/schema.json",
+      "description": "Configures GitHub CI Workflow"
+    },
+    "eslint": {
+      "factory": "./src/generators/eslint/generator.compat",
+      "schema": "./src/generators/eslint/schema.json",
+      "description": "Configures ESLint with additional rules"
+    },
+    "codecov": {
+      "factory": "./src/generators/codecov/generator.compat",
+      "schema": "./src/generators/codecov/schema.json",
+      "description": "Configures Codecov"
+    },
+    "renovate": {
+      "factory": "./src/generators/renovate/generator.compat",
+      "schema": "./src/generators/renovate/schema.json",
+      "description": "Configures Renovate"
+    },
+    "contributors": {
+      "factory": "./src/generators/contributors/generator.compat",
+      "schema": "./src/generators/contributors/schema.json",
+      "description": "Adds contributors section to Readme.md"
+    }
+  }
+}

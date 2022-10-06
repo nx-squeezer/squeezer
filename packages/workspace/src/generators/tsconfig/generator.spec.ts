@@ -4,6 +4,7 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 
 import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../core';
 import generator from './generator';
+import schematic from './generator.compat';
 
 jest.mock('../core', () => ({
   ...jest.requireActual('../core'),
@@ -25,6 +26,10 @@ describe('@nx-squeezer/workspace tsconfig generator', () => {
     const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tree, tsConfigFile);
 
     expect(tsConfig).toBeDefined();
+  });
+
+  it('should provide a schematic', async () => {
+    expect(typeof schematic({})).toBe('function');
   });
 
   it('should skip execution if tsconfig file does not exist', async () => {
