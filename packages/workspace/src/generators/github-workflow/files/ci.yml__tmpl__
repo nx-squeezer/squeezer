@@ -60,7 +60,7 @@ jobs:
           targets: <%= target.name %>
           affected: 'true'
           parallel: 'true'
-          maxParallel: 3<% if (useNxCloud) { %>
+          maxParallel: <% if (target.name === 'e2e') { %>1<% } else { %>3<% } %><% if (useNxCloud) { %>
           nxCloud: 'true'<% } %><% if (target.name === 'lint') { %>
 
       - name: lint workspace
