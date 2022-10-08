@@ -15,6 +15,7 @@ export * from './nx';
 export * from './package-json';
 export * from './prettier';
 export * from './readme';
+export * from './renovate-config-validator-task';
 export * from './renovate';
 export * from './set';
 export * from './slash';

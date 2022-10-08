@@ -1,7 +1,14 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
-import { ciFile, getGitRepoSlug, joinNormalize, renovateBranch, renovateCiFile } from '../core';
+import {
+  ciFile,
+  getGitRepoSlug,
+  joinNormalize,
+  renovateBranch,
+  renovateCiFile,
+  renovateConfigValidatorTask,
+} from '../core';
 import { RenovateGeneratorSchema } from './schema';
 
 export default async function (tree: Tree, options: RenovateGeneratorSchema) {
@@ -47,4 +54,8 @@ export default async function (tree: Tree, options: RenovateGeneratorSchema) {
   tree.write(ciFile, stringify(ci));
 
   await formatFiles(tree);
+
+  return () => {
+    renovateConfigValidatorTask(tree);
+  };
 }
