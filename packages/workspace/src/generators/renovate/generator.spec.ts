@@ -2,12 +2,25 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse, stringify } from 'yaml';
 
-import { ciFile, renovateBranch, renovateCiFile, renovateConfigFile, renovateFile, renovatePresets } from '../core';
+import {
+  ciFile,
+  renovateBranch,
+  renovateCiFile,
+  renovateConfigFile,
+  renovateConfigValidatorTask,
+  renovateFile,
+  renovatePresets,
+} from '../core';
 import { getGitRepoSlug } from '../core/get-git-repo';
 import generator from './generator';
 import schematic from './generator.compat';
 
 jest.mock('../core/get-git-repo');
+
+jest.mock('../core', () => ({
+  ...jest.requireActual('../core'),
+  renovateConfigValidatorTask: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace renovate generator', () => {
   let tree: Tree;
@@ -27,6 +40,16 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
   it('should provide a schematic', async () => {
     expect(typeof schematic({ force: true, useNxCloud: true, local: true })).toBe('function');
+  });
+
+  it('should run tasks', async () => {
+    const tasks = await generator(tree, { force: true, useNxCloud: true, local: true });
+
+    expect(tasks).toBeTruthy();
+
+    tasks?.();
+
+    expect(renovateConfigValidatorTask).toHaveBeenCalled();
   });
 
   it('should skip execution if a Renovate CI workflow already exists', async () => {
