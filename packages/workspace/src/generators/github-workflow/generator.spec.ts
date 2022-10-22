@@ -161,16 +161,15 @@ const ciFileContent = () => ({
         },
         {
           name: 'Nx Set SHAs',
-          uses: 'nrwl/nx-set-shas@v2.2.7',
+          uses: 'nrwl/nx-set-shas@v3.0.0',
         },
         {
           name: 'Build',
-          uses: 'mansagroup/nrwl-nx-action@v2.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
           with: {
             targets: 'build',
             affected: 'true',
-            parallel: 'true',
-            maxParallel: 3,
+            parallel: 3,
             nxCloud: 'true',
           },
         },
@@ -208,16 +207,15 @@ const ciFileContent = () => ({
         },
         {
           name: 'Nx Set SHAs',
-          uses: 'nrwl/nx-set-shas@v2.2.7',
+          uses: 'nrwl/nx-set-shas@v3.0.0',
         },
         {
           name: 'Lint',
-          uses: 'mansagroup/nrwl-nx-action@v2.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
           with: {
             targets: 'lint',
             affected: 'true',
-            parallel: 'true',
-            maxParallel: 3,
+            parallel: 3,
             nxCloud: 'true',
           },
         },
@@ -259,16 +257,15 @@ const ciFileContent = () => ({
         },
         {
           name: 'Nx Set SHAs',
-          uses: 'nrwl/nx-set-shas@v2.2.7',
+          uses: 'nrwl/nx-set-shas@v3.0.0',
         },
         {
           name: 'Test',
-          uses: 'mansagroup/nrwl-nx-action@v2.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
           with: {
             targets: 'test',
             affected: 'true',
-            parallel: 'true',
-            maxParallel: 3,
+            parallel: 3,
             nxCloud: 'true',
           },
         },
@@ -306,16 +303,15 @@ const ciFileContent = () => ({
         },
         {
           name: 'Nx Set SHAs',
-          uses: 'nrwl/nx-set-shas@v2.2.7',
+          uses: 'nrwl/nx-set-shas@v3.0.0',
         },
         {
           name: 'e2e',
-          uses: 'mansagroup/nrwl-nx-action@v2.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
           with: {
             targets: 'e2e',
             affected: 'true',
-            parallel: 'true',
-            maxParallel: 1,
+            parallel: 1,
             nxCloud: 'true',
           },
         },

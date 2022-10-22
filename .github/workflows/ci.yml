@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NX_RUN_GROUP: ${{ github.run_id }}
-
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
 
     steps:
@@ -56,12 +55,11 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Build
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: build
           affected: 'true'
-          parallel: 'true'
-          maxParallel: 3
+          parallel: 3
           nxCloud: 'true'
 
   lint:
@@ -91,12 +89,11 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Lint
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: lint
           affected: 'true'
-          parallel: 'true'
-          maxParallel: 3
+          parallel: 3
           nxCloud: 'true'
 
       - name: lint workspace
@@ -129,12 +126,11 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.0
 
       - name: Test
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: test
           affected: 'true'
-          parallel: 'true'
-          maxParallel: 3
+          parallel: 3
           nxCloud: 'true'
 
       - name: Codecov
@@ -171,10 +167,9 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.0
 
       - name: e2e
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.1.0
         with:
           targets: e2e
           affected: 'true'
-          parallel: 'true'
-          maxParallel: 1
+          parallel: 1
           nxCloud: 'true'
