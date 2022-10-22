@@ -108,7 +108,6 @@ const ciFileContent = () => ({
       name: 'NPM',
       'runs-on': 'ubuntu-latest',
       env: {
-        NX_RUN_GROUP: '${{ github.run_id }}',
         NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',
       },
       steps: [
@@ -134,7 +133,6 @@ const ciFileContent = () => ({
       needs: ['npm'],
       'runs-on': 'ubuntu-latest',
       env: {
-        NX_RUN_GROUP: '${{ github.run_id }}',
         NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',
       },
       steps: [
@@ -180,7 +178,6 @@ const ciFileContent = () => ({
       needs: ['npm'],
       'runs-on': 'ubuntu-latest',
       env: {
-        NX_RUN_GROUP: '${{ github.run_id }}',
         NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',
       },
       steps: [
@@ -230,7 +227,6 @@ const ciFileContent = () => ({
       needs: ['npm'],
       'runs-on': 'ubuntu-latest',
       env: {
-        NX_RUN_GROUP: '${{ github.run_id }}',
         NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',
       },
       steps: [
@@ -276,7 +272,6 @@ const ciFileContent = () => ({
       needs: ['npm'],
       'runs-on': 'ubuntu-latest',
       env: {
-        NX_RUN_GROUP: '${{ github.run_id }}',
         NX_CLOUD_AUTH_TOKEN: '${{ secrets.NX_CLOUD_AUTH_TOKEN }}',
       },
       steps: [

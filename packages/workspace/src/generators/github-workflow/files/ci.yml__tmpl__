@@ -11,8 +11,7 @@ jobs:
   npm:
     name: NPM
     runs-on: ubuntu-latest
-    env:
-      NX_RUN_GROUP: ${{ github.run_id }}<% if (useNxCloud) { %>
+    env:<% if (useNxCloud) { %>
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}<% } %>
 
     steps:
@@ -33,7 +32,6 @@ jobs:
     needs: [ npm ]
     runs-on: ubuntu-latest
     env:
-      NX_RUN_GROUP: ${{ github.run_id }}
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
