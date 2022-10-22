@@ -2,7 +2,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "groupName": "client tooling",
+      "groupName": "tooling",
       "matchManagers": ["npm"],
       "matchPackagePatterns": [
         "^eslint",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "groupName": "client tooling",
+      "groupName": "tooling",
       "matchManagers": ["npm"],
       "matchPackagePatterns": [
         "^eslint",
