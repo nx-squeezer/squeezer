@@ -3,7 +3,7 @@ export const renovateConfigFile = '.github/renovate-config.js';
 export const renovateFile = '.github/renovate.json';
 export const renovatePresets = [
   'angularWorkspace.json',
-  'clientTooling.json',
+  'tooling.json',
   'default.json',
   'githubActions.json',
   'gitmoji.json',
