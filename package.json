@@ -58,6 +58,6 @@
   ],
   "dependencies": {
     "@swc/helpers": "0.4.12",
-    "tslib": "2.4.0"
+    "tslib": "2.4.1"
   }
 }
