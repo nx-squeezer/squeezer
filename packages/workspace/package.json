@@ -6,14 +6,14 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^15.0.4",
+    "@nrwl/devkit": "^15.0.10",
     "@schemastore/eslintrc": "^0.0.6",
     "@schemastore/package": "^0.0.6",
     "@schemastore/prettierrc": "^0.0.9",
     "@schemastore/tsconfig": "^0.0.9",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
-    "renovate": "^34.9.1",
+    "renovate": "^34.18.0",
     "yaml": "^2.1.3"
   }
 }
