@@ -10,10 +10,16 @@
     "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g"
   },
   "private": true,
+  "dependencies": {
+    "@nrwl/devkit": "15.0.10",
+    "node-fetch-commonjs": "3.2.4",
+    "prettier": "2.7.1",
+    "renovate": "34.19.3",
+    "yaml": "2.1.3"
+  },
   "devDependencies": {
     "@delagen/eslint-plugin-deprecation": "1.3.2",
     "@nrwl/cli": "15.0.10",
-    "@nrwl/devkit": "15.0.10",
     "@nrwl/eslint-plugin-nx": "15.0.10",
     "@nrwl/jest": "15.0.10",
     "@nrwl/js": "15.0.10",
@@ -28,6 +34,7 @@
     "@swc-node/register": "1.5.4",
     "@swc/cli": "0.1.57",
     "@swc/core": "1.3.14",
+    "@swc/helpers": "0.4.12",
     "@types/jest": "29.2.2",
     "@types/js-yaml": "4.0.5",
     "@types/node": "18.11.9",
@@ -44,20 +51,14 @@
     "jest": "29.2.2",
     "jest-environment-jsdom": "29.2.2",
     "jsonc-eslint-parser": "2.1.0",
-    "node-fetch-commonjs": "3.2.4",
     "nx": "15.0.10",
     "prettier": "2.7.1",
-    "renovate": "34.19.3",
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",
-    "typescript": "4.8.4",
-    "yaml": "2.1.3"
+    "tslib": "2.4.1",
+    "typescript": "4.8.4"
   },
   "workspaces": [
     "packages/**"
-  ],
-  "dependencies": {
-    "@swc/helpers": "0.4.12",
-    "tslib": "2.4.1"
-  }
+  ]
 }
