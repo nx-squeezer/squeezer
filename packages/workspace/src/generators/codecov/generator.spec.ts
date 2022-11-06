@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 import { parse, stringify } from 'yaml';
 
-import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../core';
+import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../lib';
 import { codecovGenerator } from './generator';
 import { codecovSchematic } from './generator.compat';
 

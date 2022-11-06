@@ -2,7 +2,7 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
-import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../core';
+import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../lib';
 import { tsConfigGenerator } from './generator';
 import { tsConfigSchematic } from './generator.compat';
 

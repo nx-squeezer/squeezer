@@ -13,7 +13,7 @@ import {
   eslintConfigFile,
   EsLintConfigurationOverrideRule,
   joinNormalize,
-} from '../core';
+} from '../lib';
 import { EsLintGeneratorSchema } from './schema';
 
 export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {

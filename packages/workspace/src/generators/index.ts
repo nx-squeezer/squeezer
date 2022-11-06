@@ -1,6 +1,6 @@
 export * from './codecov';
 export * from './contributors';
-export * from './core';
+export * from './lib';
 export * from './eslint';
 export * from './github-workflow';
 export * from './prettier';

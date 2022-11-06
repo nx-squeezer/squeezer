@@ -12,7 +12,7 @@ import {
   prettierConfigJsonFile,
   prettierConfigFile,
   eslintPluginPrettier,
-} from '../core';
+} from '../lib';
 import { prettierDefaultConfig } from './prettier-default-config';
 
 export async function prettierGenerator(tree: Tree) {

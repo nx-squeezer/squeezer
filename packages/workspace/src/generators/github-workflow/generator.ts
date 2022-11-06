@@ -7,7 +7,7 @@ import {
   ciFile,
   getGitRepo,
   joinNormalize,
-} from '../core';
+} from '../lib';
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
 export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {

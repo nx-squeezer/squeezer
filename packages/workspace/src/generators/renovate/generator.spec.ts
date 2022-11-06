@@ -10,8 +10,8 @@ import {
   renovateConfigValidatorTask,
   renovateFile,
   renovatePresets,
-} from '../core';
-import { getGitRepoSlug } from '../core/get-git-repo';
+} from '../lib';
+import { getGitRepoSlug } from '../lib/get-git-repo';
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
 

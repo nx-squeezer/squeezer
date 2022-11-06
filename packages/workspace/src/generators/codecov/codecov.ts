@@ -1,7 +1,7 @@
 import { getProjects, ProjectConfiguration, Tree, updateProjectConfiguration } from '@nrwl/devkit';
 import { parse, stringify } from 'yaml';
 
-import { joinNormalize } from './join-normalize';
+import { joinNormalize } from '../lib';
 
 export const codecovFile = 'codecov.yml';
 export const codecovDotFile = '.codecov.yml';

@@ -1,7 +1,7 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { getGitRepoSlug, readmeFile } from '../core';
+import { getGitRepoSlug, readmeFile } from '../lib';
 import { contributorsGenerator } from './generator';
 import { contributorsSchematic } from './generator.compat';
 

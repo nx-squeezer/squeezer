@@ -12,7 +12,7 @@ import {
   prettierPlugin,
   readEsLintConfig,
   writeEsLintConfig,
-} from '../core';
+} from '../lib';
 import { prettierGenerator } from './generator';
 import { prettierSchematic } from './generator.compat';
 import { prettierDefaultConfig } from './prettier-default-config';

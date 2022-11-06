@@ -6,11 +6,9 @@ import {
   addImplicitDependencyToNxConfig,
   addGitHubCiJobStep,
   existsGitHubCiWorkflow,
-  getCodecovFile,
   getGitRepoSlug,
-  readRawCodecov,
-  writeProjectsToCodecov,
-} from '../core';
+} from '../lib';
+import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
 export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
