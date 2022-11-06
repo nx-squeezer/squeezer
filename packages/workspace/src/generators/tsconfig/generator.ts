@@ -3,7 +3,7 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 
 import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../core';
 
-export default async function (tree: Tree) {
+export async function tsConfigGenerator(tree: Tree) {
   if (!setTsConfig(tree)) {
     return;
   }

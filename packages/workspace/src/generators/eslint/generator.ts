@@ -16,7 +16,7 @@ import {
 } from '../core';
 import { EsLintGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: EsLintGeneratorSchema) {
+export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {
     addEsLintRecommendedRules(tree);
   }

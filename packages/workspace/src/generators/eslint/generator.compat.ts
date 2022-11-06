@@ -1,5 +1,5 @@
 import { convertNxGenerator } from '@nrwl/devkit';
 
-import generator from './generator';
+import { eslintGenerator } from './generator';
 
-export default convertNxGenerator(generator);
+export const eslintSchematic = convertNxGenerator(eslintGenerator);

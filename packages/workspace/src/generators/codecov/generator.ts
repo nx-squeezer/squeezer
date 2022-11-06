@@ -12,7 +12,7 @@ import {
   writeProjectsToCodecov,
 } from '../core';
 
-export default async function (tree: Tree) {
+export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
   addImplicitDependencyToNxConfig(tree, { [getCodecovFile(tree)]: '*' });
 

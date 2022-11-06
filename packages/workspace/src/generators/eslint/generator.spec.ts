@@ -2,8 +2,8 @@ import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { eslintConfigFile, lintWorkspaceTask, readEsLintConfig, writeEsLintConfig } from '../core';
-import generator from './generator';
-import schematic from './generator.compat';
+import { eslintGenerator } from './generator';
+import { eslintSchematic } from './generator.compat';
 
 const timeout = 10_000;
 
@@ -27,7 +27,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree, {});
+    await eslintGenerator(tree, {});
 
     const eslintConfig = readEsLintConfig(tree);
 
@@ -35,11 +35,11 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof eslintSchematic({})).toBe('function');
   });
 
   it('should run tasks', async () => {
-    const tasks = await generator(tree, {});
+    const tasks = await eslintGenerator(tree, {});
 
     tasks();
 
@@ -48,7 +48,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should apply eslint:recommended', async () => {
-    await generator(tree, { eslintRecommended: true });
+    await eslintGenerator(tree, { eslintRecommended: true });
 
     const eslintConfig = readEsLintConfig(tree);
 
@@ -61,7 +61,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should apply sonarjs/recommended', async () => {
-    await generator(tree, { sonarJs: true });
+    await eslintGenerator(tree, { sonarJs: true });
 
     const eslintConfig = readEsLintConfig(tree);
 
@@ -74,7 +74,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   });
 
   it('should apply unused imports', async () => {
-    await generator(tree, { unusedImports: true });
+    await eslintGenerator(tree, { unusedImports: true });
 
     const eslintConfig = readEsLintConfig(tree);
 
@@ -92,7 +92,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
     async () => {
       addLibraries();
 
-      await generator(tree, { typescriptRecommended: true });
+      await eslintGenerator(tree, { typescriptRecommended: true });
 
       const eslintConfig = readEsLintConfig(tree);
 
@@ -120,7 +120,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
     async () => {
       addLibraries();
 
-      await generator(tree, { deprecation: true });
+      await eslintGenerator(tree, { deprecation: true });
 
       const eslintConfig = readEsLintConfig(tree);
 
@@ -142,7 +142,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   it(
     'should apply import order',
     async () => {
-      await generator(tree, { importOrder: true });
+      await eslintGenerator(tree, { importOrder: true });
 
       const eslintConfig = readEsLintConfig(tree);
 

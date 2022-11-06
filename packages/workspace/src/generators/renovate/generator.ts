@@ -11,7 +11,7 @@ import {
 } from '../core';
 import { RenovateGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: RenovateGeneratorSchema) {
+export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {
     console.log(`Renovate workflow already existing at path: ${renovateCiFile}`);
     return;

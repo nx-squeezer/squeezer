@@ -2,7 +2,7 @@ import { formatFiles, Tree } from '@nrwl/devkit';
 
 import { getGitRepoSlug, readmeFile } from '../core';
 
-export default async function (tree: Tree) {
+export async function contributorsGenerator(tree: Tree) {
   if (!tree.exists(readmeFile)) {
     throw new Error(`Missing Readme file at: ${readmeFile}`);
   }

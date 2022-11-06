@@ -12,8 +12,8 @@ import {
   renovatePresets,
 } from '../core';
 import { getGitRepoSlug } from '../core/get-git-repo';
-import generator from './generator';
-import schematic from './generator.compat';
+import { renovateGenerator } from './generator';
+import { renovateSchematic } from './generator.compat';
 
 jest.mock('../core/get-git-repo');
 
@@ -34,16 +34,16 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree, { force: true, useNxCloud: true, local: true });
+    await renovateGenerator(tree, { force: true, useNxCloud: true, local: true });
     expect(tree.exists(renovateCiFile)).toBeTruthy();
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({ force: true, useNxCloud: true, local: true })).toBe('function');
+    expect(typeof renovateSchematic({ force: true, useNxCloud: true, local: true })).toBe('function');
   });
 
   it('should run tasks', async () => {
-    const tasks = await generator(tree, { force: true, useNxCloud: true, local: true });
+    const tasks = await renovateGenerator(tree, { force: true, useNxCloud: true, local: true });
 
     expect(tasks).toBeTruthy();
 
@@ -55,7 +55,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should skip execution if a Renovate CI workflow already exists', async () => {
     tree.write(renovateCiFile, '');
 
-    await generator(tree, { force: false, useNxCloud: true, local: true });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
 
     expect(console.log).toHaveBeenCalledWith(`Renovate workflow already existing at path: ${renovateCiFile}`);
   });
@@ -63,13 +63,13 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should not skip execution if a Renovate CI workflow already exists but passing force option', async () => {
     tree.write(renovateCiFile, '');
 
-    await generator(tree, { force: true, useNxCloud: true, local: true });
+    await renovateGenerator(tree, { force: true, useNxCloud: true, local: true });
 
     expect(tree.read(renovateCiFile)?.toString()).toBeTruthy();
   });
 
   it('should generate the Renovate CI workflow', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: true });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
 
     const ci = parse(tree.read(renovateCiFile)?.toString() ?? '');
 
@@ -79,13 +79,13 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should fail if repo can not be resolved', async () => {
     (getGitRepoSlug as jest.Mock).mockReturnValue(null);
 
-    await expect(async () => await generator(tree, { force: false, useNxCloud: true, local: true })).rejects.toEqual(
-      new Error(`Could not identify GitHub repo slug.`)
-    );
+    await expect(
+      async () => await renovateGenerator(tree, { force: false, useNxCloud: true, local: true })
+    ).rejects.toEqual(new Error(`Could not identify GitHub repo slug.`));
   });
 
   it('should generate renovate.json with local configuration', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: true, assignee: 'user' });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true, assignee: 'user' });
 
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
@@ -94,7 +94,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   });
 
   it('should generate renovate.json with remote configuration', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: false, assignee: 'user' });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: false, assignee: 'user' });
 
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
@@ -103,13 +103,13 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   });
 
   it('should generate renovate-config.js', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: true, assignee: 'user' });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true, assignee: 'user' });
 
     expect(tree.read(renovateConfigFile)?.toString()).toEqual(renovateConfigJsContent());
   });
 
   it('should generate presets when using local configuration', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: true });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
 
     renovatePresets.forEach((preset) => {
       expect(tree.exists(preset)).toBeTruthy();
@@ -117,7 +117,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   });
 
   it('should not generate presets when using remote configuration', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: false });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: false });
 
     renovatePresets.forEach((preset) => {
       expect(tree.exists(preset)).toBeFalsy();
@@ -127,20 +127,20 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   it('should fail if can not find GitHub CI file', async () => {
     tree.delete(ciFile);
 
-    await expect(async () => await generator(tree, { force: false, useNxCloud: true, local: true })).rejects.toEqual(
-      new Error(`Renovate needs a GitHub workflow CI file, none found at: ${ciFile}`)
-    );
+    await expect(
+      async () => await renovateGenerator(tree, { force: false, useNxCloud: true, local: true })
+    ).rejects.toEqual(new Error(`Renovate needs a GitHub workflow CI file, none found at: ${ciFile}`));
   });
 
   it('should add renovate branch to push branches', async () => {
-    await generator(tree, { force: false, useNxCloud: true, local: false });
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: false });
 
     expect(parse(tree.read(ciFile)?.toString() ?? '').on.push.branches).toContain(renovateBranch);
   });
 
   it('should add renovate branch to push branches being idempotent', async () => {
-    await generator(tree, { force: true, useNxCloud: true, local: false });
-    await generator(tree, { force: true, useNxCloud: true, local: false });
+    await renovateGenerator(tree, { force: true, useNxCloud: true, local: false });
+    await renovateGenerator(tree, { force: true, useNxCloud: true, local: false });
 
     const ci = parse(tree.read(ciFile)?.toString() ?? '');
     expect(ci.on.push.branches.filter((branch: string) => branch === renovateBranch).length).toEqual(1);

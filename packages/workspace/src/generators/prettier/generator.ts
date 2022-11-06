@@ -15,7 +15,7 @@ import {
 } from '../core';
 import { prettierDefaultConfig } from './prettier-default-config';
 
-export default async function (tree: Tree) {
+export async function prettierGenerator(tree: Tree) {
   setPrettierConfig(tree);
 
   if (isEsLintPluginPresent(tree, prettierPlugin)) {
