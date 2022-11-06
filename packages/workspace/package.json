@@ -9,7 +9,7 @@
     "@nrwl/devkit": "^15.0.10",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
-    "renovate": "^34.19.3",
+    "renovate": "^34.20.0",
     "yaml": "^2.1.3"
   },
   "devDependencies": {
