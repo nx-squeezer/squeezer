@@ -5,7 +5,10 @@ import { getGitRepoSlug, readmeFile } from '../lib';
 import { contributorsGenerator } from './generator';
 import { contributorsSchematic } from './generator.compat';
 
-jest.mock('../core/get-git-repo');
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
+  getGitRepoSlug: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace contributors generator', () => {
   let tree: Tree;

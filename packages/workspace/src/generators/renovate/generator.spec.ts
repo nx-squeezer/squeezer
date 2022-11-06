@@ -2,25 +2,20 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse, stringify } from 'yaml';
 
-import {
-  ciFile,
-  renovateBranch,
-  renovateCiFile,
-  renovateConfigFile,
-  renovateConfigValidatorTask,
-  renovateFile,
-  renovatePresets,
-} from '../lib';
-import { getGitRepoSlug } from '../lib/get-git-repo';
+import { ciFile } from '../github-workflow';
+import { getGitRepoSlug } from '../lib';
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
+import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
+import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 
-jest.mock('../core/get-git-repo');
-
-jest.mock('../core', () => ({
-  ...jest.requireActual('../core'),
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
   renovateConfigValidatorTask: jest.fn(),
+  getGitRepoSlug: jest.fn(),
 }));
+
+jest.mock('./renovate-config-validator-task');
 
 describe('@nx-squeezer/workspace renovate generator', () => {
   let tree: Tree;

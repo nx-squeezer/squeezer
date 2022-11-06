@@ -1,11 +1,11 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { getNpmPackageVersion } from '../npm';
 import { addDevDependencyToPackageJson } from './add-dev-dependency-to-package-json';
-import { getNpmPackageVersion } from './get-npm-package-version';
 import { readPackageJson } from './package-json';
 
-jest.mock('./get-npm-package-version');
+jest.mock('../npm');
 
 describe('@nx-squeezer/workspace addDevDependencyToPackageJson', () => {
   let tree: Tree;

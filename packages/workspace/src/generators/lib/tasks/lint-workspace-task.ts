@@ -2,7 +2,7 @@ import { execSync } from 'child_process';
 
 import { Tree } from '@nrwl/devkit';
 
-import { joinNormalize } from './join-normalize';
+import { joinNormalize } from '../path';
 
 export function lintWorkspaceTask(tree: Tree): void {
   try {

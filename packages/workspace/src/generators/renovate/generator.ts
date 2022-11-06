@@ -1,7 +1,9 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
-import { ciFile, getGitRepoSlug, joinNormalize, renovateBranch, renovateCiFile } from '../lib';
+import { ciFile } from '../github-workflow';
+import { getGitRepoSlug, joinNormalize } from '../lib';
+import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 

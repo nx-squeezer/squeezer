@@ -3,12 +3,18 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 import { parse, stringify } from 'yaml';
 
-import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../lib';
+import { ciFile } from '../github-workflow';
+import { getGitRepoSlug, nxConfigFile, readmeFile } from '../lib';
+import { readCodecov, codecovDotFile, readRawCodecov } from './codecov';
 import { codecovGenerator } from './generator';
 import { codecovSchematic } from './generator.compat';
 
 jest.mock('node-fetch-commonjs');
-jest.mock('../core/get-git-repo');
+
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
+  getGitRepoSlug: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace codecov generator', () => {
   let tree: Tree;

@@ -1,14 +1,15 @@
 import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { eslintConfigFile, lintWorkspaceTask, readEsLintConfig, writeEsLintConfig } from '../lib';
+import { lintWorkspaceTask } from '../lib';
+import { writeEsLintConfig, readEsLintConfig, eslintConfigFile } from './eslint-config';
 import { eslintGenerator } from './generator';
 import { eslintSchematic } from './generator.compat';
 
 const timeout = 10_000;
 
-jest.mock('../core', () => ({
-  ...jest.requireActual('../core'),
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
   lintWorkspaceTask: jest.fn(),
 }));
 

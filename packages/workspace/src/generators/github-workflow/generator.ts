@@ -4,10 +4,10 @@ import {
   addBadgeToReadme,
   addImplicitDependencyToNxConfig,
   addScriptToPackageJson,
-  ciFile,
   getGitRepo,
   joinNormalize,
 } from '../lib';
+import { ciFile } from './github-workflow';
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
 export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {
