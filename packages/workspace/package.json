@@ -7,13 +7,15 @@
   "executors": "./executors.json",
   "peerDependencies": {
     "@nrwl/devkit": "^15.0.10",
-    "@schemastore/eslintrc": "^0.0.6",
-    "@schemastore/package": "^0.0.6",
-    "@schemastore/prettierrc": "^0.0.9",
-    "@schemastore/tsconfig": "^0.0.9",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
     "renovate": "^34.19.3",
     "yaml": "^2.1.3"
+  },
+  "devDependencies": {
+    "@schemastore/eslintrc": "^0.0.6",
+    "@schemastore/package": "^0.0.6",
+    "@schemastore/prettierrc": "^0.0.9",
+    "@schemastore/tsconfig": "^0.0.9"
   }
 }
