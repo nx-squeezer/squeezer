@@ -3,6 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import { getGitRepoSlug, readmeFile } from '../core';
 import { contributorsGenerator } from './generator';
+import { contributorsSchematic } from './generator.compat';
 
 jest.mock('../core/get-git-repo');
 
@@ -57,6 +58,3 @@ describe('@nx-squeezer/workspace contributors generator', () => {
     expect(console.log).toHaveBeenCalledWith(`Contributors section already existing at: ${readmeFile}`);
   });
 });
-function contributorsSchematic(arg0: {}) {
-  throw new Error('Function not implemented.');
-}

@@ -5,6 +5,7 @@ import { parse, stringify } from 'yaml';
 
 import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../core';
 import { codecovGenerator } from './generator';
+import { codecovSchematic } from './generator.compat';
 
 jest.mock('node-fetch-commonjs');
 jest.mock('../core/get-git-repo');
@@ -101,6 +102,3 @@ describe('@nx-squeezer/workspace codecov generator', () => {
     await expect(() => codecovGenerator(tree)).rejects.toEqual(new Error(`Couldn't generate a valid Codecov file`));
   });
 });
-function codecovSchematic(arg0: {}) {
-  throw new Error('Function not implemented.');
-}
