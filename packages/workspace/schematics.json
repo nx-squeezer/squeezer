@@ -19,7 +19,7 @@
       "description": "Configures ESLint with additional rules"
     },
     "github-workflow": {
-      "factory": "./src/generators/github-workflow/generator.compat#eslintSchematic",
+      "factory": "./src/generators/github-workflow/generator.compat#gitHubWorkflowSchematic",
       "schema": "./src/generators/github-workflow/schema.json",
       "description": "Configures GitHub CI Workflow"
     },
