@@ -1,7 +1,7 @@
 import { readJson, Tree, writeJson } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
-import { areSetsEqual, getSet, removeDuplicates } from '../lib';
+import { getSet, areSetsEqual, removeDuplicates } from '../utils';
 
 export const eslintConfigFile = '.eslintrc.json';
 

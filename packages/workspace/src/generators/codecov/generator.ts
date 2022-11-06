@@ -1,8 +1,13 @@
 import { formatFiles, Tree } from '@nrwl/devkit';
 import fetch from 'node-fetch-commonjs';
 
-import { addGitHubCiJobStep, existsGitHubCiWorkflow } from '../github-workflow';
-import { addBadgeToReadme, addImplicitDependencyToNxConfig, getGitRepoSlug } from '../lib';
+import {
+  addGitHubCiJobStep,
+  existsGitHubCiWorkflow,
+  addBadgeToReadme,
+  addImplicitDependencyToNxConfig,
+  getGitRepoSlug,
+} from '../lib';
 import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
 export async function codecovGenerator(tree: Tree) {

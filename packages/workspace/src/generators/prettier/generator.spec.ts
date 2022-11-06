@@ -3,8 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
-import { writeEsLintConfig, readEsLintConfig } from '../eslint';
-import { lintWorkspaceTask, formatWorkspaceTask } from '../lib';
+import { lintWorkspaceTask, formatWorkspaceTask, writeEsLintConfig, readEsLintConfig } from '../lib';
 import { prettierGenerator } from './generator';
 import { prettierSchematic } from './generator.compat';
 import { prettierConfigFile, prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile } from './prettier';

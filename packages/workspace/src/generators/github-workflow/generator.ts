@@ -6,8 +6,8 @@ import {
   addScriptToPackageJson,
   getGitRepo,
   joinNormalize,
+  ciFile,
 } from '../lib';
-import { ciFile } from './github-workflow';
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
 export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {
