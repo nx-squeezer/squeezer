@@ -1,17 +1,12 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
-import {
-  ciFile,
-  getGitRepoSlug,
-  joinNormalize,
-  renovateBranch,
-  renovateCiFile,
-  renovateConfigValidatorTask,
-} from '../core';
+import { getGitRepoSlug, joinNormalize, ciFile } from '../lib';
+import { renovateCiFile, renovateBranch } from './renovate';
+import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: RenovateGeneratorSchema) {
+export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {
     console.log(`Renovate workflow already existing at path: ${renovateCiFile}`);
     return;

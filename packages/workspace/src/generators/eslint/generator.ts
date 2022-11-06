@@ -5,18 +5,18 @@ import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
 import {
   addDevDependencyToPackageJson,
-  addEsLintPlugin,
-  addEsLintRules,
+  joinNormalize,
   lintWorkspaceTask,
+  addEsLintRules,
   readEsLintConfig,
   writeEsLintConfig,
-  eslintConfigFile,
+  addEsLintPlugin,
   EsLintConfigurationOverrideRule,
-  joinNormalize,
-} from '../core';
+  eslintConfigFile,
+} from '../lib';
 import { EsLintGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: EsLintGeneratorSchema) {
+export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {
     addEsLintRecommendedRules(tree);
   }

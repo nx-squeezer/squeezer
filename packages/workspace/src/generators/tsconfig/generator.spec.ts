@@ -2,12 +2,13 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
-import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../core';
-import generator from './generator';
-import schematic from './generator.compat';
+import { lintWorkspaceTask } from '../lib';
+import { tsConfigGenerator } from './generator';
+import { tsConfigSchematic } from './generator.compat';
+import { tsConfigFile, tsConfigDefault } from './tsconfig';
 
-jest.mock('../core', () => ({
-  ...jest.requireActual('../core'),
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
   lintWorkspaceTask: jest.fn(),
 }));
 
@@ -21,7 +22,7 @@ describe('@nx-squeezer/workspace tsconfig generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree);
+    await tsConfigGenerator(tree);
 
     const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tree, tsConfigFile);
 
@@ -29,20 +30,20 @@ describe('@nx-squeezer/workspace tsconfig generator', () => {
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof tsConfigSchematic({})).toBe('function');
   });
 
   it('should skip execution if tsconfig file does not exist', async () => {
     tree = createTree();
 
-    await generator(tree);
+    await tsConfigGenerator(tree);
 
     expect(tree.exists(tsConfigFile)).toBeFalsy();
     expect(console.error).toHaveBeenCalledWith(`File ${tsConfigFile} not found.`);
   });
 
   it('should run tasks', async () => {
-    const tasks = await generator(tree);
+    const tasks = await tsConfigGenerator(tree);
 
     expect(tasks).toBeTruthy();
 
@@ -52,7 +53,7 @@ describe('@nx-squeezer/workspace tsconfig generator', () => {
   });
 
   it('should set compiler options', async () => {
-    await generator(tree);
+    await tsConfigGenerator(tree);
 
     const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tree, tsConfigFile);
 

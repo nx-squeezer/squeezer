@@ -2,20 +2,17 @@ import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nr
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import {
-  addEsLintRules,
   formatWorkspaceTask,
   lintWorkspaceTask,
+  addDevDependencyToPackageJson,
   isEsLintPluginPresent,
   addEsLintPlugin,
-  addDevDependencyToPackageJson,
-  prettierPlugin,
-  prettierConfigJsonFile,
-  prettierConfigFile,
-  eslintPluginPrettier,
-} from '../core';
+  addEsLintRules,
+} from '../lib';
+import { prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile, prettierConfigFile } from './prettier';
 import { prettierDefaultConfig } from './prettier-default-config';
 
-export default async function (tree: Tree) {
+export async function prettierGenerator(tree: Tree) {
   setPrettierConfig(tree);
 
   if (isEsLintPluginPresent(tree, prettierPlugin)) {

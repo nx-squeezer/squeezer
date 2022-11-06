@@ -2,17 +2,15 @@ import { formatFiles, Tree } from '@nrwl/devkit';
 import fetch from 'node-fetch-commonjs';
 
 import {
-  addBadgeToReadme,
-  addImplicitDependencyToNxConfig,
   addGitHubCiJobStep,
   existsGitHubCiWorkflow,
-  getCodecovFile,
+  addBadgeToReadme,
+  addImplicitDependencyToNxConfig,
   getGitRepoSlug,
-  readRawCodecov,
-  writeProjectsToCodecov,
-} from '../core';
+} from '../lib';
+import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
-export default async function (tree: Tree) {
+export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
   addImplicitDependencyToNxConfig(tree, { [getCodecovFile(tree)]: '*' });
 

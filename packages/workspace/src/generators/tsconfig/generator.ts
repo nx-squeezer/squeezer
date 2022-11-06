@@ -1,9 +1,10 @@
 import { formatFiles, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
-import { lintWorkspaceTask, tsConfigDefault, tsConfigFile } from '../core';
+import { lintWorkspaceTask } from '../lib';
+import { tsConfigFile, tsConfigDefault } from './tsconfig';
 
-export default async function (tree: Tree) {
+export async function tsConfigGenerator(tree: Tree) {
   if (!setTsConfig(tree)) {
     return;
   }

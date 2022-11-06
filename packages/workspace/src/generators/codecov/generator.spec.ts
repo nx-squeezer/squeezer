@@ -3,12 +3,17 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 import { parse, stringify } from 'yaml';
 
-import { ciFile, getGitRepoSlug, nxConfigFile, readCodecov, readmeFile, readRawCodecov, codecovDotFile } from '../core';
-import generator from './generator';
-import schematic from './generator.compat';
+import { getGitRepoSlug, nxConfigFile, readmeFile, ciFile } from '../lib';
+import { readCodecov, codecovDotFile, readRawCodecov } from './codecov';
+import { codecovGenerator } from './generator';
+import { codecovSchematic } from './generator.compat';
 
 jest.mock('node-fetch-commonjs');
-jest.mock('../core/get-git-repo');
+
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
+  getGitRepoSlug: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace codecov generator', () => {
   let tree: Tree;
@@ -22,7 +27,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree);
+    await codecovGenerator(tree);
 
     const codecov = readCodecov(tree);
 
@@ -30,11 +35,11 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof codecovSchematic({})).toBe('function');
   });
 
   it('should declare the implicit dependency in nx.json', async () => {
-    await generator(tree);
+    await codecovGenerator(tree);
 
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
@@ -43,7 +48,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
 
   it('should add a badge in readme', async () => {
     tree.write(readmeFile, '# Readme\n');
-    await generator(tree);
+    await codecovGenerator(tree);
 
     const readme = tree.read(readmeFile)?.toString() ?? '';
 
@@ -53,13 +58,13 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   it('should log error if can not resolve the git slug and add a badge', async () => {
     (getGitRepoSlug as jest.Mock).mockReturnValue(null);
 
-    await generator(tree);
+    await codecovGenerator(tree);
 
     expect(console.error).toHaveBeenCalledWith(`Could not add badge to README, remote repo could not be detected.`);
   });
 
   it('should log error if can not add step to GitHub workflow', async () => {
-    await generator(tree);
+    await codecovGenerator(tree);
 
     expect(console.error).toHaveBeenCalledWith(
       `Codecov needs to be called from a CI pipeline, but it could not be found.`
@@ -72,7 +77,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   it('should add step to GitHub workflow', async () => {
     tree.write(ciFile, stringify({ jobs: { test: { steps: [] } } }));
 
-    await generator(tree);
+    await codecovGenerator(tree);
 
     expect(parse(tree.read(ciFile)?.toString() ?? '').jobs.test.steps).toStrictEqual([
       {
@@ -88,7 +93,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   });
 
   it('should validate the generated codecov file', async () => {
-    await generator(tree);
+    await codecovGenerator(tree);
 
     expect(fetch).toHaveBeenCalledWith(`https://api.codecov.io/validate`, {
       method: 'POST',
@@ -99,6 +104,6 @@ describe('@nx-squeezer/workspace codecov generator', () => {
   it('should validate the generated codecov file', async () => {
     (fetch as jest.Mock).mockResolvedValue({ ok: false });
 
-    await expect(() => generator(tree)).rejects.toEqual(new Error(`Couldn't generate a valid Codecov file`));
+    await expect(() => codecovGenerator(tree)).rejects.toEqual(new Error(`Couldn't generate a valid Codecov file`));
   });
 });
