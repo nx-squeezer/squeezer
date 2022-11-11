@@ -2,9 +2,10 @@ import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse } from 'yaml';
 
-import { getGitRepo, readPackageJson, readmeFile, nxConfigFile, existsGitHubCiWorkflow, ciFile } from '../lib';
+import { getGitRepo, readPackageJson, readmeFile, nxConfigFile } from '../lib';
 import { gitHubWorkflowGenerator } from './generator';
 import { gitHubWorkflowSchematic } from './generator.compat';
+import { existsGitHubCiWorkflow, ciFile } from './github-workflow';
 
 jest.mock('../lib', () => ({
   ...jest.requireActual('../lib'),

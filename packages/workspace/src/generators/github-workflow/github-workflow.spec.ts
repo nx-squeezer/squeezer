@@ -4,7 +4,7 @@ import { parse, stringify } from 'yaml';
 
 import { addGitHubCiJobStep, ciFile, existsGitHubCiWorkflow, GitHubActionJobStep } from './github-workflow';
 
-describe('@nx-squeezer/workspace additHubCiJobStep', () => {
+describe('@nx-squeezer/workspace addGitHubCiJobStep', () => {
   let tree: Tree;
 
   beforeEach(() => {
