@@ -2,7 +2,8 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse, stringify } from 'yaml';
 
-import { getGitRepoSlug, ciFile } from '../lib';
+import { ciFile } from '../github-workflow';
+import { getGitRepoSlug } from '../lib';
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
