@@ -6,7 +6,7 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "peerDependencies": {
-    "@nrwl/devkit": "^15.0.10",
+    "@nrwl/devkit": "^15.0.13",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
     "renovate": "^34.20.0",
