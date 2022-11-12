@@ -23,6 +23,11 @@
       "schema": "./src/generators/github-workflow/schema.json",
       "description": "Configures GitHub CI Workflow"
     },
+    "lint-staged": {
+      "factory": "./src/generators/lint-staged/generator#lintStagedSchematic",
+      "schema": "./src/generators/lint-staged/schema.json",
+      "description": "Configures lint-staged"
+    },
     "prettier": {
       "factory": "./src/generators/prettier/generator.compat#prettierSchematic",
       "schema": "./src/generators/prettier/schema.json",

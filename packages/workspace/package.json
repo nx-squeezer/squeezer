@@ -7,6 +7,8 @@
   "executors": "./executors.json",
   "peerDependencies": {
     "@nrwl/devkit": "^15.0.13",
+    "husky": "8.0.2",
+    "lint-staged": "13.0.3",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
     "renovate": "^34.23.1",

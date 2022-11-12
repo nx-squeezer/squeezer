@@ -19,6 +19,11 @@ import {
   renovatePresets,
   renovateFile,
   readmeFile,
+  lintStagedConfigPath,
+  LintStagedConfig,
+  lintStagedDefaultConfig,
+  joinNormalize,
+  huskyPath,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -238,6 +243,18 @@ describe('@nx-squeezer/workspace e2e', () => {
       const readme = readFile(readmeFile);
 
       expect(readme).toContain(`## Contributors`);
+    });
+  });
+
+  describe('lint-staged workflow generator', () => {
+    it('should create lint-staged configuration and husky hook', async () => {
+      await runNxCommandAsync(`generate @nx-squeezer/workspace:lint-staged`);
+
+      const lintStagedConfig = readJson<LintStagedConfig>(lintStagedConfigPath);
+      expect(lintStagedConfig).toStrictEqual(lintStagedDefaultConfig);
+
+      const preCommitHook = readFile(joinNormalize(huskyPath, 'pre-commit'));
+      expect(preCommitHook).toContain('npx lint-staged');
     });
   });
 });

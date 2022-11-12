@@ -1,0 +1,9 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "cli": "nx",
+  "$id": "lint-staged",
+  "title": "Configures lint-staged",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {}
+}
