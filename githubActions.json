@@ -3,7 +3,8 @@
   "packageRules": [
     {
       "groupName": "GitHub actions",
-      "matchManagers": ["github-actions"]
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["minor", "patch", "pin"]
     }
   ]
 }
