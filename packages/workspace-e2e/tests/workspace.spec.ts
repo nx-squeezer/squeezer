@@ -31,6 +31,7 @@ import {
   lintStagedDefaultConfig,
   joinNormalize,
   huskyPath,
+  securityFile,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -236,6 +237,7 @@ describe('@nx-squeezer/workspace e2e', () => {
       expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
       expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
       expect(() => checkFilesExist(renovateFile)).not.toThrow();
+      expect(() => checkFilesExist(securityFile)).not.toThrow();
 
       renovatePresets.forEach((preset) => {
         expect(() => checkFilesExist(preset)).not.toThrow();

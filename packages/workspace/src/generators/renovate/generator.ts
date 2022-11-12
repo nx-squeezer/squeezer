@@ -2,7 +2,7 @@ import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
 import { ciFile } from '../github-workflow';
-import { getGitRepoSlug, joinNormalize } from '../lib';
+import { getGitRepoSlug, joinNormalize, securityFile } from '../lib';
 import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
@@ -33,6 +33,10 @@ export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSc
 
   if (options.local) {
     generateFiles(tree, joinNormalize(__dirname, 'presets'), '.', templateOptions);
+  }
+
+  if (!tree.exists(securityFile)) {
+    generateFiles(tree, joinNormalize(__dirname, 'security'), '.', templateOptions);
   }
 
   // Update CI
