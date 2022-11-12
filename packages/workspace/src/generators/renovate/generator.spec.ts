@@ -84,7 +84,13 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-      extends: ['config:base', ':label(dependencies)', 'local>test/test', ':assignee(user)'],
+      extends: [
+        'config:base',
+        ':label(dependencies)',
+        'local>test/test',
+        'local>test/test:nrwlWorkspace',
+        ':assignee(user)',
+      ],
     });
   });
 
@@ -93,7 +99,13 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
-      extends: ['config:base', ':label(dependencies)', 'github>nx-squeezer/squeezer', ':assignee(user)'],
+      extends: [
+        'config:base',
+        ':label(dependencies)',
+        'github>nx-squeezer/squeezer',
+        'github>nx-squeezer/squeezer:nrwlWorkspace',
+        ':assignee(user)',
+      ],
     });
   });
 
