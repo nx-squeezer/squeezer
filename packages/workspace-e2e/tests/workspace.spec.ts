@@ -44,7 +44,6 @@ describe('@nx-squeezer/workspace e2e', () => {
   // are not dependant on one another.
   beforeAll(async () => {
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
-    await runCommandAsync('git init');
   });
 
   afterAll(async () => {
@@ -231,7 +230,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   describe('renovate workflow generator', () => {
     it('should setup Renovate CI workflow and add presets', async () => {
       await runNxCommandAsync(
-        `generate @nx-squeezer/workspace:renovate --useNxCloud --local --assignee=samuelfernandez`
+        `generate @nx-squeezer/workspace:renovate --useNxCloud --local=false --assignee=samuelfernandez`
       );
 
       expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
@@ -256,6 +255,8 @@ describe('@nx-squeezer/workspace e2e', () => {
 
   describe('lint-staged workflow generator', () => {
     it('should create lint-staged configuration and husky hook', async () => {
+      await runCommandAsync('git init');
+
       await runNxCommandAsync(`generate @nx-squeezer/workspace:lint-staged`);
 
       const lintStagedConfig = readJson<LintStagedConfig>(lintStagedConfigPath);
