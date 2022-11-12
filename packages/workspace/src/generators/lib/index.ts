@@ -1,4 +1,5 @@
 export * from './git';
+export * from './husky';
 export * from './npm';
 export * from './nx';
 export * from './package-json';

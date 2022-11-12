@@ -7,11 +7,14 @@
     "lint:fix": "nx run-many --target=lint --parallel=3 --all --fix",
     "nx": "nx",
     "lint:workspace": "nx workspace-lint",
-    "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g"
+    "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g",
+    "prepare": "husky install"
   },
   "private": true,
   "dependencies": {
     "@nrwl/devkit": "15.0.13",
+    "husky": "8.0.2",
+    "lint-staged": "13.0.3",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.7.1",
     "renovate": "34.23.1",
@@ -52,7 +55,6 @@
     "jest-environment-jsdom": "29.3.1",
     "jsonc-eslint-parser": "2.1.0",
     "nx": "15.0.13",
-    "prettier": "2.7.1",
     "ts-jest": "29.0.3",
     "ts-node": "10.9.1",
     "tslib": "2.4.1",
@@ -62,4 +64,3 @@
     "packages/**"
   ]
 }
-
