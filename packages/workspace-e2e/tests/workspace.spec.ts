@@ -1,4 +1,11 @@
-import { ensureNxProject, readJson, runNxCommandAsync, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
+import {
+  ensureNxProject,
+  readJson,
+  runNxCommandAsync,
+  checkFilesExist,
+  readFile,
+  runCommandAsync,
+} from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
@@ -37,6 +44,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   // are not dependant on one another.
   beforeAll(async () => {
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
+    await runCommandAsync('git init');
   });
 
   afterAll(async () => {
