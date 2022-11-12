@@ -5,5 +5,6 @@ export * from './nx';
 export * from './package-json';
 export * from './path';
 export * from './readme';
+export * from './security';
 export * from './tasks';
 export * from './utils';

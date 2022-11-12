@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse, stringify } from 'yaml';
 
 import { ciFile } from '../github-workflow';
-import { getGitRepoSlug } from '../lib';
+import { getGitRepoSlug, securityFile } from '../lib';
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
@@ -151,6 +151,21 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
     const ci = parse(tree.read(ciFile)?.toString() ?? '');
     expect(ci.on.push.branches.filter((branch: string) => branch === renovateBranch).length).toEqual(1);
+  });
+
+  it('should generate the security file if it did not exist before', async () => {
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
+
+    expect(tree.exists(securityFile)).toBeTruthy();
+  });
+
+  it('should skip generating the security file if it existed before', async () => {
+    const customSecurity = 'custom';
+    tree.write(securityFile, customSecurity);
+
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
+
+    expect(tree.read(securityFile)?.toString()).toBe(customSecurity);
   });
 });
 
