@@ -36,7 +36,7 @@ export function addHuskyHookTask(tree: Tree, hook: HuskyHooks, command: string) 
   }
 
   console.log(`Adding husky hook ${hook} with command "${command}"`);
-  const { error } = exec('npx', ['husky', 'add', `${huskyPath}/${hook}`, `"${command}"`], { cwd: tree.root });
+  const { error } = exec('npx', ['husky', 'add', `${huskyPath}/${hook}`, command], { cwd: tree.root });
 
   if (error != null) {
     console.error(`Could not add husky hook in path: ${tree.root}`);

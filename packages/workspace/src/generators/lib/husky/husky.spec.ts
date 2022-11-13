@@ -63,7 +63,7 @@ describe('@nx-squeezer/workspace husky', () => {
     it('should add husky hook if husky not installed', () => {
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, `"${command}"`], {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
       });
     });
@@ -73,7 +73,7 @@ describe('@nx-squeezer/workspace husky', () => {
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, `"${command}"`], {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
       });
     });
@@ -83,7 +83,7 @@ describe('@nx-squeezer/workspace husky', () => {
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, `"${command}"`], {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
       });
     });

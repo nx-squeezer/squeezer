@@ -16,7 +16,7 @@ describe('@nx-squeezer/workspace getNpmPackageVersion', () => {
     (exec as jest.Mock).mockReturnValue({ output: version });
 
     expect(getNpmPackageVersion(packageName)).toBe(version);
-    expect(exec).toHaveBeenCalledWith(`npm`, ['view', 'add', packageName, 'version']);
+    expect(exec).toHaveBeenCalledWith(`npm`, ['view', packageName, 'version']);
   });
 
   it('should not fail if exec sync fails', () => {
