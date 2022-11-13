@@ -1,18 +1,11 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 
-import { joinNormalize } from '../path';
+import { exec } from '../exec';
 
 export function formatWorkspaceTask(tree: Tree): void {
-  try {
-    execSync('npx prettier . --write', {
-      cwd: joinNormalize(tree.root),
-      stdio: [0, 1, 2],
-    });
-  } catch (err) {
+  const { error } = exec('npx', ['prettier', '.', '--write'], { cwd: tree.root });
+
+  if (error != null) {
     console.error(`Could not format files in path: ${tree.root}`);
-    console.error(err);
-    return;
   }
 }

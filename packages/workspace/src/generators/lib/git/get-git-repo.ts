@@ -1,28 +1,19 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 
-import { joinNormalize } from '../path';
+import { exec } from '../exec';
 
 export function getGitRepo(tree: Tree): string | null {
-  try {
-    const output = execSync(`git config --get remote.origin.url`, {
-      stdio: ['pipe', 'pipe', 'ignore'],
-      cwd: joinNormalize(tree.root),
-    });
+  const { output, error } = exec('git', ['config', '--get', 'remote.origin.url'], { cwd: tree.root });
 
-    if (output) {
-      return output
-        .toString()
-        .trim()
-        .replace(/^\n*|\n*$/g, '')
-        .replace(/\.git$/i, '');
-    }
-  } catch (err) {
-    console.error(err);
+  if (error != null) {
+    console.error(`Could not resolve git repo remote url.`);
+    return null;
   }
-  console.error(`Could not resolve git repo remote url.`);
-  return null;
+
+  return output
+    .trim()
+    .replace(/^\n*|\n*$/g, '')
+    .replace(/\.git$/i, '');
 }
 
 export function getGitRepoSlug(tree: Tree): string | null {

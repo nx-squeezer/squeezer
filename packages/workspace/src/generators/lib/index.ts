@@ -1,3 +1,4 @@
+export * from './exec';
 export * from './git';
 export * from './husky';
 export * from './npm';

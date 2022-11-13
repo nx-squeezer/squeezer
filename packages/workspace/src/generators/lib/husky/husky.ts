@@ -1,7 +1,6 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 
+import { exec } from '../exec';
 import { addDevDependencyToPackageJson, addScriptToPackageJson } from '../package-json';
 import { joinNormalize } from '../path';
 
@@ -18,15 +17,11 @@ export function installHuskyTask(tree: Tree) {
   if (tree.exists(huskyPath)) {
     console.log(`Husky already installed, skipping installation.`);
   } else {
-    try {
-      console.log(`Installing husky...`);
-      execSync(`npx husky install`, {
-        cwd: joinNormalize(tree.root),
-        stdio: [0, 1, 2],
-      });
-    } catch (err) {
+    console.log(`Installing husky...`);
+    const { error } = exec('npx', ['husky', 'install'], { cwd: tree.root });
+
+    if (error != null) {
       console.error(`Could not install husky in path: ${tree.root}`);
-      console.error(err);
     }
   }
 }
@@ -40,14 +35,10 @@ export function addHuskyHookTask(tree: Tree, hook: HuskyHooks, command: string) 
     return;
   }
 
-  try {
-    console.log(`Adding husky hook ${hook} with command "${command}"`);
-    execSync(`npx husky add ${huskyPath}/${hook} "${command}"`, {
-      cwd: joinNormalize(tree.root),
-      stdio: [0, 1, 2],
-    });
-  } catch (err) {
+  console.log(`Adding husky hook ${hook} with command "${command}"`);
+  const { error } = exec('npx', ['husky', 'add', `${huskyPath}/${hook}`, `"${command}"`], { cwd: tree.root });
+
+  if (error != null) {
     console.error(`Could not add husky hook in path: ${tree.root}`);
-    console.error(err);
   }
 }
