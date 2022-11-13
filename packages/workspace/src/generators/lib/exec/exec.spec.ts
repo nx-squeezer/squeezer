@@ -45,4 +45,16 @@ describe('@nx-squeezer/workspace exec', () => {
     expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
     expect(console.error).toBeCalledWith(new Error('error'));
   });
+
+  it('should catch string errors', () => {
+    (execFileSync as jest.Mock).mockImplementation(() => {
+      throw 'error';
+    });
+    (sync as jest.Mock).mockReturnValue('npm');
+    jest.spyOn(console, 'error').mockImplementation(() => void {});
+
+    expect(exec('npm', ['run', 'test'])).toStrictEqual({ output: '', error: new Error('error') });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
+    expect(console.error).toBeCalledWith(new Error('error'));
+  });
 });

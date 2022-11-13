@@ -37,4 +37,10 @@ describe('@nx-squeezer/workspace getGitRepo', () => {
 
     expect(getGitRepoSlug(tree)).toBe('nx-squeezer/squeezer');
   });
+
+  it('should empty return git repo slug', () => {
+    (exec as jest.Mock).mockReturnValue({ error: '' });
+
+    expect(getGitRepoSlug(tree)).toBeNull();
+  });
 });
