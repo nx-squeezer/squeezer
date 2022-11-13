@@ -27,6 +27,6 @@ export function exec(file: string, args: ReadonlyArray<string>, options?: ExecOp
     return { output: result.toString() };
   } catch (error) {
     console.error(error);
-    return { output: '', error: new Error(error as string) };
+    return { output: '', error: error instanceof Error ? error : new Error(error as string) };
   }
 }
