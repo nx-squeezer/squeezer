@@ -1,11 +1,10 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
+import { exec } from '../lib';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 
-jest.mock('child_process');
+jest.mock('../lib');
 
 describe('@nx-squeezer/workspace renovateConfigValidatorTask', () => {
   let tree: Tree;
@@ -17,34 +16,27 @@ describe('@nx-squeezer/workspace renovateConfigValidatorTask', () => {
   });
 
   it('should execute renovate config validator command', () => {
-    (execSync as jest.Mock).mockReturnValue(null);
+    (exec as jest.Mock).mockReturnValue({ output: '' });
 
     expect(renovateConfigValidatorTask(tree)).toBeFalsy();
 
-    expect(execSync).toHaveBeenCalledWith('npx renovate-config-validator', {
-      cwd: '/virtual',
-      stdio: ['pipe', 'pipe', 'ignore'],
-    });
+    expect(exec).toHaveBeenCalledWith('npx', ['renovate-config-validator'], { cwd: '/virtual' });
   });
 
-  it('should return false and log the error if it fails', () => {
-    (execSync as jest.Mock).mockImplementation(() => {
-      throw new Error(`Custom error`);
-    });
+  it('should return false', () => {
+    (exec as jest.Mock).mockReturnValue({ error: new Error(`Custom error`) });
 
     expect(renovateConfigValidatorTask(tree)).toBeFalsy();
-
-    expect(console.error).toHaveBeenCalledWith(new Error(`Custom error`));
   });
 
   it('should return true if the validator runs successfully', () => {
-    (execSync as jest.Mock).mockReturnValue(`INFO: Config validated successfully`);
+    (exec as jest.Mock).mockReturnValue({ output: `INFO: Config validated successfully` });
 
     expect(renovateConfigValidatorTask(tree)).toBeTruthy();
   });
 
   it('should return fals if the validator runs fails', () => {
-    (execSync as jest.Mock).mockReturnValue(`FATAL: Error`);
+    (exec as jest.Mock).mockReturnValue({ output: `FATAL: Error` });
 
     expect(renovateConfigValidatorTask(tree)).toBeFalsy();
   });

@@ -1,11 +1,10 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
+import { exec } from '../exec';
 import { formatWorkspaceTask } from './format-workspace-task';
 
-jest.mock('child_process');
+jest.mock('../exec');
 
 describe('@nx-squeezer/workspace formatWorkspaceTask', () => {
   let tree: Tree;
@@ -17,17 +16,15 @@ describe('@nx-squeezer/workspace formatWorkspaceTask', () => {
   });
 
   it('should execute prettier command', () => {
-    (execSync as jest.Mock).mockReturnValue(null);
+    (exec as jest.Mock).mockReturnValue({});
 
     formatWorkspaceTask(tree);
 
-    expect(execSync).toHaveBeenCalledWith('npx prettier . --write', { cwd: '/virtual', stdio: [0, 1, 2] });
+    expect(exec).toHaveBeenCalledWith('npx', ['prettier', '.', '--write'], { cwd: '/virtual' });
   });
 
   it('should not fail if exec sync fails', () => {
-    (execSync as jest.Mock).mockImplementation(() => {
-      throw new Error();
-    });
+    (exec as jest.Mock).mockReturnValue({ error: '' });
 
     formatWorkspaceTask(tree);
 

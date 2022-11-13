@@ -1,14 +1,12 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { exec } from '../exec';
 import { addDevDependencyToPackageJson, addScriptToPackageJson } from '../package-json';
 import { joinNormalize } from '../path';
 import { addHuskyHookTask, addHuskyToPackageJson, husky, HuskyHooks, huskyPath, installHuskyTask } from './husky';
 
-jest.mock('child_process');
-
+jest.mock('../exec');
 jest.mock('../package-json');
 
 describe('@nx-squeezer/workspace husky', () => {
@@ -33,12 +31,15 @@ describe('@nx-squeezer/workspace husky', () => {
 
   describe('installHuskyTask', () => {
     it('should install husky', () => {
+      (exec as jest.Mock).mockReturnValue({ output: '' });
+
       installHuskyTask(tree);
 
-      expect(execSync).toHaveBeenCalledWith(`npx husky install`, { cwd: '/virtual', stdio: [0, 1, 2] });
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'install'], { cwd: '/virtual' });
     });
 
     it('should skip installation if already installed', () => {
+      (exec as jest.Mock).mockReturnValue({ output: '' });
       tree.write(joinNormalize(huskyPath, 'pre-commit'), '');
 
       installHuskyTask(tree);
@@ -47,9 +48,7 @@ describe('@nx-squeezer/workspace husky', () => {
     });
 
     it('should not fail if exec sync fails', () => {
-      (execSync as jest.Mock).mockImplementation(() => {
-        throw new Error();
-      });
+      (exec as jest.Mock).mockReturnValue({ error: '' });
 
       installHuskyTask(tree);
 
@@ -64,9 +63,8 @@ describe('@nx-squeezer/workspace husky', () => {
     it('should add husky hook if husky not installed', () => {
       addHuskyHookTask(tree, hook, command);
 
-      expect(execSync).toHaveBeenCalledWith(`npx husky add ${huskyPath}/${hook} "${command}"`, {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
-        stdio: [0, 1, 2],
       });
     });
 
@@ -75,9 +73,8 @@ describe('@nx-squeezer/workspace husky', () => {
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(execSync).toHaveBeenCalledWith(`npx husky add ${huskyPath}/${hook} "${command}"`, {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
-        stdio: [0, 1, 2],
       });
     });
 
@@ -86,9 +83,8 @@ describe('@nx-squeezer/workspace husky', () => {
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(execSync).toHaveBeenCalledWith(`npx husky add ${huskyPath}/${hook} "${command}"`, {
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
         cwd: '/virtual',
-        stdio: [0, 1, 2],
       });
     });
 
@@ -101,9 +97,7 @@ describe('@nx-squeezer/workspace husky', () => {
     });
 
     it('should not fail if exec sync fails', () => {
-      (execSync as jest.Mock).mockImplementation(() => {
-        throw new Error();
-      });
+      (exec as jest.Mock).mockReturnValue({ error: '' });
 
       addHuskyHookTask(tree, hook, command);
 

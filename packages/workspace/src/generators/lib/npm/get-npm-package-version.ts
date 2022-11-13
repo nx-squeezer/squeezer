@@ -1,20 +1,12 @@
-import { execSync } from 'child_process';
+import { exec } from '../exec';
 
 export function getNpmPackageVersion(packageName: string): string | null {
-  try {
-    const version = execSync(`npm view ${packageName} version`, {
-      stdio: ['pipe', 'pipe', 'ignore'],
-    });
+  const { output, error } = exec('npm', ['view', packageName, 'version']);
 
-    if (version) {
-      return version
-        .toString()
-        .trim()
-        .replace(/^\n*|\n*$/g, '');
-    }
-  } catch (err) {
-    console.error(err);
+  if (error != null) {
+    console.error(`Could not retrieve package version for "${packageName}"`);
+    return null;
   }
-  console.error(`Could not retrieve package version for "${packageName}"`);
-  return null;
+
+  return output.trim().replace(/^\n*|\n*$/g, '');
 }

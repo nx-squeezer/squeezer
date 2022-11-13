@@ -1,11 +1,10 @@
-import { execSync } from 'child_process';
-
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
+import { exec } from '../exec';
 import { lintWorkspaceTask } from './lint-workspace-task';
 
-jest.mock('child_process');
+jest.mock('../exec');
 
 describe('@nx-squeezer/workspace lintWorkspaceTask', () => {
   let tree: Tree;
@@ -17,20 +16,17 @@ describe('@nx-squeezer/workspace lintWorkspaceTask', () => {
   });
 
   it('should execute lint command', () => {
-    (execSync as jest.Mock).mockReturnValue(null);
+    (exec as jest.Mock).mockReturnValue({});
 
     lintWorkspaceTask(tree);
 
-    expect(execSync).toHaveBeenCalledWith('npx nx run-many --target=lint --parallel=2 --all --fix', {
+    expect(exec).toHaveBeenCalledWith('npx', ['nx', 'run-many', '--target=lint', '--parallel=2', '--all', '--fix'], {
       cwd: '/virtual',
-      stdio: [0, 1, 2],
     });
   });
 
   it('should not fail if exec sync fails', () => {
-    (execSync as jest.Mock).mockImplementation(() => {
-      throw new Error();
-    });
+    (exec as jest.Mock).mockReturnValue({ error: '' });
 
     lintWorkspaceTask(tree);
 
