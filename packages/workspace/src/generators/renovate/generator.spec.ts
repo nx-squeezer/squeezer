@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { parse, stringify } from 'yaml';
 
 import { ciFile } from '../github-workflow';
-import { getGitRepoSlug, securityFile } from '../lib';
+import { getGitRepoSlug, readmeFile, securityFile } from '../lib';
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
@@ -23,6 +23,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
   beforeEach(() => {
     tree = createTreeWithEmptyWorkspace();
     tree.write(ciFile, stringify({ on: { push: { branches: ['main'] } } }));
+    tree.write(readmeFile, `# README\n`);
     jest.spyOn(console, 'log').mockImplementation(() => null);
     jest.spyOn(console, 'error').mockImplementation(() => null);
     (getGitRepoSlug as jest.Mock).mockReturnValue('test/test');
@@ -166,6 +167,14 @@ describe('@nx-squeezer/workspace renovate generator', () => {
     await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
 
     expect(tree.read(securityFile)?.toString()).toBe(customSecurity);
+  });
+
+  it('should add renovate badge', async () => {
+    await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
+
+    expect(tree.read(readmeFile)?.toString()).toContain(
+      `![renovate](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot)`
+    );
   });
 });
 

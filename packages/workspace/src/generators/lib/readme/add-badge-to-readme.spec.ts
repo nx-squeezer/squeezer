@@ -70,4 +70,15 @@ describe('@nx-squeezer/workspace addBadgeToReadme', () => {
       `# README\n\n[![description](badge)](link) [![existing](existing)](existing)`
     );
   });
+
+  it('should create a badge without link', () => {
+    const readme = `# README\n\n[![existing](existing)](existing)`;
+    tree.write(readmeFile, readme);
+
+    addBadgeToReadme(tree, badge, null, description);
+
+    expect(tree.read(readmeFile)?.toString()).toBe(
+      `# README\n\n[![existing](existing)](existing) ![description](badge)`
+    );
+  });
 });
