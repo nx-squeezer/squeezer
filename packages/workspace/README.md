@@ -21,7 +21,7 @@ npm install --save-dev @nx-squeezer/workspace
 - [renovate](#renovate)
 - [tsconfig](#tsconfig)
 
-## [codecov](generators/codecov/README.md)
+## [codecov](src/generators/codecov/README.md)
 
 Setup command:
 
@@ -36,7 +36,7 @@ Adds [`codecov`](https://docs.codecov.com/docs) to a project to have coverage in
 - Updates CI file to upload coverage report.
 - Adds badge to README.md.
 
-## [contributors](generators/contributors/README.md)
+## [contributors](src/generators/contributors/README.md)
 
 Setup command:
 
@@ -46,7 +46,7 @@ nx g @nx-squeezer/workspace:contributors
 
 Adds contributors attribution to `README.md` using [`contrib.rocks`](https://contrib.rocks/).
 
-## [eslint](generators/eslint/README.md)
+## [eslint](src/generators/eslint/README.md)
 
 Setup command, which will prompt one by one the set of rules that can be added:
 
@@ -63,7 +63,7 @@ Adds a set of [ESLint](https://eslint.org/) rules to enhance code style in proje
 - `@delagen/deprecation`
 - `import/recommended`
 
-## [github-workflow](generators/github-workflow/README.md)
+## [github-workflow](src/generators/github-workflow/README.md)
 
 Setup command:
 
@@ -87,7 +87,7 @@ Options:
 - Provide default branch with `--branch=master` (default `main`).
 - Use [Nx Cloud](https://nx.app) `--useNxCloud` (default `true`).
 
-## [lint-staged](generators/lint-staged/README.md)
+## [lint-staged](src/generators/lint-staged/README.md)
 
 Setup command:
 
@@ -97,7 +97,7 @@ nx g @nx-squeezer/workspace:lint-staged
 
 Uses [`lint-staged`](https://github.com/okonet/lint-staged[) and [`husky`](https://github.com/typicode/husky) to lint files when being committed to the repo.
 
-## [prettier](generators/prettier/README.md)
+## [prettier](src/generators/prettier/README.md)
 
 Setup command:
 
@@ -107,7 +107,7 @@ nx g @nx-squeezer/workspace:prettier
 
 Updates [`prettier`](https://github.com/prettier/prettier) configuration with some defaults, and adds [`prettier/recommended`](https://github.com/prettier/eslint-plugin-prettier) rule to ESLint configuration.
 
-## [renovate](generators/renovate/README.md)
+## [renovate](src/generators/renovate/README.md)
 
 Setup command:
 
@@ -243,7 +243,7 @@ This [preset](https://github.com/nx-squeezer/squeezer/blob/main/maintenance.json
 
 </details>
 
-## [tsconfig](generators/tsconfig/README.md)
+## [tsconfig](src/generators/tsconfig/README.md)
 
 Setup command:
 
