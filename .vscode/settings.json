@@ -3,7 +3,7 @@
   "editor.formatOnPaste": true,
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
-  "conventionalCommits.scopes": ["workspace", "renovate"],
+  "conventionalCommits.scopes": ["workspace", "renovate", "deps"],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
