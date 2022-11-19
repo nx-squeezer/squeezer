@@ -2,7 +2,7 @@ import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
 import { ciFile } from '../github-workflow';
-import { getGitRepoSlug, joinNormalize, securityFile } from '../lib';
+import { addBadgeToReadme, getGitRepoSlug, joinNormalize, securityFile } from '../lib';
 import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
@@ -52,6 +52,15 @@ export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSc
     pushBranches.add(new Scalar(renovateBranch));
   }
   tree.write(ciFile, stringify(ci));
+
+  // Add badge to README.md
+
+  addBadgeToReadme(
+    tree,
+    'https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot',
+    null,
+    'renovate'
+  );
 
   await formatFiles(tree);
 

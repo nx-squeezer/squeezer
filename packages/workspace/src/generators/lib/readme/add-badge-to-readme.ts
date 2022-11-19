@@ -5,9 +5,15 @@ import { readmeFile } from './readme';
 const titleRegex = /^#\s+/;
 const badgesRegex = /^\s*(\[!\[.+\]\(.+\)\]\(.+\)\s*)+/;
 
-export function addBadgeToReadme(tree: Tree, badge: string, link: string, description: string, beginning = false) {
+export function addBadgeToReadme(
+  tree: Tree,
+  badgeImg: string,
+  link: string | null,
+  description: string,
+  beginning = false
+) {
   const readme = tree.read(readmeFile)?.toString() ?? '';
-  const badgeMarkdown = `[![${description}](${badge})](${link})`;
+  const badgeMarkdown = link ? `[![${description}](${badgeImg})](${link})` : `![${description}](${badgeImg})`;
 
   if (readme.includes(badgeMarkdown)) {
     console.log(`Badge for ${description} already present in ${readmeFile}`);
