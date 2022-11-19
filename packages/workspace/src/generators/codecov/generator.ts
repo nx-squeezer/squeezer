@@ -24,8 +24,6 @@ export async function codecovGenerator(tree: Tree) {
     console.error(`Try to generate it first using nx g @nx-squeezer/workspace:github-workflow`);
   }
 
-  await formatFiles(tree);
-
   // Validate
   const response = await fetch(`https://api.codecov.io/validate`, { method: 'POST', body: readRawCodecov(tree) });
   if (response.ok) {
@@ -47,4 +45,6 @@ export async function codecovGenerator(tree: Tree) {
       'codecov'
     );
   }
+
+  await formatFiles(tree);
 }
