@@ -10,6 +10,19 @@ Contributing and maintaining OSS projects can be boosted :rocket: through a set 
 npm install --save-dev @nx-squeezer/workspace
 ```
 
+Recommended order to setup all the generators:
+
+```shell
+nx g @nx-squeezer/workspace:prettier
+nx g @nx-squeezer/workspace:eslint
+nx g @nx-squeezer/workspace:tsconfig
+nx g @nx-squeezer/workspace:lint-staged
+nx g @nx-squeezer/workspace:contributors
+nx g @nx-squeezer/workspace:github-workflow
+nx g @nx-squeezer/workspace:codecov
+nx g @nx-squeezer/workspace:renovate
+```
+
 ## Generators <!-- omit in toc -->
 
 - [codecov](#codecov)
