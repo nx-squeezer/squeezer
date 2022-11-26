@@ -8,10 +8,10 @@
   "peerDependencies": {
     "@nrwl/devkit": "^15.2.1",
     "husky": "^8.0.2",
-    "lint-staged": "^13.0.3",
+    "lint-staged": "^13.0.4",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.7.1",
-    "renovate": "^34.29.1",
+    "renovate": "^34.37.0",
     "yaml": "^2.1.3"
   },
   "devDependencies": {
