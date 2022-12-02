@@ -26,6 +26,7 @@ nx g @nx-squeezer/workspace:renovate
 ## Generators <!-- omit in toc -->
 
 - [codecov](#codecov)
+- [commitlint](#commitlint)
 - [contributors](#contributors)
 - [eslint](#eslint)
 - [github-workflow](#github-workflow)
@@ -48,6 +49,16 @@ Adds [`codecov`](https://docs.codecov.com/docs) to a project to have coverage in
 - Configures individual projects with `test` target to expose coverage information.
 - Updates CI file to upload coverage report.
 - Adds badge to README.md.
+
+## [commitlint](src/generators/commitlint/README.md)
+
+Setup command:
+
+```shell
+nx g @nx-squeezer/workspace:commitlint
+```
+
+Uses [`commitlint`](https://github.com/conventional-changelog/commitlint) and [`husky`](https://github.com/typicode/husky) to lint commit messages to adhere to [conventional commits](https://www.conventionalcommits.org/). It uses the default configuration provided by [@commitlint/config-conventional](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional).
 
 ## [contributors](src/generators/contributors/README.md)
 

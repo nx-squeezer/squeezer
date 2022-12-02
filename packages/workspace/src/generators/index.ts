@@ -1,4 +1,5 @@
 export * from './codecov';
+export * from './commitlint';
 export * from './contributors';
 export * from './eslint';
 export * from './github-workflow';
