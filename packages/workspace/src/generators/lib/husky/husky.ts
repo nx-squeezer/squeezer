@@ -6,7 +6,7 @@ import { joinNormalize } from '../path';
 
 export const husky = 'husky';
 export const huskyPath = '.husky';
-export type HuskyHooks = 'pre-commit';
+export type HuskyHooks = 'pre-commit' | 'commit-msg';
 
 export function addHuskyToPackageJson(tree: Tree) {
   addDevDependencyToPackageJson(tree, husky);

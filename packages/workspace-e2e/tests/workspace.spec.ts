@@ -32,6 +32,9 @@ import {
   joinNormalize,
   huskyPath,
   securityFile,
+  CommitlintConfig,
+  commitlintConfigPath,
+  commitlintDefaultConfig,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -266,6 +269,20 @@ describe('@nx-squeezer/workspace e2e', () => {
 
       const preCommitHook = readFile(joinNormalize(huskyPath, 'pre-commit'));
       expect(preCommitHook).toContain('npx lint-staged');
+    });
+  });
+
+  describe('commitlint workflow generator', () => {
+    it('should create commitlint configuration and husky hook', async () => {
+      await runCommandAsync('git init');
+
+      await runNxCommandAsync(`generate @nx-squeezer/workspace:commitlint`);
+
+      const commitlintConfig = readJson<CommitlintConfig>(commitlintConfigPath);
+      expect(commitlintConfig).toStrictEqual(commitlintDefaultConfig);
+
+      const commitMsgHook = readFile(joinNormalize(huskyPath, 'commit-msg'));
+      expect(commitMsgHook).toContain('npx --no-install commitlint --edit $1');
     });
   });
 });

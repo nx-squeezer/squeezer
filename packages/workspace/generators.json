@@ -8,6 +8,11 @@
       "schema": "./src/generators/codecov/schema.json",
       "description": "Configures Codecov"
     },
+    "commitlint": {
+      "factory": "./src/generators/commitlint/generator#commitlintGenerator",
+      "schema": "./src/generators/commitlint/schema.json",
+      "description": "Configures commitlint to lint commit messages according to conventional commits"
+    },
     "contributors": {
       "factory": "./src/generators/contributors/generator#contributorsGenerator",
       "schema": "./src/generators/contributors/schema.json",
