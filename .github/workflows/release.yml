@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v3.1.0
         with:
           fetch-depth: 0
-          persist-credentials: false # Needed so that semantic release can use the admin token
+          token: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v3.5.1
@@ -28,13 +28,9 @@ jobs:
       - name: Version
         shell: bash
         run: npx nx affected --base=last-release --target=version
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
       - name: Tag last-release
         shell: bash
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           git tag -f last-release
           git push origin last-release --force
