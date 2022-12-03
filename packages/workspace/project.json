@@ -60,6 +60,7 @@
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
+        "push": true,
         "preset": "conventional",
         "trackDeps": true,
         "tagPrefix": "${projectName}@",
@@ -70,7 +71,6 @@
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
-        "target": "main",
         "tag": "${tag}",
         "notes": "${notes}"
       }
