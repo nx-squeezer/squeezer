@@ -6,6 +6,8 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "peerDependencies": {
+    "@commitlint/cli": "^17.3.0",
+    "@commitlint/config-conventional": "^17.3.0",
     "@nrwl/devkit": "^15.2.4",
     "husky": "^8.0.2",
     "lint-staged": "^13.0.4",
