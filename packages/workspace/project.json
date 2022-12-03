@@ -70,6 +70,7 @@
     "github": {
       "executor": "@jscutlery/semver:github",
       "options": {
+        "target": "main",
         "tag": "${tag}",
         "notes": "${notes}"
       }
