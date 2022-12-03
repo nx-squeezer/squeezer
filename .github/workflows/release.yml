@@ -27,6 +27,8 @@ jobs:
 
       - name: Version
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: npx nx affected --base=last-release --target=version
 
       - name: Tag last-release
