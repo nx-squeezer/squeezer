@@ -275,7 +275,7 @@ Setup command:
 nx g @nx-squeezer/workspace:tsconfig
 ```
 
-Updates the `tsconfig.json` file adding a default configuration with stricter options turned on.
+Updates the `tsconfig.json` file adding a default configuration with stricter options enabled.
 
 ## Contributors <!-- omit in toc -->
 
