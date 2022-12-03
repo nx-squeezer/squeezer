@@ -16,6 +16,11 @@ jobs:
         with:
           node-version: 16.x
 
+      - name: Setup Git
+        run: |
+          git config user.name "Samuel Fernández"
+          git config user.email "samuelfernandez@users.noreply.github.com"
+
       - name: NPM
         uses: ng-easy/npm-setup@v2.0.14
 
