@@ -38,7 +38,7 @@
     "lint-staged": "13.0.4",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.8.0",
-    "renovate": "34.48.0",
+    "renovate": "34.48.1",
     "yaml": "2.1.3"
   },
   "devDependencies": {
