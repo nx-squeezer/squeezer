@@ -35,7 +35,7 @@
     "@jscutlery/semver": "^2.29.0",
     "@nrwl/devkit": "15.2.4",
     "husky": "8.0.2",
-    "lint-staged": "13.0.4",
+    "lint-staged": "13.1.0",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.8.0",
     "renovate": "34.48.3",
