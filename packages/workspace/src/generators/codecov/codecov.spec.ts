@@ -111,10 +111,20 @@ describe('@nx-squeezer/workspace codecov', () => {
         sourceRoot: 'libs/lib4/src',
       });
 
+      addProjectConfiguration(tree, 'lib5', {
+        root: 'libs/lib5',
+        sourceRoot: 'libs/lib5/src',
+        targets: {
+          test: {
+            command: 'npm run test',
+          },
+        },
+      });
+
       writeProjectsToCodecov(tree);
 
       expect(console.log).toHaveBeenCalledWith(
-        `Ignored projects where a test target with a jest executor was not detected: lib2, lib3, lib4`
+        `Ignored projects where a test target with a jest executor was not detected: lib2, lib3, lib4, lib5`
       );
     });
 

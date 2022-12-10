@@ -102,7 +102,7 @@ export function writeProjectsToCodecov(tree: Tree): void {
 
   projects.forEach((projectConfiguration: ProjectConfiguration, projectName: string) => {
     const testTarget = projectConfiguration.targets?.test;
-    if (testTarget != null && testTarget.executor.includes('jest')) {
+    if (testTarget != null && testTarget.executor?.includes('jest')) {
       testableProjects.set(projectName, projectConfiguration);
       testTarget.options = {
         ...testTarget.options,
