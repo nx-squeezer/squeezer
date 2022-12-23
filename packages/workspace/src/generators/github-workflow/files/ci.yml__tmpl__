@@ -11,8 +11,7 @@ jobs:
   npm:
     name: NPM
     runs-on: ubuntu-latest
-    env:
-      NX_RUN_GROUP: ${{ github.run_id }}<% if (useNxCloud) { %>
+    env:<% if (useNxCloud) { %>
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}<% } %>
 
     steps:
@@ -33,7 +32,6 @@ jobs:
     needs: [ npm ]
     runs-on: ubuntu-latest
     env:
-      NX_RUN_GROUP: ${{ github.run_id }}
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
@@ -52,15 +50,14 @@ jobs:
           nx-key: <%= target.name %>
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v2.2.7
+        uses: nrwl/nx-set-shas@v3.0.0
 
       - name: <%= target.className %>
-        uses: mansagroup/nrwl-nx-action@v2.1.0
+        uses: mansagroup/nrwl-nx-action@v3.2.1
         with:
           targets: <%= target.name %>
           affected: 'true'
-          parallel: 'true'
-          maxParallel: <% if (target.name === 'e2e') { %>1<% } else { %>3<% } %><% if (useNxCloud) { %>
+          parallel: <% if (target.name === 'e2e') { %>1<% } else { %>3<% } %><% if (useNxCloud) { %>
           nxCloud: 'true'<% } %><% if (target.name === 'lint') { %>
 
       - name: lint workspace
