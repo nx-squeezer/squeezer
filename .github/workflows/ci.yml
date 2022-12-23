@@ -53,7 +53,7 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Build
-        uses: mansagroup/nrwl-nx-action@v3.1.0
+        uses: mansagroup/nrwl-nx-action@v3.2.1
         with:
           targets: build
           affected: 'true'
@@ -86,7 +86,7 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Lint
-        uses: mansagroup/nrwl-nx-action@v3.1.0
+        uses: mansagroup/nrwl-nx-action@v3.2.1
         with:
           targets: lint
           affected: 'true'
@@ -122,7 +122,7 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Test
-        uses: mansagroup/nrwl-nx-action@v3.1.0
+        uses: mansagroup/nrwl-nx-action@v3.2.1
         with:
           targets: test
           affected: 'true'
@@ -162,7 +162,7 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.2
 
       - name: e2e
-        uses: mansagroup/nrwl-nx-action@v3.1.0
+        uses: mansagroup/nrwl-nx-action@v3.2.1
         with:
           targets: e2e
           affected: 'true'

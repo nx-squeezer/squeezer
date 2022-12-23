@@ -165,7 +165,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'Build',
-          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
           with: {
             targets: 'build',
             affected: 'true',
@@ -210,7 +210,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'Lint',
-          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
           with: {
             targets: 'lint',
             affected: 'true',
@@ -259,7 +259,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'Test',
-          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
           with: {
             targets: 'test',
             affected: 'true',
@@ -304,7 +304,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'e2e',
-          uses: 'mansagroup/nrwl-nx-action@v3.1.0',
+          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
           with: {
             targets: 'e2e',
             affected: 'true',
