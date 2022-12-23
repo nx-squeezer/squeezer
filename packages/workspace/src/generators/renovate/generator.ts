@@ -1,17 +1,13 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
-import {
-  ciFile,
-  getGitRepoSlug,
-  joinNormalize,
-  renovateBranch,
-  renovateCiFile,
-  renovateConfigValidatorTask,
-} from '../core';
+import { ciFile } from '../github-workflow';
+import { addBadgeToReadme, getGitRepoSlug, joinNormalize, securityFile } from '../lib';
+import { renovateCiFile, renovateBranch } from './renovate';
+import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: RenovateGeneratorSchema) {
+export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {
     console.log(`Renovate workflow already existing at path: ${renovateCiFile}`);
     return;
@@ -39,6 +35,10 @@ export default async function (tree: Tree, options: RenovateGeneratorSchema) {
     generateFiles(tree, joinNormalize(__dirname, 'presets'), '.', templateOptions);
   }
 
+  if (!tree.exists(securityFile)) {
+    generateFiles(tree, joinNormalize(__dirname, 'security'), '.', templateOptions);
+  }
+
   // Update CI
 
   if (!tree.exists(ciFile)) {
@@ -52,6 +52,15 @@ export default async function (tree: Tree, options: RenovateGeneratorSchema) {
     pushBranches.add(new Scalar(renovateBranch));
   }
   tree.write(ciFile, stringify(ci));
+
+  // Add badge to README.md
+
+  addBadgeToReadme(
+    tree,
+    'https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot',
+    null,
+    'renovate'
+  );
 
   await formatFiles(tree);
 

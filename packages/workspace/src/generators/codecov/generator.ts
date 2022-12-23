@@ -1,18 +1,11 @@
 import { formatFiles, Tree } from '@nrwl/devkit';
 import fetch from 'node-fetch-commonjs';
 
-import {
-  addBadgeToReadme,
-  addImplicitDependencyToNxConfig,
-  addGitHubCiJobStep,
-  existsGitHubCiWorkflow,
-  getCodecovFile,
-  getGitRepoSlug,
-  readRawCodecov,
-  writeProjectsToCodecov,
-} from '../core';
+import { existsGitHubCiWorkflow, addGitHubCiJobStep } from '../github-workflow';
+import { addBadgeToReadme, addImplicitDependencyToNxConfig, getGitRepoSlug } from '../lib';
+import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
-export default async function (tree: Tree) {
+export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
   addImplicitDependencyToNxConfig(tree, { [getCodecovFile(tree)]: '*' });
 
@@ -30,8 +23,6 @@ export default async function (tree: Tree) {
     console.error(`Codecov needs to be called from a CI pipeline, but it could not be found.`);
     console.error(`Try to generate it first using nx g @nx-squeezer/workspace:github-workflow`);
   }
-
-  await formatFiles(tree);
 
   // Validate
   const response = await fetch(`https://api.codecov.io/validate`, { method: 'POST', body: readRawCodecov(tree) });
@@ -54,4 +45,6 @@ export default async function (tree: Tree) {
       'codecov'
     );
   }
+
+  await formatFiles(tree);
 }

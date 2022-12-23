@@ -3,20 +3,18 @@ import { join } from 'path';
 import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
+import { addDevDependencyToPackageJson, joinNormalize, lintWorkspaceTask } from '../lib';
 import {
-  addDevDependencyToPackageJson,
-  addEsLintPlugin,
   addEsLintRules,
-  lintWorkspaceTask,
   readEsLintConfig,
   writeEsLintConfig,
-  eslintConfigFile,
+  addEsLintPlugin,
   EsLintConfigurationOverrideRule,
-  joinNormalize,
-} from '../core';
+  eslintConfigFile,
+} from './eslint-config';
 import { EsLintGeneratorSchema } from './schema';
 
-export default async function (tree: Tree, options: EsLintGeneratorSchema) {
+export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {
     addEsLintRecommendedRules(tree);
   }

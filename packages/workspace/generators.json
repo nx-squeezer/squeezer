@@ -3,40 +3,50 @@
   "name": "workspace",
   "version": "0.0.1",
   "generators": {
-    "prettier": {
-      "factory": "./src/generators/prettier/generator",
-      "schema": "./src/generators/prettier/schema.json",
-      "description": "Configure Prettier"
-    },
-    "tsconfig": {
-      "factory": "./src/generators/tsconfig/generator",
-      "schema": "./src/generators/tsconfig/schema.json",
-      "description": "Configures tsconfig.base.json"
-    },
-    "github-workflow": {
-      "factory": "./src/generators/github-workflow/generator",
-      "schema": "./src/generators/github-workflow/schema.json",
-      "description": "Configures GitHub CI Workflow"
-    },
-    "eslint": {
-      "factory": "./src/generators/eslint/generator",
-      "schema": "./src/generators/eslint/schema.json",
-      "description": "Configures ESLint with additional rules"
-    },
     "codecov": {
-      "factory": "./src/generators/codecov/generator",
+      "factory": "./src/generators/codecov/generator#codecovGenerator",
       "schema": "./src/generators/codecov/schema.json",
       "description": "Configures Codecov"
     },
+    "commitlint": {
+      "factory": "./src/generators/commitlint/generator#commitlintGenerator",
+      "schema": "./src/generators/commitlint/schema.json",
+      "description": "Configures commitlint to lint commit messages according to conventional commits"
+    },
+    "contributors": {
+      "factory": "./src/generators/contributors/generator#contributorsGenerator",
+      "schema": "./src/generators/contributors/schema.json",
+      "description": "Adds contributors section to Readme.md"
+    },
+    "eslint": {
+      "factory": "./src/generators/eslint/generator#eslintGenerator",
+      "schema": "./src/generators/eslint/schema.json",
+      "description": "Configures ESLint with additional rules"
+    },
+    "github-workflow": {
+      "factory": "./src/generators/github-workflow/generator#gitHubWorkflowGenerator",
+      "schema": "./src/generators/github-workflow/schema.json",
+      "description": "Configures GitHub CI Workflow"
+    },
+    "lint-staged": {
+      "factory": "./src/generators/lint-staged/generator#lintStagedGenerator",
+      "schema": "./src/generators/lint-staged/schema.json",
+      "description": "Configures lint-staged"
+    },
+    "prettier": {
+      "factory": "./src/generators/prettier/generator#prettierGenerator",
+      "schema": "./src/generators/prettier/schema.json",
+      "description": "Configure Prettier"
+    },
     "renovate": {
-      "factory": "./src/generators/renovate/generator",
+      "factory": "./src/generators/renovate/generator#renovateGenerator",
       "schema": "./src/generators/renovate/schema.json",
       "description": "Configures Renovate"
     },
-    "contributors": {
-      "factory": "./src/generators/contributors/generator",
-      "schema": "./src/generators/contributors/schema.json",
-      "description": "Adds contributors section to Readme.md"
+    "tsconfig": {
+      "factory": "./src/generators/tsconfig/generator#tsConfigGenerator",
+      "schema": "./src/generators/tsconfig/schema.json",
+      "description": "Configures tsconfig.base.json"
     }
   }
 }

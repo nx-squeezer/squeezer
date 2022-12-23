@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3.5.1
@@ -35,7 +35,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -50,7 +50,7 @@ jobs:
           nx-key: build
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v3.0.0
+        uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Build
         uses: mansagroup/nrwl-nx-action@v3.1.0
@@ -68,7 +68,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -83,7 +83,7 @@ jobs:
           nx-key: lint
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v3.0.0
+        uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Lint
         uses: mansagroup/nrwl-nx-action@v3.1.0
@@ -104,7 +104,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -119,7 +119,7 @@ jobs:
           nx-key: test
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v3.0.0
+        uses: nrwl/nx-set-shas@v3.0.2
 
       - name: Test
         uses: mansagroup/nrwl-nx-action@v3.1.0
@@ -144,7 +144,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v3.2.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -159,7 +159,7 @@ jobs:
           nx-key: e2e
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v3.0.0
+        uses: nrwl/nx-set-shas@v3.0.2
 
       - name: e2e
         uses: mansagroup/nrwl-nx-action@v3.1.0

@@ -7,6 +7,20 @@
       "matchPackagePatterns": [".*"],
       "matchDepTypes": ["dependencies", "peerDependencies", "optionalDependencies"],
       "matchUpdateTypes": ["minor", "patch", "bump"],
+      "excludePackagePatterns": [
+        "^@angular-devkit/",
+        "^@angular-eslint/",
+        "^@angular/",
+        "^@ng-easy/",
+        "^@ngrx/",
+        "^@nrwl/",
+        "^ng-packagr",
+        "^nx$",
+        "^nx-",
+        "^ts-node",
+        "^tslib",
+        "^zone\\.js"
+      ],
       "semanticCommitType": "fix"
     },
     {
@@ -15,6 +29,20 @@
       "matchPackagePatterns": [".*"],
       "matchDepTypes": ["devDependencies"],
       "matchUpdateTypes": ["minor", "patch", "bump"],
+      "excludePackagePatterns": [
+        "^@angular-devkit/",
+        "^@angular-eslint/",
+        "^@angular/",
+        "^@ng-easy/",
+        "^@ngrx/",
+        "^@nrwl/",
+        "^ng-packagr",
+        "^nx$",
+        "^nx-",
+        "^ts-node",
+        "^tslib",
+        "^zone\\.js"
+      ],
       "semanticCommitType": "chore"
     }
   ]

@@ -1,4 +1,11 @@
-import { ensureNxProject, readJson, runNxCommandAsync, checkFilesExist, readFile } from '@nrwl/nx-plugin/testing';
+import {
+  ensureNxProject,
+  readJson,
+  runNxCommandAsync,
+  checkFilesExist,
+  readFile,
+  runCommandAsync,
+} from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
@@ -19,6 +26,15 @@ import {
   renovatePresets,
   renovateFile,
   readmeFile,
+  lintStagedConfigPath,
+  LintStagedConfig,
+  lintStagedDefaultConfig,
+  joinNormalize,
+  huskyPath,
+  securityFile,
+  CommitlintConfig,
+  commitlintConfigPath,
+  commitlintDefaultConfig,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -224,6 +240,7 @@ describe('@nx-squeezer/workspace e2e', () => {
       expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
       expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
       expect(() => checkFilesExist(renovateFile)).not.toThrow();
+      expect(() => checkFilesExist(securityFile)).not.toThrow();
 
       renovatePresets.forEach((preset) => {
         expect(() => checkFilesExist(preset)).not.toThrow();
@@ -238,6 +255,34 @@ describe('@nx-squeezer/workspace e2e', () => {
       const readme = readFile(readmeFile);
 
       expect(readme).toContain(`## Contributors`);
+    });
+  });
+
+  describe('lint-staged workflow generator', () => {
+    it('should create lint-staged configuration and husky hook', async () => {
+      await runCommandAsync('git init');
+
+      await runNxCommandAsync(`generate @nx-squeezer/workspace:lint-staged`);
+
+      const lintStagedConfig = readJson<LintStagedConfig>(lintStagedConfigPath);
+      expect(lintStagedConfig).toStrictEqual(lintStagedDefaultConfig);
+
+      const preCommitHook = readFile(joinNormalize(huskyPath, 'pre-commit'));
+      expect(preCommitHook).toContain('npx lint-staged');
+    });
+  });
+
+  describe('commitlint workflow generator', () => {
+    it('should create commitlint configuration and husky hook', async () => {
+      await runCommandAsync('git init');
+
+      await runNxCommandAsync(`generate @nx-squeezer/workspace:commitlint`);
+
+      const commitlintConfig = readJson<CommitlintConfig>(commitlintConfigPath);
+      expect(commitlintConfig).toStrictEqual(commitlintDefaultConfig);
+
+      const commitMsgHook = readFile(joinNormalize(huskyPath, 'commit-msg'));
+      expect(commitMsgHook).toContain('npx --no-install commitlint --edit $1');
     });
   });
 });

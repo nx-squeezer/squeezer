@@ -1,11 +1,14 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { getGitRepoSlug, readmeFile } from '../core';
-import generator from './generator';
-import schematic from './generator.compat';
+import { getGitRepoSlug, readmeFile } from '../lib';
+import { contributorsGenerator } from './generator';
+import { contributorsSchematic } from './generator.compat';
 
-jest.mock('../core/get-git-repo');
+jest.mock('../lib', () => ({
+  ...jest.requireActual('../lib'),
+  getGitRepoSlug: jest.fn(),
+}));
 
 describe('@nx-squeezer/workspace contributors generator', () => {
   let tree: Tree;
@@ -19,27 +22,31 @@ describe('@nx-squeezer/workspace contributors generator', () => {
   });
 
   it('should run successfully', async () => {
-    await generator(tree);
+    await contributorsGenerator(tree);
   });
 
   it('should provide a schematic', async () => {
-    expect(typeof schematic({})).toBe('function');
+    expect(typeof contributorsSchematic({})).toBe('function');
   });
 
   it('should fail if Readme does not exist', async () => {
     tree.delete(readmeFile);
 
-    await expect(async () => await generator(tree)).rejects.toEqual(new Error(`Missing Readme file at: ${readmeFile}`));
+    await expect(async () => await contributorsGenerator(tree)).rejects.toEqual(
+      new Error(`Missing Readme file at: ${readmeFile}`)
+    );
   });
 
   it('should fail if remote repo can not be resolved', async () => {
     (getGitRepoSlug as jest.Mock).mockReturnValue(null);
 
-    await expect(async () => await generator(tree)).rejects.toEqual(new Error(`Remote repo could not be detected.`));
+    await expect(async () => await contributorsGenerator(tree)).rejects.toEqual(
+      new Error(`Remote repo could not be detected.`)
+    );
   });
 
   it('should add the contributors section and image', async () => {
-    await generator(tree);
+    await contributorsGenerator(tree);
 
     const readme = tree.read(readmeFile)?.toString() ?? '';
 
@@ -48,8 +55,8 @@ describe('@nx-squeezer/workspace contributors generator', () => {
   });
 
   it('should not add the contributors section if already existing', async () => {
-    await generator(tree);
-    await generator(tree);
+    await contributorsGenerator(tree);
+    await contributorsGenerator(tree);
 
     expect(console.log).toHaveBeenCalledWith(`Contributors section already existing at: ${readmeFile}`);
   });

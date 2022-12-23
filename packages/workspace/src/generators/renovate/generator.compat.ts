@@ -1,5 +1,5 @@
 import { convertNxGenerator } from '@nrwl/devkit';
 
-import generator from './generator';
+import { renovateGenerator } from './generator';
 
-export default convertNxGenerator(generator);
+export const renovateSchematic = convertNxGenerator(renovateGenerator);

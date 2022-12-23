@@ -15,9 +15,16 @@
     "local>nx-squeezer/squeezer:gitmoji",
     "local>nx-squeezer/squeezer:npm",
     "local>nx-squeezer/squeezer:groupAllNonMajor",
-    "local>nx-squeezer/squeezer:clientTooling",
+    "local>nx-squeezer/squeezer:tooling",
     "local>nx-squeezer/squeezer:maintenance",
     "local>nx-squeezer/squeezer:githubActions"
   ],
-  "rangeStrategy": "bump"
+  "rangeStrategy": "bump",
+  "packageRules": [
+    {
+      "matchDatasources": ["npm"],
+      "matchUpdateTypes": ["minor", "patch", "bump"],
+      "stabilityDays": 3
+    }
+  ]
 }

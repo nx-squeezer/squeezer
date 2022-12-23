@@ -1,0 +1,38 @@
+name: Release
+on:
+  - workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.2.0
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.RELEASE_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version: 16.x
+
+      - name: Setup Git
+        run: |
+          git config user.name "Samuel Fernández"
+          git config user.email "samuelfernandez@users.noreply.github.com"
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v2.0.14
+
+      - name: Version
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: npx nx affected --base=last-release --target=version
+
+      - name: Tag last-release
+        shell: bash
+        run: |
+          git tag -f last-release
+          git push origin last-release --force
