@@ -165,13 +165,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'Build',
-          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
-          with: {
-            targets: 'build',
-            affected: 'true',
-            parallel: 3,
-            nxCloud: 'true',
-          },
+          run: 'npx nx affected --target=build --parallel=3',
         },
       ],
     },
@@ -210,16 +204,10 @@ const ciFileContent = () => ({
         },
         {
           name: 'Lint',
-          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
-          with: {
-            targets: 'lint',
-            affected: 'true',
-            parallel: 3,
-            nxCloud: 'true',
-          },
+          run: 'npx nx affected --target=lint --parallel=3',
         },
         {
-          name: 'lint workspace',
+          name: 'Lint workspace',
           run: 'npm run lint:workspace',
         },
       ],
@@ -259,13 +247,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'Test',
-          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
-          with: {
-            targets: 'test',
-            affected: 'true',
-            parallel: 3,
-            nxCloud: 'true',
-          },
+          run: 'npx nx affected --target=test --parallel=3',
         },
       ],
     },
@@ -304,13 +286,7 @@ const ciFileContent = () => ({
         },
         {
           name: 'e2e',
-          uses: 'mansagroup/nrwl-nx-action@v3.2.1',
-          with: {
-            targets: 'e2e',
-            affected: 'true',
-            parallel: 1,
-            nxCloud: 'true',
-          },
+          run: 'npx nx affected --target=e2e --parallel=1',
         },
       ],
     },
