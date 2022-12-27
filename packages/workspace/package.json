@@ -40,8 +40,8 @@
     "lint-staged": "^13.1.0",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.8.1",
-    "renovate": "^34.58.0",
-    "yaml": "^2.1.3"
+    "renovate": "^34.72.3",
+    "yaml": "^2.2.0"
   },
   "devDependencies": {
     "@schemastore/eslintrc": "^0.0.6",
