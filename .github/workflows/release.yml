@@ -23,7 +23,7 @@ jobs:
           git config user.email "samuelfernandez@users.noreply.github.com"
 
       - name: NPM
-        uses: ng-easy/npm-setup@v2.0.14
+        uses: ng-easy/npm-setup@v2.0.15
 
       - name: Version
         shell: bash
