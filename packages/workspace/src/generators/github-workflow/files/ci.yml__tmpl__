@@ -53,13 +53,8 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.0
 
       - name: <%= target.className %>
-        uses: mansagroup/nrwl-nx-action@v3.2.1
-        with:
-          targets: <%= target.name %>
-          affected: 'true'
-          parallel: <% if (target.name === 'e2e') { %>1<% } else { %>3<% } %><% if (useNxCloud) { %>
-          nxCloud: 'true'<% } %><% if (target.name === 'lint') { %>
+        run: npx nx affected --target=<%= target.name %> --parallel=<% if (target.name === 'e2e') { %>1<% } else { %>3<% } %><% if (!useNxCloud) { %> --skip-nx-cache<% } %><% if (target.name === 'lint') { %>
 
-      - name: lint workspace
+      - name: Lint workspace
         run: npm run lint:workspace<% } %>
 <% }); %>
