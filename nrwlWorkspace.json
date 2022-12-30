@@ -55,7 +55,7 @@
           "npm ci --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
-          "test -f migrations.json && npx --no-install nx migrate --run-migrations=migrations.json",
+          "npx path-exists-cli migrations.json && npx --no-install nx migrate --run-migrations=migrations.json",
           "rm -f migrations.json || true",
           "npx --no-install nx workspace-lint",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
@@ -82,7 +82,7 @@
           "npm ci --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
-          "test -f migrations.json && npx --no-install nx migrate --run-migrations=migrations.json",
+          "npx path-exists-cli migrations.json && npx --no-install nx migrate --run-migrations=migrations.json",
           "rm -f migrations.json || true",
           "npx --no-install nx workspace-lint",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
