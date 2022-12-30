@@ -65,7 +65,7 @@
         "trackDeps": true,
         "tagPrefix": "${projectName}@",
         "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]",
-        "postTargets": ["workspace:github"]
+        "postTargets": ["workspace:github", "workspace:npm"]
       }
     },
     "github": {
