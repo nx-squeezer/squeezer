@@ -8,9 +8,9 @@ Monorepo with many tools and packages for [Nx](https://nx.dev/) and [Angular](ht
 
 ### Tools
 
-| Project       | Package                  | Links                                                                                      |
-| ------------- | ------------------------ | ------------------------------------------------------------------------------------------ |
-| **Workspace** | `@nx-squeezer/workspace` | [![README](https://img.shields.io/badge/README--green.svg)](/packages/workspace/README.md) |
+| Package                                                                          | Version                                                                                                                                       | Links                                                                                      |
+| -------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| [`@nx-squeezer/workspace`](https://www.npmjs.com/package/@nx-squeezer/workspace) | [![npm latest version](https://img.shields.io/npm/v/@nx-squeezer/workspace/latest.svg)](https://www.npmjs.com/package/@nx-squeezer/workspace) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/workspace/README.md) |
 
 ## Development
 

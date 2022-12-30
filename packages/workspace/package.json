@@ -9,7 +9,8 @@
     "executors",
     "schematics",
     "generators",
-    "codecov"
+    "codecov",
+    "renovate"
   ],
   "author": "samuelfernandez",
   "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/libs/builders",
