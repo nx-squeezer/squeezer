@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.2.1](https://github.com/nx-squeezer/squeezer/compare/workspace@0.2.0...workspace@0.2.1) (2022-12-30)
+
+
+### Bug Fixes
+
+* **workspace:** :package: deploy to npm ([1ee9f2d](https://github.com/nx-squeezer/squeezer/commit/1ee9f2d2740c89e8a1d6bc24a258691342ad21e4))
+
 ## [0.2.0](https://github.com/nx-squeezer/squeezer/compare/workspace@0.1.2...workspace@0.2.0) (2022-12-30)
 
 
