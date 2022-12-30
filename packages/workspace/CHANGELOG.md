@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.0...workspace@1.0.1) (2022-12-30)
+
+
+### Bug Fixes
+
+* **renovate:** :bug: update command to run migrations ([#235](https://github.com/nx-squeezer/squeezer/issues/235)) ([fd29583](https://github.com/nx-squeezer/squeezer/commit/fd2958323f0e3b6f91470eb10b406114bbc543a0))
+* **workspace:** :bug: use path-exists command to test if migrations exist ([cb00d30](https://github.com/nx-squeezer/squeezer/commit/cb00d3037f2352472a4f55404e9b61091404e993))
+* **workspace:** :bug: workaround by allowing migration script to fail ([71e42ce](https://github.com/nx-squeezer/squeezer/commit/71e42ce4fcc8fa7b7c36fac207a3e9b56b48722a))
+
 ## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@0.3.0...workspace@1.0.0) (2022-12-30)
 
 
