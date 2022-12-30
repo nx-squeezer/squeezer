@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@0.3.0...workspace@1.0.0) (2022-12-30)
+
+
+### ⚠ BREAKING CHANGES
+
+* **workspace:** first stable version
+
+### Features
+
+* **workspace:** :sparkles: first stable version ([ff41dbe](https://github.com/nx-squeezer/squeezer/commit/ff41dbe785f64993da3c8c30288c645b1962d09b))
+
 ## [0.3.0](https://github.com/nx-squeezer/squeezer/compare/workspace@0.2.1...workspace@0.3.0) (2022-12-30)
 
 
