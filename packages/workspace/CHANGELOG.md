@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/nx-squeezer/squeezer/compare/workspace@0.2.1...workspace@0.3.0) (2022-12-30)
+
+
+### Features
+
+* **workspace:** :memo: add keywords to package.json ([047fe7a](https://github.com/nx-squeezer/squeezer/commit/047fe7a8a88b1feec1b81c698c6f1004e7c4c901))
+
 ## [0.2.1](https://github.com/nx-squeezer/squeezer/compare/workspace@0.2.0...workspace@0.2.1) (2022-12-30)
 
 
