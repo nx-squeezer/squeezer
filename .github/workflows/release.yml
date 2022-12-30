@@ -25,11 +25,16 @@ jobs:
       - name: NPM
         uses: ng-easy/npm-setup@v2.0.15
 
+      - name: Check NPM credentials
+        run: npm whoami
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Version
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx nx affected --base=last-release --target=version
 
       - name: Tag last-release
