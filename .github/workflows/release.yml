@@ -29,6 +29,7 @@ jobs:
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx nx affected --base=last-release --target=version
 
       - name: Tag last-release
@@ -36,3 +37,13 @@ jobs:
         run: |
           git tag -f last-release
           git push origin last-release --force
+
+      - uses: nashmaniac/create-issue-action@v1.1
+        if: failure()
+        name: Create Issue
+        with:
+          title: 'bug(release): release pipeline failed'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
+          labels: bug
+          body: GitHub [release workflow](https://github.com/nx-squeezer/squeezer/actions/workflows/release.yml) failed
