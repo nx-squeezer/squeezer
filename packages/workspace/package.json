@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@nrwl/devkit": "^15.4.1",
+    "@nrwl/devkit": "^15.4.2",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "ngx-deploy-npm": "^4.3.10",
