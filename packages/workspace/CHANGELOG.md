@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.2](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.1...workspace@1.0.2) (2023-01-04)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update dependency renovate to v34.74.2 ([8af1f8b](https://github.com/nx-squeezer/squeezer/commit/8af1f8b7198863f20c98d43e4c9df2b617133ac1))
+* **deps:** :arrow_up: update dependency renovate to v34.75.0 ([0bd435b](https://github.com/nx-squeezer/squeezer/commit/0bd435bdc70a1762a0cb74623a9a552c14853631))
+* **deps:** :arrow_up: update dependency renovate to v34.76.0 ([c94e9ae](https://github.com/nx-squeezer/squeezer/commit/c94e9ae6bab432f08b91655e7eaa942e33d5da01))
+* **workspace:** :bug: solve runtime issue when adding renovate ([#252](https://github.com/nx-squeezer/squeezer/issues/252)) ([#254](https://github.com/nx-squeezer/squeezer/issues/254)) ([889d376](https://github.com/nx-squeezer/squeezer/commit/889d376d6063563cb9519ebefca2dd03d01715f3))
+* **workspace:** :bug: use bash script for renovate migrations ([#253](https://github.com/nx-squeezer/squeezer/issues/253)) ([c33b76a](https://github.com/nx-squeezer/squeezer/commit/c33b76a2aaac4be910cb9081400b38ca9ab0e75f))
+* **workspace:** :bug: use npm script for migration script ([#250](https://github.com/nx-squeezer/squeezer/issues/250)) ([e302132](https://github.com/nx-squeezer/squeezer/commit/e302132e5d04e7d5b7a073e355eb8e0591c9d9aa))
+* **workspace:** :bug: use path exists to allow failure in migrations on renovate ([#242](https://github.com/nx-squeezer/squeezer/issues/242)) ([4690a74](https://github.com/nx-squeezer/squeezer/commit/4690a74a86a6dacaa56950bf49ef1ada38e2f757))
+
 ## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.0...workspace@1.0.1) (2022-12-30)
 
 
