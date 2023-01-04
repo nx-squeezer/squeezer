@@ -27,8 +27,7 @@
     "nx": "nx",
     "lint:workspace": "nx workspace-lint",
     "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g",
-    "prepare": "husky install",
-    "migrations": "path-exists migrations.json && nx migrate --run-migrations=migrations.json"
+    "prepare": "husky install"
   },
   "dependencies": {
     "@commitlint/cli": "17.3.0",
