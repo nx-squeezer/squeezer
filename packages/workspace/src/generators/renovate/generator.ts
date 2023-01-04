@@ -1,5 +1,5 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
-import { parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
+import { parse, parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
 import { ciFile } from '../github-workflow';
 import { addBadgeToReadme, getGitRepoSlug, joinNormalize, securityFile } from '../lib';
@@ -49,7 +49,7 @@ export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSc
   const ci = parseDocument(tree.read(ciFile)!.toString());
   const pushBranches: YAMLSeq<Scalar> = ci.getIn(['on', 'push', 'branches']) as YAMLSeq<Scalar>;
   if (!pushBranches.items.map((item) => item.value).includes(renovateBranch)) {
-    pushBranches.add(new Scalar(renovateBranch));
+    pushBranches.add(parse(renovateBranch));
   }
   tree.write(ciFile, stringify(ci));
 
