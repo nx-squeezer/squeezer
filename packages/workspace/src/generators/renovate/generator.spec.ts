@@ -233,7 +233,7 @@ const renovateConfigJsContent = () =>
     '^npx --no-install ng update (@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]* --from=\\d+\\.\\d+\\.\\d+ --to=\\d+\\.\\d+\\.\\d+ --migrate-only --allow-dirty --force$',
     '^npx --no-install ng lint --fix$',
     '^npx --no-install nx migrate (@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]* --from=(@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]*@\\d+\\.\\d+\\.\\d+ --to=(@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]*@\\d+\\.\\d+\\.\\d+$',
-    '^npm run migrations$',
+    '^bash nx-run-migrations\\.sh$',
     '^rm -f migrations.json || true$',
     '^npx --no-install nx workspace-lint$',
     '^npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache$',
