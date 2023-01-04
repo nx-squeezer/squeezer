@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.2...workspace@1.1.0) (2023-01-04)
+
+
+### Features
+
+* **workspace:** :package: restore using dependencies ([5e3a610](https://github.com/nx-squeezer/squeezer/commit/5e3a6109649ed11ce6cf15bafa5aa157f76bbabe))
+* **workspace:** :package: stop using peer dependencies ([#256](https://github.com/nx-squeezer/squeezer/issues/256)) ([97e37d6](https://github.com/nx-squeezer/squeezer/commit/97e37d60a7d32b30136853c60d37ad3cc2f96599)), closes [#255](https://github.com/nx-squeezer/squeezer/issues/255)
+
+
+### Bug Fixes
+
+* **deps:** ⬆️ update nrwl workspace to v15.4.4 ([#257](https://github.com/nx-squeezer/squeezer/issues/257)) ([1e1c6d2](https://github.com/nx-squeezer/squeezer/commit/1e1c6d26c8bc192574c047ed2bdf53b12b393c6e))
+
 ## [1.0.2](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.1...workspace@1.0.2) (2023-01-04)
 
 
