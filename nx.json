@@ -25,6 +25,21 @@
     "@nrwl/js:library": {
       "buildable": true,
       "publishable": true
+    },
+    "@nrwl/angular:application": {
+      "style": "css",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "none"
+    },
+    "@nrwl/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "buildable": true,
+      "publishable": true
+    },
+    "@nrwl/angular:component": {
+      "style": "css"
     }
   }
 }

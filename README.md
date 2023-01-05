@@ -14,7 +14,7 @@ Monorepo with many tools and packages for [Nx](https://nx.dev/) and [Angular](ht
 
 ## Development
 
-### New Library
+### New Plugin Library
 
 Create new library with [local plugins](https://nx.dev/plugin-features/create-your-own-plugin#local-workspace-plugins):
 
