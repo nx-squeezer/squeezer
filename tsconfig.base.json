@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@nx-squeezer/ng-async-injector": ["packages/ng-async-injector/src/index.ts"],
       "@nx-squeezer/workspace": ["packages/workspace/src/index.ts"]
     },
     "forceConsistentCasingInFileNames": true,

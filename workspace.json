@@ -2,6 +2,7 @@
   "$schema": "./node_modules/nx/schemas/workspace-schema.json",
   "version": 2,
   "projects": {
+    "ng-async-injector": "packages/ng-async-injector",
     "workspace": "packages/workspace",
     "workspace-e2e": "packages/workspace-e2e"
   }
