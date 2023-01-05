@@ -1,1 +1,1 @@
-export * from './lib/ng-async-injector.module';
+export * from './lib/injector';

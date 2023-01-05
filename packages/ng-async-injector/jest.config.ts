@@ -9,6 +9,7 @@ export default {
     },
   },
   coverageDirectory: '../../coverage/packages/ng-async-injector',
+  coverageReporters: ['lcov'],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
