@@ -20,7 +20,9 @@ describe('@nx-squeezer/workspace renovateConfigValidatorTask', () => {
 
     expect(renovateConfigValidatorTask(tree)).toBeFalsy();
 
-    expect(exec).toHaveBeenCalledWith('npx', ['renovate-config-validator'], { cwd: '/virtual' });
+    expect(exec).toHaveBeenCalledWith('npx', ['--package', 'renovate', '-c', 'renovate-config-validator'], {
+      cwd: '/virtual',
+    });
   });
 
   it('should return false', () => {
