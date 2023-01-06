@@ -1,18 +1,17 @@
 import { StaticProvider, inject, ENVIRONMENT_INITIALIZER } from '@angular/core';
 
 import { AsyncInjector } from '../injector/async-injector';
-import { AsyncInjectionToken } from '../tokens/async-injection-token';
+import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 
-export function provideAsync<T>(
-  injectionToken: AsyncInjectionToken<T>,
-  useAsyncFactory: () => Promise<T>
-): StaticProvider[] {
+export function provideAsync<T>(asyncStaticProvider: AsyncStaticProvider<T>): StaticProvider[] {
+  const { provide: injectionToken } = asyncStaticProvider;
+
   return [
     { provide: injectionToken, useFactory: () => inject(AsyncInjector).get(injectionToken) },
     {
       provide: ENVIRONMENT_INITIALIZER,
       multi: true,
-      useValue: () => inject(AsyncInjector).register(injectionToken, useAsyncFactory),
+      useValue: () => inject(AsyncInjector).register(asyncStaticProvider),
     },
   ];
 }
