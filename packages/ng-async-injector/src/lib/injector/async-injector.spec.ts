@@ -161,7 +161,7 @@ describe('AsyncInjector', () => {
 
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
-    }, 100_00);
+    });
   });
 });
 
