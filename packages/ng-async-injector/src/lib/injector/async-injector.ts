@@ -58,6 +58,13 @@ export class AsyncInjector {
 
     return hydrate(injectable);
   }
+
+  async resolveAll(): Promise<void> {
+    const pendingInjectables: AsyncInjectableRecord<any>[] = [...this.records.values()].filter(
+      ({ status }) => status !== 'resolved'
+    );
+    await Promise.all(pendingInjectables.map((injectable) => hydrate(injectable)));
+  }
 }
 
 function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
