@@ -6,8 +6,6 @@ import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 export function provideAsync<T>(asyncStaticProvider: AsyncStaticProvider<T>): StaticProvider[];
 export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknown>[]): StaticProvider[];
 export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknown>[]): StaticProvider[] {
-  asyncStaticProviders = Array.isArray(asyncStaticProviders) ? asyncStaticProviders : [asyncStaticProviders];
-
   return asyncStaticProviders
     .map((asyncStaticProvider: AsyncStaticProvider<unknown>) => [
       {
