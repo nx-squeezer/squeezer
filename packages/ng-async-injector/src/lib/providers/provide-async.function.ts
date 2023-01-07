@@ -8,8 +8,6 @@ export function provideAsync<T extends AsyncStaticProvider<unknown>[]>(
   ...asyncStaticProviders: [...T]
 ): StaticProvider[];
 export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknown>[]): StaticProvider[] {
-  asyncStaticProviders = Array.isArray(asyncStaticProviders) ? asyncStaticProviders : [asyncStaticProviders];
-
   return asyncStaticProviders
     .map((asyncStaticProvider: AsyncStaticProvider<unknown>) => [
       {
