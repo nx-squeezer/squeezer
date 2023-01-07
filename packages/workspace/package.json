@@ -35,15 +35,15 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
+    "@commitlint/cli": "^17.4.0",
+    "@commitlint/config-conventional": "^17.4.0",
     "@nrwl/devkit": "^15.4.4",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "ngx-deploy-npm": "^4.3.10",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.8.1",
-    "renovate": "^34.82.0",
+    "renovate": "^34.82.1",
     "yaml": "^2.2.1"
   },
   "devDependencies": {
