@@ -13,12 +13,12 @@ interface AsyncInjectableRecord<T> {
 
 @Injectable({ providedIn: 'root' })
 export class AsyncInjector {
-  private store = new Map<AsyncInjectionToken<any>, AsyncInjectableRecord<any>>();
+  private readonly records = new Map<AsyncInjectionToken<any>, AsyncInjectableRecord<any>>();
 
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
     const { provide: injectionToken, useAsyncFactory, mode } = asyncStaticProvider;
 
-    this.store.set(injectionToken, {
+    this.records.set(injectionToken, {
       injectionToken,
       useAsyncFactory,
       status: 'initial',
@@ -32,7 +32,7 @@ export class AsyncInjector {
   }
 
   get<T>(injectionToken: AsyncInjectionToken<T>): T {
-    const injectable = this.store.get(injectionToken);
+    const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
       throw new Error(`${injectionToken.toString()} not provided.`);
@@ -50,32 +50,36 @@ export class AsyncInjector {
   }
 
   resolve<T>(injectionToken: AsyncInjectionToken<T>): Promise<T> {
-    const injectable = this.store.get(injectionToken);
+    const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
       throw new Error(`${injectionToken.toString()} not provided.`);
     }
 
-    if (injectable.promise) {
-      return injectable.promise;
-    }
-
-    injectable.status = 'resolving';
-
-    const promise = injectable
-      .useAsyncFactory()
-      .then((resolvedValue) => {
-        injectable.status = 'resolved';
-        injectable.resolvedValue = resolvedValue;
-        return resolvedValue;
-      })
-      .catch((error) => {
-        injectable.status = 'error';
-        throw new Error(`${injectionToken.toString()} failed resolution: ${error}`);
-      });
-
-    injectable.promise = promise;
-
-    return promise;
+    return hydrate(injectable);
   }
+}
+
+function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
+  if (injectable.promise) {
+    return injectable.promise;
+  }
+
+  injectable.status = 'resolving';
+
+  const promise = injectable
+    .useAsyncFactory()
+    .then((resolvedValue) => {
+      injectable.status = 'resolved';
+      injectable.resolvedValue = resolvedValue;
+      return resolvedValue;
+    })
+    .catch((error) => {
+      injectable.status = 'error';
+      throw new Error(`${injectable.injectionToken.toString()} failed resolution: ${error}`);
+    });
+
+  injectable.promise = promise;
+
+  return promise;
 }
