@@ -4,7 +4,7 @@
     {
       "groupName": "Nrwl workspace",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^tslib", "^ts-node", "^zone\\.js", "^cypress$", "^jest", "^ts-jest"],
+      "matchPackagePatterns": ["^tslib", "^ts-node", "^zone\\.js", "^cypress$", "^jest", "@types/jest", "^ts-jest"],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
