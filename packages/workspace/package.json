@@ -37,7 +37,7 @@
   "dependencies": {
     "@commitlint/cli": "^17.4.0",
     "@commitlint/config-conventional": "^17.4.0",
-    "@nrwl/devkit": "^15.4.4",
+    "@nrwl/devkit": "^15.4.5",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "ngx-deploy-npm": "^4.3.10",
