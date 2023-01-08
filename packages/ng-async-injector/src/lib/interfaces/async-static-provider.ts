@@ -1,7 +1,7 @@
-import { AsyncInjectionToken } from '../tokens/async-injection-token';
+import { InjectionToken } from '@angular/core';
 
 export interface AsyncStaticProvider<T> {
-  provide: AsyncInjectionToken<T>;
+  provide: InjectionToken<T>;
   useAsyncFactory: () => Promise<T>;
 
   /**
