@@ -120,9 +120,11 @@ describe('AsyncInjector', () => {
       });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
-      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+      const booleanValue: boolean = await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+      const numberValue: number = await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
 
+      expect(booleanValue).toBeTruthy();
+      expect(numberValue).toBe(1);
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
     });
@@ -161,7 +163,29 @@ describe('AsyncInjector', () => {
 
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
-    }, 100_00);
+    });
+
+    it('should resolve multiple async injection tokens', async () => {
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncFactory: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: numberAsyncFactory }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      const [booleanValue, numberValue]: [boolean, number] = await asyncInjector.resolveMany(
+        BOOLEAN_INJECTOR_TOKEN,
+        NUMBER_INJECTOR_TOKEN
+      );
+
+      expect(booleanValue).toBeTruthy();
+      expect(numberValue).toBe(1);
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
   });
 });
 

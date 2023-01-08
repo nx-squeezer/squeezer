@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 
+import { AsyncInjectionTokenTypes } from '../interfaces/async-injection-token-type';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { AsyncInjectionToken } from '../tokens/async-injection-token';
 
@@ -57,6 +58,12 @@ export class AsyncInjector {
     }
 
     return hydrate(injectable);
+  }
+
+  resolveMany<T extends AsyncInjectionToken<any>[]>(...injectionTokens: T): Promise<AsyncInjectionTokenTypes<[...T]>> {
+    return Promise.all(
+      injectionTokens.map((injectionToken: AsyncInjectionToken<any>): Promise<any> => this.resolve(injectionToken))
+    ) as Promise<AsyncInjectionTokenTypes<[...T]>>;
   }
 
   async resolveAll(): Promise<void> {
