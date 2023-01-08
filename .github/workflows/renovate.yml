@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3.3.0
 
       - name: Self-hosted Renovate
-        uses: renovatebot/github-action@v34.92.1
+        uses: renovatebot/github-action@v34.93.0
         env:
           LOG_LEVEL: debug
           NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
