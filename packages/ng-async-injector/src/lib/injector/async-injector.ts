@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, InjectionToken } from '@angular/core';
 
-import { AsyncInjectionTokenTypes } from '../interfaces/async-injection-token-type';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
-import { AsyncInjectionToken } from '../tokens/async-injection-token';
+import { InjectionTokenTypes } from '../interfaces/injection-token-type';
 
 interface AsyncInjectableRecord<T> {
-  injectionToken: AsyncInjectionToken<T>;
+  injectionToken: InjectionToken<T>;
   useAsyncFactory: () => Promise<T>;
   status: 'initial' | 'resolving' | 'resolved' | 'error';
   promise: Promise<T> | null;
@@ -14,7 +13,7 @@ interface AsyncInjectableRecord<T> {
 
 @Injectable({ providedIn: 'root' })
 export class AsyncInjector {
-  private readonly records = new Map<AsyncInjectionToken<any>, AsyncInjectableRecord<any>>();
+  private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
     const { provide: injectionToken, useAsyncFactory, mode } = asyncStaticProvider;
@@ -32,7 +31,7 @@ export class AsyncInjector {
     }
   }
 
-  get<T>(injectionToken: AsyncInjectionToken<T>): T {
+  get<T>(injectionToken: InjectionToken<T>): T {
     const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
@@ -50,7 +49,7 @@ export class AsyncInjector {
     return injectable.resolvedValue;
   }
 
-  resolve<T>(injectionToken: AsyncInjectionToken<T>): Promise<T> {
+  resolve<T>(injectionToken: InjectionToken<T>): Promise<T> {
     const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
@@ -60,10 +59,10 @@ export class AsyncInjector {
     return hydrate(injectable);
   }
 
-  resolveMany<T extends AsyncInjectionToken<any>[]>(...injectionTokens: T): Promise<AsyncInjectionTokenTypes<[...T]>> {
+  resolveMany<T extends InjectionToken<any>[]>(...injectionTokens: T): Promise<InjectionTokenTypes<[...T]>> {
     return Promise.all(
-      injectionTokens.map((injectionToken: AsyncInjectionToken<any>): Promise<any> => this.resolve(injectionToken))
-    ) as Promise<AsyncInjectionTokenTypes<[...T]>>;
+      injectionTokens.map((injectionToken: InjectionToken<any>): Promise<any> => this.resolve(injectionToken))
+    ) as Promise<InjectionTokenTypes<[...T]>>;
   }
 
   async resolveAll(): Promise<void> {

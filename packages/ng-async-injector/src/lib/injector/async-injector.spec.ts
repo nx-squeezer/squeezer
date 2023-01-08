@@ -1,15 +1,15 @@
+import { InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { provideAsyncInjector } from '../providers/provide-async-injector.function';
 import { provideAsync } from '../providers/provide-async.function';
-import { AsyncInjectionToken } from '../tokens/async-injection-token';
 import { AsyncInjector } from './async-injector';
 
 describe('AsyncInjector', () => {
-  const BOOLEAN_INJECTOR_TOKEN = new AsyncInjectionToken<boolean>('boolean');
+  const BOOLEAN_INJECTOR_TOKEN = new InjectionToken<boolean>('boolean');
   const booleanAsyncFactory = () => Promise.resolve(true);
 
-  const NUMBER_INJECTOR_TOKEN = new AsyncInjectionToken<number>('number');
+  const NUMBER_INJECTOR_TOKEN = new InjectionToken<number>('number');
   const numberAsyncFactory = () => Promise.resolve(1);
 
   describe('injector', () => {
@@ -47,7 +47,7 @@ describe('AsyncInjector', () => {
 
       expect(() => {
         TestBed.inject(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('AsyncInjectionToken boolean not yet resolved.');
+      }).toThrowError('InjectionToken boolean not yet resolved.');
     });
 
     it('should fail injection if async injection token not registered', () => {
@@ -57,11 +57,11 @@ describe('AsyncInjector', () => {
 
       expect(() => {
         asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('AsyncInjectionToken boolean not provided.');
+      }).toThrowError('InjectionToken boolean not provided.');
 
       expect(() => {
         asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('AsyncInjectionToken boolean not provided.');
+      }).toThrowError('InjectionToken boolean not provided.');
     });
 
     it('should resolve the factory only once', async () => {
@@ -101,10 +101,10 @@ describe('AsyncInjector', () => {
       const promise = asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
       reject('failure');
 
-      await expect(promise).rejects.toEqual(new Error(`AsyncInjectionToken boolean failed resolution: failure`));
+      await expect(promise).rejects.toEqual(new Error(`InjectionToken boolean failed resolution: failure`));
       expect(() => {
         asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('AsyncInjectionToken boolean failed during its resolution.');
+      }).toThrowError('InjectionToken boolean failed during its resolution.');
     });
   });
 
