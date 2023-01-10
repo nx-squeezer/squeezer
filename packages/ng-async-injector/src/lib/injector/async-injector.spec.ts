@@ -17,7 +17,7 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsyncInjector(),
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory }),
+          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory }),
         ],
       });
 
@@ -29,7 +29,45 @@ describe('AsyncInjector', () => {
 
     it('should resolve async injection tokens by lazy loading async injector', async () => {
       TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory })],
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory })],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
+
+    it('should resolve async injection tokens using an async value', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(true) })],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
+
+    it('should resolve async injection tokens using an async class', async () => {
+      class TestClass {}
+      const CLASS_INJECTOR_TOKEN = new InjectionToken<TestClass>('class');
+
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: CLASS_INJECTOR_TOKEN, useAsyncClass: () => Promise.resolve(TestClass) })],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(CLASS_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(CLASS_INJECTOR_TOKEN)).toBeInstanceOf(TestClass);
+    });
+
+    it('should resolve async injection tokens using an async factory', async () => {
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(() => true) }),
+        ],
       });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
@@ -42,7 +80,7 @@ describe('AsyncInjector', () => {
   describe('provide single injection token', () => {
     it('should fail injection if async injection token not resolved', () => {
       TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory })],
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory })],
       });
 
       expect(() => {
@@ -71,7 +109,7 @@ describe('AsyncInjector', () => {
         providers: [
           provideAsync({
             provide: BOOLEAN_INJECTOR_TOKEN,
-            useValueFactory: () => new Promise((resolveCallback) => (resolve = resolveCallback)),
+            useAsyncValue: () => new Promise((resolveCallback) => (resolve = resolveCallback)),
           }),
         ],
       });
@@ -91,7 +129,7 @@ describe('AsyncInjector', () => {
         providers: [
           provideAsync({
             provide: BOOLEAN_INJECTOR_TOKEN,
-            useValueFactory: () => new Promise((_, rejectCallback) => (reject = rejectCallback)),
+            useAsyncValue: () => new Promise((_, rejectCallback) => (reject = rejectCallback)),
           }),
         ],
       });
@@ -113,8 +151,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useValueFactory: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
           ),
         ],
       });
@@ -134,7 +172,7 @@ describe('AsyncInjector', () => {
     it('should resolve async injection if when mode is eager', async () => {
       TestBed.configureTestingModule({
         providers: [
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory, mode: 'eager' }),
+          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory, mode: 'eager' }),
         ],
       });
 
@@ -151,8 +189,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useValueFactory: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
           ),
         ],
       });
@@ -169,8 +207,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useValueFactory: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
           ),
         ],
       });
@@ -191,8 +229,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useValueFactory: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
           ),
         ],
       });
@@ -207,8 +245,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useValueFactory: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useValueFactory: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
           ),
         ],
       });

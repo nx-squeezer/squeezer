@@ -67,7 +67,7 @@ describe('ResolveAsyncProvidersDirective', () => {
 
   it('should compile', () => {
     TestBed.configureTestingModule({
-      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useValueFactory: stringAsyncFactory })],
+      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
     });
     const fixture = TestBed.createComponent(TestResolveAllProvidersComponent);
     fixture.autoDetectChanges();
@@ -77,7 +77,7 @@ describe('ResolveAsyncProvidersDirective', () => {
 
   it('should render the template once all async providers are resolved', async () => {
     TestBed.configureTestingModule({
-      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useValueFactory: stringAsyncFactory })],
+      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
     });
     const fixture = TestBed.createComponent(TestResolveAllProvidersComponent);
     fixture.autoDetectChanges();
@@ -91,7 +91,7 @@ describe('ResolveAsyncProvidersDirective', () => {
 
   it('should not render the template if destroyed before completing', () => {
     TestBed.configureTestingModule({
-      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useValueFactory: stringAsyncFactory })],
+      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
     });
     const fixture = TestBed.createComponent(TestResolveAllProvidersComponent);
     fixture.autoDetectChanges();
@@ -102,7 +102,7 @@ describe('ResolveAsyncProvidersDirective', () => {
 
   it('should render the template once selected async providers are resolved', async () => {
     TestBed.configureTestingModule({
-      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useValueFactory: stringAsyncFactory })],
+      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
     });
     const fixture = TestBed.createComponent(TestResolveManyProvidersComponent);
     fixture.autoDetectChanges();
