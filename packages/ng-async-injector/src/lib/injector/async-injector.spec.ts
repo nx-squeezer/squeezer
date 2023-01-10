@@ -165,7 +165,7 @@ describe('AsyncInjector', () => {
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
     });
 
-    it('should resolve multiple async injection tokens', async () => {
+    it('should resolve multiple async injection tokens from a collection', async () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
@@ -180,6 +180,45 @@ describe('AsyncInjector', () => {
         BOOLEAN_INJECTOR_TOKEN,
         NUMBER_INJECTOR_TOKEN
       );
+
+      expect(booleanValue).toBeTruthy();
+      expect(numberValue).toBe(1);
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+
+    it('should fail when resolving multiple async injection tokens if none provided from a collection', async () => {
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncFactory: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: numberAsyncFactory }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      expect(() => asyncInjector.resolveMany()).toThrowError(
+        'Provide at least one injection token to be resolved when calling resolveMany().'
+      );
+    });
+
+    it('should resolve multiple async injection tokens from a map', async () => {
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncFactory: booleanAsyncFactory },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: numberAsyncFactory }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      const { booleanValue, numberValue }: { booleanValue: boolean; numberValue: number } =
+        await asyncInjector.resolveMany({
+          booleanValue: BOOLEAN_INJECTOR_TOKEN,
+          numberValue: NUMBER_INJECTOR_TOKEN,
+        });
 
       expect(booleanValue).toBeTruthy();
       expect(numberValue).toBe(1);

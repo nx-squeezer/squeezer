@@ -1,7 +1,7 @@
 import { Injectable, InjectionToken } from '@angular/core';
 
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
-import { InjectionTokenTypes } from '../interfaces/injection-token-type';
+import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfaces/injection-token-type';
 
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
@@ -59,10 +59,44 @@ export class AsyncInjector {
     return hydrate(injectable);
   }
 
-  resolveMany<T extends InjectionToken<any>[]>(...injectionTokens: T): Promise<InjectionTokenTypes<[...T]>> {
+  resolveMany<T extends { [key: string]: InjectionToken<any> }>(injectionTokens: T): Promise<InjectionTokenTypeMap<T>>;
+  resolveMany<T extends InjectionToken<any>[]>(...injectionTokens: T): Promise<InjectionTokenTypeCollection<[...T]>>;
+  resolveMany(
+    ...injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
+  ): Promise<any[] | { [key: string]: any }> {
+    if (injectionTokens.length === 0) {
+      throw new Error(`Provide at least one injection token to be resolved when calling resolveMany().`);
+    }
+
+    if (isInjectionTokenCollection(injectionTokens)) {
+      return this.resolveManyFromCollection(injectionTokens);
+    } else {
+      return this.resolveManyFromMap(injectionTokens[0] as { [key: string]: InjectionToken<any> });
+    }
+  }
+
+  private resolveManyFromCollection<T extends InjectionToken<any>[]>(
+    injectionTokens: T
+  ): Promise<InjectionTokenTypeCollection<[...T]>> {
     return Promise.all(
       injectionTokens.map((injectionToken: InjectionToken<any>): Promise<any> => this.resolve(injectionToken))
-    ) as Promise<InjectionTokenTypes<[...T]>>;
+    ) as Promise<InjectionTokenTypeCollection<[...T]>>;
+  }
+
+  private async resolveManyFromMap<T extends { [key: string]: InjectionToken<any> }>(
+    injectionTokens: T
+  ): Promise<InjectionTokenTypeMap<T>> {
+    const values: { [key: string]: any } = {};
+
+    await Promise.all(
+      Object.entries(injectionTokens).map(([key, injectionToken]) =>
+        this.resolve(injectionToken).then((value) => {
+          values[key] = value;
+        })
+      )
+    );
+
+    return values as InjectionTokenTypeMap<T>;
   }
 
   async resolveAll(): Promise<void> {
@@ -95,4 +129,10 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   injectable.promise = promise;
 
   return promise;
+}
+
+function isInjectionTokenCollection(
+  injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
+): injectionTokens is InjectionToken<any>[] {
+  return injectionTokens.every((injectionToken) => injectionToken instanceof InjectionToken);
 }
