@@ -1,4 +1,4 @@
-import { Injectable, InjectionToken } from '@angular/core';
+import { EnvironmentInjector, inject, Injectable, InjectionToken } from '@angular/core';
 
 import { isAsyncClassProvider } from '../interfaces/async-class-provider';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
@@ -7,7 +7,7 @@ import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfac
 
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
-  factoryPromise: () => Promise<() => T>;
+  valuePromise: () => Promise<T>;
   status: 'initial' | 'resolving' | 'resolved' | 'error';
   promise: Promise<T> | null;
   resolvedValue: T | null;
@@ -111,11 +111,11 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   injectable.status = 'resolving';
 
   const promise = injectable
-    .factoryPromise()
+    .valuePromise()
     .then((resolvedValue) => {
       injectable.status = 'resolved';
-      injectable.resolvedValue = resolvedValue();
-      return injectable.resolvedValue;
+      injectable.resolvedValue = resolvedValue;
+      return resolvedValue;
     })
     .catch((error) => {
       injectable.status = 'error';
@@ -134,19 +134,28 @@ function isInjectionTokenCollection(
 }
 
 function makeAsyncInjectableRecord(asyncStaticProvider: AsyncStaticProvider<any>): AsyncInjectableRecord<any> {
-  let factoryPromise: () => Promise<() => any>;
+  const envInjector = inject(EnvironmentInjector);
+  const runInContext = (fn: () => any) => {
+    let result: any;
+    envInjector.runInContext(() => {
+      result = fn();
+    });
+    return result;
+  };
+
+  let valuePromise: () => Promise<any>;
 
   if (isAsyncValueProvider(asyncStaticProvider)) {
-    factoryPromise = () => asyncStaticProvider.useAsyncValue().then((value) => () => value);
+    valuePromise = () => asyncStaticProvider.useAsyncValue();
   } else if (isAsyncClassProvider(asyncStaticProvider)) {
-    factoryPromise = () => asyncStaticProvider.useAsyncClass().then((classType) => () => new classType());
+    valuePromise = () => asyncStaticProvider.useAsyncClass().then((classType) => runInContext(() => new classType()));
   } else {
-    factoryPromise = () => asyncStaticProvider.useAsyncFactory();
+    valuePromise = () => asyncStaticProvider.useAsyncFactory().then((factory) => runInContext(factory));
   }
 
   return {
     injectionToken: asyncStaticProvider.provide,
-    factoryPromise,
+    valuePromise,
     status: 'initial',
     promise: null,
     resolvedValue: null,

@@ -1,4 +1,4 @@
-import { InjectionToken } from '@angular/core';
+import { inject, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { provideAsyncInjector } from '../providers/provide-async-injector.function';
@@ -30,44 +30,6 @@ describe('AsyncInjector', () => {
     it('should resolve async injection tokens by lazy loading async injector', async () => {
       TestBed.configureTestingModule({
         providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory })],
-      });
-
-      const asyncInjector = TestBed.inject(AsyncInjector);
-      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-
-      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
-    });
-
-    it('should resolve async injection tokens using an async value', async () => {
-      TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(true) })],
-      });
-
-      const asyncInjector = TestBed.inject(AsyncInjector);
-      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-
-      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
-    });
-
-    it('should resolve async injection tokens using an async class', async () => {
-      class TestClass {}
-      const CLASS_INJECTOR_TOKEN = new InjectionToken<TestClass>('class');
-
-      TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: CLASS_INJECTOR_TOKEN, useAsyncClass: () => Promise.resolve(TestClass) })],
-      });
-
-      const asyncInjector = TestBed.inject(AsyncInjector);
-      await asyncInjector.resolve(CLASS_INJECTOR_TOKEN);
-
-      expect(TestBed.inject(CLASS_INJECTOR_TOKEN)).toBeInstanceOf(TestClass);
-    });
-
-    it('should resolve async injection tokens using an async factory', async () => {
-      TestBed.configureTestingModule({
-        providers: [
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(() => true) }),
-        ],
       });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
@@ -261,6 +223,83 @@ describe('AsyncInjector', () => {
       expect(booleanValue).toBeTruthy();
       expect(numberValue).toBe(1);
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+  });
+
+  describe('injection strategies', () => {
+    it('should resolve async injection tokens using an async value', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(true) })],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
+
+    it('should resolve async injection tokens using an async class', async () => {
+      class TestClass {
+        readonly booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
+      }
+      const CLASS_INJECTOR_TOKEN = new InjectionToken<TestClass>('class');
+
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
+          provideAsync({ provide: CLASS_INJECTOR_TOKEN, useAsyncClass: () => Promise.resolve(TestClass) }),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(CLASS_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(CLASS_INJECTOR_TOKEN)).toBeInstanceOf(TestClass);
+      expect(TestBed.inject(CLASS_INJECTOR_TOKEN).booleanValue).toBeTruthy();
+    });
+
+    it('should resolve async injection tokens using an async factory', async () => {
+      function factory() {
+        return inject(BOOLEAN_INJECTOR_TOKEN) ? 1 : 0;
+      }
+
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
+          provideAsync({
+            provide: NUMBER_INJECTOR_TOKEN,
+            useAsyncFactory: () => Promise.resolve(factory),
+          }),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+
+    it('should resolve async injection tokens using an async factory that returns a promise', async () => {
+      async function factory() {
+        const booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        return booleanValue ? 1 : 0;
+      }
+
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
+          provideAsync({
+            provide: NUMBER_INJECTOR_TOKEN,
+            useAsyncFactory: () => Promise.resolve(factory),
+          }),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
     });
   });
