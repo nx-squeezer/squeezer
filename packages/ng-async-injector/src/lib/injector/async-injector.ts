@@ -1,11 +1,13 @@
 import { Injectable, InjectionToken } from '@angular/core';
 
+import { isAsyncClassProvider } from '../interfaces/async-class-provider';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
+import { isAsyncValueProvider } from '../interfaces/async-value-provider';
 import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfaces/injection-token-type';
 
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
-  useAsyncFactory: () => Promise<T>;
+  factoryPromise: () => Promise<() => T>;
   status: 'initial' | 'resolving' | 'resolved' | 'error';
   promise: Promise<T> | null;
   resolvedValue: T | null;
@@ -16,15 +18,9 @@ export class AsyncInjector {
   private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
-    const { provide: injectionToken, useAsyncFactory, mode } = asyncStaticProvider;
+    const { provide: injectionToken, mode } = asyncStaticProvider;
 
-    this.records.set(injectionToken, {
-      injectionToken,
-      useAsyncFactory,
-      status: 'initial',
-      promise: null,
-      resolvedValue: null,
-    });
+    this.records.set(injectionToken, makeAsyncInjectableRecord(asyncStaticProvider));
 
     if (mode === 'eager') {
       this.resolve(injectionToken);
@@ -115,11 +111,11 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   injectable.status = 'resolving';
 
   const promise = injectable
-    .useAsyncFactory()
+    .factoryPromise()
     .then((resolvedValue) => {
       injectable.status = 'resolved';
-      injectable.resolvedValue = resolvedValue;
-      return resolvedValue;
+      injectable.resolvedValue = resolvedValue();
+      return injectable.resolvedValue;
     })
     .catch((error) => {
       injectable.status = 'error';
@@ -135,4 +131,24 @@ function isInjectionTokenCollection(
   injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
 ): injectionTokens is InjectionToken<any>[] {
   return injectionTokens.every((injectionToken) => injectionToken instanceof InjectionToken);
+}
+
+function makeAsyncInjectableRecord(asyncStaticProvider: AsyncStaticProvider<any>): AsyncInjectableRecord<any> {
+  let factoryPromise: () => Promise<() => any>;
+
+  if (isAsyncValueProvider(asyncStaticProvider)) {
+    factoryPromise = () => asyncStaticProvider.useAsyncValue().then((value) => () => value);
+  } else if (isAsyncClassProvider(asyncStaticProvider)) {
+    factoryPromise = () => asyncStaticProvider.useAsyncClass().then((classType) => () => new classType());
+  } else {
+    factoryPromise = () => asyncStaticProvider.useAsyncFactory();
+  }
+
+  return {
+    injectionToken: asyncStaticProvider.provide,
+    factoryPromise,
+    status: 'initial',
+    promise: null,
+    resolvedValue: null,
+  };
 }

@@ -1,12 +1,5 @@
-import { InjectionToken } from '@angular/core';
+import { AsyncClassProvider } from './async-class-provider';
+import { AsyncFactoryProvider } from './async-factory-provider';
+import { AsyncValueProvider } from './async-value-provider';
 
-export interface AsyncStaticProvider<T> {
-  provide: InjectionToken<T>;
-  useAsyncFactory: () => Promise<T>;
-
-  /**
-   * If `eager`, the async injector will start resolving as soon as the environment injector initializes.
-   * If `lazy` (default), it will wait until the injection token is resolved.
-   */
-  mode?: 'lazy' | 'eager';
-}
+export type AsyncStaticProvider<T> = AsyncValueProvider<T> | AsyncFactoryProvider<T> | AsyncClassProvider<T>;
