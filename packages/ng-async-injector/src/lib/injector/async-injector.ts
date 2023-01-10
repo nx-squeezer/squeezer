@@ -5,7 +5,7 @@ import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfac
 
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
-  useAsyncFactory: () => Promise<T>;
+  useValueFactory: () => Promise<T>;
   status: 'initial' | 'resolving' | 'resolved' | 'error';
   promise: Promise<T> | null;
   resolvedValue: T | null;
@@ -16,11 +16,11 @@ export class AsyncInjector {
   private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
-    const { provide: injectionToken, useAsyncFactory, mode } = asyncStaticProvider;
+    const { provide: injectionToken, useValueFactory, mode } = asyncStaticProvider;
 
     this.records.set(injectionToken, {
       injectionToken,
-      useAsyncFactory,
+      useValueFactory,
       status: 'initial',
       promise: null,
       resolvedValue: null,
@@ -115,7 +115,7 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   injectable.status = 'resolving';
 
   const promise = injectable
-    .useAsyncFactory()
+    .useValueFactory()
     .then((resolvedValue) => {
       injectable.status = 'resolved';
       injectable.resolvedValue = resolvedValue;
