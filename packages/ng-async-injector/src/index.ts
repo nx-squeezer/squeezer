@@ -10,6 +10,7 @@ export * from './lib/interfaces/async-provider-config';
 export * from './lib/interfaces/async-provider-types';
 export * from './lib/interfaces/async-static-provider';
 export * from './lib/interfaces/async-value-provider';
+export * from './lib/interfaces/injection-context';
 export * from './lib/interfaces/injection-token-type';
 export * from './lib/interfaces/type-without-constructor-params';
 

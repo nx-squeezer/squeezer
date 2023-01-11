@@ -1,23 +1,27 @@
 import { inject, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { InjectionContext } from '../interfaces/injection-context';
 import { provideAsyncInjector } from '../providers/provide-async-injector.function';
 import { provideAsync } from '../providers/provide-async.function';
 import { AsyncInjector } from './async-injector';
 
 describe('AsyncInjector', () => {
   const BOOLEAN_INJECTOR_TOKEN = new InjectionToken<boolean>('boolean');
-  const booleanAsyncFactory = () => Promise.resolve(true);
+  const booleanAsyncValue = () => Promise.resolve(true);
 
   const NUMBER_INJECTOR_TOKEN = new InjectionToken<number>('number');
-  const numberAsyncFactory = () => Promise.resolve(1);
+  const numberAsyncValue = () => Promise.resolve(1);
+
+  const STRING_INJECTOR_TOKEN = new InjectionToken<string>('string');
+  const stringAsyncValue = () => Promise.resolve('test');
 
   describe('injector', () => {
     it('should resolve async injection tokens by providing async injector', async () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsyncInjector(),
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory }),
+          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue }),
         ],
       });
 
@@ -29,7 +33,7 @@ describe('AsyncInjector', () => {
 
     it('should resolve async injection tokens by lazy loading async injector', async () => {
       TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory })],
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
       });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
@@ -39,10 +43,10 @@ describe('AsyncInjector', () => {
     });
   });
 
-  describe('provide single injection token', () => {
+  describe('single injection token', () => {
     it('should fail injection if async injection token not resolved', () => {
       TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory })],
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
       });
 
       expect(() => {
@@ -108,13 +112,13 @@ describe('AsyncInjector', () => {
     });
   });
 
-  describe('provide multiple injection token', () => {
+  describe('multiple injection token', () => {
     it('should resolve async injection token', async () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncValue }
           ),
         ],
       });
@@ -130,29 +134,13 @@ describe('AsyncInjector', () => {
     });
   });
 
-  describe('injection mode', () => {
-    it('should resolve async injection if when mode is eager', async () => {
-      TestBed.configureTestingModule({
-        providers: [
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory, mode: 'eager' }),
-        ],
-      });
-
-      // Force environment to initialize and wait for macrotask so that promise is resolved
-      TestBed.inject(AsyncInjector);
-      await flushPromises();
-
-      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
-    });
-  });
-
   describe('resolve', () => {
     it('should resolve all async injection tokens', async () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncValue }
           ),
         ],
       });
@@ -169,8 +157,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncValue }
           ),
         ],
       });
@@ -191,8 +179,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncValue }
           ),
         ],
       });
@@ -207,8 +195,8 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
-            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncFactory },
-            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncFactory }
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncValue: numberAsyncValue }
           ),
         ],
       });
@@ -224,6 +212,20 @@ describe('AsyncInjector', () => {
       expect(numberValue).toBe(1);
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+  });
+
+  describe('injection mode', () => {
+    it('should resolve async injection if when mode is eager', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue, mode: 'eager' })],
+      });
+
+      // Force environment to initialize and wait for macrotask so that promise is resolved
+      TestBed.inject(AsyncInjector);
+      await flushPromises();
+
+      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
     });
   });
 
@@ -283,7 +285,7 @@ describe('AsyncInjector', () => {
     it('should resolve async injection tokens using an async factory that returns a promise', async () => {
       async function factory() {
         const booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
-        await new Promise((resolve) => setTimeout(resolve, 10));
+        await new Promise((resolve) => setTimeout(resolve, 0));
         return booleanValue ? 1 : 0;
       }
 
@@ -301,6 +303,34 @@ describe('AsyncInjector', () => {
       await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
 
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+  });
+
+  describe('injection context', () => {
+    it('should provide environment injection context to async factories', async () => {
+      const factory = async ({ inject, resolve }: InjectionContext) => {
+        const stringValue = await resolve(STRING_INJECTOR_TOKEN);
+        const booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
+        return booleanValue ? stringValue.length : 0;
+      };
+
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
+          provideAsync(
+            { provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncValue },
+            {
+              provide: NUMBER_INJECTOR_TOKEN,
+              useAsyncFactory: () => Promise.resolve(factory),
+            }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(4);
     });
   });
 });
