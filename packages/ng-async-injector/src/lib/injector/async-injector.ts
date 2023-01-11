@@ -26,6 +26,9 @@ interface AsyncInjectableRecord<T> {
 export class AsyncInjector {
   private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
+  // The key is the injection token, which depends on the injection tokens in the value
+  private readonly dependencyMap = new Map<InjectionToken<any>, InjectionToken<any>[]>();
+
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
     const { provide: injectionToken, mode } = asyncStaticProvider;
 
@@ -58,7 +61,7 @@ export class AsyncInjector {
     const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
-      throw new Error(`${injectionToken.toString()} not provided.`);
+      return Promise.reject(`${injectionToken.toString()} not provided.`);
     }
 
     return hydrate(injectable);
@@ -70,7 +73,7 @@ export class AsyncInjector {
     ...injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
   ): Promise<any[] | { [key: string]: any }> {
     if (injectionTokens.length === 0) {
-      throw new Error(`Provide at least one injection token to be resolved when calling resolveMany().`);
+      return Promise.reject(`Provide at least one injection token to be resolved when calling resolveMany().`);
     }
 
     if (isInjectionTokenCollection(injectionTokens)) {
@@ -118,12 +121,16 @@ export class AsyncInjector {
       envInjector.runInContext(() => (result = fn()));
       return result;
     };
+
     const injectionContext: InjectionContext = {
       // eslint-disable-next-line @delagen/deprecation/deprecation
       inject: <T>(token: ProviderToken<T>, options: InjectOptions | InjectFlags = InjectFlags.Default): T | null =>
         // eslint-disable-next-line @delagen/deprecation/deprecation
         runInContext(() => inject(token, options as any)),
-      resolve: <T>(injectionToken: InjectionToken<T>) => this.resolve(injectionToken),
+      resolve: <T>(injectionToken: InjectionToken<T>) => {
+        this.processDependency(asyncStaticProvider.provide, injectionToken);
+        return this.resolve(injectionToken);
+      },
     };
 
     let valuePromise: () => Promise<any>;
@@ -145,6 +152,32 @@ export class AsyncInjector {
       resolvedValue: null,
     };
   }
+
+  private processDependency(
+    dependantInjectionToken: InjectionToken<any>,
+    dependsOnInjectionToken: InjectionToken<any>
+  ) {
+    const dependencyTree = this.calculateDependencyTree(dependsOnInjectionToken);
+    if (dependencyTree.includes(dependantInjectionToken)) {
+      const dependencyChain = [dependsOnInjectionToken, ...dependencyTree, dependsOnInjectionToken]
+        .map((token) => token.toString())
+        .join(' -> ');
+      throw new Error(`Cyclic dependency on async providers: ${dependencyChain}`);
+    }
+
+    const dependsOn: InjectionToken<any>[] = this.dependencyMap.get(dependantInjectionToken) ?? [];
+    dependsOn.push(dependsOnInjectionToken);
+    this.dependencyMap.set(dependantInjectionToken, dependsOn);
+  }
+
+  private calculateDependencyTree(dependantInjectionToken: InjectionToken<any>): InjectionToken<any>[] {
+    const dependsOn: InjectionToken<any>[] | undefined = this.dependencyMap.get(dependantInjectionToken);
+    if (dependsOn == null || dependsOn.length === 0) {
+      return [];
+    }
+
+    return [...dependsOn, ...dependsOn.map((dependency) => this.calculateDependencyTree(dependency)).flat()];
+  }
 }
 
 function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
@@ -163,7 +196,10 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
     })
     .catch((error) => {
       injectable.status = 'error';
-      throw new Error(`${injectable.injectionToken.toString()} failed resolution: ${error}`);
+
+      return error instanceof Error
+        ? Promise.reject(error)
+        : Promise.reject(`${injectable.injectionToken.toString()} failed resolution: ${error}`);
     });
 
   injectable.promise = promise;

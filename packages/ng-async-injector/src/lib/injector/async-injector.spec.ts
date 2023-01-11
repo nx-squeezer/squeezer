@@ -54,18 +54,16 @@ describe('AsyncInjector', () => {
       }).toThrowError('InjectionToken boolean not yet resolved.');
     });
 
-    it('should fail injection if async injection token not registered', () => {
+    it('should fail injection if async injection token not registered', async () => {
       TestBed.configureTestingModule({});
 
       const asyncInjector = TestBed.inject(AsyncInjector);
 
-      expect(() => {
-        asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('InjectionToken boolean not provided.');
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError('InjectionToken boolean not provided.');
 
-      expect(() => {
-        asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('InjectionToken boolean not provided.');
+      await expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).rejects.toBe(
+        'InjectionToken boolean not provided.'
+      );
     });
 
     it('should resolve the factory only once', async () => {
@@ -105,7 +103,7 @@ describe('AsyncInjector', () => {
       const promise = asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
       reject('failure');
 
-      await expect(promise).rejects.toEqual(new Error(`InjectionToken boolean failed resolution: failure`));
+      await expect(promise).rejects.toEqual(`InjectionToken boolean failed resolution: failure`);
       expect(() => {
         asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
       }).toThrowError('InjectionToken boolean failed during its resolution.');
@@ -186,7 +184,7 @@ describe('AsyncInjector', () => {
       });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
-      expect(() => asyncInjector.resolveMany()).toThrowError(
+      await expect(() => asyncInjector.resolveMany()).rejects.toBe(
         'Provide at least one injection token to be resolved when calling resolveMany().'
       );
     });
@@ -262,17 +260,14 @@ describe('AsyncInjector', () => {
     });
 
     it('should resolve async injection tokens using an async factory', async () => {
-      function factory() {
+      function factory(): number {
         return inject(BOOLEAN_INJECTOR_TOKEN) ? 1 : 0;
       }
 
       TestBed.configureTestingModule({
         providers: [
           { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
-          provideAsync({
-            provide: NUMBER_INJECTOR_TOKEN,
-            useAsyncFactory: () => Promise.resolve(factory),
-          }),
+          provideAsync({ provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(factory) }),
         ],
       });
 
@@ -283,7 +278,7 @@ describe('AsyncInjector', () => {
     });
 
     it('should resolve async injection tokens using an async factory that returns a promise', async () => {
-      async function factory() {
+      async function factory(): Promise<number> {
         const booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
         await new Promise((resolve) => setTimeout(resolve, 0));
         return booleanValue ? 1 : 0;
@@ -292,10 +287,7 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({
         providers: [
           { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
-          provideAsync({
-            provide: NUMBER_INJECTOR_TOKEN,
-            useAsyncFactory: () => Promise.resolve(factory),
-          }),
+          provideAsync({ provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(factory) }),
         ],
       });
 
@@ -308,7 +300,7 @@ describe('AsyncInjector', () => {
 
   describe('injection context', () => {
     it('should provide environment injection context to async factories', async () => {
-      const factory = async ({ inject, resolve }: InjectionContext) => {
+      const factory = async ({ inject, resolve }: InjectionContext): Promise<number> => {
         const stringValue = await resolve(STRING_INJECTOR_TOKEN);
         const booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
         return booleanValue ? stringValue.length : 0;
@@ -319,10 +311,7 @@ describe('AsyncInjector', () => {
           { provide: BOOLEAN_INJECTOR_TOKEN, useValue: true },
           provideAsync(
             { provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncValue },
-            {
-              provide: NUMBER_INJECTOR_TOKEN,
-              useAsyncFactory: () => Promise.resolve(factory),
-            }
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(factory) }
           ),
         ],
       });
@@ -331,6 +320,41 @@ describe('AsyncInjector', () => {
       await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
 
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(4);
+    });
+
+    it('should fail when there are cyclic dependencies', async () => {
+      const FIRST_INJECTOR_TOKEN = new InjectionToken<string>('first');
+      const firstFactory = async ({ resolve }: InjectionContext): Promise<string> => {
+        return resolve(THIRD_INJECTOR_TOKEN);
+      };
+
+      const SECOND_INJECTOR_TOKEN = new InjectionToken<string>('second');
+      const secondFactory = async ({ resolve }: InjectionContext): Promise<string> => {
+        return resolve(FIRST_INJECTOR_TOKEN);
+      };
+
+      const THIRD_INJECTOR_TOKEN = new InjectionToken<string>('third');
+      const thirdFactory = async ({ resolve }: InjectionContext): Promise<string> => {
+        return resolve(SECOND_INJECTOR_TOKEN);
+      };
+
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: FIRST_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(firstFactory) },
+            { provide: SECOND_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(secondFactory) },
+            { provide: THIRD_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(thirdFactory) }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+
+      await expect(() => asyncInjector.resolve(FIRST_INJECTOR_TOKEN)).rejects.toStrictEqual(
+        new Error(
+          `Cyclic dependency on async providers: InjectionToken first -> InjectionToken third -> InjectionToken second -> InjectionToken first`
+        )
+      );
     });
   });
 });
