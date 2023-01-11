@@ -1,8 +1,17 @@
-import { EnvironmentInjector, inject, Injectable, InjectionToken } from '@angular/core';
+import {
+  EnvironmentInjector,
+  inject,
+  Injectable,
+  InjectFlags,
+  InjectionToken,
+  InjectOptions,
+  ProviderToken,
+} from '@angular/core';
 
 import { isAsyncClassProvider } from '../interfaces/async-class-provider';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { isAsyncValueProvider } from '../interfaces/async-value-provider';
+import { InjectionContext } from '../interfaces/injection-context';
 import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfaces/injection-token-type';
 
 interface AsyncInjectableRecord<T> {
@@ -20,7 +29,7 @@ export class AsyncInjector {
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
     const { provide: injectionToken, mode } = asyncStaticProvider;
 
-    this.records.set(injectionToken, makeAsyncInjectableRecord(asyncStaticProvider));
+    this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
 
     if (mode === 'eager') {
       this.resolve(injectionToken);
@@ -101,6 +110,41 @@ export class AsyncInjector {
     );
     await Promise.all(pendingInjectables.map((injectable) => hydrate(injectable)));
   }
+
+  private makeAsyncInjectableRecord(asyncStaticProvider: AsyncStaticProvider<any>): AsyncInjectableRecord<any> {
+    const envInjector = inject(EnvironmentInjector);
+    const runInContext = (fn: () => any) => {
+      let result: any;
+      envInjector.runInContext(() => (result = fn()));
+      return result;
+    };
+    const injectionContext: InjectionContext = {
+      // eslint-disable-next-line @delagen/deprecation/deprecation
+      inject: <T>(token: ProviderToken<T>, options: InjectOptions | InjectFlags = InjectFlags.Default): T | null =>
+        // eslint-disable-next-line @delagen/deprecation/deprecation
+        runInContext(() => inject(token, options as any)),
+      resolve: <T>(injectionToken: InjectionToken<T>) => this.resolve(injectionToken),
+    };
+
+    let valuePromise: () => Promise<any>;
+
+    if (isAsyncValueProvider(asyncStaticProvider)) {
+      valuePromise = () => asyncStaticProvider.useAsyncValue();
+    } else if (isAsyncClassProvider(asyncStaticProvider)) {
+      valuePromise = () => asyncStaticProvider.useAsyncClass().then((classType) => runInContext(() => new classType()));
+    } else {
+      valuePromise = () =>
+        asyncStaticProvider.useAsyncFactory().then((factory) => runInContext(() => factory(injectionContext)));
+    }
+
+    return {
+      injectionToken: asyncStaticProvider.provide,
+      valuePromise,
+      status: 'initial',
+      promise: null,
+      resolvedValue: null,
+    };
+  }
 }
 
 function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
@@ -131,33 +175,4 @@ function isInjectionTokenCollection(
   injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
 ): injectionTokens is InjectionToken<any>[] {
   return injectionTokens.every((injectionToken) => injectionToken instanceof InjectionToken);
-}
-
-function makeAsyncInjectableRecord(asyncStaticProvider: AsyncStaticProvider<any>): AsyncInjectableRecord<any> {
-  const envInjector = inject(EnvironmentInjector);
-  const runInContext = (fn: () => any) => {
-    let result: any;
-    envInjector.runInContext(() => {
-      result = fn();
-    });
-    return result;
-  };
-
-  let valuePromise: () => Promise<any>;
-
-  if (isAsyncValueProvider(asyncStaticProvider)) {
-    valuePromise = () => asyncStaticProvider.useAsyncValue();
-  } else if (isAsyncClassProvider(asyncStaticProvider)) {
-    valuePromise = () => asyncStaticProvider.useAsyncClass().then((classType) => runInContext(() => new classType()));
-  } else {
-    valuePromise = () => asyncStaticProvider.useAsyncFactory().then((factory) => runInContext(factory));
-  }
-
-  return {
-    injectionToken: asyncStaticProvider.provide,
-    valuePromise,
-    status: 'initial',
-    promise: null,
-    resolvedValue: null,
-  };
 }
