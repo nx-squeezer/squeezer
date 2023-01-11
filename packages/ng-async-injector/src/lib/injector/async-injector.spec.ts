@@ -306,7 +306,7 @@ describe('AsyncInjector', () => {
     });
   });
 
-  fdescribe('injection context', () => {
+  describe('injection context', () => {
     it('should provide environment injection context to async factories', async () => {
       const factory = async ({ inject, resolve }: InjectionContext) => {
         const stringValue = await resolve(STRING_INJECTOR_TOKEN);
