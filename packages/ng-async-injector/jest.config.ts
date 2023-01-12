@@ -10,6 +10,14 @@ export default {
   },
   coverageDirectory: '../../coverage/packages/ng-async-injector',
   coverageReporters: ['lcov'],
+  coverageThreshold: {
+    global: {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100,
+    },
+  },
   transform: {
     '^.+\\.(ts|mjs|js|html)$': 'jest-preset-angular',
   },
