@@ -11,8 +11,7 @@ export function calculateCircularDependencyChain<T>(dependencyMap: Map<T, T[]>, 
     return null;
   }
 
-  for (let index = 0; index < childNodes.length; index++) {
-    const childNode = childNodes[index];
+  for (const childNode of childNodes) {
     const newChain = [...chain, childNode];
     if (childNode === firstNode) {
       return newChain;
