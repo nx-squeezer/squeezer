@@ -324,26 +324,27 @@ describe('AsyncInjector', () => {
 
     it('should fail when there are cyclic dependencies', async () => {
       const FIRST_INJECTOR_TOKEN = new InjectionToken<string>('first');
-      const firstFactory = async ({ resolve }: InjectionContext): Promise<string> => {
-        return resolve(THIRD_INJECTOR_TOKEN);
-      };
+      const firstFactory = ({ resolve }: InjectionContext): Promise<string> => resolve(THIRD_INJECTOR_TOKEN);
 
       const SECOND_INJECTOR_TOKEN = new InjectionToken<string>('second');
-      const secondFactory = async ({ resolve }: InjectionContext): Promise<string> => {
-        return resolve(FIRST_INJECTOR_TOKEN);
-      };
+      const secondFactory = ({ resolve }: InjectionContext): Promise<string> => resolve(FIRST_INJECTOR_TOKEN);
 
       const THIRD_INJECTOR_TOKEN = new InjectionToken<string>('third');
       const thirdFactory = async ({ resolve }: InjectionContext): Promise<string> => {
+        await resolve(FOURTH_INJECTOR_TOKEN);
         return resolve(SECOND_INJECTOR_TOKEN);
       };
+
+      const FOURTH_INJECTOR_TOKEN = new InjectionToken<string>('fourth');
+      const fourthFactory = (): Promise<string> => Promise.resolve('fourth');
 
       TestBed.configureTestingModule({
         providers: [
           provideAsync(
             { provide: FIRST_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(firstFactory) },
             { provide: SECOND_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(secondFactory) },
-            { provide: THIRD_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(thirdFactory) }
+            { provide: THIRD_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(thirdFactory) },
+            { provide: FOURTH_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(fourthFactory) }
           ),
         ],
       });

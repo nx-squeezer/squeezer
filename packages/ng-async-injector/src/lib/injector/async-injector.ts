@@ -13,6 +13,7 @@ import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { isAsyncValueProvider } from '../interfaces/async-value-provider';
 import { InjectionContext } from '../interfaces/injection-context';
 import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfaces/injection-token-type';
+import { calculateCircularDependencyChain } from '../utils/calculate-circular-dependencies.function';
 
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
@@ -157,26 +158,21 @@ export class AsyncInjector {
     dependantInjectionToken: InjectionToken<any>,
     dependsOnInjectionToken: InjectionToken<any>
   ) {
-    const dependencyTree = this.calculateDependencyTree(dependsOnInjectionToken);
-    if (dependencyTree.includes(dependantInjectionToken)) {
-      const dependencyChain = [dependsOnInjectionToken, ...dependencyTree, dependsOnInjectionToken]
-        .map((token) => token.toString())
-        .join(' -> ');
-      throw new Error(`Cyclic dependency on async providers: ${dependencyChain}`);
-    }
-
-    const dependsOn: InjectionToken<any>[] = this.dependencyMap.get(dependantInjectionToken) ?? [];
+    const dependsOn: InjectionToken<any>[] | undefined = this.dependencyMap.get(dependantInjectionToken) ?? [];
     dependsOn.push(dependsOnInjectionToken);
     this.dependencyMap.set(dependantInjectionToken, dependsOn);
-  }
 
-  private calculateDependencyTree(dependantInjectionToken: InjectionToken<any>): InjectionToken<any>[] {
-    const dependsOn: InjectionToken<any>[] | undefined = this.dependencyMap.get(dependantInjectionToken);
-    if (dependsOn == null || dependsOn.length === 0) {
-      return [];
+    const cyclicDependencies = this.dependencyMap.get(dependsOnInjectionToken);
+    if (cyclicDependencies == null) {
+      return;
     }
 
-    return [...dependsOn, ...dependsOn.map((dependency) => this.calculateDependencyTree(dependency)).flat()];
+    const dependencyChain = calculateCircularDependencyChain(this.dependencyMap, [
+      dependsOnInjectionToken,
+    ]) as InjectionToken<any>[];
+
+    const stringifiedDependencyChain = dependencyChain.map((token) => token.toString()).join(' -> ');
+    throw new Error(`Cyclic dependency on async providers: ${stringifiedDependencyChain}`);
   }
 }
 
