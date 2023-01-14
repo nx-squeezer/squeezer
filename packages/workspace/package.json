@@ -43,7 +43,7 @@
     "ngx-deploy-npm": "^4.3.10",
     "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.8.2",
-    "renovate": "^34.97.6",
+    "renovate": "^34.98.0",
     "yaml": "^2.2.1"
   },
   "devDependencies": {
