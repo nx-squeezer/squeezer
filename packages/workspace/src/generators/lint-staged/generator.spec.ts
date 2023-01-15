@@ -1,10 +1,10 @@
 import { Tree, installPackagesTask, readJson, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { addDevDependencyToPackageJson, addHuskyHookTask, addHuskyToPackageJson, installHuskyTask } from '../lib';
 import { lintStagedGenerator } from './generator';
 import { lintStagedSchematic } from './generator.compat';
 import { lintStaged, lintStagedConfigPath, lintStagedDefaultConfig, LintStagedConfig } from './lint-staged';
+import { addDevDependencyToPackageJson, addHuskyHookTask, addHuskyToPackageJson, installHuskyTask } from '../lib';
 
 jest.mock('@nrwl/devkit', () => ({
   ...jest.requireActual('@nrwl/devkit'),

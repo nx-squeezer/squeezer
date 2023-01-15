@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, ElementRef, inject, InjectionToken, Input } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { provideAsync } from '../providers/provide-async.function';
 import { ResolveAsyncProvidersDirective } from './resolve-async-providers.directive';
+import { provideAsync } from '../providers/provide-async.function';
 
 const STRING_INJECTOR_TOKEN = new InjectionToken<string>('string');
 let resolved = false;

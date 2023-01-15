@@ -1,10 +1,10 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { addHuskyHookTask, addHuskyToPackageJson, husky, HuskyHooks, huskyPath, installHuskyTask } from './husky';
 import { exec } from '../exec';
 import { addDevDependencyToPackageJson, addScriptToPackageJson } from '../package-json';
 import { joinNormalize } from '../path';
-import { addHuskyHookTask, addHuskyToPackageJson, husky, HuskyHooks, huskyPath, installHuskyTask } from './husky';
 
 jest.mock('../exec');
 jest.mock('../package-json');

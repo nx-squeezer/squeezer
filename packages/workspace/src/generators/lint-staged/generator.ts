@@ -1,7 +1,7 @@
 import { formatFiles, installPackagesTask, Tree, readJson, writeJson } from '@nrwl/devkit';
 
-import { addDevDependencyToPackageJson, addHuskyHookTask, addHuskyToPackageJson, installHuskyTask } from '../lib';
 import { lintStaged, LintStagedConfig, lintStagedConfigPath, lintStagedDefaultConfig } from './lint-staged';
+import { addDevDependencyToPackageJson, addHuskyHookTask, addHuskyToPackageJson, installHuskyTask } from '../lib';
 
 export async function lintStagedGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);

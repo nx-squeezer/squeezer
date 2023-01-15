@@ -1,9 +1,9 @@
 import { formatFiles, Tree } from '@nrwl/devkit';
 import fetch from 'node-fetch-commonjs';
 
+import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 import { existsGitHubCiWorkflow, addGitHubCiJobStep } from '../github-workflow';
 import { addBadgeToReadme, addImplicitDependencyToNxConfig, getGitRepoSlug } from '../lib';
-import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
 export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);

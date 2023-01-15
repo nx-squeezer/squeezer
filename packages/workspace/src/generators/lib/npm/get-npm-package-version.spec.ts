@@ -1,5 +1,5 @@
-import { exec } from '../exec';
 import { getNpmPackageVersion } from './get-npm-package-version';
+import { exec } from '../exec';
 
 jest.mock('../exec');
 

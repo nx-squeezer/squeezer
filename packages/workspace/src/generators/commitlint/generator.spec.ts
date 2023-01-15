@@ -1,7 +1,6 @@
 import { installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { addHuskyToPackageJson, addDevDependencyToPackageJson, installHuskyTask, addHuskyHookTask } from '../lib';
 import {
   commitlintCli,
   CommitlintConfig,
@@ -11,6 +10,7 @@ import {
 } from './commitlint';
 import { commitlintGenerator } from './generator';
 import { commitlintSchematic } from './generator.compat';
+import { addHuskyToPackageJson, addDevDependencyToPackageJson, installHuskyTask, addHuskyHookTask } from '../lib';
 
 jest.mock('@nrwl/devkit', () => ({
   ...jest.requireActual('@nrwl/devkit'),
