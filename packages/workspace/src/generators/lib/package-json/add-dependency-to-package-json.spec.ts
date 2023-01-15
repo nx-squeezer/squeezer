@@ -1,9 +1,9 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { getNpmPackageVersion } from '../npm';
 import { addDependencyToPackageJson } from './add-dependency-to-package-json';
 import { readPackageJson } from './package-json';
+import { getNpmPackageVersion } from '../npm';
 
 jest.mock('../npm');
 

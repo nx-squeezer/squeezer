@@ -1,8 +1,8 @@
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
-import { exec } from '../exec';
 import { lintWorkspaceTask } from './lint-workspace-task';
+import { exec } from '../exec';
 
 jest.mock('../exec');
 

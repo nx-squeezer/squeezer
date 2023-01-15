@@ -1,10 +1,10 @@
 import { inject, InjectionToken } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { AsyncInjector } from './async-injector';
 import { InjectionContext } from '../interfaces/injection-context';
 import { provideAsyncInjector } from '../providers/provide-async-injector.function';
 import { provideAsync } from '../providers/provide-async.function';
-import { AsyncInjector } from './async-injector';
 
 describe('AsyncInjector', () => {
   const BOOLEAN_INJECTOR_TOKEN = new InjectionToken<boolean>('boolean');

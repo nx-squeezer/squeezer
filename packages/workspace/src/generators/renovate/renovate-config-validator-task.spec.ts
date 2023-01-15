@@ -1,8 +1,8 @@
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
-import { exec } from '../lib';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
+import { exec } from '../lib';
 
 jest.mock('../lib');
 

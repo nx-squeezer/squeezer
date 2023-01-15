@@ -1,6 +1,5 @@
 import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 
-import { addHuskyToPackageJson, addDevDependencyToPackageJson, installHuskyTask, addHuskyHookTask } from '../lib';
 import {
   commitlintCli,
   CommitlintConfig,
@@ -8,6 +7,7 @@ import {
   commitlintConfigPath,
   commitlintDefaultConfig,
 } from './commitlint';
+import { addHuskyToPackageJson, addDevDependencyToPackageJson, installHuskyTask, addHuskyHookTask } from '../lib';
 
 export async function commitlintGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);

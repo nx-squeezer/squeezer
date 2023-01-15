@@ -1,10 +1,10 @@
 import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
-import { lintWorkspaceTask } from '../lib';
 import { writeEsLintConfig, readEsLintConfig, eslintConfigFile } from './eslint-config';
 import { eslintGenerator } from './generator';
 import { eslintSchematic } from './generator.compat';
+import { lintWorkspaceTask } from '../lib';
 
 const timeout = 10_000;
 

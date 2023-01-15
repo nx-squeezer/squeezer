@@ -2,10 +2,10 @@ import { Tree, readJson } from '@nrwl/devkit';
 import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
-import { lintWorkspaceTask } from '../lib';
 import { tsConfigGenerator } from './generator';
 import { tsConfigSchematic } from './generator.compat';
 import { tsConfigFile, tsConfigDefault } from './tsconfig';
+import { lintWorkspaceTask } from '../lib';
 
 jest.mock('../lib', () => ({
   ...jest.requireActual('../lib'),
