@@ -1,0 +1,10 @@
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
+
+@Component({
+  selector: 'nx-squeezer-root',
+  imports: [RouterOutlet],
+  template: `<router-outlet/>`,
+  standalone: true,
+})
+export class AppComponent {}
