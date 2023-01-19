@@ -1,0 +1,69 @@
+{
+  "name": "ng-async-injector-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/ng-async-injector-e2e/src",
+  "prefix": "nx-squeezer",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/ng-async-injector-e2e",
+        "index": "packages/ng-async-injector-e2e/src/index.html",
+        "main": "packages/ng-async-injector-e2e/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "packages/ng-async-injector-e2e/tsconfig.app.json",
+        "assets": ["packages/ng-async-injector-e2e/src/favicon.ico", "packages/ng-async-injector-e2e/src/assets"],
+        "styles": ["packages/ng-async-injector-e2e/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ng-async-injector-e2e:build:production"
+        },
+        "development": {
+          "browserTarget": "ng-async-injector-e2e:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/ng-async-injector-e2e/**/*.ts", "packages/ng-async-injector-e2e/**/*.html"]
+      }
+    }
+  },
+  "tags": []
+}
