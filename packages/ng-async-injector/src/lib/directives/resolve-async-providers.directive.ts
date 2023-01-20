@@ -29,8 +29,15 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
 
   private destroyed = false;
 
+  static ngTemplateContextGuard<T extends { [key: string]: InjectionToken<any> }>(
+    _: ResolveAsyncProvidersDirective<T>,
+    context: unknown
+  ): context is ResolveAsyncProvidersContext<T> {
+    return true;
+  }
+
   ngOnInit() {
-    if (this.providers == null) {
+    if (this.providers === null) {
       this.asyncInjector.resolveAll().then(() => this.renderTemplate());
     } else {
       this.asyncInjector

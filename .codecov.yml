@@ -18,9 +18,6 @@ coverage:
       workspace:
         flags:
           - workspace
-      renovate:
-        flags:
-          - renovate
       ng-async-injector:
         flags:
           - ng-async-injector
@@ -28,9 +25,6 @@ flags:
   workspace:
     paths:
       - packages/workspace
-  renovate:
-    paths:
-      - packages/renovate
   ng-async-injector:
     paths:
       - packages/ng-async-injector
