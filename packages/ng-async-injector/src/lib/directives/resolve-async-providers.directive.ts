@@ -25,12 +25,19 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
   private readonly templateRef = inject(TemplateRef);
   private readonly cdr = inject(ChangeDetectorRef);
 
-  @Input('ngxResolveAsyncProviders') providers: TProviders | null = null;
+  @Input('ngxResolveAsyncProviders') providers: TProviders | '' = '';
 
   private destroyed = false;
 
+  static ngTemplateContextGuard<T extends { [key: string]: InjectionToken<any> }>(
+    _: ResolveAsyncProvidersDirective<T>,
+    context: unknown
+  ): context is ResolveAsyncProvidersContext<T> {
+    return true;
+  }
+
   ngOnInit() {
-    if (this.providers == null) {
+    if (this.providers === '') {
       this.asyncInjector.resolveAll().then(() => this.renderTemplate());
     } else {
       this.asyncInjector
