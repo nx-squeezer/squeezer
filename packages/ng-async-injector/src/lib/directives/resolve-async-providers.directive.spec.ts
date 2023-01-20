@@ -113,4 +113,8 @@ describe('ResolveAsyncProvidersDirective', () => {
 
     expect(fixture.componentInstance.textContent).toBe('Async injector value: text text');
   });
+
+  it('should provide a context guard', () => {
+    expect(ResolveAsyncProvidersDirective.ngTemplateContextGuard(null as any, null as any)).toBeTruthy();
+  });
 });
