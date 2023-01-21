@@ -18,6 +18,10 @@
     }
   },
   "implicitDependencies": {
+    "package.json": {
+      "dependencies": "*",
+      "devDependencies": "*"
+    },
     ".github/workflows/*.yml": "*",
     ".codecov.yml": "*"
   },

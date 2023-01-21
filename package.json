@@ -25,7 +25,7 @@
     "g": "cross-env NODE_OPTIONS=\"-r ts-node/register\" nx g",
     "build": "nx run-many --target=build --parallel=3 --all",
     "lint": "nx run-many --target=lint --parallel=3 --all",
-    "lint:fix": "nx run-many --target=lint --parallel=3 --all --fix",
+    "format": "nx run-many --target=lint --parallel=3 --all --fix",
     "lint:workspace": "nx workspace-lint",
     "nx": "nx",
     "test": "nx run-many --target=test --parallel=3 --all",
