@@ -16,7 +16,7 @@
         "^@nrwl/",
         "^ng-packagr",
         "^nx$",
-        "^nx-",
+        "^@nx-",
         "^ts-node",
         "^tslib",
         "^zone\\.js"
@@ -38,7 +38,7 @@
         "^@nrwl/",
         "^ng-packagr",
         "^nx$",
-        "^nx-",
+        "^@nx-",
         "^ts-node",
         "^tslib",
         "^zone\\.js"

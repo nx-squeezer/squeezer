@@ -25,7 +25,7 @@
     {
       "groupName": "Angular workspace",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/"],
+      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/", "^@nx-"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "semanticCommitType": "fix"
     },
@@ -48,6 +48,23 @@
         "@ngrx/store",
         "@ngrx/component-store"
       ],
+      "matchFiles": ["package.json"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npm run prepare --if-present",
+          "npx --no-install ng update {{{depName}}} --from={{{replace '^[^\\d]*' '' currentValue}}} --to={{{replace '^[^\\d]*' '' newValue}}} --migrate-only --allow-dirty --force",
+          "npm run format --if-present",
+          "npx --no-install ng lint --fix"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@ng-easy/", "^@nx-"],
       "matchFiles": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {

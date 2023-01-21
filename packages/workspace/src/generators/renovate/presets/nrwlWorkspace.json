@@ -25,7 +25,7 @@
     {
       "groupName": "Nrwl workspace",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/"],
+      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/", "^@nx-"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "semanticCommitType": "fix"
     },
@@ -47,7 +47,7 @@
     {
       "groupName": "Nrwl workspace",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^@nrwl/", "^nx$"],
+      "matchPackagePatterns": ["^@nrwl/", "^nx$", "^@nx-", "^@ng-easy/"],
       "matchFiles": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
