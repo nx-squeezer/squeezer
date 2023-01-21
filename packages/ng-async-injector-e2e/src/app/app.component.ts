@@ -4,7 +4,7 @@ import { RouterOutlet } from '@angular/router';
 @Component({
   selector: 'nx-squeezer-root',
   imports: [RouterOutlet],
-  template: `<router-outlet/>`,
+  template: `<router-outlet />`,
   standalone: true,
 })
 export class AppComponent {}

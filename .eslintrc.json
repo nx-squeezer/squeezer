@@ -17,7 +17,7 @@
   ],
   "overrides": [
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md"],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
       "extends": ["plugin:prettier/recommended"],
       "rules": {}
     },
