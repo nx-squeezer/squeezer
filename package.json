@@ -49,7 +49,7 @@
     "ngx-deploy-npm": "4.3.10",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.8.3",
-    "renovate": "34.105.5",
+    "renovate": "34.105.6",
     "rxjs": "7.8.0",
     "tslib": "2.4.1",
     "yaml": "2.2.1",
