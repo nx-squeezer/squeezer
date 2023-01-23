@@ -52,5 +52,8 @@
     "@schemastore/prettierrc": "^0.0.9",
     "@schemastore/tsconfig": "^0.0.9",
     "@types/which": "^2.0.1"
+  },
+  "nx-migrations": {
+    "migrations": "./migrations.json"
   }
 }

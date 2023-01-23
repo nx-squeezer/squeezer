@@ -1,0 +1,10 @@
+{
+  "generators": {
+    "add-html-override-to-prettier-config": {
+      "version": "1.1.0",
+      "description": "Add html override to prettier config so that eslint can successfully parse html files",
+      "cli": "nx",
+      "implementation": "./src/migrations/add-html-override-to-prettier-config/add-html-override-to-prettier-config"
+    }
+  }
+}
