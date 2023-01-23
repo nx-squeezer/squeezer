@@ -7,4 +7,12 @@ export const prettierDefaultConfig: Exclude<SchemaForPrettierrc, string> = {
   trailingComma: 'es5',
   bracketSpacing: true,
   arrowParens: 'always',
+  overrides: [
+    {
+      files: '*.html',
+      options: {
+        parser: 'html',
+      },
+    },
+  ],
 };

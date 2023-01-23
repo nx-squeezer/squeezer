@@ -78,6 +78,14 @@ describe('@nx-squeezer/workspace e2e', () => {
         trailingComma: 'es5',
         bracketSpacing: true,
         arrowParens: 'always',
+        overrides: [
+          {
+            files: '*.html',
+            options: {
+              parser: 'html',
+            },
+          },
+        ],
       });
     });
   });

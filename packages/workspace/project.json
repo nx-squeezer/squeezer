@@ -32,6 +32,11 @@
             "input": "./packages/workspace",
             "glob": "executors.json",
             "output": "."
+          },
+          {
+            "input": "./packages/workspace",
+            "glob": "migrations.json",
+            "output": "."
           }
         ]
       }
@@ -44,7 +49,8 @@
           "packages/workspace/**/*.ts",
           "packages/workspace/generators.json",
           "packages/workspace/executors.json",
-          "packages/workspace/package.json"
+          "packages/workspace/package.json",
+          "packages/workspace/migrations.json"
         ]
       }
     },
