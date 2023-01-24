@@ -33,6 +33,10 @@ export class AsyncInjector {
   register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
     const { provide: injectionToken, mode } = asyncStaticProvider;
 
+    if (this.records.get(injectionToken) != null) {
+      throw new Error(`${injectionToken.toString()} already provided.`);
+    }
+
     this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
 
     if (mode === 'eager') {

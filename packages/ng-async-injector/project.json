@@ -27,6 +27,11 @@
       "options": {
         "jestConfig": "packages/ng-async-injector/jest.config.ts",
         "codeCoverage": true
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
       }
     },
     "lint": {

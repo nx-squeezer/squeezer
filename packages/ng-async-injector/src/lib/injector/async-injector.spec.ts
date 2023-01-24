@@ -108,9 +108,24 @@ describe('AsyncInjector', () => {
         asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
       }).toThrowError('InjectionToken boolean failed during its resolution.');
     });
+
+    it('should fail when registering token if duplicated', () => {
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue },
+            { provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue }
+          ),
+        ],
+      });
+
+      expect(() => {
+        TestBed.inject(BOOLEAN_INJECTOR_TOKEN);
+      }).toThrowError('InjectionToken boolean already provided.');
+    });
   });
 
-  describe('multiple injection token', () => {
+  describe('additional injection tokens', () => {
     it('should resolve async injection token', async () => {
       TestBed.configureTestingModule({
         providers: [
