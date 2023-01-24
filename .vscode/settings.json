@@ -3,7 +3,14 @@
   "editor.formatOnPaste": true,
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
-  "conventionalCommits.scopes": ["workspace", "renovate", "deps", "ng-async-injector", "ng-async-injector-e2e"],
+  "conventionalCommits.scopes": [
+    "workspace",
+    "renovate",
+    "deps",
+    "ng-async-injector",
+    "ng-async-injector-app",
+    "ng-async-injector-e2e"
+  ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
