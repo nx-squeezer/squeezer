@@ -3,7 +3,7 @@
   "version": 2,
   "projects": {
     "ng-async-injector": "packages/ng-async-injector",
-    "ng-async-injector-e2e": "packages/ng-async-injector-e2e",
+    "ng-async-injector-app": "packages/ng-async-injector-app",
     "workspace": "packages/workspace",
     "workspace-e2e": "packages/workspace-e2e"
   }
