@@ -1,1 +1,1 @@
-export const fourthProvider = 4;
+export const fourthProvider = 'Resolved through directive with key';
