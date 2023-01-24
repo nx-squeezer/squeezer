@@ -1,1 +1,1 @@
-export const firstProvider = 1;
+export const firstProvider = 'Provided with useAsyncValue';

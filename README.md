@@ -2,6 +2,8 @@
 
 [![CI](https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg)](https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml) [![codecov](https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg)](https://codecov.io/gh/nx-squeezer/squeezer) ![renovate](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot) ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
 
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-squeezer_squeezer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=nx-squeezer_squeezer) [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-squeezer_squeezer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=nx-squeezer_squeezer) [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=nx-squeezer_squeezer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=nx-squeezer_squeezer) [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=nx-squeezer_squeezer&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=nx-squeezer_squeezer)
+
 Monorepo with many tools and packages for [Nx](https://nx.dev/) and [Angular](https://angular.io/) projects.
 
 ## Packages

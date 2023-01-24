@@ -1,3 +1,3 @@
 export class ThirdProvider {
-  readonly value = 3;
+  readonly value = 'Provided with useAsyncClass';
 }

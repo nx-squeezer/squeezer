@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 
 import { ResolveAsyncProvidersDirective } from '@nx-squeezer/ng-async-injector';
@@ -11,11 +10,11 @@ import { THIRD_INJECTION_TOKEN } from './async-tokens/third.token';
 import ChildComponent from './child.component';
 
 @Component({
-  imports: [JsonPipe, ResolveAsyncProvidersDirective, ChildComponent],
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
   template: `
-    <p>{{ first | json }}</p>
-    <p>{{ second | json }}</p>
-    <p>{{ third.value | json }}</p>
+    <p>{{ first }}</p>
+    <p>{{ second }}</p>
+    <p>{{ third.value }}</p>
     <nx-squeezer-child
       *ngxResolveAsyncProviders="
         { fourth: FOURTH_INJECTION_TOKEN, fifth: FIFTH_INJECTION_TOKEN };
