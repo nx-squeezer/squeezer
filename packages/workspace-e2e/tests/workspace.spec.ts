@@ -35,6 +35,11 @@ import {
   CommitlintConfig,
   commitlintConfigPath,
   commitlintDefaultConfig,
+  esLintRule,
+  typescriptRule,
+  importOrderRule,
+  unusedImportsRule,
+  deprecationRule,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -150,54 +155,18 @@ describe('@nx-squeezer/workspace e2e', () => {
           extends: ['plugin:prettier/recommended'],
           rules: {},
         },
-        {
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-          extends: ['eslint:recommended', 'plugin:sonarjs/recommended'],
-          rules: {},
-        },
+        esLintRule,
         {
           files: ['*.ts', '*.tsx'],
-          extends: ['plugin:@typescript-eslint/recommended', 'plugin:import/recommended', 'plugin:import/typescript'],
+          extends: [...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
           rules: {
-            'unused-imports/no-unused-imports': 'error',
-            '@typescript-eslint/explicit-member-accessibility': [
-              'warn',
-              {
-                accessibility: 'no-public',
-              },
-            ],
-            '@typescript-eslint/no-explicit-any': ['off'],
-            '@typescript-eslint/explicit-module-boundary-types': ['off'],
-            '@typescript-eslint/ban-types': ['off'],
-            '@delagen/deprecation/deprecation': 'error',
-            'import/order': [
-              'error',
-              {
-                pathGroups: [
-                  {
-                    pattern: '@nx-*/**',
-                    group: 'internal',
-                    position: 'before',
-                  },
-                ],
-                groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
-                pathGroupsExcludedImportTypes: [],
-                'newlines-between': 'always',
-                alphabetize: {
-                  order: 'asc',
-                  caseInsensitive: true,
-                },
-              },
-            ],
-            'import/no-unresolved': ['off'],
+            ...unusedImportsRule.rules,
+            ...typescriptRule.rules,
+            ...deprecationRule.rules,
+            ...importOrderRule.rules,
           },
           settings: {
-            'import/resolver': {
-              node: {
-                extensions: ['.js', '.jsx', '.ts', '.tsx'],
-              },
-              typescript: {},
-            },
+            ...importOrderRule.settings,
           },
         },
       ]);

@@ -12,7 +12,7 @@ export function getGitRepo(tree: Tree): string | null {
 
   return output
     .trim()
-    .replace(/^\n*|\n*$/g, '')
+    .replace(/^\n*$/g, '')
     .replace(/\.git$/i, '');
 }
 
