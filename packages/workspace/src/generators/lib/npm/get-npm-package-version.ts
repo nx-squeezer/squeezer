@@ -8,5 +8,5 @@ export function getNpmPackageVersion(packageName: string): string | null {
     return null;
   }
 
-  return output.trim().replace(/^\n*|\n*$/g, '');
+  return output.trim().replace(/^\n*$/g, '');
 }

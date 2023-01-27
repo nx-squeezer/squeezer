@@ -11,6 +11,7 @@ import {
   EsLintConfigurationOverrideRule,
   eslintConfigFile,
 } from './eslint-config';
+import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
 import { EsLintGeneratorSchema } from './schema';
 import { addDevDependencyToPackageJson, joinNormalize, lintWorkspaceTask } from '../lib';
 
@@ -48,11 +49,7 @@ export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema
 }
 
 function addEsLintRecommendedRules(tree: Tree): void {
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-    extends: ['eslint:recommended'],
-    rules: {},
-  });
+  addEsLintRules(tree, esLintRule);
 
   const eslintConfig = readEsLintConfig(tree);
 
@@ -69,38 +66,20 @@ function addEsLintRecommendedRules(tree: Tree): void {
 function addSonarJsRecommendedRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-sonarjs');
   addEsLintPlugin(tree, 'sonarjs');
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
-    extends: ['plugin:sonarjs/recommended'],
-    rules: {},
-  });
+  addEsLintRules(tree, sonarJSRule);
 }
 
 function addUnusedImportsRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-unused-imports');
   addEsLintPlugin(tree, 'unused-imports');
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx'],
-    rules: {
-      'unused-imports/no-unused-imports': 'error',
-    },
-  });
+  addEsLintRules(tree, unusedImportsRule);
 }
 
 function addTypescriptRecommendedRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
   addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
   addEsLintPlugin(tree, '@typescript-eslint');
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx'],
-    extends: ['plugin:@typescript-eslint/recommended'],
-    rules: {
-      '@typescript-eslint/explicit-member-accessibility': ['warn', { accessibility: 'no-public' }],
-      '@typescript-eslint/no-explicit-any': ['off'],
-      '@typescript-eslint/explicit-module-boundary-types': ['off'],
-      '@typescript-eslint/ban-types': ['off'],
-    },
-  });
+  addEsLintRules(tree, typescriptRule);
   addParserOptionsToProjects(tree);
 }
 
@@ -109,12 +88,7 @@ function addDeprecationRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
   addDevDependencyToPackageJson(tree, '@delagen/eslint-plugin-deprecation');
   addEsLintPlugin(tree, '@delagen/deprecation');
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx'],
-    rules: {
-      '@delagen/deprecation/deprecation': 'error',
-    },
-  });
+  addEsLintRules(tree, deprecationRule);
   addParserOptionsToProjects(tree);
 }
 
@@ -122,29 +96,7 @@ function addImportOrderRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-import');
   addDevDependencyToPackageJson(tree, 'eslint-import-resolver-typescript');
   addEsLintPlugin(tree, 'import');
-  addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx'],
-    extends: ['plugin:import/recommended', 'plugin:import/typescript'],
-    rules: {
-      'import/order': [
-        'error',
-        {
-          pathGroups: [{ pattern: '@nx-*/**', group: 'internal', position: 'before' }],
-          groups: ['builtin', 'external', 'internal', ['parent', 'sibling', 'index']],
-          pathGroupsExcludedImportTypes: [],
-          'newlines-between': 'always',
-          alphabetize: { order: 'asc', caseInsensitive: true },
-        },
-      ],
-      'import/no-unresolved': ['off'],
-    },
-    settings: {
-      'import/resolver': {
-        node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] },
-        typescript: {},
-      },
-    },
-  });
+  addEsLintRules(tree, importOrderRule);
 }
 
 function addParserOptionsToProjects(tree: Tree) {
