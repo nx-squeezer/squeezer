@@ -2,6 +2,48 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.1.0...workspace@1.2.0) (2023-01-27)
+
+
+### Features
+
+* **ng-async-injector:** :sparkles: initial implementation of async injector ([#264](https://github.com/nx-squeezer/squeezer/issues/264)) ([0bdb368](https://github.com/nx-squeezer/squeezer/commit/0bdb3680a42b05a4882e7e6051b2ad7b3652d42e))
+* **workspace:** :bug: run post upgrade commands on renovate for [@nx](https://github.com/nx)- scope ([4192020](https://github.com/nx-squeezer/squeezer/commit/41920207358ebba587c5f3b92f1c228b400078ca))
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([c4d501c](https://github.com/nx-squeezer/squeezer/commit/c4d501c4ad9804594c3c6ce63f5d867105bbad83))
+* **deps:** :arrow_up: update all non-major dependencies ([93df4e6](https://github.com/nx-squeezer/squeezer/commit/93df4e6ff20bde1c0d929296051a69c78924c257))
+* **deps:** :arrow_up: update all non-major dependencies ([77cdce1](https://github.com/nx-squeezer/squeezer/commit/77cdce1d27acd142016c655925cca3cf4ab13a0a))
+* **deps:** :arrow_up: update all non-major dependencies ([#339](https://github.com/nx-squeezer/squeezer/issues/339)) ([ff3bf67](https://github.com/nx-squeezer/squeezer/commit/ff3bf67c022b73e4ce1b393189600afb7bd57c44))
+* **deps:** :arrow_up: update all non-major dependencies ([#380](https://github.com/nx-squeezer/squeezer/issues/380)) ([8561b60](https://github.com/nx-squeezer/squeezer/commit/8561b604bc025d2209284cb16a5ee9671aa19aca))
+* **deps:** :arrow_up: update dependency @angular/cli to ~15.1.1 ([bfa8e5f](https://github.com/nx-squeezer/squeezer/commit/bfa8e5ff422fc573a020aa3d9538f3551f01ee29))
+* **deps:** :arrow_up: update dependency renovate to v34.105.3 ([0d74dcb](https://github.com/nx-squeezer/squeezer/commit/0d74dcbc11b2fb40a9caa5fe6055b6485d23074a))
+* **deps:** :arrow_up: update dependency renovate to v34.105.4 ([272e03f](https://github.com/nx-squeezer/squeezer/commit/272e03fc275ad6ec86e6c0c3cb8d10a0409079ab))
+* **deps:** :arrow_up: update dependency renovate to v34.105.5 ([4e8694c](https://github.com/nx-squeezer/squeezer/commit/4e8694cae0b4c82cbb1999147bf52465369254fd))
+* **deps:** :arrow_up: update dependency renovate to v34.105.6 ([0aa7944](https://github.com/nx-squeezer/squeezer/commit/0aa79441d0efed1453650b99863867e993485eb1))
+* **deps:** :arrow_up: update dependency renovate to v34.106.0 ([9fc1978](https://github.com/nx-squeezer/squeezer/commit/9fc19783f08cefab4e3a36eff0cd0ec60ecabc4a))
+* **deps:** :arrow_up: update dependency renovate to v34.111.0 ([#378](https://github.com/nx-squeezer/squeezer/issues/378)) ([7ddd6ce](https://github.com/nx-squeezer/squeezer/commit/7ddd6ce36973abb593f6a2c6c1449ca42d9a4539))
+* **deps:** :arrow_up: update dependency renovate to v34.82.2 ([5babb7b](https://github.com/nx-squeezer/squeezer/commit/5babb7b4100b7f337714e46252165d7a34c9d4a3))
+* **deps:** :arrow_up: update dependency renovate to v34.83.0 ([a52932a](https://github.com/nx-squeezer/squeezer/commit/a52932a09c5e9d4ea7aab42f22b8d2b83779387a))
+* **deps:** :arrow_up: update dependency renovate to v34.83.1 ([364fed2](https://github.com/nx-squeezer/squeezer/commit/364fed22ab694078dfcd140cdbbceda6e461aa37))
+* **deps:** :arrow_up: update dependency renovate to v34.84.0 ([f28b042](https://github.com/nx-squeezer/squeezer/commit/f28b0421a299c67f4ad9ac0b0137da18fa74e6c5))
+* **deps:** :arrow_up: update dependency renovate to v34.84.1 ([ca335b7](https://github.com/nx-squeezer/squeezer/commit/ca335b7568ccf71fbebd83d725f29585924779b5))
+* **deps:** :arrow_up: update dependency renovate to v34.92.1 ([#311](https://github.com/nx-squeezer/squeezer/issues/311)) ([e59b281](https://github.com/nx-squeezer/squeezer/commit/e59b28126912c0dc7cb05a51d1925d1486e12181))
+* **deps:** :arrow_up: update dependency renovate to v34.97.6 ([5c2e93f](https://github.com/nx-squeezer/squeezer/commit/5c2e93fe977537a94d3242d1f8bed2ab1c672b86))
+* **deps:** :arrow_up: update dependency renovate to v34.98.0 ([039cde9](https://github.com/nx-squeezer/squeezer/commit/039cde92c7e48bea97835fbb4f487c4ffb404d37))
+* **deps:** :arrow_up: update dependency renovate to v34.98.1 ([76b300a](https://github.com/nx-squeezer/squeezer/commit/76b300a5a08d4ab5095a760185b6fce7d6568ba9))
+* **deps:** :arrow_up: update dependency renovate to v34.98.2 ([e2f231c](https://github.com/nx-squeezer/squeezer/commit/e2f231c3ec267a0aa79e3f7d9e0692f7009d528c))
+* **deps:** :arrow_up: update dependency renovate to v34.99.0 ([ba8a11f](https://github.com/nx-squeezer/squeezer/commit/ba8a11fd17634f27f73343c3056b58461c9ab4bf))
+* **deps:** :arrow_up: update dependency renovate to v34.99.1 ([2032764](https://github.com/nx-squeezer/squeezer/commit/2032764068e6399cace173adc814e425e12d4e9f))
+* **deps:** :arrow_up: update dependency renovate to v34.99.2 ([d2cbba4](https://github.com/nx-squeezer/squeezer/commit/d2cbba407fc28d5d1c975a66b85920a4296d8831))
+* **renovate:** :bug: disable major version upgrade of @types/jest ([98c3e99](https://github.com/nx-squeezer/squeezer/commit/98c3e99b8cd841d9d3c15e8d4b31d43fa4d600d5))
+* **workspace:** :bug: configure prettier override for html ([#367](https://github.com/nx-squeezer/squeezer/issues/367)) ([0dd0f23](https://github.com/nx-squeezer/squeezer/commit/0dd0f2312519c95b6a99b2ecc39d072af6da72aa)), closes [#357](https://github.com/nx-squeezer/squeezer/issues/357)
+* **workspace:** :bug: fix order of commands for angular renovate upgrades ([#275](https://github.com/nx-squeezer/squeezer/issues/275)) ([bc0eca8](https://github.com/nx-squeezer/squeezer/commit/bc0eca8c29a0534814285227ac54dbc745f69906))
+* **workspace:** :bug: renovate config validator task will succeed even if not installed ([#260](https://github.com/nx-squeezer/squeezer/issues/260)) ([838c59d](https://github.com/nx-squeezer/squeezer/commit/838c59d809dcc8567e69f6e1c64772e414aaa961)), closes [#259](https://github.com/nx-squeezer/squeezer/issues/259)
+* **workspace:** :bug: try generating empty migrations json for renovate ([#258](https://github.com/nx-squeezer/squeezer/issues/258)) ([0a4ef15](https://github.com/nx-squeezer/squeezer/commit/0a4ef156c0655c554a58b45c0d835accc60c530a))
+
 ## [1.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.0.2...workspace@1.1.0) (2023-01-04)
 
 
