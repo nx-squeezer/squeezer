@@ -35,11 +35,12 @@ import {
   CommitlintConfig,
   commitlintConfigPath,
   commitlintDefaultConfig,
-  esLintRule,
   typescriptRule,
   importOrderRule,
   unusedImportsRule,
   deprecationRule,
+  esLintRule,
+  sonarJSRule,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -155,7 +156,11 @@ describe('@nx-squeezer/workspace e2e', () => {
           extends: ['plugin:prettier/recommended'],
           rules: {},
         },
-        esLintRule,
+        {
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
+          extends: [...(esLintRule.extends ?? []), ...(sonarJSRule.extends ?? [])],
+          rules: {},
+        },
         {
           files: ['*.ts', '*.tsx'],
           extends: [...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
