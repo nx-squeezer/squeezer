@@ -7,5 +7,6 @@ describe('ng-async-injector-app', () => {
     cy.contains('Provided with useAsyncClass');
     cy.contains('Resolved through directive with key');
     cy.contains('Resolved through directive with implicit context');
+    cy.contains('Registered in child route');
   });
 });

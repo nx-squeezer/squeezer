@@ -11,12 +11,22 @@ export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknow
     .map((asyncStaticProvider: AsyncStaticProvider<unknown>) => [
       {
         provide: asyncStaticProvider.provide,
-        useFactory: () => inject(AsyncInjector).get(asyncStaticProvider.provide),
+        useFactory: () => inject(AsyncInjector, { self: true }).get(asyncStaticProvider.provide),
       },
       {
         provide: ENVIRONMENT_INITIALIZER,
         multi: true,
-        useValue: () => inject(AsyncInjector).register(asyncStaticProvider),
+        useValue: () => {
+          const injector = inject(AsyncInjector, { self: true, optional: true });
+          if (injector == null) {
+            throw new Error(
+              `Trying to register async injection token, but async injector does not exist. ` +
+                `Use provideAsyncInjector() in the same provider list as where you defined child ${asyncStaticProvider.provide.toString()}`
+            );
+          }
+
+          return injector.register(asyncStaticProvider);
+        },
       },
     ])
     .flat();
