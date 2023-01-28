@@ -2,6 +2,9 @@
 
 export * from './lib/directives/resolve-async-providers.directive';
 
+export * from './lib/functions/resolve';
+export * from './lib/functions/resolve-many';
+
 export * from './lib/injector/async-injector';
 
 export * from './lib/interfaces/async-class-provider';
