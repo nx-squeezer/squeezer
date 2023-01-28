@@ -2,6 +2,8 @@ import { EnvironmentInjector, inject, InjectionToken, createEnvironmentInjector 
 import { TestBed } from '@angular/core/testing';
 
 import { AsyncInjector } from './async-injector';
+import { resolve } from '../functions/resolve';
+import { resolveMany } from '../functions/resolve-many';
 import { InjectionContext } from '../interfaces/injection-context';
 import { provideAsyncInjector } from '../providers/provide-async-injector.function';
 import { provideAsync } from '../providers/provide-async.function';
@@ -371,6 +373,48 @@ describe('AsyncInjector', () => {
           `Cyclic dependency on async providers: InjectionToken first -> InjectionToken third -> InjectionToken second -> InjectionToken first`
         )
       );
+    });
+
+    it('should provide environment injection context to async factories through global resolve', async () => {
+      const factory = async (): Promise<number> => {
+        const stringValue = await resolve(STRING_INJECTOR_TOKEN);
+        return stringValue.length;
+      };
+
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(factory) }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(4);
+    });
+
+    it('should provide environment injection context to async factories through global resolveMany', async () => {
+      const factory = async (): Promise<number> => {
+        const [stringValue] = await resolveMany(STRING_INJECTOR_TOKEN);
+        return stringValue.length;
+      };
+
+      TestBed.configureTestingModule({
+        providers: [
+          provideAsync(
+            { provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncValue },
+            { provide: NUMBER_INJECTOR_TOKEN, useAsyncFactory: () => Promise.resolve(factory) }
+          ),
+        ],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      await asyncInjector.resolve(NUMBER_INJECTOR_TOKEN);
+
+      expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(4);
     });
   });
 

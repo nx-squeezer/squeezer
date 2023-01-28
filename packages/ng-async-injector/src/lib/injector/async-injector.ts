@@ -23,6 +23,9 @@ interface AsyncInjectableRecord<T> {
   resolvedValue: T | null;
 }
 
+/**
+ * @private
+ */
 @Injectable({ providedIn: 'root' })
 export class AsyncInjector {
   private readonly parentAsyncInjector = inject(AsyncInjector, { optional: true, skipSelf: true });
