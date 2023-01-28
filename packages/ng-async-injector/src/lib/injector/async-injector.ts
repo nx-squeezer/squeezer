@@ -25,6 +25,8 @@ interface AsyncInjectableRecord<T> {
 
 @Injectable({ providedIn: 'root' })
 export class AsyncInjector {
+  private readonly parentAsyncInjector = inject(AsyncInjector, { optional: true, skipSelf: true });
+
   private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
   // The key is the injection token, which depends on the injection tokens in the value
@@ -45,7 +47,7 @@ export class AsyncInjector {
   }
 
   get<T>(injectionToken: InjectionToken<T>): T {
-    const injectable = this.records.get(injectionToken);
+    const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
 
     if (injectable == null) {
       throw new Error(`${injectionToken.toString()} not provided.`);
@@ -63,7 +65,7 @@ export class AsyncInjector {
   }
 
   resolve<T>(injectionToken: InjectionToken<T>): Promise<T> {
-    const injectable = this.records.get(injectionToken);
+    const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
 
     if (injectable == null) {
       return Promise.reject(`${injectionToken.toString()} not provided.`);
@@ -117,6 +119,7 @@ export class AsyncInjector {
       ({ status }) => status !== 'resolved'
     );
     await Promise.all(pendingInjectables.map((injectable) => hydrate(injectable)));
+    await this.parentAsyncInjector?.resolveAll();
   }
 
   private makeAsyncInjectableRecord(asyncStaticProvider: AsyncStaticProvider<any>): AsyncInjectableRecord<any> {

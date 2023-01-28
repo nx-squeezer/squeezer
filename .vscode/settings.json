@@ -24,7 +24,6 @@
   "[html]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
-  "coverage-gutters.coverageBaseDir": "/coverage",
   "coverage-gutters.showGutterCoverage": true,
   "coverage-gutters.showRulerCoverage": true,
   "coverage-gutters.showLineCoverage": false

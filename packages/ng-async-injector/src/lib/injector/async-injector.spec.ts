@@ -1,4 +1,4 @@
-import { inject, InjectionToken } from '@angular/core';
+import { EnvironmentInjector, inject, InjectionToken, createEnvironmentInjector } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { AsyncInjector } from './async-injector';
@@ -371,6 +371,71 @@ describe('AsyncInjector', () => {
           `Cyclic dependency on async providers: InjectionToken first -> InjectionToken third -> InjectionToken second -> InjectionToken first`
         )
       );
+    });
+  });
+
+  describe('hierarchical injectors', () => {
+    it('should resolve injection tokens from parent async injector', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      });
+
+      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+      const childEnvInjector = createEnvironmentInjector([provideAsyncInjector()], rootEnvInjector);
+      const childAsyncInjector = childEnvInjector.get(AsyncInjector);
+
+      await childAsyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
+
+    it('should resolve all tokens from parent async injector', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      });
+
+      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+      const childEnvInjector = createEnvironmentInjector([provideAsyncInjector()], rootEnvInjector);
+      const childAsyncInjector = childEnvInjector.get(AsyncInjector);
+
+      await childAsyncInjector.resolveAll();
+
+      expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
+
+    it('should resolve injection tokens from child async injector', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      });
+
+      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+      const childEnvInjector = createEnvironmentInjector(
+        [
+          provideAsyncInjector(),
+          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(false) }),
+        ],
+        rootEnvInjector
+      );
+      const childAsyncInjector = childEnvInjector.get(AsyncInjector);
+
+      await childAsyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeFalsy();
+    });
+
+    it('should fail when resolving injection tokens if async injector not provided in child injector', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      });
+
+      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+
+      expect(() => {
+        createEnvironmentInjector(
+          [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(false) })],
+          rootEnvInjector
+        );
+      }).toThrowError(/Use provideAsyncInjector.*InjectionToken boolean/);
     });
   });
 });
