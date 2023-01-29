@@ -51,7 +51,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   // For this reason, we recommend each suite only
   // consumes 1 workspace. The tests should each operate
   // on a unique project in the workspace, such that they
-  // are not dependant on one another.
+  // are not dependent on one another.
   beforeAll(async () => {
     ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
   });
