@@ -35,16 +35,18 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
+    "@nrwl/devkit": "^15.6.2",
+    "node-fetch-commonjs": "^3.2.4",
+    "yaml": "^2.2.1"
+  },
+  "peerDependencies": {
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
-    "@nrwl/devkit": "^15.6.2",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "ngx-deploy-npm": "^4.3.11",
-    "node-fetch-commonjs": "^3.2.4",
     "prettier": "^2.8.3",
-    "renovate": "^34.114.1",
-    "yaml": "^2.2.1"
+    "renovate": "^34.114.1"
   },
   "devDependencies": {
     "@schemastore/eslintrc": "^0.0.6",
