@@ -44,7 +44,6 @@
     "@commitlint/config-conventional": "^17.4.2",
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
-    "ngx-deploy-npm": "^4.3.11",
     "prettier": "^2.8.3",
     "renovate": "^34.114.1"
   },
