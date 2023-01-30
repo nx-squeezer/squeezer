@@ -11,6 +11,7 @@
         "outputPath": "dist/packages/workspace",
         "main": "packages/workspace/src/index.ts",
         "tsConfig": "packages/workspace/tsconfig.lib.json",
+        "updateBuildableProjectDepsInPackageJson": false,
         "assets": [
           "packages/workspace/*.md",
           {
