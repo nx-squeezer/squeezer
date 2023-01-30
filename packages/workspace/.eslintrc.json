@@ -10,7 +10,7 @@
       "files": ["*.ts", "*.tsx"],
       "rules": {},
       "parserOptions": {
-        "project": ["packages/workspace/tsconfig.*?.json"]
+        "project": ["packages/workspace/tsconfig*.json"]
       }
     },
     {
