@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.1](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.0...workspace@1.2.1) (2023-01-30)
+
+
+### Bug Fixes
+
+* **workspace:** :pushpin: allow semver minor versions for peer deps ([#390](https://github.com/nx-squeezer/squeezer/issues/390)) ([#395](https://github.com/nx-squeezer/squeezer/issues/395)) ([940c611](https://github.com/nx-squeezer/squeezer/commit/940c6118bdee6e4c8cee0c1cfbcb2341592df30f))
+* **workspace:** :pushpin: update dependencies to only required ([#390](https://github.com/nx-squeezer/squeezer/issues/390)) ([#394](https://github.com/nx-squeezer/squeezer/issues/394)) ([03763d5](https://github.com/nx-squeezer/squeezer/commit/03763d5adade6bdfec6aefc76282adeeb2083284))
+* **workspace:** fix eslint for e2e-projects ([#393](https://github.com/nx-squeezer/squeezer/issues/393)) ([5441666](https://github.com/nx-squeezer/squeezer/commit/54416665a31b3fb552201bcde42a24c01880c132))
+
 ## [1.2.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.1.0...workspace@1.2.0) (2023-01-27)
 
 
