@@ -89,7 +89,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
       expect(eslintConfig.overrides?.[0]).toStrictEqual(typescriptRule);
       expect(readEsLintConfig(tree, `libs/lib1/${eslintConfigFile}`).overrides?.[0]).toStrictEqual({
         files: ['*.ts', '*.tsx'],
-        parserOptions: { project: ['libs/lib1/tsconfig.*?.json'] },
+        parserOptions: { project: ['libs/lib1/tsconfig*.json'] },
       });
     },
     timeout
@@ -108,7 +108,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
       expect(eslintConfig.overrides?.[0]).toStrictEqual(deprecationRule);
       expect(readEsLintConfig(tree, `libs/lib1/${eslintConfigFile}`).overrides?.[0]).toStrictEqual({
         files: ['*.ts', '*.tsx'],
-        parserOptions: { project: ['libs/lib1/tsconfig.*?.json'] },
+        parserOptions: { project: ['libs/lib1/tsconfig*.json'] },
       });
     },
     timeout

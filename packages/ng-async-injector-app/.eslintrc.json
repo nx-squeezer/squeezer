@@ -32,7 +32,7 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["packages/ng-async-injector-app/tsconfig.*?.json"]
+        "project": ["packages/ng-async-injector-app/tsconfig*.json"]
       }
     }
   ]

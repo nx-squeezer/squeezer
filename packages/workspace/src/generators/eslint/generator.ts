@@ -103,7 +103,7 @@ function addParserOptionsToProjects(tree: Tree) {
   updateEsLintProjectConfig(tree, (project) => ({
     files: ['*.ts', '*.tsx'],
     parserOptions: {
-      project: [joinNormalize(project.root, 'tsconfig.*?.json')],
+      project: [joinNormalize(project.root, 'tsconfig*.json')],
     },
   }));
 }
