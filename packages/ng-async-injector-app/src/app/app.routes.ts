@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { provideAsync, provideAsyncInjector, resolveMany } from '@nx-squeezer/ng-async-injector';
+import { provideAsync, resolveMany } from '@nx-squeezer/ng-async-injector';
 
 import { FIRST_INJECTION_TOKEN } from './async-tokens/first.token';
 import { SECOND_INJECTION_TOKEN } from './async-tokens/second.token';
@@ -13,7 +13,6 @@ export const appRoutes: Route[] = [
     path: '',
     loadComponent: () => import('./route.component'),
     providers: [
-      provideAsyncInjector(),
       provideAsync(
         {
           provide: SIXTH_INJECTION_TOKEN,
