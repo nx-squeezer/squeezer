@@ -5,7 +5,6 @@ import { AsyncInjector } from './async-injector';
 import { resolve } from '../functions/resolve';
 import { resolveMany } from '../functions/resolve-many';
 import { InjectionContext } from '../interfaces/injection-context';
-import { provideAsyncInjector } from '../providers/provide-async-injector.function';
 import { provideAsync } from '../providers/provide-async.function';
 
 describe('AsyncInjector', () => {
@@ -20,20 +19,6 @@ describe('AsyncInjector', () => {
 
   describe('injector', () => {
     it('should resolve async injection tokens by providing async injector', async () => {
-      TestBed.configureTestingModule({
-        providers: [
-          provideAsyncInjector(),
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue }),
-        ],
-      });
-
-      const asyncInjector = TestBed.inject(AsyncInjector);
-      await asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
-
-      expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
-    });
-
-    it('should resolve async injection tokens by lazy loading async injector', async () => {
       TestBed.configureTestingModule({
         providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
       });
@@ -57,7 +42,9 @@ describe('AsyncInjector', () => {
     });
 
     it('should fail injection if async injection token not registered', async () => {
-      TestBed.configureTestingModule({});
+      TestBed.configureTestingModule({
+        providers: [AsyncInjector],
+      });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
 
@@ -425,11 +412,14 @@ describe('AsyncInjector', () => {
       });
 
       const rootEnvInjector = TestBed.inject(EnvironmentInjector);
-      const childEnvInjector = createEnvironmentInjector([provideAsyncInjector()], rootEnvInjector);
+      const rootAsyncInjector = rootEnvInjector.get(AsyncInjector);
+
+      const childEnvInjector = createEnvironmentInjector([provideAsync()], rootEnvInjector);
       const childAsyncInjector = childEnvInjector.get(AsyncInjector);
 
       await childAsyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
 
+      expect(rootAsyncInjector).not.toBe(childAsyncInjector);
       expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
     });
 
@@ -439,11 +429,14 @@ describe('AsyncInjector', () => {
       });
 
       const rootEnvInjector = TestBed.inject(EnvironmentInjector);
-      const childEnvInjector = createEnvironmentInjector([provideAsyncInjector()], rootEnvInjector);
+      const rootAsyncInjector = rootEnvInjector.get(AsyncInjector);
+
+      const childEnvInjector = createEnvironmentInjector([provideAsync()], rootEnvInjector);
       const childAsyncInjector = childEnvInjector.get(AsyncInjector);
 
       await childAsyncInjector.resolveAll();
 
+      expect(rootAsyncInjector).not.toBe(childAsyncInjector);
       expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
     });
 
@@ -453,33 +446,53 @@ describe('AsyncInjector', () => {
       });
 
       const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+      const rootAsyncInjector = rootEnvInjector.get(AsyncInjector);
+
       const childEnvInjector = createEnvironmentInjector(
-        [
-          provideAsyncInjector(),
-          provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(false) }),
-        ],
+        [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(false) })],
         rootEnvInjector
       );
       const childAsyncInjector = childEnvInjector.get(AsyncInjector);
 
       await childAsyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
 
+      expect(rootAsyncInjector).not.toBe(childAsyncInjector);
       expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeFalsy();
     });
+  });
 
-    it('should fail when resolving injection tokens if async injector not provided in child injector', async () => {
-      TestBed.configureTestingModule({
-        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
-      });
+  describe('handle destruction', () => {
+    const asyncInjectorDestroyedMsg = 'Async injection token already destroyed.';
 
-      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+    it('should not allow registering providers after it is destroyed', () => {
+      TestBed.configureTestingModule({ providers: [provideAsync()] });
 
-      expect(() => {
-        createEnvironmentInjector(
-          [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: () => Promise.resolve(false) })],
-          rootEnvInjector
-        );
-      }).toThrowError(/Use provideAsyncInjector.*InjectionToken boolean/);
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      TestBed.resetTestingModule();
+
+      expect(() =>
+        asyncInjector.register({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })
+      ).toThrowError(asyncInjectorDestroyedMsg);
+    });
+
+    it('should not allow resolving providers after it is destroyed', async () => {
+      TestBed.configureTestingModule({ providers: [provideAsync()] });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      TestBed.resetTestingModule();
+
+      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorDestroyedMsg);
+      expect(() => asyncInjector.resolveMany()).toThrowError(asyncInjectorDestroyedMsg);
+      await expect(() => asyncInjector.resolveAll()).rejects.toEqual(new Error(asyncInjectorDestroyedMsg));
+    });
+
+    it('should not allow getting providers after it is destroyed', () => {
+      TestBed.configureTestingModule({ providers: [provideAsync()] });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      TestBed.resetTestingModule();
+
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorDestroyedMsg);
     });
   });
 });

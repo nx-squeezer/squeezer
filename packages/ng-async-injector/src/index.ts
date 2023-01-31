@@ -18,4 +18,3 @@ export * from './lib/interfaces/injection-token-type';
 export * from './lib/interfaces/type-without-constructor-params';
 
 export * from './lib/providers/provide-async.function';
-export * from './lib/providers/provide-async-injector.function';
