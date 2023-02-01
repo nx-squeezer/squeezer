@@ -46,6 +46,7 @@ class TestResolveAllProvidersComponent {
     >
     </ngx-child-component>
   `,
+  providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
   imports: [ResolveAsyncProvidersDirective, ChildTestComponent],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -101,9 +102,7 @@ describe('ResolveAsyncProvidersDirective', () => {
   });
 
   it('should render the template once selected async providers are resolved', async () => {
-    TestBed.configureTestingModule({
-      providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
-    });
+    TestBed.configureTestingModule({});
     const fixture = TestBed.createComponent(TestResolveManyProvidersComponent);
     fixture.autoDetectChanges();
 

@@ -1,7 +1,17 @@
-import { EnvironmentInjector, inject, InjectionToken, createEnvironmentInjector } from '@angular/core';
+import {
+  EnvironmentInjector,
+  inject,
+  InjectionToken,
+  createEnvironmentInjector,
+  Injector,
+  Component,
+  ChangeDetectionStrategy,
+  ViewChild,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { AsyncInjector } from './async-injector';
+import { ResolveAsyncProvidersDirective } from '../directives/resolve-async-providers.directive';
 import { resolve } from '../functions/resolve';
 import { resolveMany } from '../functions/resolve-many';
 import { InjectionContext } from '../interfaces/injection-context';
@@ -42,9 +52,7 @@ describe('AsyncInjector', () => {
     });
 
     it('should fail injection if async injection token not registered', async () => {
-      TestBed.configureTestingModule({
-        providers: [AsyncInjector],
-      });
+      TestBed.configureTestingModule({ providers: [provideAsync()] });
 
       const asyncInjector = TestBed.inject(AsyncInjector);
 
@@ -461,7 +469,34 @@ describe('AsyncInjector', () => {
     });
   });
 
-  describe('handle destruction', () => {
+  describe('initialization', () => {
+    const asyncInjectorNotInitializedMsg = 'Async injection not yet initialized.';
+
+    it('should not allow multiple initialization', () => {
+      TestBed.configureTestingModule({ providers: [provideAsync()] });
+      const asyncInjector = TestBed.inject(AsyncInjector);
+
+      expect(() => asyncInjector.init()).toThrowError('Async injection token already initialized.');
+    });
+
+    it('should not allow resolving providers before it is initialized', async () => {
+      const injector = Injector.create({ providers: [{ provide: AsyncInjector }] });
+      const asyncInjector = injector.get(AsyncInjector);
+
+      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorNotInitializedMsg);
+      expect(() => asyncInjector.resolveMany()).toThrowError(asyncInjectorNotInitializedMsg);
+      await expect(() => asyncInjector.resolveAll()).rejects.toEqual(new Error(asyncInjectorNotInitializedMsg));
+    });
+
+    it('should not allow getting providers before it is initialized', () => {
+      const injector = Injector.create({ providers: [{ provide: AsyncInjector }] });
+      const asyncInjector = injector.get(AsyncInjector);
+
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorNotInitializedMsg);
+    });
+  });
+
+  describe('teardown', () => {
     const asyncInjectorDestroyedMsg = 'Async injection token already destroyed.';
 
     it('should not allow registering providers after it is destroyed', () => {
@@ -471,7 +506,7 @@ describe('AsyncInjector', () => {
       TestBed.resetTestingModule();
 
       expect(() =>
-        asyncInjector.register({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })
+        asyncInjector.init({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })
       ).toThrowError(asyncInjectorDestroyedMsg);
     });
 
@@ -493,6 +528,74 @@ describe('AsyncInjector', () => {
       TestBed.resetTestingModule();
 
       expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorDestroyedMsg);
+    });
+  });
+
+  describe('provide in component', () => {
+    it('should not init the async injector automatically', async () => {
+      @Component({
+        template: ``,
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        standalone: true,
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      })
+      class TestComponent {
+        readonly asyncInjector = inject(AsyncInjector);
+      }
+
+      await TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
+      const fixture = TestBed.createComponent(TestComponent);
+
+      expect(fixture.componentInstance.asyncInjector).toBeTruthy();
+      expect(() => fixture.componentInstance.asyncInjector.init()).not.toThrow();
+    });
+
+    it('should fail if trying to inject an async provider in a component before resolution', async () => {
+      @Component({
+        template: ``,
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        standalone: true,
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      })
+      class TestComponent {
+        readonly booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
+      }
+
+      await TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
+
+      expect(() => TestBed.createComponent(TestComponent)).toThrowError(/Use directive \*ngxResolveAsyncProviders/);
+    });
+
+    it('should init the async injector when using the directive', async () => {
+      @Component({
+        selector: `ngx-child`,
+        template: ``,
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        standalone: true,
+      })
+      class ChildComponent {
+        readonly booleanValue = inject(BOOLEAN_INJECTOR_TOKEN);
+      }
+
+      @Component({
+        template: `<ngx-child #child *ngxResolveAsyncProviders />`,
+        imports: [ChildComponent, ResolveAsyncProvidersDirective],
+        changeDetection: ChangeDetectionStrategy.OnPush,
+        standalone: true,
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      })
+      class ParentComponent {
+        @ViewChild(ChildComponent) child!: ChildComponent;
+        readonly asyncInjector = inject(AsyncInjector);
+      }
+
+      await TestBed.configureTestingModule({ imports: [ParentComponent] }).compileComponents();
+      const fixture = TestBed.createComponent(ParentComponent);
+      fixture.autoDetectChanges();
+
+      await fixture.whenStable();
+
+      expect(fixture.componentInstance.child).toBeTruthy();
     });
   });
 });
