@@ -98,9 +98,13 @@ export class AsyncInjector implements OnDestroy {
     this.assertNotDestroyed();
     this.assertInitialized();
 
-    const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
+    const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
+      if (this.parentAsyncInjector != null) {
+        return this.parentAsyncInjector.get(injectionToken);
+      }
+
       throw new Error(`${injectionToken.toString()} not provided.`);
     }
 
@@ -119,9 +123,12 @@ export class AsyncInjector implements OnDestroy {
     this.assertNotDestroyed();
     this.assertInitialized();
 
-    const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
+    const injectable = this.records.get(injectionToken);
 
     if (injectable == null) {
+      if (this.parentAsyncInjector != null) {
+        return this.parentAsyncInjector.resolve(injectionToken);
+      }
       return Promise.reject(`${injectionToken.toString()} not provided.`);
     }
 

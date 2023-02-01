@@ -467,6 +467,21 @@ describe('AsyncInjector', () => {
       expect(rootAsyncInjector).not.toBe(childAsyncInjector);
       expect(childAsyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeFalsy();
     });
+
+    it('should resolve injection tokens from grand parent async injector', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })],
+      });
+
+      const rootEnvInjector = TestBed.inject(EnvironmentInjector);
+      const childEnvInjector = createEnvironmentInjector([provideAsync()], rootEnvInjector);
+      const grandchildEnvInjector = createEnvironmentInjector([provideAsync()], childEnvInjector);
+      const grandchildAsyncInjector = grandchildEnvInjector.get(AsyncInjector);
+
+      await grandchildAsyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN);
+
+      expect(grandchildEnvInjector.get(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
+    });
   });
 
   describe('initialization', () => {
