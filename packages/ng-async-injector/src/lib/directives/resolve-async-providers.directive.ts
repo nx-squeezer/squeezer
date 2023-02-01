@@ -12,6 +12,7 @@ import {
 
 import { AsyncInjector } from '../injector/async-injector';
 import { InjectionTokenTypeMap } from '../interfaces/injection-token-type';
+import { ASYNC_INJECTOR_INITIALIZER } from '../tokens/async-injector-initializer.token';
 
 @Directive({
   selector: 'ng-template[ngxResolveAsyncProviders]',
@@ -21,6 +22,7 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
   implements OnInit, OnDestroy
 {
   private readonly asyncInjector = inject(AsyncInjector);
+  private readonly _asyncInjectorInitializer = inject(ASYNC_INJECTOR_INITIALIZER);
   private readonly viewContainerRef = inject(ViewContainerRef);
   private readonly templateRef = inject(TemplateRef);
   private readonly cdr = inject(ChangeDetectorRef);

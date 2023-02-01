@@ -5,6 +5,7 @@ import {
   InjectFlags,
   InjectionToken,
   InjectOptions,
+  Injector,
   OnDestroy,
   ProviderToken,
 } from '@angular/core';
@@ -30,6 +31,7 @@ interface AsyncInjectableRecord<T> {
 @Injectable()
 export class AsyncInjector implements OnDestroy {
   private readonly parentAsyncInjector = inject(AsyncInjector, { optional: true, skipSelf: true });
+  private readonly injector = inject(Injector);
 
   private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
 
@@ -37,6 +39,7 @@ export class AsyncInjector implements OnDestroy {
   private readonly dependencyMap = new Map<InjectionToken<any>, InjectionToken<any>[]>();
 
   private destroyed = false;
+  private initialized = false;
 
   ngOnDestroy() {
     this.destroyed = true;
@@ -50,24 +53,50 @@ export class AsyncInjector implements OnDestroy {
     }
   }
 
-  register<T>(asyncStaticProvider: AsyncStaticProvider<T>) {
+  private assertNotInitialized() {
+    if (this.initialized) {
+      throw new Error(`Async injection token already initialized.`);
+    }
+  }
+
+  private assertInitialized() {
+    if (this.initialized) {
+      return;
+    }
+
+    if (this.injector instanceof EnvironmentInjector) {
+      throw new Error(`Async injection not yet initialized.`);
+    } else {
+      throw new Error(
+        `Async injector provided in a component, providers can't be injected in the same injector. ` +
+          `Use directive *ngxResolveAsyncProviders to resolve them before injection.`
+      );
+    }
+  }
+
+  init(...asyncStaticProviders: AsyncStaticProvider<any>[]) {
     this.assertNotDestroyed();
+    this.assertNotInitialized();
+    this.initialized = true;
 
-    const { provide: injectionToken, mode } = asyncStaticProvider;
+    asyncStaticProviders.forEach((asyncStaticProvider) => {
+      const { provide: injectionToken, mode } = asyncStaticProvider;
 
-    if (this.records.get(injectionToken) != null) {
-      throw new Error(`${injectionToken.toString()} already provided.`);
-    }
+      if (this.records.get(injectionToken) != null) {
+        throw new Error(`${injectionToken.toString()} already provided.`);
+      }
 
-    this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
+      this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
 
-    if (mode === 'eager') {
-      this.resolve(injectionToken);
-    }
+      if (mode === 'eager') {
+        this.resolve(injectionToken);
+      }
+    });
   }
 
   get<T>(injectionToken: InjectionToken<T>): T {
     this.assertNotDestroyed();
+    this.assertInitialized();
 
     const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
 
@@ -88,6 +117,7 @@ export class AsyncInjector implements OnDestroy {
 
   resolve<T>(injectionToken: InjectionToken<T>): Promise<T> {
     this.assertNotDestroyed();
+    this.assertInitialized();
 
     const injectable = this.records.get(injectionToken) ?? this.parentAsyncInjector?.records.get(injectionToken);
 
@@ -104,6 +134,7 @@ export class AsyncInjector implements OnDestroy {
     ...injectionTokens: (InjectionToken<any> | { [key: string]: InjectionToken<any> })[]
   ): Promise<any[] | { [key: string]: any }> {
     this.assertNotDestroyed();
+    this.assertInitialized();
 
     if (injectionTokens.length === 0) {
       return Promise.reject(`Provide at least one injection token to be resolved when calling resolveMany().`);
@@ -142,6 +173,7 @@ export class AsyncInjector implements OnDestroy {
 
   async resolveAll(): Promise<void> {
     this.assertNotDestroyed();
+    this.assertInitialized();
 
     const pendingInjectables: AsyncInjectableRecord<any>[] = [...this.records.values()].filter(
       ({ status }) => status !== 'resolved'
