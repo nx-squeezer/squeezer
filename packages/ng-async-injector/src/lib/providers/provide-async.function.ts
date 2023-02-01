@@ -6,7 +6,9 @@ import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { ASYNC_INJECTOR_INITIALIZER } from '../tokens/async-injector-initializer.token';
 
 export function provideAsync<T>(asyncStaticProvider: AsyncStaticProvider<T>): StaticProvider[];
-export function provideAsync<T extends any[]>(...asyncStaticProviders: AsyncProviderTypes<[...T]>): StaticProvider[];
+export function provideAsync<T extends unknown[]>(
+  ...asyncStaticProviders: AsyncProviderTypes<[...T]>
+): StaticProvider[];
 export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknown>[]): StaticProvider[] {
   const asyncProviders: StaticProvider[] = asyncStaticProviders.map(
     (asyncStaticProvider: AsyncStaticProvider<unknown>) => ({

@@ -18,7 +18,7 @@ import { ASYNC_INJECTOR_INITIALIZER } from '../tokens/async-injector-initializer
   selector: 'ng-template[ngxResolveAsyncProviders]',
   standalone: true,
 })
-export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: InjectionToken<any> }>
+export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: InjectionToken<unknown> }>
   implements OnInit, OnDestroy
 {
   private readonly asyncInjector = inject(AsyncInjector);
@@ -31,7 +31,7 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
 
   private destroyed = false;
 
-  static ngTemplateContextGuard<T extends { [key: string]: InjectionToken<any> }>(
+  static ngTemplateContextGuard<T extends { [key: string]: InjectionToken<unknown> }>(
     _: ResolveAsyncProvidersDirective<T>,
     context: unknown
   ): context is ResolveAsyncProvidersContext<T> {
@@ -71,6 +71,6 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
   }
 }
 
-export type ResolveAsyncProvidersContext<TProviders extends { [key: string]: InjectionToken<any> }> = {
+export type ResolveAsyncProvidersContext<TProviders extends { [key: string]: InjectionToken<unknown> }> = {
   $implicit: InjectionTokenTypeMap<TProviders>;
 } & InjectionTokenTypeMap<TProviders>;
