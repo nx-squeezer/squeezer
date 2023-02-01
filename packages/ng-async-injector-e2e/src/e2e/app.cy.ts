@@ -9,5 +9,6 @@ describe('ng-async-injector-app', () => {
     cy.contains('Resolved through directive with implicit context');
     cy.contains('Registered in child route');
     cy.contains('Resolved through injection context resolve');
+    cy.contains('Provided in component instead of environment injector');
   });
 });
