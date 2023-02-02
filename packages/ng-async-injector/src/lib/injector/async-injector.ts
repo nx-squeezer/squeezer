@@ -10,6 +10,7 @@ import {
   ProviderToken,
 } from '@angular/core';
 
+import { isMultiProvider } from '../functions/is-multi-provider';
 import { isAsyncClassProvider } from '../interfaces/async-class-provider';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { isAsyncValueProvider } from '../interfaces/async-value-provider';
@@ -79,14 +80,26 @@ export class AsyncInjector implements OnDestroy {
     this.assertNotInitialized();
     this.initialized = true;
 
-    asyncStaticProviders.forEach((asyncStaticProvider) => {
+    asyncStaticProviders.forEach((asyncStaticProvider: AsyncStaticProvider<unknown>) => {
       const { provide: injectionToken, mode } = asyncStaticProvider;
+      const existingProvider = this.records.get(injectionToken);
+      const isMulti = isMultiProvider(asyncStaticProvider);
 
-      if (this.records.get(injectionToken) != null) {
-        throw new Error(`${injectionToken.toString()} already provided.`);
+      if (existingProvider != null) {
+        if ((isMulti && !Array.isArray(existingProvider)) || (!isMulti && Array.isArray(existingProvider))) {
+          throw new Error(`${injectionToken.toString()} mixing providers.`);
+        } else if (!isMulti) {
+          throw new Error(`${injectionToken.toString()} already provided.`);
+        }
       }
 
-      this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
+      if (existingProvider == null && isMulti) {
+        this.records.set(injectionToken, [this.makeAsyncInjectableRecord(asyncStaticProvider)]);
+      } else if (Array.isArray(existingProvider)) {
+        this.records.set(injectionToken, [...existingProvider, this.makeAsyncInjectableRecord(asyncStaticProvider)]);
+      } else {
+        this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
+      }
 
       if (mode === 'eager') {
         this.resolve(injectionToken);
