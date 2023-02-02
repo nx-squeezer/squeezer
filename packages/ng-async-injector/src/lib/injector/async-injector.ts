@@ -10,6 +10,7 @@ import {
   ProviderToken,
 } from '@angular/core';
 
+import { isMultiProvider } from '../functions/is-multi-provider';
 import { isAsyncClassProvider } from '../interfaces/async-class-provider';
 import { AsyncStaticProvider } from '../interfaces/async-static-provider';
 import { isAsyncValueProvider } from '../interfaces/async-value-provider';
@@ -33,7 +34,7 @@ export class AsyncInjector implements OnDestroy {
   private readonly parentAsyncInjector = inject(AsyncInjector, { optional: true, skipSelf: true });
   private readonly injector = inject(Injector);
 
-  private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any>>();
+  private readonly records = new Map<InjectionToken<any>, AsyncInjectableRecord<any> | AsyncInjectableRecord<any>[]>();
 
   // The key is the injection token, which depends on the injection tokens in the value
   private readonly dependencyMap = new Map<InjectionToken<unknown>, InjectionToken<unknown>[]>();
@@ -79,14 +80,26 @@ export class AsyncInjector implements OnDestroy {
     this.assertNotInitialized();
     this.initialized = true;
 
-    asyncStaticProviders.forEach((asyncStaticProvider) => {
+    asyncStaticProviders.forEach((asyncStaticProvider: AsyncStaticProvider<unknown>) => {
       const { provide: injectionToken, mode } = asyncStaticProvider;
+      const existingProvider = this.records.get(injectionToken);
+      const isMulti = isMultiProvider(asyncStaticProvider);
 
-      if (this.records.get(injectionToken) != null) {
-        throw new Error(`${injectionToken.toString()} already provided.`);
+      if (existingProvider != null) {
+        if ((isMulti && !Array.isArray(existingProvider)) || (!isMulti && Array.isArray(existingProvider))) {
+          throw new Error(`${injectionToken.toString()} mixing providers.`);
+        } else if (!isMulti) {
+          throw new Error(`${injectionToken.toString()} already provided.`);
+        }
       }
 
-      this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
+      if (existingProvider == null && isMulti) {
+        this.records.set(injectionToken, [this.makeAsyncInjectableRecord(asyncStaticProvider)]);
+      } else if (Array.isArray(existingProvider)) {
+        this.records.set(injectionToken, [...existingProvider, this.makeAsyncInjectableRecord(asyncStaticProvider)]);
+      } else {
+        this.records.set(injectionToken, this.makeAsyncInjectableRecord(asyncStaticProvider));
+      }
 
       if (mode === 'eager') {
         this.resolve(injectionToken);
@@ -108,15 +121,23 @@ export class AsyncInjector implements OnDestroy {
       throw new Error(`${injectionToken.toString()} not provided.`);
     }
 
-    if (injectable.status === 'error') {
-      throw new Error(`${injectionToken.toString()} failed during its resolution.`);
+    if (Array.isArray(injectable)) {
+      return injectable.map((record) => this.getSingleProvider(record)) as T;
+    } else {
+      return this.getSingleProvider(injectable);
+    }
+  }
+
+  private getSingleProvider<T>(injectableRecord: AsyncInjectableRecord<T>): T {
+    if (injectableRecord.status === 'error') {
+      throw new Error(`${injectableRecord.injectionToken.toString()} failed during its resolution.`);
     }
 
-    if (injectable.status !== 'resolved') {
-      throw new Error(`${injectionToken.toString()} not yet resolved.`);
+    if (injectableRecord.status !== 'resolved') {
+      throw new Error(`${injectableRecord.injectionToken.toString()} not yet resolved.`);
     }
 
-    return injectable.resolvedValue;
+    return injectableRecord.resolvedValue as T;
   }
 
   resolve<T>(injectionToken: InjectionToken<T>): Promise<T> {
@@ -132,7 +153,11 @@ export class AsyncInjector implements OnDestroy {
       return Promise.reject(`${injectionToken.toString()} not provided.`);
     }
 
-    return hydrate(injectable);
+    if (Array.isArray(injectable)) {
+      return Promise.all(injectable.map((record) => hydrate(record))) as Promise<T>;
+    } else {
+      return hydrate(injectable);
+    }
   }
 
   resolveMany<T extends { [key: string]: InjectionToken<unknown> }>(
@@ -186,9 +211,9 @@ export class AsyncInjector implements OnDestroy {
     this.assertNotDestroyed();
     this.assertInitialized();
 
-    const pendingInjectables: AsyncInjectableRecord<unknown>[] = [...this.records.values()].filter(
-      ({ status }) => status !== 'resolved'
-    );
+    const pendingInjectables: AsyncInjectableRecord<unknown>[] = [...this.records.values()]
+      .flat()
+      .filter(({ status }) => status !== 'resolved');
     await Promise.all(pendingInjectables.map((injectable) => hydrate(injectable)));
     await this.parentAsyncInjector?.resolveAll();
   }

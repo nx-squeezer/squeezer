@@ -14,6 +14,7 @@ import { AsyncInjector } from './async-injector';
 import { ResolveAsyncProvidersDirective } from '../directives/resolve-async-providers.directive';
 import { resolve } from '../functions/resolve';
 import { resolveMany } from '../functions/resolve-many';
+import { AsyncValueMultiProvider, AsyncValueProvider } from '../interfaces/async-value-provider';
 import { InjectionContext } from '../interfaces/injection-context';
 import { provideAsync } from '../providers/provide-async.function';
 
@@ -222,6 +223,55 @@ describe('AsyncInjector', () => {
       expect(numberValue).toBe(1);
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
       expect(TestBed.inject(NUMBER_INJECTOR_TOKEN)).toBe(1);
+    });
+  });
+
+  describe('multi provider', () => {
+    const MULTI_BOOLEAN_INJECTOR_TOKEN = new InjectionToken<boolean[]>('multi-boolean');
+    const trueAsyncValue = () => Promise.resolve(true);
+    const falseAsyncValue = () => Promise.resolve(false);
+
+    const trueMultiProvider: AsyncValueMultiProvider<boolean[]> = {
+      provide: MULTI_BOOLEAN_INJECTOR_TOKEN,
+      useAsyncValue: trueAsyncValue,
+      multi: true,
+    };
+
+    const falseMultiProvider: AsyncValueMultiProvider<boolean[]> = {
+      provide: MULTI_BOOLEAN_INJECTOR_TOKEN,
+      useAsyncValue: falseAsyncValue,
+      multi: true,
+    };
+
+    const mixedMultiProvider: AsyncValueProvider<boolean> = {
+      provide: MULTI_BOOLEAN_INJECTOR_TOKEN,
+      useAsyncValue: falseAsyncValue,
+    };
+
+    it('should resolve multi providers', async () => {
+      TestBed.configureTestingModule({
+        providers: [provideAsync(trueMultiProvider, falseMultiProvider)],
+      });
+
+      const asyncInjector = TestBed.inject(AsyncInjector);
+      const resolved = await asyncInjector.resolve(MULTI_BOOLEAN_INJECTOR_TOKEN);
+
+      expect(resolved).toStrictEqual([true, false]);
+      expect(TestBed.inject(MULTI_BOOLEAN_INJECTOR_TOKEN)).toStrictEqual([true, false]);
+    });
+
+    it('should fail when mixing multi providers with regular ones', () => {
+      const multiError = `InjectionToken multi-boolean mixing providers.`;
+
+      expect(() => {
+        TestBed.configureTestingModule({ providers: [provideAsync(trueMultiProvider, mixedMultiProvider)] });
+        TestBed.inject(AsyncInjector);
+      }).toThrowError(multiError);
+
+      expect(() => {
+        TestBed.configureTestingModule({ providers: [provideAsync(mixedMultiProvider, trueMultiProvider)] });
+        TestBed.inject(AsyncInjector);
+      }).toThrowError(multiError);
     });
   });
 

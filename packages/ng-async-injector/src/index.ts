@@ -2,13 +2,16 @@
 
 export * from './lib/directives/resolve-async-providers.directive';
 
+export * from './lib/functions/is-multi-provider';
 export * from './lib/functions/resolve';
 export * from './lib/functions/resolve-many';
 
 export * from './lib/injector/async-injector';
 
+export * from './lib/interfaces/array-item';
 export * from './lib/interfaces/async-class-provider';
 export * from './lib/interfaces/async-factory-provider';
+export * from './lib/interfaces/async-multi-provider';
 export * from './lib/interfaces/async-provider-config';
 export * from './lib/interfaces/async-provider-types';
 export * from './lib/interfaces/async-static-provider';

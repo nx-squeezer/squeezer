@@ -6,6 +6,7 @@ import { EIGHTH_INJECTION_TOKEN } from './async-tokens/eighth.token';
 import { FIFTH_INJECTION_TOKEN } from './async-tokens/fifth.token';
 import { FIRST_INJECTION_TOKEN } from './async-tokens/first.token';
 import { FOURTH_INJECTION_TOKEN } from './async-tokens/fourth.token';
+import { MULTI_INJECTION_TOKEN } from './async-tokens/multi-provider.token';
 import { SECOND_INJECTION_TOKEN } from './async-tokens/second.token';
 import { THIRD_INJECTION_TOKEN } from './async-tokens/third.token';
 import ChildComponent from './child.component';
@@ -31,6 +32,7 @@ import ChildComponent from './child.component';
       [fourth]="fourth"
       [fifth]="providers.fifth"
     />
+    <p>{{ multi[0] }}</p>
   `,
   standalone: true,
 })
@@ -38,6 +40,7 @@ export default class RouteComponent {
   readonly first = inject(FIRST_INJECTION_TOKEN);
   readonly second = inject(SECOND_INJECTION_TOKEN);
   readonly third = inject(THIRD_INJECTION_TOKEN);
+  readonly multi = inject(MULTI_INJECTION_TOKEN);
   readonly FOURTH_INJECTION_TOKEN = FOURTH_INJECTION_TOKEN;
   readonly FIFTH_INJECTION_TOKEN = FIFTH_INJECTION_TOKEN;
   readonly EIGHTH_INJECTION_TOKEN = EIGHTH_INJECTION_TOKEN;

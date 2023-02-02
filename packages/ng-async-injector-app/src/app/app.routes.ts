@@ -3,6 +3,7 @@ import { Route } from '@angular/router';
 import { provideAsync, resolveMany } from '@nx-squeezer/ng-async-injector';
 
 import { FIRST_INJECTION_TOKEN } from './async-tokens/first.token';
+import { MULTI_INJECTION_TOKEN } from './async-tokens/multi-provider.token';
 import { SECOND_INJECTION_TOKEN } from './async-tokens/second.token';
 import { SEVENTH_INJECTION_TOKEN } from './async-tokens/seventh.token';
 import { SIXTH_INJECTION_TOKEN } from './async-tokens/sixth.token';
@@ -15,6 +16,16 @@ export const appRoutes: Route[] = [
     providers: [
       provideAsync(
         {
+          provide: MULTI_INJECTION_TOKEN,
+          useAsyncValue: () => import('./async-providers/multi.provider').then((x) => x.multiProvider),
+          multi: true,
+        },
+        {
+          provide: MULTI_INJECTION_TOKEN,
+          useAsyncValue: () => import('./async-providers/multi.provider').then((x) => x.multiProvider),
+          multi: true,
+        },
+        {
           provide: SIXTH_INJECTION_TOKEN,
           useAsyncValue: () => import('./async-providers/sixth.provider').then((x) => x.sixthProvider),
         },
@@ -26,7 +37,13 @@ export const appRoutes: Route[] = [
     ],
     resolve: {
       asyncProviders: () =>
-        resolveMany(FIRST_INJECTION_TOKEN, SECOND_INJECTION_TOKEN, THIRD_INJECTION_TOKEN, SIXTH_INJECTION_TOKEN),
+        resolveMany(
+          FIRST_INJECTION_TOKEN,
+          SECOND_INJECTION_TOKEN,
+          THIRD_INJECTION_TOKEN,
+          SIXTH_INJECTION_TOKEN,
+          MULTI_INJECTION_TOKEN
+        ),
     },
   },
   { path: '**', redirectTo: '' },
