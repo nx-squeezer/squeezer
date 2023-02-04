@@ -2,8 +2,8 @@
   "name": "@nx-squeezer/ng-async-injector",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^15.1.2",
-    "@angular/core": "^15.1.2"
+    "@angular/common": "^15.1.3",
+    "@angular/core": "^15.1.3"
   },
   "dependencies": {
     "tslib": "^2.5.0"
