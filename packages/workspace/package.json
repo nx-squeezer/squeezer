@@ -45,7 +45,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.3",
-    "renovate": "^34.114.1"
+    "renovate": "^34.118.2"
   },
   "devDependencies": {
     "@schemastore/eslintrc": "^0.0.6",
