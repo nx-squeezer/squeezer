@@ -46,7 +46,7 @@
     "@nrwl/devkit": "15.6.2",
     "husky": "8.0.3",
     "lint-staged": "13.1.0",
-    "ngx-deploy-npm": "4.3.11",
+    "ngx-deploy-npm": "5.0.0",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.8.3",
     "renovate": "34.118.3",
