@@ -1,0 +1,50 @@
+name: Next
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # daily at 00:00
+
+jobs:
+  next:
+    name: Pipeline with @next version
+    runs-on: ubuntu-latest
+    env:
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3.3.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3.6.0
+        with:
+          node-version: 16.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v3.0.0
+        with:
+          nx-key: next
+
+      - name: Migrate @next
+        run: |
+          ./nx-create-migrations.sh
+          npx nx migrate next
+          npx nx migrate --run-migrations
+
+      - name: Lint
+        run: npx nx affected --target=lint --parallel=3
+
+      - name: Lint workspace
+        run: npm run lint:workspace
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v3.0.2
+
+      - name: Build
+        run: npx nx affected --target=build --parallel=3
+
+      - name: Test
+        run: npx nx affected --target=test --parallel=3
+
+      - name: e2e
+        run: npx nx affected --target=e2e --parallel=3
