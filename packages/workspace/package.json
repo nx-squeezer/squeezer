@@ -13,7 +13,7 @@
     "renovate"
   ],
   "author": "samuelfernandez",
-  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/libs/builders",
+  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/workspace",
   "bugs": {
     "url": "https://github.com/nx-squeezer/squeezer/issues"
   },
