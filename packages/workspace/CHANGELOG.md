@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.2](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.1...workspace@1.2.2) (2023-02-07)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update dependency renovate to v34.118.2 ([e3df031](https://github.com/nx-squeezer/squeezer/commit/e3df03159286d3236e0126a1b983bbaad2d55050))
+* **deps:** :arrow_up: update dependency renovate to v34.118.3 ([f885272](https://github.com/nx-squeezer/squeezer/commit/f8852721bd5c168d1f882d75918ef115b9534f1b))
+* **deps:** :arrow_up: update dependency renovate to v34.119.0 ([e6efe74](https://github.com/nx-squeezer/squeezer/commit/e6efe74ec1a723630eec04e34693a94d854ff1e2))
+* **deps:** :arrow_up: update dependency renovate to v34.119.2 ([7506493](https://github.com/nx-squeezer/squeezer/commit/75064939053406b84bb504eed5899205fc98bf85))
+* **deps:** :arrow_up: update dependency renovate to v34.119.4 ([#419](https://github.com/nx-squeezer/squeezer/issues/419)) ([46b7777](https://github.com/nx-squeezer/squeezer/commit/46b7777902eceeaa8220cae89260d89eb3ef778e))
+* **deps:** :arrow_up: update dependency renovate to v34.119.5 ([a341d1d](https://github.com/nx-squeezer/squeezer/commit/a341d1dbf78658c19dedf4af96b7f9c0e108d796))
+* **deps:** :arrow_up: update dependency renovate to v34.120.0 ([e1e8877](https://github.com/nx-squeezer/squeezer/commit/e1e8877d218c79e034cc94c07b3f6dd59e50b417))
+* **workspace:** :package: fix homepage in package.json ([16ee20b](https://github.com/nx-squeezer/squeezer/commit/16ee20bafd63ec5c139849b93ac79633595ba3e7))
+
 ## [1.2.1](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.0...workspace@1.2.1) (2023-01-30)
 
 
