@@ -35,16 +35,16 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nrwl/devkit": "^15.6.3",
-    "node-fetch-commonjs": "^3.2.4",
-    "yaml": "^2.2.1"
+    "@nrwl/devkit": "^15.0.0",
+    "node-fetch-commonjs": "^3.0.0",
+    "yaml": "^2.0.0"
   },
   "peerDependencies": {
-    "@commitlint/cli": "^17.4.2",
-    "@commitlint/config-conventional": "^17.4.2",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.0",
-    "prettier": "^2.8.3",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0",
+    "prettier": "^2.8.0",
     "renovate": "^34.120.0"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "@schemastore/package": "^0.0.6",
     "@schemastore/prettierrc": "^0.0.9",
     "@schemastore/tsconfig": "^0.0.9",
-    "@types/which": "^2.0.1"
+    "@types/which": "^2.0.0"
   },
   "nx-migrations": {
     "migrations": "./migrations.json"

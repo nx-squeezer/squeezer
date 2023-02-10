@@ -12,6 +12,7 @@
     ":semanticCommits",
     "schedule:weekends",
     "github>whitesource/merge-confidence:beta",
+    "local>nx-squeezer/squeezer:widenRangeLibraryDeps",
     "local>nx-squeezer/squeezer:gitmoji",
     "local>nx-squeezer/squeezer:npm",
     "local>nx-squeezer/squeezer:groupAllNonMajor",

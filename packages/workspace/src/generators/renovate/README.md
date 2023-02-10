@@ -133,3 +133,14 @@ This [preset](https://github.com/nx-squeezer/squeezer/blob/main/maintenance.json
 ```
 
 </details>
+
+<details>
+  <summary>Widen Range for Library Dependencies</summary>
+
+This [preset](https://github.com/nx-squeezer/squeezer/blob/main/widenRangeLibraryDeps.json) causes Renovate to _not_ update libraries' `package.json`, only the root `package.json` will be updated for minor and patch versions. This has the purpose of keeping libraries with a wider compatibility range, within the last major version. This is the recommended configuration for library authors.
+
+```json
+"extends": ["github>@nx-squeezer/squeezer:widenRangeLibraryDeps"]
+```
+
+</details>
