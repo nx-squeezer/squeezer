@@ -14,6 +14,7 @@ module.exports = {
   allowPostUpgradeCommandTemplating: true,
   allowedPostUpgradeCommands: [
     '^npm ci --ignore-scripts$',
+    '^npm install --ignore-scripts$'
     '^npm run prepare --if-present$',
     '^npm run format --if-present$',
     '^npx --no-install ng update (@[a-z0-9-~][a-z0-9-._~]*\\/)?[a-z0-9-~][a-z0-9-._~]* --from=\\d+\\.\\d+\\.\\d+ --to=\\d+\\.\\d+\\.\\d+ --migrate-only --allow-dirty --force$',
