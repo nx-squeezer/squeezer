@@ -3,9 +3,9 @@
   "packageRules": [
     {
       "matchManagers": ["npm"],
-      "matchDepTypes": ["dependencies", "peerDependencies", "optionalDependencies", "devDependencies"],
+      "matchDepTypes": ["peerDependencies"],
       "matchUpdateTypes": ["minor", "patch", "bump"],
-      "excludePaths": ["package.json"],
+      "ignorePaths": ["package.json"],
       "enabled": false
     }
   ]
