@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.3](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.2...workspace@1.2.3) (2023-02-10)
+
+
+### Bug Fixes
+
+* **workspace:** :bug: renovate runs npm install for nrwl ([#429](https://github.com/nx-squeezer/squeezer/issues/429)) ([9eaa3c0](https://github.com/nx-squeezer/squeezer/commit/9eaa3c08e9f521dc7e22b2591de1b045521430d4)), closes [#427](https://github.com/nx-squeezer/squeezer/issues/427)
+
 ## [1.2.2](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.1...workspace@1.2.2) (2023-02-07)
 
 
