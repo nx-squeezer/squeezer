@@ -36,8 +36,8 @@
   "executors": "./executors.json",
   "dependencies": {
     "@nrwl/devkit": "^15.6.3",
-    "node-fetch-commonjs": "^3.0.0",
-    "yaml": "^2.0.0"
+    "node-fetch-commonjs": "^3.2.4",
+    "yaml": "^2.2.1"
   },
   "peerDependencies": {
     "@commitlint/cli": "^17.0.0",
