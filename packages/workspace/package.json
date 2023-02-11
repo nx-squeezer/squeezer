@@ -35,7 +35,7 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nrwl/devkit": "^15.0.0",
+    "@nrwl/devkit": "^15.6.3",
     "node-fetch-commonjs": "^3.0.0",
     "yaml": "^2.0.0"
   },
