@@ -35,8 +35,8 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
-    "node-fetch-commonjs": "^3.0.0",
-    "yaml": "^2.0.0"
+    "node-fetch-commonjs": "3.2.4",
+    "yaml": "2.2.1"
   },
   "peerDependencies": {
     "@nrwl/devkit": "^15.0.0",
@@ -53,7 +53,7 @@
     "@schemastore/package": "^0.0.6",
     "@schemastore/prettierrc": "^0.0.9",
     "@schemastore/tsconfig": "^0.0.9",
-    "@types/which": "^2.0.0"
+    "@types/which": "^2.0.1"
   },
   "nx-migrations": {
     "migrations": "./migrations.json"
