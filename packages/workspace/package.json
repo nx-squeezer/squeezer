@@ -35,11 +35,12 @@
   "schematics": "./schematics.json",
   "executors": "./executors.json",
   "dependencies": {
-    "@nrwl/devkit": "^15.0.0",
     "node-fetch-commonjs": "^3.0.0",
     "yaml": "^2.0.0"
   },
   "peerDependencies": {
+    "@nrwl/devkit": "^15.0.0",
+    "nx": "^15.0.0",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "husky": "^8.0.0",
