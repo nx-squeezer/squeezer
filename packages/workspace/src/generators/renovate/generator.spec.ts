@@ -4,6 +4,7 @@ import { parse, stringify } from 'yaml';
 
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
+import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { ciFile } from '../github-workflow';
@@ -16,6 +17,7 @@ jest.mock('../lib', () => ({
 }));
 
 jest.mock('./renovate-config-validator-task');
+jest.mock('./make-migrations-script-executable-task');
 
 describe('@nx-squeezer/workspace renovate generator', () => {
   let tree: Tree;
@@ -46,6 +48,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
     tasks?.();
 
     expect(renovateConfigValidatorTask).toHaveBeenCalled();
+    expect(makeMigrationsScriptExecutableTask).toHaveBeenCalled();
   });
 
   it('should skip execution if a Renovate CI workflow already exists', async () => {

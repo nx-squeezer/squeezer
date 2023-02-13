@@ -61,6 +61,11 @@
         "jestConfig": "packages/workspace/jest.config.ts",
         "passWithNoTests": true,
         "codeCoverage": true
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
       }
     },
     "version": {
