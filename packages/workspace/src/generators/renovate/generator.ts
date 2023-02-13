@@ -1,6 +1,7 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parse, parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
+import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
@@ -66,5 +67,6 @@ export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSc
 
   return () => {
     renovateConfigValidatorTask(tree);
+    makeMigrationsScriptExecutableTask(tree);
   };
 }

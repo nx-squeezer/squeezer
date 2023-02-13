@@ -1,6 +1,7 @@
 export const renovateCiFile = './.github/workflows/renovate.yml';
 export const renovateConfigFile = '.github/renovate-config.js';
 export const renovateFile = '.github/renovate.json';
+export const renovateCreateMigrationsFile = 'nx-create-migrations.sh';
 export const renovatePresets = [
   'angularWorkspace.json',
   'tooling.json',

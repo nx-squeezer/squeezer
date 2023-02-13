@@ -41,6 +41,7 @@ import {
   deprecationRule,
   esLintRule,
   sonarJSRule,
+  renovateCreateMigrationsFile,
 } from '@nx-squeezer/workspace';
 
 jest.setTimeout(120_000);
@@ -222,6 +223,7 @@ describe('@nx-squeezer/workspace e2e', () => {
       expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
       expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
       expect(() => checkFilesExist(renovateFile)).not.toThrow();
+      expect(() => checkFilesExist(renovateCreateMigrationsFile)).not.toThrow();
       expect(() => checkFilesExist(securityFile)).not.toThrow();
 
       renovatePresets.forEach((preset) => {
