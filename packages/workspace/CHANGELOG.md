@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.3.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.3...workspace@1.3.0) (2023-02-13)
+
+
+### Features
+
+* **workspace:** :sparkles: configure renovate to widen dependencies ([#434](https://github.com/nx-squeezer/squeezer/issues/434)) ([5e37f14](https://github.com/nx-squeezer/squeezer/commit/5e37f1483efec355445acd1c3a8ff1e316eb2dd1)), closes [#432](https://github.com/nx-squeezer/squeezer/issues/432)
+* **workspace:** :sparkles: widen peer dependencies range ([#396](https://github.com/nx-squeezer/squeezer/issues/396)) ([#450](https://github.com/nx-squeezer/squeezer/issues/450)) ([31a9145](https://github.com/nx-squeezer/squeezer/commit/31a9145a0bcb9d7c1ded1ee9378d68b0e9567623))
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([47a07dd](https://github.com/nx-squeezer/squeezer/commit/47a07dd63ef571a38c7e7f1fd866a47388402dbc))
+* **workspace:** fix wrong config for renovate widen preset ([38ec4ec](https://github.com/nx-squeezer/squeezer/commit/38ec4ec7d8bb29be6526284b463bb20db461e8ff))
+
 ## [1.2.3](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.2...workspace@1.2.3) (2023-02-10)
 
 
