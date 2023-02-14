@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.4.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.3.0...workspace@1.4.0) (2023-02-14)
+
+
+### Features
+
+* **workspace:** :sparkles: renovate adds create migrations script ([#390](https://github.com/nx-squeezer/squeezer/issues/390)) ([#451](https://github.com/nx-squeezer/squeezer/issues/451)) ([6bb96d2](https://github.com/nx-squeezer/squeezer/commit/6bb96d23890c74127123e34d1a367418af584f96))
+
 ## [1.3.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.2.3...workspace@1.3.0) (2023-02-13)
 
 
