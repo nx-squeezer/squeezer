@@ -7,9 +7,9 @@
     "workspace",
     "renovate",
     "deps",
-    "ng-async-injector",
-    "ng-async-injector-app",
-    "ng-async-injector-e2e"
+    "ngx-async-injector",
+    "ngx-async-injector-app",
+    "ngx-async-injector-e2e"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {

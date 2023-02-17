@@ -1,4 +1,4 @@
-describe('ng-async-injector-app', () => {
+describe('ngx-async-injector-app', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should provide all async providers', () => {

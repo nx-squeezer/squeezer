@@ -1,21 +1,21 @@
 {
-  "name": "ng-async-injector-app",
+  "name": "ngx-async-injector-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/ng-async-injector-app/src",
+  "sourceRoot": "packages/ngx-async-injector-app/src",
   "prefix": "nx-squeezer",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/ng-async-injector-app",
-        "index": "packages/ng-async-injector-app/src/index.html",
-        "main": "packages/ng-async-injector-app/src/main.ts",
+        "outputPath": "dist/packages/ngx-async-injector-app",
+        "index": "packages/ngx-async-injector-app/src/index.html",
+        "main": "packages/ngx-async-injector-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "packages/ng-async-injector-app/tsconfig.app.json",
-        "assets": ["packages/ng-async-injector-app/src/favicon.ico", "packages/ng-async-injector-app/src/assets"],
-        "styles": ["packages/ng-async-injector-app/src/styles.css"],
+        "tsConfig": "packages/ngx-async-injector-app/tsconfig.app.json",
+        "assets": ["packages/ngx-async-injector-app/src/favicon.ico", "packages/ngx-async-injector-app/src/assets"],
+        "styles": ["packages/ngx-async-injector-app/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -49,10 +49,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "ng-async-injector-app:build:production"
+          "browserTarget": "ngx-async-injector-app:build:production"
         },
         "development": {
-          "browserTarget": "ng-async-injector-app:build:development"
+          "browserTarget": "ngx-async-injector-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -61,7 +61,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/ng-async-injector-app/**/*.ts", "packages/ng-async-injector-app/**/*.html"]
+        "lintFilePatterns": ["packages/ngx-async-injector-app/**/*.ts", "packages/ngx-async-injector-app/**/*.html"]
       }
     }
   },
