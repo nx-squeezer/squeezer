@@ -1,5 +1,5 @@
 {
-  "name": "@nx-squeezer/ng-async-injector",
+  "name": "@nx-squeezer/ngx-async-injector",
   "version": "0.0.1",
   "description": "Angular library that provides async dependency injection",
   "keywords": [
@@ -9,14 +9,14 @@
     "dependency injection"
   ],
   "author": "samuelfernandez",
-  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/ng-async-injector",
+  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/ngx-async-injector",
   "bugs": {
     "url": "https://github.com/nx-squeezer/squeezer/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nx-squeezer/squeezer.git",
-    "directory": "packages/ng-async-injector"
+    "directory": "packages/ngx-async-injector"
   },
   "engines": {
     "node": ">=16.14.0",

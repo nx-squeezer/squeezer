@@ -1,19 +1,19 @@
 {
-  "name": "ng-async-injector-e2e",
+  "name": "ngx-async-injector-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "packages/ng-async-injector-e2e/src",
+  "sourceRoot": "packages/ngx-async-injector-e2e/src",
   "projectType": "application",
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/ng-async-injector-e2e/cypress.config.ts",
-        "devServerTarget": "ng-async-injector-app:serve:development",
+        "cypressConfig": "packages/ngx-async-injector-e2e/cypress.config.ts",
+        "devServerTarget": "ngx-async-injector-app:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "ng-async-injector-app:serve:production"
+          "devServerTarget": "ngx-async-injector-app:serve:production"
         },
         "watch": {
           "watch": true
@@ -24,10 +24,10 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/ng-async-injector-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["packages/ngx-async-injector-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["ng-async-injector-app"]
+  "implicitDependencies": ["ngx-async-injector-app"]
 }

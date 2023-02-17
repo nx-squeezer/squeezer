@@ -1,4 +1,4 @@
-import { InjectionContext } from '@nx-squeezer/ng-async-injector';
+import { InjectionContext } from '@nx-squeezer/ngx-async-injector';
 
 import { FIRST_INJECTION_TOKEN } from '../async-tokens/first.token';
 

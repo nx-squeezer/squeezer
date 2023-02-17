@@ -1,7 +1,7 @@
 import { AsyncPipe, NgIf } from '@angular/common';
 import { Component, inject, Input } from '@angular/core';
 
-import { resolve } from '@nx-squeezer/ng-async-injector';
+import { resolve } from '@nx-squeezer/ngx-async-injector';
 
 import { EIGHTH_INJECTION_TOKEN } from './async-tokens/eighth.token';
 import { SEVENTH_INJECTION_TOKEN } from './async-tokens/seventh.token';

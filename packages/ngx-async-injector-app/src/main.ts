@@ -1,7 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
 import { provideRouter } from '@angular/router';
 
-import { provideAsync } from '@nx-squeezer/ng-async-injector';
+import { provideAsync } from '@nx-squeezer/ngx-async-injector';
 
 import { AppComponent } from './app/app.component';
 import { appRoutes } from './app/app.routes';

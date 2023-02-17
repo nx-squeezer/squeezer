@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 
-import { provideAsync, ResolveAsyncProvidersDirective } from '@nx-squeezer/ng-async-injector';
+import { provideAsync, ResolveAsyncProvidersDirective } from '@nx-squeezer/ngx-async-injector';
 
 import { EIGHTH_INJECTION_TOKEN } from './async-tokens/eighth.token';
 import { FIFTH_INJECTION_TOKEN } from './async-tokens/fifth.token';

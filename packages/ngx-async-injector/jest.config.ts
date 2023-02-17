@@ -1,5 +1,5 @@
 export default {
-  displayName: 'ng-async-injector',
+  displayName: 'ngx-async-injector',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {
@@ -8,7 +8,7 @@ export default {
       stringifyContentPathRegex: '\\.(html|svg)$',
     },
   },
-  coverageDirectory: '../../coverage/packages/ng-async-injector',
+  coverageDirectory: '../../coverage/packages/ngx-async-injector',
   coverageReporters: ['lcov'],
   coverageThreshold: {
     global: {

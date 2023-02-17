@@ -9,7 +9,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "nxSqueezer",
+            "prefix": "ngx",
             "style": "camelCase"
           }
         ],
@@ -17,7 +17,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "nx-squeezer",
+            "prefix": "ngx",
             "style": "kebab-case"
           }
         ]
@@ -32,7 +32,7 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["packages/ng-async-injector-app/tsconfig*.json"]
+        "project": ["packages/ngx-async-injector/tsconfig*.json"]
       }
     }
   ]

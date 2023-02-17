@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-import { provideAsync, resolveMany } from '@nx-squeezer/ng-async-injector';
+import { provideAsync, resolveMany } from '@nx-squeezer/ngx-async-injector';
 
 import { FIRST_INJECTION_TOKEN } from './async-tokens/first.token';
 import { MULTI_INJECTION_TOKEN } from './async-tokens/multi-provider.token';
