@@ -283,7 +283,7 @@ describe('AsyncInjector', () => {
 
       // Force environment to initialize and wait for macrotask so that promise is resolved
       TestBed.inject(AsyncInjector);
-      await flushPromises();
+      await new Promise(process.nextTick); // Resolve injectors
 
       expect(TestBed.inject(BOOLEAN_INJECTOR_TOKEN)).toBeTruthy();
     });
@@ -658,11 +658,9 @@ describe('AsyncInjector', () => {
       const fixture = TestBed.createComponent(ParentComponent);
       fixture.autoDetectChanges();
 
-      await fixture.whenStable();
+      await new Promise(process.nextTick); // Resolve injectors
 
       expect(fixture.componentInstance.child).toBeTruthy();
     });
   });
 });
-
-const flushPromises = () => new Promise((resolve) => setTimeout(resolve, 0));
