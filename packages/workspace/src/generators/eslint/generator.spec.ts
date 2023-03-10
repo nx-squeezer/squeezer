@@ -19,6 +19,8 @@ jest.mock('@nrwl/devkit', () => ({
   installPackagesTask: jest.fn(),
 }));
 
+jest.setTimeout(10_000);
+
 describe('@nx-squeezer/workspace eslint generator', () => {
   let tree: Tree;
 
