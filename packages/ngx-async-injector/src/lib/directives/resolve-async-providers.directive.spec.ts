@@ -88,7 +88,7 @@ describe('ResolveAsyncProvidersDirective', () => {
     await new Promise(process.nextTick); // Resolve injectors
 
     expect(fixture.componentInstance.textContent).toBe('Async injector value: text');
-  }, 100000);
+  });
 
   it('should not render the template if destroyed before completing', () => {
     TestBed.configureTestingModule({
