@@ -5,6 +5,7 @@ import {
   checkFilesExist,
   readFile,
   runCommandAsync,
+  updateFile,
 } from '@nrwl/nx-plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
@@ -99,6 +100,8 @@ describe('@nx-squeezer/workspace e2e', () => {
 
   describe('tsconfig generator', () => {
     it('should setup default compiler options', async () => {
+      updateFile(tsConfigFile, JSON.stringify({ compilerOptions: {} }));
+
       await runNxCommandAsync(`generate @nx-squeezer/workspace:tsconfig`);
 
       const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tsConfigFile);
