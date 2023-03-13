@@ -121,7 +121,7 @@ const ciFileContent = () => ({
           name: 'Setup Node.js',
           uses: 'actions/setup-node@v3.4.1',
           with: {
-            'node-version': '16.x',
+            'node-version': '18.x',
           },
         },
         {
@@ -149,7 +149,7 @@ const ciFileContent = () => ({
           name: 'Setup Node.js',
           uses: 'actions/setup-node@v3.4.1',
           with: {
-            'node-version': '16.x',
+            'node-version': '18.x',
           },
         },
         {
@@ -188,7 +188,7 @@ const ciFileContent = () => ({
           name: 'Setup Node.js',
           uses: 'actions/setup-node@v3.4.1',
           with: {
-            'node-version': '16.x',
+            'node-version': '18.x',
           },
         },
         {
@@ -231,7 +231,7 @@ const ciFileContent = () => ({
           name: 'Setup Node.js',
           uses: 'actions/setup-node@v3.4.1',
           with: {
-            'node-version': '16.x',
+            'node-version': '18.x',
           },
         },
         {
@@ -270,7 +270,7 @@ const ciFileContent = () => ({
           name: 'Setup Node.js',
           uses: 'actions/setup-node@v3.4.1',
           with: {
-            'node-version': '16.x',
+            'node-version': '18.x',
           },
         },
         {
