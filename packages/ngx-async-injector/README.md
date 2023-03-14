@@ -5,16 +5,20 @@
 - [Motivation](#motivation)
 - [Show me the code](#show-me-the-code)
 - [Examples](#examples)
-- [Resolve using route's resolver](#resolve-using-routes-resolver)
-- [Resolve using a structural directive](#resolve-using-a-structural-directive)
+  - [Resolve using route's resolver](#resolve-using-routes-resolver)
+  - [Resolve using a structural directive](#resolve-using-a-structural-directive)
+- [API](#api)
+  - [`provideAsync` function](#provideasync-function)
+  - [`resolve` and `resolveMany`](#resolve-and-resolvemany)
+- [Installation](#installation)
 
 ## Motivation
 
-Angular's DI system is designed to be [synchronous](https://github.com/angular/angular/issues/23279#issuecomment-1165030809), since having asynchronous services would make component rendering asynchronous.
+Angular's dependency injection (DI) system is designed to be [synchronous](https://github.com/angular/angular/issues/23279#issuecomment-1165030809), since having asynchronous providers would make component rendering asynchronous and break existing renderer.
 
-When there is a need to load dynamic data when the app is initializing, it is Angular recommends using [`APP_INITIALIZER`](https://angular.io/api/core/APP_INITIALIZER). However, it has several known cons, like delaying rendering the whole component tree or load the routes.
+As of today it is not possible to lazy load data asynchronously and consume it through a provider. The only option recommended by Angular when it needs to be loaded before the app initializes is using [`APP_INITIALIZER`](https://angular.io/api/core/APP_INITIALIZER). However, it has several known cons because it is blocking and delays rendering the whole component tree and loading routes.
 
-Another common problem is that, when a provider is needed by various features it usually needs to be declared in the root injector, increasing the initial bundle size. It would be great that services could be declared in root, but lazy loaded when needed. It is true that using `providedIn: root` could be used in many scenarios, but there are others where using async `import()` of a dependency would be more useful, such as code splitting and fine grained lazy loading.
+Another common problem is the initial payload of the main bundle caused by needing to declare providers in root. When a provider is needed by various features it usually needs to be declared in the root injector, increasing the initial bundle size. It would be great that services could be declared in the root component, but lazy loaded when needed. It is true that using `providedIn: root` could be used in many scenarios, but there are others where using async `import()` of a dependency would be more useful, such as code splitting and fine grained lazy loading.
 
 For the scenarios described above, having a way to declare asynchronous providers, either by loading data from the server and later instantiating a service, or to lazy load them using `import()`, could help and give flexibility to implementers. This particular problem is what `@nx-squeezer/ngx-async-injector` solves.
 
@@ -60,7 +64,7 @@ class Component {
 
 That's it! Declaration is almost identical, and consumption is the same. But wait, when is the async provided actually loaded and resolved?
 
-It needs another piece that triggers it: resolvers. Check this diagram:
+It needs another piece that triggers it: async provider resolvers. Check this diagram:
 
 ```mermaid
 flowchart TD
@@ -77,7 +81,7 @@ Async providers need to be resolved before being used, and that is a responsibil
 
 ## Examples
 
-## Resolve using route's resolver
+### Resolve using route's resolver
 
 ```ts
 export const appRoutes: Route[] = [
@@ -93,7 +97,7 @@ export const appRoutes: Route[] = [
 
 In this case, the async provider will be resolved while the route loads, and the inside the component `MY_SERVICE` can be injected.
 
-## Resolve using a structural directive
+### Resolve using a structural directive
 
 ```ts
 @Component({
@@ -108,6 +112,108 @@ export default class ParentComponent {
 
 In this case, the async provider will be resolved when the parent component renders, and once completed the child component will be rendered having `MY_SERVICE` available.
 
-# API
+## API
 
-# Installation
+### `provideAsync` function
+
+It is used to declare one or more async providers. For each provider, it requires the token, and then an async function that can be `useAsyncValue`, `useAsyncClass` or `useAsyncFactory`. It supports `multi` providers as well. It can be used in environment injectors, modules, components and directives. If multiple providers need to be declared in the same injector, use a single `provideAsync` function with multiple providers instead of using it multiple times.
+
+Example of declaring a single async provider:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: MY_SERVICE,
+      useAsyncClass: () => import('./my-service').then((x) => x.MyService),
+    }),
+  ],
+});
+```
+
+Example of declaring multiple providers, each one with different async functions:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: CLASS_PROVIDER,
+        useAsyncClass: () => import('./first-service').then((x) => x.FirstService),
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () => import('./value').then((x) => x.value),
+      },
+      {
+        provide: FACTORY_PROVIDER,
+        useAsyncFactory: () => import('./factory').then((x) => x.providerFactory),
+      }
+    ),
+  ],
+});
+
+// first-service.ts
+export class FirstService {}
+
+// value.ts
+export const value = 'value';
+
+// factory.ts
+export async function providerFactory() {
+  return await Promise.resolve('value');
+}
+```
+
+Multi providers can also be declared as it happens with Angular:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () => import('./first-value').then((x) => x.value),
+        multi: true,
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () => import('./second-value').then((x) => x.value),
+        multi: true,
+      }
+    ),
+  ],
+});
+```
+
+Finally, the lazy load behavior can be controlled by the `mode` flag. By default it is `lazy`, which means it won't be resolved until requested. `eager` on the contrary will trigger the load on declaration, even though resolvers are still needed to wait for completion. Example:
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: VALUE_PROVIDER,
+      useAsyncValue: () => import('./first-value').then((x) => x.value),
+      mode: 'eager',
+    }),
+  ],
+});
+```
+
+When using a factory provider, the function itself can be async. Regular `inject` function from Angular can be used before executing any async code since the injection context is preserved, however it can't be used afterwards. To solve that problem, and also to protect against cyclic dependencies between async providers, the factory provider function is called with a context that exposes two functions that are self explanatory, `inject` and `resolve`. Example:
+
+```ts
+import { InjectionContext } from '@nx-squeezer/ngx-async-injector';
+
+export async function providerFactory({ inject, resolve }: InjectionContext): Promise<string> {
+  const firstString = await resolve(FIRST_INJECTION_TOKEN);
+  const secondString = inject(SECOND_INJECTION_TOKEN);
+  return `${firstString} ${secondString}`;
+}
+```
+
+### `resolve` and `resolveMany`
+
+WIP
+
+## Installation
