@@ -67,16 +67,7 @@ That's it! Declaration is almost identical, and consumption is the same. But wai
 
 It needs another piece that triggers it: async provider resolvers. Check this diagram:
 
-```mermaid
-flowchart TD
-  subgraph "Angular's DI"
-    ngDeclaration("Provider declared<br><code>providers: [{/* provider */}]</code>") --> ngConsumed("Provider consumed<br><code>inject(PROVIDER)</code>")
-  end
-
-  subgraph "@nx-squeezer/ngx-async-injector"
-    ngxDeclaration("Provider declared<br><code>providers: [provideAsync({/* provider */})]</code>") --Resolver--> ngxConsumed("Provider consumed<br><code>inject(PROVIDER)</code>")
-  end
-```
+![resolver diagram](https://raw.githubusercontent.com/nx-squeezer/squeezer/main/media/ngx-async-injector/resolver-diagram.png)
 
 Async providers need to be resolved before being used, and that is a responsibility of the application. It can be done while loading a route using a [route resolver](#resolve-using-routes-resolver), or with a [structural directive](#resolve-using-a-structural-directive) that will delay rendering until they are loaded.
 
