@@ -43,8 +43,7 @@ class TestResolveAllProvidersComponent {
     <ngx-child-component
       *ngxResolveAsyncProviders="{ stringValue: stringInjectionToken }; let providers; stringValue as stringValue"
       [inputText]="providers.stringValue + ' ' + stringValue"
-    >
-    </ngx-child-component>
+    ></ngx-child-component>
   `,
   providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
   imports: [ResolveAsyncProvidersDirective, ChildTestComponent],

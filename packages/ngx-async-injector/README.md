@@ -7,9 +7,10 @@
 - [Examples](#examples)
   - [Resolve using route's resolver](#resolve-using-routes-resolver)
   - [Resolve using a structural directive](#resolve-using-a-structural-directive)
-- [API](#api)
+- [API documentation](#api-documentation)
   - [`provideAsync` function](#provideasync-function)
   - [`resolve` and `resolveMany`](#resolve-and-resolvemany)
+  - [`*ngxResolveAsyncProviders` structural directive](#ngxresolveasyncproviders-structural-directive)
 - [Installation](#installation)
 
 ## Motivation
@@ -112,15 +113,19 @@ export default class ParentComponent {
 
 In this case, the async provider will be resolved when the parent component renders, and once completed the child component will be rendered having `MY_SERVICE` available.
 
-## API
+## API documentation
 
-### `provideAsync` function
+### [`provideAsync`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/providers/provide-async.function.ts) function
 
 It is used to declare one or more async providers. For each provider, it requires the token, and then an async function that can be `useAsyncValue`, `useAsyncClass` or `useAsyncFactory`. It supports `multi` providers as well. It can be used in environment injectors, modules, components and directives. If multiple providers need to be declared in the same injector, use a single `provideAsync` function with multiple providers instead of using it multiple times.
+
+Async provider tokens are regular Angular [injection tokens](https://angular.io/api/core/InjectionToken) typed with the resolved value of the async provider.
 
 Example of declaring a single async provider:
 
 ```ts
+export const MY_SERVICE = new InjectionToken<MyService>('my-service-token');
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideAsync({
@@ -200,7 +205,7 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-When using a factory provider, the function itself can be async. Regular `inject` function from Angular can be used before executing any async code since the injection context is preserved, however it can't be used afterwards. To solve that problem, and also to protect against cyclic dependencies between async providers, the factory provider function is called with a context that exposes two functions that are self explanatory, `inject` and `resolve`. Example:
+When using a factory provider, the function itself can be async. Regular [`inject`](https://angular.io/api/core/inject) function from Angular can be used before executing any async code since the injection context is preserved, however it can't be used afterwards. To solve that problem, and also to protect against cyclic dependencies between async providers, the factory provider function is called with a context that exposes two functions that are self explanatory, `inject` and `resolve`. Example:
 
 ```ts
 import { InjectionContext } from '@nx-squeezer/ngx-async-injector';
@@ -212,8 +217,104 @@ export async function providerFactory({ inject, resolve }: InjectionContext): Pr
 }
 ```
 
-### `resolve` and `resolveMany`
+### [`resolve`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve.ts) and [`resolveMany`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve-many.ts)
 
-WIP
+[`resolve`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve.ts) and [`resolveMany`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve-many.ts) functions can be used in route resolvers to ensure that certain async providers are resolved before a route loads. They could be used in other places as needed, since they return a promise that resolves when the async provider is resolved and returns its value. It can be compared to Angular's [`inject`](https://angular.io/api/core/inject) function, but for async providers.
+
+Example of how to use it in a route resolver:
+
+```ts
+export const routes: Route[] = [
+  {
+    path: '',
+    loadComponent: () => import('./route.component'),
+    providers: [
+      provideAsync(
+        {
+          provide: CLASS_PROVIDER,
+          useAsyncClass: () => import('./first-service').then((x) => x.FirstService),
+        },
+        {
+          provide: VALUE_PROVIDER,
+          useAsyncValue: () => import('./value').then((x) => x.value),
+        }
+      ),
+    ],
+    resolve: {
+      asyncProviders: () => resolveMany(CLASS_PROVIDER, VALUE_PROVIDER),
+    },
+  },
+];
+```
+
+### [`*ngxResolveAsyncProviders`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/directives/resolve-async-providers.directive.ts) structural directive
+
+This directive can be used to render a template after certain async providers have resolved. It can be useful to delay loading them as much as possible. The template can safely inject those resolved async providers.
+
+When no parameters are passed, it will load _all_ async injectors in the injector hierarchy:
+
+```ts
+@Component({
+  template: `<child-component *ngxResolveAsyncProviders></child-component>`,
+  providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ParentComponent {}
+
+@Component({
+  selector: 'child-component',
+  template: `Async injector value: {{ injectedText }}`,
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ChildComponent {
+  readonly injectedText = inject(STRING_INJECTOR_TOKEN);
+}
+```
+
+Additionally, it also supports a map of async provider tokens. Only those will be resolved instead of _all_. The resolved async providers are available as the context for the structural directive. Example:
+
+```ts
+@Component({
+  template: `
+    <!-- Use $implicit context from the structural directive, it is type safe -->
+    <child-component
+      *ngxResolveAsyncProviders="{ stringValue: stringInjectionToken }; let providers"
+      [inputText]="providers.stringValue"
+    ></child-component>
+
+    <!-- Use the key from the context, it is type safe as well -->
+    <child-component
+      *ngxResolveAsyncProviders="{ stringValue: stringInjectionToken }; stringValue as stringValue"
+      [inputText]="stringValue"
+    ></child-component>
+  `,
+  providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ParentComponent {
+  readonly stringInjectionToken = STRING_INJECTOR_TOKEN;
+}
+
+@Component({
+  selector: 'child-component',
+  template: `Async injector value: {{ inputText }}`,
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ChildComponent {
+  @Input() inputText!: string;
+}
+```
 
 ## Installation
+
+Do you like this library? Go ahead and use it! It is production ready, with 100% code coverage, protected by integration tests, and uses semantic versioning. To install it:
+
+```shell
+npm install @nx-squeezer/ngx-async-injector
+```
