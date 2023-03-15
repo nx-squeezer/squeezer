@@ -6,7 +6,8 @@
     "angular",
     "async",
     "DI",
-    "dependency injection"
+    "dependency injection",
+    "providers"
   ],
   "author": "samuelfernandez",
   "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/ngx-async-injector",

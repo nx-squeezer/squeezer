@@ -14,6 +14,75 @@ import { AsyncInjector } from '../injector/async-injector';
 import { InjectionTokenTypeMap } from '../interfaces/injection-token-type';
 import { ASYNC_INJECTOR_INITIALIZER } from '../tokens/async-injector-initializer.token';
 
+/**
+ * This directive can be used to render a template after certain async providers have resolved. It can be useful to delay loading them as much as possible.
+ * The template can safely inject those resolved async providers.
+ *
+ * @example
+ *
+ * When no parameters are passed, it will load _all_ async injectors in the injector hierarchy:
+ *
+ * ```ts
+ * @Component({
+ *   template: `<child-component *ngxResolveAsyncProviders></child-component>`,
+ *   providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+ *   imports: [ResolveAsyncProvidersDirective, ChildComponent],
+ *   standalone: true,
+ *   changeDetection: ChangeDetectionStrategy.OnPush,
+ * })
+ * class ParentComponent {}
+ *
+ * @Component({
+ *   selector: 'child-component',
+ *   template: `Async injector value: {{ injectedText }}`,
+ *   standalone: true,
+ *   changeDetection: ChangeDetectionStrategy.OnPush,
+ * })
+ * class ChildComponent {
+ *   readonly injectedText = inject(STRING_INJECTOR_TOKEN);
+ * }
+ * ```
+ *
+ * @example
+ *
+ * Additionally, it also supports a map of async provider tokens. Only those will be resolved instead of _all_. The resolved async providers
+ * are available as the context for the structural directive. Example:
+ *
+ * ```ts
+ * @Component({
+ *   template: `
+ *     <!-- Use $implicit context from the structural directive, it is type safe -->
+ *     <child-component
+ *       *ngxResolveAsyncProviders="{ stringValue: stringInjectionToken }; let providers"
+ *       [inputText]="providers.stringValue"
+ *     ></child-component>
+ *
+ *     <!-- Use the key from the context, it is type safe as well -->
+ *     <child-component
+ *       *ngxResolveAsyncProviders="{ stringValue: stringInjectionToken }; stringValue as stringValue"
+ *       [inputText]="stringValue"
+ *     ></child-component>
+ *   `,
+ *   providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+ *   imports: [ResolveAsyncProvidersDirective, ChildComponent],
+ *   standalone: true,
+ *   changeDetection: ChangeDetectionStrategy.OnPush,
+ * })
+ * class ParentComponent {
+ *   readonly stringInjectionToken = STRING_INJECTOR_TOKEN;
+ * }
+ *
+ * @Component({
+ *   selector: 'child-component',
+ *   template: `Async injector value: {{ inputText }}`,
+ *   standalone: true,
+ *   changeDetection: ChangeDetectionStrategy.OnPush,
+ * })
+ * class ChildComponent {
+ *   @Input() inputText!: string;
+ * }
+ * ```
+ */
 @Directive({
   selector: 'ng-template[ngxResolveAsyncProviders]',
   standalone: true,
