@@ -7,6 +7,7 @@
 - [Examples](#examples)
   - [Resolve using route's resolver](#resolve-using-routes-resolver)
   - [Resolve using a structural directive](#resolve-using-a-structural-directive)
+  - [Resolve configuration from API](#resolve-configuration-from-api)
 - [API documentation](#api-documentation)
   - [`provideAsync` function](#provideasync-function)
   - [`resolve` and `resolveMany`](#resolve-and-resolvemany)
@@ -71,6 +72,8 @@ It needs another piece that triggers it: async provider resolvers. Check this di
 
 Async providers need to be resolved before being used, and that is a responsibility of the application. It can be done while loading a route using a [route resolver](#resolve-using-routes-resolver), or with a [structural directive](#resolve-using-a-structural-directive) that will delay rendering until they are loaded.
 
+Check this online [Stackblitz playground](https://stackblitz.com/edit/ngx-async-injector?file=src/main.ts) with a live demo.
+
 ## Examples
 
 ### Resolve using route's resolver
@@ -103,6 +106,34 @@ export default class ParentComponent {
 ```
 
 In this case, the async provider will be resolved when the parent component renders, and once completed the child component will be rendered having `MY_SERVICE` available.
+
+### Resolve configuration from API
+
+```ts
+// Instead of using the common approach of APP_INITIALIZER, which blocks loading and rendering until resolved:
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => inject(HttpClient).get('/config'),
+      multi: true,
+    },
+  ],
+});
+
+// You could declare it with an async provider, which will be resolved on demand without blocking,
+// and yet available through DI:
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: CONFIG_TOKEN,
+      useAsyncFactory: () => firstValueFrom(inject(HttpClient).get('/config')),
+    },
+  ],
+});
+```
 
 ## API documentation
 
