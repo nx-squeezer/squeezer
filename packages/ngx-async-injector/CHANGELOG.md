@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.2](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.1...ngx-async-injector@1.0.2) (2023-03-15)
+
+
+### Bug Fixes
+
+* **ngx-async-injector:** :memo: add playground to README ([5234f18](https://github.com/nx-squeezer/squeezer/commit/5234f189e28f94015a7d12c2970b33efd422207f))
+
 ## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.0...ngx-async-injector@1.0.1) (2023-03-15)
 
 ### Bug Fixes
