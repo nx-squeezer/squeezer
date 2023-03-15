@@ -27,12 +27,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "src/index.js",
   "dependencies": {
     "tslib": "^2.5.0"
   },
   "peerDependencies": {
-    "@angular/common": "^15.1.4",
-    "@angular/core": "^15.1.4"
+    "@angular/common": "^15.1.0",
+    "@angular/core": "^15.1.0"
   }
 }
