@@ -8,6 +8,12 @@ Monorepo with many tools and packages for [Nx](https://nx.dev/) and [Angular](ht
 
 ## Packages
 
+### Libraries
+
+| Package                                                                                            | Version                                                                                                                                                         | Links                                                                                                                                                                                                             |
+| -------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [`@nx-squeezer/ngx-async-injector`](https://www.npmjs.com/package/@nx-squeezer/ngx-async-injector) | [![npm latest version](https://img.shields.io/npm/v/@nx-squeezer/ngx-async-injector/latest.svg)](https://www.npmjs.com/package/@nx-squeezer/ngx-async-injector) | [![README](https://img.shields.io/badge/README--green.svg)](/packages/ngx-async-injector/README.md) [![CHANGELOG](https://img.shields.io/badge/CHANGELOG--orange.svg)](/packages/ngx-async-injector/CHANGELOG.md) |
+
 ### Tools
 
 | Package                                                                          | Version                                                                                                                                       | Links                                                                                                                                                                                           |
