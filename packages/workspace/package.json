@@ -53,7 +53,7 @@
     "@schemastore/package": "^0.0.8",
     "@schemastore/prettierrc": "^0.0.10",
     "@schemastore/tsconfig": "^0.0.10",
-    "@types/which": "^2.0.2"
+    "@types/which": "^3.0.0"
   },
   "nx-migrations": {
     "migrations": "./migrations.json"
