@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3.6.0
@@ -36,7 +36,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -64,7 +64,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -95,7 +95,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
@@ -131,7 +131,7 @@ jobs:
       NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3.4.0
+        uses: actions/checkout@v3.5.0
         with:
           fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
 
