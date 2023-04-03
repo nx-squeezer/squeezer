@@ -149,4 +149,4 @@ jobs:
         uses: nrwl/nx-set-shas@v3.0.2
 
       - name: e2e
-        run: npx nx affected --target=e2e --parallel=3
+        run: npx nx affected --target=e2e --parallel=1
