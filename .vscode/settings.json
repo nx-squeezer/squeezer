@@ -4,12 +4,14 @@
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
   "conventionalCommits.scopes": [
-    "workspace",
-    "renovate",
     "deps",
-    "ngx-async-injector",
+    "devkit",
+    "devkit-e2e",
     "ngx-async-injector-app",
-    "ngx-async-injector-e2e"
+    "ngx-async-injector-e2e",
+    "ngx-async-injector",
+    "renovate",
+    "workspace"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
