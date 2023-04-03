@@ -9,7 +9,8 @@
     "deps",
     "ngx-async-injector",
     "ngx-async-injector-app",
-    "ngx-async-injector-e2e"
+    "ngx-async-injector-e2e",
+    "devkit"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "devkit",
+  "version": "0.0.1",
+  "generators": {
+    "devkit": {
+      "factory": "./src/generators/devkit/generator",
+      "schema": "./src/generators/devkit/schema.json",
+      "description": "devkit generator"
+    }
+  }
+}
