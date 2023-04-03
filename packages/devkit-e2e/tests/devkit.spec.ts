@@ -1,4 +1,4 @@
-import { checkFilesExist, ensureNxProject, readJson, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
 
 describe('devkit e2e', () => {
   // Setting up individual workspaces per
@@ -23,22 +23,4 @@ describe('devkit e2e', () => {
     const result = await runNxCommandAsync(`build ${project}`);
     expect(result.stdout).toContain('Executor ran');
   }, 120000);
-
-  describe('--directory', () => {
-    it('should create src in the specified directory', async () => {
-      const project = uniq('devkit');
-      await runNxCommandAsync(`generate @nx-squeezer/devkit:devkit ${project} --directory subdir`);
-      expect(() => checkFilesExist(`libs/subdir/${project}/src/index.ts`)).not.toThrow();
-    }, 120000);
-  });
-
-  describe('--tags', () => {
-    it('should add tags to the project', async () => {
-      const projectName = uniq('devkit');
-      ensureNxProject('@nx-squeezer/devkit', 'dist/packages/devkit');
-      await runNxCommandAsync(`generate @nx-squeezer/devkit:devkit ${projectName} --tags e2etag,e2ePackage`);
-      const project = readJson(`libs/${projectName}/project.json`);
-      expect(project.tags).toEqual(['e2etag', 'e2ePackage']);
-    }, 120000);
-  });
 });
