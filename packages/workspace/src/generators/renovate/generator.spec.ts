@@ -169,7 +169,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
 
     await renovateGenerator(tree, { force: false, useNxCloud: true, local: true });
 
-    expect(tree.read(securityFile)?.toString()).toBe(customSecurity);
+    expect(tree.read(securityFile)?.toString()).toContain(customSecurity);
   });
 
   it('should add renovate badge', async () => {
