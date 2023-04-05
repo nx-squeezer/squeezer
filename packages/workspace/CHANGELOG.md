@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@2.0.3...workspace@2.1.0) (2023-04-05)
+
+### Dependency Updates
+
+* `devkit` updated to version `0.2.0`
+
+### Features
+
+* :art: move library code from workspace into devkit ([#577](https://github.com/nx-squeezer/squeezer/issues/577)) ([9d82481](https://github.com/nx-squeezer/squeezer/commit/9d824817706f35f20fbd833dedb7dd2e21d18872))
+
 ## [2.0.3](https://github.com/nx-squeezer/squeezer/compare/workspace@2.0.2...workspace@2.0.3) (2023-04-05)
 
 ## [2.0.2](https://github.com/nx-squeezer/squeezer/compare/workspace@2.0.1...workspace@2.0.2) (2023-04-04)
