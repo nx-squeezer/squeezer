@@ -62,6 +62,30 @@
           "codeCoverage": true
         }
       }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "push": true,
+        "preset": "conventional",
+        "trackDeps": true,
+        "tagPrefix": "${projectName}@",
+        "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]",
+        "postTargets": ["devkit:github", "devkit:npm"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notes": "${notes}"
+      }
+    },
+    "npm": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public"
+      }
     }
   },
   "tags": []
