@@ -32,6 +32,12 @@
   "executors": "./executors.json",
   "peerDependencies": {
     "@nrwl/devkit": "^15.0.0",
-    "nx": "^15.0.0"
+    "husky": "^8.0.0",
+    "lint-staged": "^13.0.0",
+    "nx": "^15.0.0",
+    "prettier": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/which": "^3.0.0"
   }
 }

@@ -39,12 +39,12 @@
     "yaml": "2.2.1"
   },
   "peerDependencies": {
-    "@nrwl/devkit": "^15.0.0",
-    "nx": "^15.0.0",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
+    "@nrwl/devkit": "^15.0.0",
     "husky": "^8.0.0",
     "lint-staged": "^13.0.0",
+    "nx": "^15.0.0",
     "prettier": "^2.8.0",
     "renovate": "^35.1.0"
   },
@@ -52,8 +52,7 @@
     "@schemastore/eslintrc": "^0.0.7",
     "@schemastore/package": "^0.0.8",
     "@schemastore/prettierrc": "^0.0.10",
-    "@schemastore/tsconfig": "^0.0.10",
-    "@types/which": "^3.0.0"
+    "@schemastore/tsconfig": "^0.0.10"
   },
   "nx-migrations": {
     "migrations": "./migrations.json"
