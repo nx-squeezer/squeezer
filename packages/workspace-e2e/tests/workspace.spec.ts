@@ -13,6 +13,7 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { parse } from 'yaml';
 
+import { securityFile, readmeFile, joinNormalize, huskyPath } from '@nx-squeezer/devkit';
 import {
   ciFile,
   codecovDotFile,
@@ -26,13 +27,9 @@ import {
   renovateConfigFile,
   renovatePresets,
   renovateFile,
-  readmeFile,
   lintStagedConfigPath,
   LintStagedConfig,
   lintStagedDefaultConfig,
-  joinNormalize,
-  huskyPath,
-  securityFile,
   CommitlintConfig,
   commitlintConfigPath,
   commitlintDefaultConfig,
