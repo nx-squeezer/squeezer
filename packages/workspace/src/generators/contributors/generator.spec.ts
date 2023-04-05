@@ -1,12 +1,13 @@
 import { Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { readmeFile, getGitRepoSlug } from '@nx-squeezer/devkit';
+
 import { contributorsGenerator } from './generator';
 import { contributorsSchematic } from './generator.compat';
-import { getGitRepoSlug, readmeFile } from '../lib';
 
-jest.mock('../lib', () => ({
-  ...jest.requireActual('../lib'),
+jest.mock('@nx-squeezer/devkit', () => ({
+  ...jest.requireActual('@nx-squeezer/devkit'),
   getGitRepoSlug: jest.fn(),
 }));
 

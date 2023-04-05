@@ -2,6 +2,13 @@ import { installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import {
+  addHuskyToPackageJson,
+  addDevDependencyToPackageJson,
+  installHuskyTask,
+  addHuskyHookTask,
+} from '@nx-squeezer/devkit';
+
+import {
   commitlintCli,
   CommitlintConfig,
   commitlintConfigConventional,
@@ -10,14 +17,13 @@ import {
 } from './commitlint';
 import { commitlintGenerator } from './generator';
 import { commitlintSchematic } from './generator.compat';
-import { addHuskyToPackageJson, addDevDependencyToPackageJson, installHuskyTask, addHuskyHookTask } from '../lib';
 
 jest.mock('@nrwl/devkit', () => ({
   ...jest.requireActual('@nrwl/devkit'),
   installPackagesTask: jest.fn(),
 }));
 
-jest.mock('../lib');
+jest.mock('@nx-squeezer/devkit');
 
 describe('@nx-squeezer/workspace commitlint generator', () => {
   let tree: Tree;

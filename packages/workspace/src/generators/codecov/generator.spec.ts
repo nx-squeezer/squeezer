@@ -3,16 +3,17 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import fetch from 'node-fetch-commonjs';
 import { parse, stringify } from 'yaml';
 
+import { getGitRepoSlug, nxConfigFile, readmeFile } from '@nx-squeezer/devkit';
+
 import { readCodecov, codecovDotFile, readRawCodecov } from './codecov';
 import { codecovGenerator } from './generator';
 import { codecovSchematic } from './generator.compat';
 import { ciFile } from '../github-workflow';
-import { getGitRepoSlug, nxConfigFile, readmeFile } from '../lib';
 
 jest.mock('node-fetch-commonjs');
 
-jest.mock('../lib', () => ({
-  ...jest.requireActual('../lib'),
+jest.mock('@nx-squeezer/devkit', () => ({
+  ...jest.requireActual('@nx-squeezer/devkit'),
   getGitRepoSlug: jest.fn(),
 }));
 
