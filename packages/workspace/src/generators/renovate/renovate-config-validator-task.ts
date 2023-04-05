@@ -1,6 +1,6 @@
 import { Tree } from '@nrwl/devkit';
 
-import { exec } from '../lib';
+import { exec } from '@nx-squeezer/devkit';
 
 export function renovateConfigValidatorTask(tree: Tree): boolean {
   console.log(`Validating Renovate configuration...`);

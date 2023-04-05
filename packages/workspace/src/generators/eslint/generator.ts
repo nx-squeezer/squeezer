@@ -3,6 +3,8 @@ import { join } from 'path';
 import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nrwl/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
+import { lintWorkspaceTask, addDevDependencyToPackageJson, joinNormalize } from '@nx-squeezer/devkit';
+
 import {
   addEsLintRules,
   readEsLintConfig,
@@ -13,7 +15,6 @@ import {
 } from './eslint-config';
 import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
 import { EsLintGeneratorSchema } from './schema';
-import { addDevDependencyToPackageJson, joinNormalize, lintWorkspaceTask } from '../lib';
 
 export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {

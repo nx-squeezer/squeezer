@@ -1,7 +1,8 @@
 import { Tree } from '@nrwl/devkit';
 
+import { gitMakeExecutable } from '@nx-squeezer/devkit';
+
 import { renovateCreateMigrationsFile } from './renovate';
-import { gitMakeExecutable } from '../lib';
 
 export function makeMigrationsScriptExecutableTask(tree: Tree): boolean {
   try {

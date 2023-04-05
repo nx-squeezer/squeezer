@@ -1,6 +1,6 @@
 import { formatFiles, Tree } from '@nrwl/devkit';
 
-import { getGitRepoSlug, readmeFile } from '../lib';
+import { readmeFile, getGitRepoSlug } from '@nx-squeezer/devkit';
 
 export async function contributorsGenerator(tree: Tree) {
   if (!tree.exists(readmeFile)) {
