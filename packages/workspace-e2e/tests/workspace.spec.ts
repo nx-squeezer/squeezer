@@ -1,5 +1,4 @@
 import {
-  ensureNxProject,
   readJson,
   runNxCommandAsync,
   checkFilesExist,
@@ -13,7 +12,7 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { parse } from 'yaml';
 
-import { securityFile, readmeFile, joinNormalize, huskyPath } from '@nx-squeezer/devkit';
+import { securityFile, readmeFile, joinNormalize, huskyPath, ensureComplexNxProject } from '@nx-squeezer/devkit';
 import {
   ciFile,
   codecovDotFile,
@@ -52,7 +51,11 @@ describe('@nx-squeezer/workspace e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependent on one another.
   beforeAll(async () => {
-    ensureNxProject('@nx-squeezer/workspace', 'dist/packages/workspace');
+    // https://github.com/nrwl/nx/issues/4851#issuecomment-822604801
+    ensureComplexNxProject(
+      ['@nx-squeezer/workspace', 'dist/packages/workspace'],
+      ['@nx-squeezer/devkit', 'dist/packages/devkit']
+    );
   });
 
   afterAll(async () => {

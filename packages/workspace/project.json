@@ -11,7 +11,6 @@
         "outputPath": "dist/packages/workspace",
         "main": "packages/workspace/src/index.ts",
         "tsConfig": "packages/workspace/tsconfig.lib.json",
-        "rootDir": ".",
         "buildableProjectDepsInPackageJsonType": "dependencies",
         "assets": [
           "packages/workspace/*.md",

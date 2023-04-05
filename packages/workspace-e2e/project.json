@@ -7,8 +7,14 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "workspace:build",
+        "target": "workspace-e2e:prepare",
         "jestConfig": "packages/workspace-e2e/jest.config.ts"
+      }
+    },
+    "prepare": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx build workspace --with-deps"
       }
     },
     "lint": {
