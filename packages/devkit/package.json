@@ -1,7 +1,37 @@
 {
   "name": "@nx-squeezer/devkit",
   "version": "0.0.1",
+  "description": "This package contains a set of utilities for creating Nx plugins",
+  "keywords": [
+    "nx",
+    "builders",
+    "executors",
+    "schematics",
+    "generators"
+  ],
+  "author": "samuelfernandez",
+  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/devkit",
+  "bugs": {
+    "url": "https://github.com/nx-squeezer/squeezer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nx-squeezer/squeezer.git",
+    "directory": "packages/devkit"
+  },
+  "engines": {
+    "node": ">=18.10.0",
+    "npm": ">=9.5.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "src/index.js",
   "generators": "./generators.json",
-  "executors": "./executors.json"
+  "executors": "./executors.json",
+  "peerDependencies": {
+    "@nrwl/devkit": "^15.0.0",
+    "nx": "^15.0.0"
+  }
 }
