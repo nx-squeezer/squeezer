@@ -23,9 +23,14 @@ jest.mock('./run-package-manager-install');
 describe('@nx-squeezer/devkit ensureComplexNxProject', () => {
   const testPath = 'test';
   const packageA = 'packageA';
+  const fileRootPackageA = `file:root/dist/${packageA}`;
+  const rootDistPackageA = `root/dist/${packageA}`;
+  const distPackageA = `dist/${packageA}`;
+  const emptyDependencies = `{ "dependencies": {} }`;
+  const emptyDevDependencies = `{ "devDependencies": {} }`;
 
   beforeEach(() => {
-    (readFileSync as jest.Mock).mockReturnValue(`{ "devDependencies": {} }`);
+    (readFileSync as jest.Mock).mockReturnValue(emptyDevDependencies);
     (writeFileSync as jest.Mock).mockReturnValue(null);
     (ensureDirSync as jest.Mock).mockReturnValue(null);
 
@@ -38,7 +43,7 @@ describe('@nx-squeezer/devkit ensureComplexNxProject', () => {
   });
 
   it('should execute commands', () => {
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
     expect(ensureDirSync).toHaveBeenCalledWith(`${testPath}/`);
     expect(cleanup).toHaveBeenCalled();
@@ -47,75 +52,63 @@ describe('@nx-squeezer/devkit ensureComplexNxProject', () => {
   });
 
   it('should update dev dependencies in temp project folder', () => {
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
     expect(writeFileSync).toHaveBeenCalledWith(
       `test/${packageJsonFile}`,
-      JSON.stringify({ devDependencies: { [packageA]: `file:root/dist/${packageA}` } }, null, 2)
+      JSON.stringify({ devDependencies: { [packageA]: fileRootPackageA } }, null, 2)
     );
   });
 
   it('should not update dist folder if dependencies not present', () => {
-    (readFileSync as jest.Mock).mockImplementation((path) => {
-      if (path === `root/dist/${packageA}/${packageJsonFile}`) {
-        return `{ "dependencies": {} }`;
-      } else {
-        return `{ "devDependencies": {} }`;
-      }
-    });
+    (readFileSync as jest.Mock).mockImplementation((path) =>
+      path === `root/dist/${packageA}/${packageJsonFile}` ? emptyDependencies : emptyDevDependencies
+    );
 
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
-    expect(runPackageManagerInstall).not.toHaveBeenCalledWith(`root/dist/${packageA}`);
+    expect(runPackageManagerInstall).not.toHaveBeenCalledWith(rootDistPackageA);
   });
 
   it('should not update dist folder if dependencies are empty', () => {
-    (readFileSync as jest.Mock).mockImplementation((path) => {
-      if (path === `root/dist/${packageA}/${packageJsonFile}`) {
-        return `{}`;
-      } else {
-        return `{ "devDependencies": {} }`;
-      }
-    });
+    (readFileSync as jest.Mock).mockImplementation((path) =>
+      path === `root/dist/${packageA}/${packageJsonFile}` ? `{}` : emptyDevDependencies
+    );
 
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
-    expect(runPackageManagerInstall).not.toHaveBeenCalledWith(`root/dist/${packageA}`);
+    expect(runPackageManagerInstall).not.toHaveBeenCalledWith(rootDistPackageA);
   });
 
   it('should update dist folder with file dependencies', () => {
-    (readFileSync as jest.Mock).mockImplementation((path) => {
-      if (path === `root/dist/${packageA}/${packageJsonFile}`) {
-        return `{ "dependencies": { "${packageA}": "0.0.0" } }`;
-      } else {
-        return `{ "devDependencies": {} }`;
-      }
-    });
+    (readFileSync as jest.Mock).mockImplementation((path) =>
+      path === `root/dist/${packageA}/${packageJsonFile}`
+        ? `{ "dependencies": { "${packageA}": "0.0.0" } }`
+        : emptyDevDependencies
+    );
 
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
     expect(writeFileSync).toHaveBeenCalledWith(
       `root/dist/${packageA}/${packageJsonFile}`,
-      JSON.stringify({ dependencies: { [packageA]: `file:root/dist/${packageA}` } }, null, 2)
+      JSON.stringify({ dependencies: { [packageA]: fileRootPackageA } }, null, 2)
     );
-    expect(runPackageManagerInstall).toHaveBeenCalledWith(`root/dist/${packageA}`);
+    expect(runPackageManagerInstall).toHaveBeenCalledWith(rootDistPackageA);
   });
 
   it('should update dist folder with file peer dependencies', () => {
-    (readFileSync as jest.Mock).mockImplementation((path) => {
-      if (path === `root/dist/${packageA}/${packageJsonFile}`) {
-        return `{ "peerDependencies": { "${packageA}": "0.0.0" } }`;
-      } else {
-        return `{ "devDependencies": {} }`;
-      }
-    });
+    (readFileSync as jest.Mock).mockImplementation((path) =>
+      path === `root/dist/${packageA}/${packageJsonFile}`
+        ? `{ "peerDependencies": { "${packageA}": "0.0.0" } }`
+        : emptyDevDependencies
+    );
 
-    ensureComplexNxProject([packageA, `dist/${packageA}`]);
+    ensureComplexNxProject([packageA, distPackageA]);
 
     expect(writeFileSync).toHaveBeenCalledWith(
       `root/dist/${packageA}/${packageJsonFile}`,
-      JSON.stringify({ peerDependencies: { [packageA]: `file:root/dist/${packageA}` } }, null, 2)
+      JSON.stringify({ peerDependencies: { [packageA]: fileRootPackageA } }, null, 2)
     );
-    expect(runPackageManagerInstall).toHaveBeenCalledWith(`root/dist/${packageA}`);
+    expect(runPackageManagerInstall).toHaveBeenCalledWith(rootDistPackageA);
   });
 });
