@@ -77,7 +77,6 @@
     "@nrwl/nx-cloud": "15.3.5",
     "@nrwl/nx-plugin": "15.9.2",
     "@nrwl/workspace": "15.9.2",
-    "@ns3/nx-core": "^4.1.0",
     "@schemastore/eslintrc": "0.0.7",
     "@schemastore/package": "0.0.8",
     "@schemastore/prettierrc": "0.0.10",

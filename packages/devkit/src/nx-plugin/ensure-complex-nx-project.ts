@@ -13,7 +13,7 @@ export type PluginInput = [npmPackageName: string, pluginDistPath: string];
 export function ensureComplexNxProject(...inputs: PluginInput[]): void {
   ensureDirSync(tmpProjPath());
   cleanup();
-  runNxNewCommand('', true);
+  runNxNewCommand();
   patchPackageJsonForPlugins(inputs);
   runPackageManagerInstall();
 }
