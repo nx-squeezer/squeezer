@@ -1,12 +1,13 @@
 import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
 import { parse, parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
+import { getGitRepoSlug, joinNormalize, securityFile, addBadgeToReadme } from '@nx-squeezer/devkit';
+
 import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 import { ciFile } from '../github-workflow';
-import { addBadgeToReadme, getGitRepoSlug, joinNormalize, securityFile } from '../lib';
 
 export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {

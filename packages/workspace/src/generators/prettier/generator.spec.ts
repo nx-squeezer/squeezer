@@ -3,15 +3,16 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
+import { lintWorkspaceTask, formatWorkspaceTask } from '@nx-squeezer/devkit';
+
 import { prettierGenerator } from './generator';
 import { prettierSchematic } from './generator.compat';
 import { prettierConfigFile, prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile } from './prettier';
 import { prettierDefaultConfig } from './prettier-default-config';
 import { readEsLintConfig, writeEsLintConfig } from '../eslint';
-import { lintWorkspaceTask, formatWorkspaceTask } from '../lib';
 
-jest.mock('../lib', () => ({
-  ...jest.requireActual('../lib'),
+jest.mock('@nx-squeezer/devkit', () => ({
+  ...jest.requireActual('@nx-squeezer/devkit'),
   lintWorkspaceTask: jest.fn(),
   formatWorkspaceTask: jest.fn(),
 }));

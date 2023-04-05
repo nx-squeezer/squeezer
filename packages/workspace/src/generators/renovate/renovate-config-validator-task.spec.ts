@@ -1,10 +1,11 @@
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
-import { renovateConfigValidatorTask } from './renovate-config-validator-task';
-import { exec } from '../lib';
+import { exec } from '@nx-squeezer/devkit';
 
-jest.mock('../lib');
+import { renovateConfigValidatorTask } from './renovate-config-validator-task';
+
+jest.mock('@nx-squeezer/devkit');
 
 describe('@nx-squeezer/workspace renovateConfigValidatorTask', () => {
   let tree: Tree;

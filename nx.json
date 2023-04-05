@@ -25,6 +25,19 @@
     ".github/workflows/*.yml": "*",
     ".codecov.yml": "*"
   },
+  "targetDependencies": {
+    "build": [
+      {
+        "target": "build",
+        "projects": "dependencies"
+      }
+    ]
+  },
+  "pluginsConfig": {
+    "@nrwl/js": {
+      "analyzeSourceFiles": true
+    }
+  },
   "generators": {
     "@nrwl/js:library": {
       "buildable": true,

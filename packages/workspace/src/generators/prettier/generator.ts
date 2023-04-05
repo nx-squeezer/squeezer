@@ -1,10 +1,11 @@
 import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
+import { addDevDependencyToPackageJson, lintWorkspaceTask, formatWorkspaceTask } from '@nx-squeezer/devkit';
+
 import { prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile, prettierConfigFile } from './prettier';
 import { prettierDefaultConfig } from './prettier-default-config';
 import { addEsLintPlugin, addEsLintRules, isEsLintPluginPresent } from '../eslint';
-import { formatWorkspaceTask, lintWorkspaceTask, addDevDependencyToPackageJson } from '../lib';
 
 export async function prettierGenerator(tree: Tree) {
   setPrettierConfig(tree);

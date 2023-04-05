@@ -1,11 +1,12 @@
 import { Tree } from '@nrwl/devkit';
 import { createTree } from '@nrwl/devkit/testing';
 
+import { gitMakeExecutable } from '@nx-squeezer/devkit';
+
 import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCreateMigrationsFile } from './renovate';
-import { gitMakeExecutable } from '../lib';
 
-jest.mock('../lib');
+jest.mock('@nx-squeezer/devkit');
 
 describe('@nx-squeezer/workspace makeMigrationsScriptExecutableTask', () => {
   let tree: Tree;

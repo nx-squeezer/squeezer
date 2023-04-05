@@ -1,16 +1,17 @@
 import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit';
 import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
+import { lintWorkspaceTask } from '@nx-squeezer/devkit';
+
 import { writeEsLintConfig, readEsLintConfig, eslintConfigFile } from './eslint-config';
 import { eslintGenerator } from './generator';
 import { eslintSchematic } from './generator.compat';
 import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
-import { lintWorkspaceTask } from '../lib';
 
 const timeout = 10_000;
 
-jest.mock('../lib', () => ({
-  ...jest.requireActual('../lib'),
+jest.mock('@nx-squeezer/devkit', () => ({
+  ...jest.requireActual('@nx-squeezer/devkit'),
   lintWorkspaceTask: jest.fn(),
 }));
 

@@ -11,7 +11,8 @@
     "ngx-async-injector-e2e",
     "ngx-async-injector",
     "renovate",
-    "workspace"
+    "workspace",
+    "workspace-e2e"
   ],
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "[typescript]": {
