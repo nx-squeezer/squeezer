@@ -1,11 +1,11 @@
-# devkit
+# @nx-squeezer/devkit <!-- omit in toc -->
 
-This library was generated with [Nx](https://nx.dev).
+[![CI](https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg)](https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml) [![npm latest version](https://img.shields.io/npm/v/@nx-squeezer/devkit/latest.svg)](https://www.npmjs.com/package/@nx-squeezer/devkit) [![CHANGELOG](https://img.shields.io/badge/CHANGELOG--orange.svg)](https://github.com/nx-squeezer/squeezer/blob/main/packages/devkit/CHANGELOG.md) [![codecov](https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg)](https://codecov.io/gh/nx-squeezer/squeezer) ![renovate](https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot) ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
 
-## Building
+This package contains a set of utilities for creating Nx plugins.
 
-Run `nx build devkit` to build the library.
+## Setup <!-- omit in toc -->
 
-## Running unit tests
-
-Run `nx test devkit` to execute the unit tests via [Jest](https://jestjs.io).
+```shell
+npm install --save-dev @nx-squeezer/devkit
+```

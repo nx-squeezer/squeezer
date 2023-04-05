@@ -18,13 +18,19 @@ coverage:
       workspace:
         flags:
           - workspace
-      ng-async-injector:
+      devkit:
         flags:
-          - ng-async-injector
+          - devkit
+      ngx-async-injector:
+        flags:
+          - ngx-async-injector
 flags:
   workspace:
     paths:
       - packages/workspace
-  ng-async-injector:
+  devkit:
     paths:
-      - packages/ng-async-injector
+      - packages/devkit
+  ngx-async-injector:
+    paths:
+      - packages/ngx-async-injector
