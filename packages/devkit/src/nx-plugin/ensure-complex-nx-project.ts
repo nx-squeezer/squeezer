@@ -6,6 +6,7 @@ import { ensureDirSync } from 'fs-extra';
 
 import { runNxNewCommand } from './run-nx-new-command';
 import { runPackageManagerInstall } from './run-package-manager-install';
+import { packageJsonFile } from '../package-json';
 
 export type PluginInput = [npmPackageName: string, pluginDistPath: string];
 
@@ -19,33 +20,42 @@ export function ensureComplexNxProject(...inputs: PluginInput[]): void {
 }
 
 function patchPackageJsonForPlugins(inputs: PluginInput[]) {
-  const pPath = tmpProjPath('package.json');
-  const p = JSON.parse(readFileSync(pPath).toString());
+  const packageJsonPath = tmpProjPath(packageJsonFile);
+  const packageJson = JSON.parse(readFileSync(packageJsonPath).toString());
 
   inputs.forEach(([npmPackageName, pluginDistPath]) => {
-    p.devDependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
+    packageJson.devDependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
     updatePackageInDist([npmPackageName, pluginDistPath], inputs);
   });
 
-  writeFileSync(pPath, JSON.stringify(p, null, 2));
+  writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 }
 
 function updatePackageInDist(target: PluginInput, inputs: PluginInput[]) {
-  const pPath = `${workspaceRoot}/${target[1]}/package.json`;
-  const p = JSON.parse(readFileSync(pPath).toString());
+  const packageJsonPath = `${workspaceRoot}/${target[1]}/${packageJsonFile}`;
+  const packageJson = JSON.parse(readFileSync(packageJsonPath).toString());
+  let updated = false;
 
   inputs
-    .filter(([npmPackageName]) => p.dependencies != null && npmPackageName in p.dependencies)
+    .filter(([npmPackageName]) => packageJson.dependencies != null && npmPackageName in packageJson.dependencies)
     .forEach(([npmPackageName, pluginDistPath]) => {
-      p.dependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
+      packageJson.dependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
+      updated = true;
     });
 
   inputs
-    .filter(([npmPackageName]) => p.peerDependencies != null && npmPackageName in p.peerDependencies)
+    .filter(
+      ([npmPackageName]) => packageJson.peerDependencies != null && npmPackageName in packageJson.peerDependencies
+    )
     .forEach(([npmPackageName, pluginDistPath]) => {
-      p.peerDependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
+      packageJson.peerDependencies[npmPackageName] = `file:${workspaceRoot}/${pluginDistPath}`;
+      updated = true;
     });
 
-  writeFileSync(pPath, JSON.stringify(p, null, 2));
+  if (!updated) {
+    return;
+  }
+
+  writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
   runPackageManagerInstall(`${workspaceRoot}/${target[1]}`);
 }

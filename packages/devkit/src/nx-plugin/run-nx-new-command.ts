@@ -5,9 +5,8 @@ import { tmpProjPath } from '@nrwl/nx-plugin/testing';
 import { exec } from '../exec';
 
 // https://github.com/nrwl/nx/blob/master/packages/nx-plugin/src/utils/testing-utils/nx-project.ts
-export function runNxNewCommand(args?: string): void {
+export function runNxNewCommand(): void {
   const localTmpDir = dirname(tmpProjPath());
-  const arrayArgs = args ? [args] : [];
 
   exec(
     'node',
@@ -21,7 +20,6 @@ export function runNxNewCommand(args?: string): void {
       '--collection=@nrwl/workspace',
       '--npmScope=proj',
       '--preset=empty',
-      ...arrayArgs,
     ],
     { cwd: localTmpDir }
   );

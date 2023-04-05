@@ -1,6 +1,6 @@
 import { areSetsEqual, getSet, removeDuplicates } from './set';
 
-describe('@nx-squeezer/workspace set functions', () => {
+describe('@nx-squeezer/devkit set functions', () => {
   describe('areSetsEqual', () => {
     it('should consider sets equal', () => {
       expect(areSetsEqual(new Set([1, 1, 2, 3]), new Set([1, 2, 3]))).toBeTruthy();

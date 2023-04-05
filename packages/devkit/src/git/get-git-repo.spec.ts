@@ -6,7 +6,7 @@ import { exec } from '../exec';
 
 jest.mock('../exec');
 
-describe('@nx-squeezer/workspace getGitRepo', () => {
+describe('@nx-squeezer/devkit getGitRepo', () => {
   let tree: Tree;
   const gitRepo = 'https://github.com/nx-squeezer/squeezer';
 

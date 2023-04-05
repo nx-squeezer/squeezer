@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { addScriptToPackageJson } from './add-script-to-package-json';
 import { readPackageJson, writePackageJson } from './package-json';
 
-describe('@nx-squeezer/workspace addScriptToPackageJson', () => {
+describe('@nx-squeezer/devkit addScriptToPackageJson', () => {
   let tree: Tree;
   const scriptName = 'test';
   const script = 'nx test';

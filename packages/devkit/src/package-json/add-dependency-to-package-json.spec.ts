@@ -7,7 +7,7 @@ import { getNpmPackageVersion } from '../npm';
 
 jest.mock('../npm');
 
-describe('@nx-squeezer/workspace addDependencyToPackageJson', () => {
+describe('@nx-squeezer/devkit addDependencyToPackageJson', () => {
   let tree: Tree;
   const packageName = 'package';
   const version = '1.0.0';

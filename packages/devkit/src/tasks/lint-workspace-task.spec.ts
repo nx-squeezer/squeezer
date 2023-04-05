@@ -6,7 +6,7 @@ import { exec } from '../exec';
 
 jest.mock('../exec');
 
-describe('@nx-squeezer/workspace lintWorkspaceTask', () => {
+describe('@nx-squeezer/devkit lintWorkspaceTask', () => {
   let tree: Tree;
 
   beforeEach(() => {

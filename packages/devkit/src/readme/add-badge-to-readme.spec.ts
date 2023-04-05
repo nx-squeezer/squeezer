@@ -4,7 +4,7 @@ import { createTree } from '@nrwl/devkit/testing';
 import { addBadgeToReadme } from './add-badge-to-readme';
 import { readmeFile } from './readme';
 
-describe('@nx-squeezer/workspace addBadgeToReadme', () => {
+describe('@nx-squeezer/devkit addBadgeToReadme', () => {
   let tree: Tree;
   const badge = 'badge';
   const link = 'link';

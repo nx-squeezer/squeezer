@@ -1,6 +1,6 @@
 import { slash } from './slash';
 
-describe('@nx-squeezer/workspace slash', () => {
+describe('@nx-squeezer/devkit slash', () => {
   it('convert backwards-slash paths to forward slash paths', () => {
     expect(slash('c:/aaaa\\bbbb')).toBe('c:/aaaa/bbbb');
     expect(slash('c:\\aaaa\\bbbb')).toBe('c:/aaaa/bbbb');

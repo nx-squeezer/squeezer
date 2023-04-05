@@ -6,7 +6,7 @@ import { exec } from '../exec';
 
 jest.mock('../exec');
 
-describe('@nx-squeezer/workspace gitMakeExecutable', () => {
+describe('@nx-squeezer/devkit gitMakeExecutable', () => {
   let tree: Tree;
   const file = 'file.sh';
 

@@ -4,7 +4,7 @@ import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 import { addImplicitDependencyToNxConfig } from './add-implicit-dependency-to-nx-config';
 import { nxConfigFile } from './nx';
 
-describe('@nx-squeezer/workspace addImplicitDependencyToNxConfig', () => {
+describe('@nx-squeezer/devkit addImplicitDependencyToNxConfig', () => {
   let tree: Tree;
 
   beforeEach(() => {

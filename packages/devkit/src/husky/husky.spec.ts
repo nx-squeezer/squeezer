@@ -9,7 +9,7 @@ import { joinNormalize } from '../path';
 jest.mock('../exec');
 jest.mock('../package-json');
 
-describe('@nx-squeezer/workspace husky', () => {
+describe('@nx-squeezer/devkit husky', () => {
   let tree: Tree;
 
   beforeEach(() => {

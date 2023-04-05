@@ -3,7 +3,7 @@ import { exec } from '../exec';
 
 jest.mock('../exec');
 
-describe('@nx-squeezer/workspace getNpmPackageVersion', () => {
+describe('@nx-squeezer/devkit getNpmPackageVersion', () => {
   const packageName = 'package';
   const version = '1.0.0';
 

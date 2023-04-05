@@ -4,7 +4,7 @@ import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
 import { readPackageJson, writePackageJson } from './package-json';
 
-describe('@nx-squeezer/workspace packageJsonFile', () => {
+describe('@nx-squeezer/devkit packageJsonFile', () => {
   let tree: Tree;
 
   beforeEach(() => {

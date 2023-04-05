@@ -2,12 +2,12 @@ import { execFileSync } from 'child_process';
 
 import { sync } from 'which';
 
-import { exec } from '.';
+import { exec } from './exec';
 
 jest.mock('child_process');
 jest.mock('which');
 
-describe('@nx-squeezer/workspace exec', () => {
+describe('@nx-squeezer/devkit exec', () => {
   const output = 'output';
 
   it('should execute command without cwd', () => {
