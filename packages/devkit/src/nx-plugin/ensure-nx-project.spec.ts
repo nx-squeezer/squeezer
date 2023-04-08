@@ -111,7 +111,7 @@ describe('@nx-squeezer/devkit ensureNxProject', () => {
   it('should update package json in temp folder with dependencies and run install command', async () => {
     await ensureNxProject('libA');
 
-    expect(writeJsonFile).toHaveBeenCalledWith('test/package.json', {
+    expect(writeJsonFile).toHaveBeenCalledWith('test-path/package.json', {
       devDependencies: { '@test/libA': `file:root/dist/libA` },
     });
 

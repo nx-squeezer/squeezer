@@ -17,13 +17,6 @@ import { runNxNewCommand } from './run-nx-new-command';
 import { runPackageManagerInstall } from './run-package-manager-install';
 import { packageJsonFile } from '../package-json';
 
-export interface BuildableProject {
-  projectName: string;
-  npmPackageName: string;
-  pluginDistPath: string;
-}
-
-export type PluginInput = [npmPackageName: string, pluginDistPath: string];
 export interface Plugin {
   npmPackageName: string;
   pluginDistPath: string;
