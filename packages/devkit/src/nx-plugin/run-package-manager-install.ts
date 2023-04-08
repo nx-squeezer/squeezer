@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import { execSync } from 'child_process';
 
 import { getPackageManagerCommand } from '@nrwl/devkit';
