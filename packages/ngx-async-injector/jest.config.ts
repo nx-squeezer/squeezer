@@ -17,14 +17,4 @@ export default {
     'jest-preset-angular/build/serializers/ng-snapshot',
     'jest-preset-angular/build/serializers/html-comment',
   ],
-  coverageDirectory: '../../coverage/packages/ngx-async-injector',
-  coverageReporters: ['lcov'],
-  coverageThreshold: {
-    global: {
-      branches: 100,
-      functions: 100,
-      lines: 100,
-      statements: 100,
-    },
-  },
 };

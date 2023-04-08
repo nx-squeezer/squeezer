@@ -7,16 +7,11 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "devkit:build",
-        "jestConfig": "packages/devkit-e2e/jest.config.ts"
+        "target": "devkit:build"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/devkit-e2e/**/*.ts"]
-      }
+      "executor": "@nrwl/linter:eslint"
     }
   },
   "tags": [],

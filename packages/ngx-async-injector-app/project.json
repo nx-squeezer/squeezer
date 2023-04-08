@@ -58,11 +58,7 @@
       "defaultConfiguration": "development"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/ngx-async-injector-app/**/*.ts", "packages/ngx-async-injector-app/**/*.html"]
-      }
+      "executor": "@nrwl/linter:eslint"
     }
   },
   "tags": []

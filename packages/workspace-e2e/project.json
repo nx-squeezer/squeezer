@@ -18,11 +18,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/workspace-e2e/**/*.ts"]
-      }
+      "executor": "@nrwl/linter:eslint"
     }
   },
   "tags": [],

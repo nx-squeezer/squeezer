@@ -7,25 +7,16 @@
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/ngx-async-injector-e2e/cypress.config.ts",
-        "devServerTarget": "ngx-async-injector-app:serve:development",
-        "testingType": "e2e"
+        "devServerTarget": "ngx-async-injector-app:serve:development"
       },
       "configurations": {
         "production": {
           "devServerTarget": "ngx-async-injector-app:serve:production"
-        },
-        "watch": {
-          "watch": true
         }
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/ngx-async-injector-e2e/**/*.{js,ts}"]
-      }
+      "executor": "@nrwl/linter:eslint"
     }
   },
   "tags": [],

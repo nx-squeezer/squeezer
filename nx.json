@@ -33,6 +33,82 @@
       }
     ]
   },
+  "targetDefaults": {
+    "@nrwl/linter:eslint": {
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.{ts,js,html}",
+          "{projectRoot}/generators.json",
+          "{projectRoot}/executors.json",
+          "{projectRoot}/package.json",
+          "{projectRoot}/migrations.json"
+        ]
+      }
+    },
+    "@nrwl/jest:jest": {
+      "outputs": ["coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "{projectRoot}/jest.config.ts",
+        "codeCoverage": true,
+        "coverageDirectory": "../../coverage/{projectRoot}",
+        "coverageReporters": ["lcov", "html"],
+        "coverageThreshold": {
+          "global": {
+            "branches": 100,
+            "functions": 100,
+            "lines": 100,
+            "statements": 100
+          }
+        }
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        },
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "@nrwl/cypress:cypress": {
+      "options": {
+        "cypressConfig": "{projectRoot}/cypress.config.ts",
+        "testingType": "e2e"
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
+      }
+    },
+    "@nrwl/nx-plugin:e2e": {
+      "options": {
+        "jestConfig": "{projectRoot}/jest.config.ts"
+      }
+    },
+    "@jscutlery/semver:version": {
+      "options": {
+        "push": true,
+        "preset": "conventional",
+        "trackDeps": true,
+        "tagPrefix": "${projectName}@",
+        "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]"
+      }
+    },
+    "@jscutlery/semver:github": {
+      "options": {
+        "tag": "${tag}",
+        "notes": "${notes}"
+      }
+    },
+    "ngx-deploy-npm:deploy": {
+      "options": {
+        "access": "public"
+      }
+    }
+  },
   "pluginsConfig": {
     "@nrwl/js": {
       "analyzeSourceFiles": true
