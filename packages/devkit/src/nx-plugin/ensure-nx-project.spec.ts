@@ -25,7 +25,7 @@ describe('@nx-squeezer/devkit ensureNxProject', () => {
   beforeEach(() => {
     (readJsonFile as jest.Mock).mockImplementation((path: string) => {
       switch (path) {
-        case 'test/package.json':
+        case 'test-path/package.json':
           return { devDependencies: {} };
         case 'root/dist/libA/package.json':
           return { peerDependencies: { '@test/libB': '0.0.0' }, dependencies: { '@test/libC': '0.0.0' } };
