@@ -12,7 +12,7 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { parse } from 'yaml';
 
-import { securityFile, readmeFile, joinNormalize, huskyPath, ensureComplexNxProject } from '@nx-squeezer/devkit';
+import { securityFile, readmeFile, joinNormalize, huskyPath, ensureNxProject } from '@nx-squeezer/devkit';
 import {
   ciFile,
   codecovDotFile,
@@ -52,10 +52,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   // are not dependent on one another.
   beforeAll(async () => {
     // https://github.com/nrwl/nx/issues/4851#issuecomment-822604801
-    ensureComplexNxProject(
-      ['@nx-squeezer/workspace', 'dist/packages/workspace'],
-      ['@nx-squeezer/devkit', 'dist/packages/devkit']
-    );
+    await ensureNxProject('workspace');
   });
 
   afterAll(async () => {
