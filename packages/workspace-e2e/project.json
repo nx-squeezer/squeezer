@@ -7,8 +7,7 @@
     "e2e": {
       "executor": "@nrwl/nx-plugin:e2e",
       "options": {
-        "target": "workspace-e2e:prepare",
-        "jestConfig": "packages/workspace-e2e/jest.config.ts"
+        "target": "workspace-e2e:prepare"
       }
     },
     "prepare": {

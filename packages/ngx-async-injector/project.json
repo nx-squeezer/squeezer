@@ -7,7 +7,7 @@
   "targets": {
     "build": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": ["dist/{projectRoot}"],
       "options": {
         "project": "packages/ngx-async-injector/ng-package.json"
       },

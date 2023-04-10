@@ -5,42 +5,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/workspace",
-        "main": "packages/workspace/src/index.ts",
-        "tsConfig": "packages/workspace/tsconfig.lib.json",
-        "buildableProjectDepsInPackageJsonType": "dependencies",
-        "assets": [
-          "packages/workspace/*.md",
-          {
-            "input": "./packages/workspace/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/workspace/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "executors.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "migrations.json",
-            "output": "."
-          }
-        ]
-      }
+      "executor": "@nrwl/js:tsc"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint"
