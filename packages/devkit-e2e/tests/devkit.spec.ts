@@ -1,4 +1,6 @@
-import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+
+import { ensureNxProject } from '@nx-squeezer/devkit';
 
 describe('devkit e2e', () => {
   // Setting up individual workspaces per
