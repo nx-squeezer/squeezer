@@ -5,87 +5,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/devkit",
-        "main": "packages/devkit/src/index.ts",
-        "tsConfig": "packages/devkit/tsconfig.lib.json",
-        "assets": [
-          "packages/devkit/*.md",
-          {
-            "input": "./packages/devkit/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/devkit/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/devkit",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/devkit",
-            "glob": "executors.json",
-            "output": "."
-          }
-        ]
-      }
+      "executor": "@nrwl/js:tsc"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/devkit/**/*.ts",
-          "packages/devkit/generators.json",
-          "packages/devkit/executors.json",
-          "packages/devkit/package.json"
-        ]
-      }
+      "executor": "@nrwl/linter:eslint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "options": {
-        "jestConfig": "packages/devkit/jest.config.ts",
-        "passWithNoTests": true,
-        "codeCoverage": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "executor": "@nrwl/jest:jest"
     },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "push": true,
-        "preset": "conventional",
-        "trackDeps": true,
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]",
         "postTargets": ["devkit:github", "devkit:npm"]
       }
     },
     "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notes": "${notes}"
-      }
+      "executor": "@jscutlery/semver:github"
     },
     "npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
+      "executor": "ngx-deploy-npm:deploy"
     }
   },
   "tags": []

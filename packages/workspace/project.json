@@ -5,93 +5,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc",
-      "outputs": ["{options.outputPath}"],
-      "options": {
-        "outputPath": "dist/packages/workspace",
-        "main": "packages/workspace/src/index.ts",
-        "tsConfig": "packages/workspace/tsconfig.lib.json",
-        "buildableProjectDepsInPackageJsonType": "dependencies",
-        "assets": [
-          "packages/workspace/*.md",
-          {
-            "input": "./packages/workspace/src",
-            "glob": "**/!(*.ts)",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/workspace/src",
-            "glob": "**/*.d.ts",
-            "output": "./src"
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "executors.json",
-            "output": "."
-          },
-          {
-            "input": "./packages/workspace",
-            "glob": "migrations.json",
-            "output": "."
-          }
-        ]
-      }
+      "executor": "@nrwl/js:tsc"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/workspace/**/*.ts",
-          "packages/workspace/generators.json",
-          "packages/workspace/executors.json",
-          "packages/workspace/package.json",
-          "packages/workspace/migrations.json"
-        ]
-      }
+      "executor": "@nrwl/linter:eslint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/workspace"],
-      "options": {
-        "jestConfig": "packages/workspace/jest.config.ts",
-        "passWithNoTests": true,
-        "codeCoverage": true
-      },
-      "configurations": {
-        "watch": {
-          "watch": true
-        }
-      }
+      "executor": "@nrwl/jest:jest"
     },
     "version": {
       "executor": "@jscutlery/semver:version",
       "options": {
-        "push": true,
-        "preset": "conventional",
-        "trackDeps": true,
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]",
         "postTargets": ["workspace:github", "workspace:npm"]
       }
     },
     "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notes": "${notes}"
-      }
+      "executor": "@jscutlery/semver:github"
     },
     "npm": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public"
-      }
+      "executor": "ngx-deploy-npm:deploy"
     }
   },
   "tags": []
