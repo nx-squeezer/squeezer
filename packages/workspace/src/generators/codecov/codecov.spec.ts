@@ -14,6 +14,8 @@ import {
   writeProjectsToCodecov,
 } from './codecov';
 
+const jestExecutor = '@nrwl/jest:jest';
+
 describe('@nx-squeezer/workspace codecov', () => {
   let tree: Tree;
   const jestConfigPath = 'libs/lib1/jest.config.ts';
@@ -78,7 +80,7 @@ describe('@nx-squeezer/workspace codecov', () => {
       writeProjectsToCodecov(tree);
 
       expect(readProjectConfiguration(tree, 'lib1').targets?.test).toStrictEqual({
-        executor: '@nrwl/jest:jest',
+        executor: jestExecutor,
         outputs: ['coverage/libs/lib1'],
         options: {
           jestConfig: jestConfigPath,
@@ -89,6 +91,14 @@ describe('@nx-squeezer/workspace codecov', () => {
       expect(tree.read(jestConfigPath)?.includes(`"coverageReporters": ["lcov"]`)).toBeTruthy();
       expect(readCodecov(tree).flags).toStrictEqual({ lib1: { paths: ['libs/lib1'] } });
       expect(readCodecov(tree).coverage?.status.project.lib1).toStrictEqual({ flags: ['lib1'] });
+    });
+
+    it('should update jest configuration even if not defined in options', () => {
+      addTestableLibrary();
+
+      writeProjectsToCodecov(tree);
+
+      expect(tree.read(jestConfigPath)?.includes(`"coverageReporters": ["lcov"]`)).toBeTruthy();
     });
 
     it('should ignore non testable projects', () => {
@@ -162,7 +172,7 @@ describe('@nx-squeezer/workspace codecov', () => {
       sourceRoot: 'libs/lib1/src',
       targets: {
         test: {
-          executor: '@nrwl/jest:jest',
+          executor: jestExecutor,
           outputs: ['coverage/libs/lib1'],
           options: {
             jestConfig: jestConfigPath,
