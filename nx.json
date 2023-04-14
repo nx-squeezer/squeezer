@@ -93,15 +93,7 @@
         "jestConfig": "{projectRoot}/jest.config.ts",
         "codeCoverage": true,
         "coverageDirectory": "{workspaceRoot}/coverage/{projectRoot}",
-        "coverageReporters": ["lcov", "html"],
-        "coverageThreshold": {
-          "global": {
-            "branches": 100,
-            "functions": 100,
-            "lines": 100,
-            "statements": 100
-          }
-        }
+        "coverageReporters": ["lcov", "html"]
       },
       "configurations": {
         "watch": {

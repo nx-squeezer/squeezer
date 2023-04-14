@@ -1,4 +1,4 @@
-import { addProjectConfiguration, Tree, readProjectConfiguration } from '@nrwl/devkit';
+import { addProjectConfiguration, Tree, readProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
 import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
 
 import {
@@ -95,6 +95,14 @@ describe('@nx-squeezer/workspace codecov', () => {
 
     it('should update jest configuration even if not defined in options', () => {
       addTestableLibrary();
+      const project = readProjectConfiguration(tree, 'lib1');
+      project.targets = {
+        ...project.targets,
+        test: {
+          executor: jestExecutor,
+        },
+      };
+      updateProjectConfiguration(tree, 'lib1', project);
 
       writeProjectsToCodecov(tree);
 

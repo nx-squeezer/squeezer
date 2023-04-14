@@ -109,7 +109,7 @@ export function writeProjectsToCodecov(tree: Tree): void {
         codeCoverage: true,
       };
       updateProjectConfiguration(tree, projectName, projectConfiguration);
-      updateProjectJestCoverage(tree, testTarget.options.jestConfig ?? 'jest.config.ts');
+      updateProjectJestCoverage(tree, testTarget.options.jestConfig ?? `${projectConfiguration.root}/jest.config.ts`);
     } else {
       ignoredProjects.push(projectName);
     }
