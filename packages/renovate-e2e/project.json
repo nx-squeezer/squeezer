@@ -1,0 +1,19 @@
+{
+  "name": "renovate-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/renovate-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/nx-plugin:e2e",
+      "options": {
+        "target": "renovate:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint"
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["renovate"]
+}

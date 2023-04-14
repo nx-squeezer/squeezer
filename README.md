@@ -34,17 +34,15 @@ nx g @nrwl/nx-plugin:plugin my-plugin --importPath @nx-squeezer/my-plugin
 After that, run the following commands to add additional tooling:
 
 ```shell
-npm run g -- eslint
-npm run g -- codecov
+npx nx g eslint
+npx nx g codecov
 ```
 
 ### Running Local Generators
 
 ```shell
-npm run g -- generator
+npx nx g <generator>
 ```
-
-> Workaround due to [Nx issue](https://github.com/nrwl/nx/issues/9823)
 
 ## Contributors
 

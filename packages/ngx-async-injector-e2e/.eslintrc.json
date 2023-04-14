@@ -9,7 +9,7 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["packages/ngx-async-injector-e2e/tsconfig.json"]
+        "project": ["packages/ngx-async-injector-e2e/tsconfig*.json"]
       }
     }
   ]

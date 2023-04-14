@@ -12,10 +12,6 @@
       "parserOptions": {
         "project": ["packages/devkit-e2e/tsconfig*.json"]
       }
-    },
-    {
-      "files": ["*.js", "*.jsx"],
-      "rules": {}
     }
   ]
 }

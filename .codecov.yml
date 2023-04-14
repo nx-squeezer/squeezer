@@ -24,6 +24,9 @@ coverage:
       ngx-async-injector:
         flags:
           - ngx-async-injector
+      renovate:
+        flags:
+          - renovate
 flags:
   workspace:
     paths:
@@ -34,3 +37,6 @@ flags:
   ngx-async-injector:
     paths:
       - packages/ngx-async-injector
+  renovate:
+    paths:
+      - packages/renovate
