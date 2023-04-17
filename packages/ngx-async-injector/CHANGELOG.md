@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.5](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.4...ngx-async-injector@1.0.5) (2023-04-17)
+
+
+### Reverts
+
+* Revert "chore($ngx-async-injector): :package: release version 1.0.0 [skip ci]" ([c434583](https://github.com/nx-squeezer/squeezer/commit/c434583188011a7031f0d14bf6f8408abb4d523f))
+
 ## [1.0.4](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.3...ngx-async-injector@1.0.4) (2023-04-05)
 
 ## [1.0.3](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.2...ngx-async-injector@1.0.3) (2023-04-04)
