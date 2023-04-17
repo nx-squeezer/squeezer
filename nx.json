@@ -40,6 +40,7 @@
         "outputPath": "dist/{projectRoot}",
         "main": "{projectRoot}/src/index.ts",
         "tsConfig": "{projectRoot}/tsconfig.lib.json",
+        "buildableProjectDepsInPackageJsonType": "dependencies",
         "assets": [
           "{projectRoot}/*.md",
           {
@@ -54,17 +55,8 @@
           },
           {
             "input": "./{projectRoot}",
-            "glob": "generators.json",
-            "output": "."
-          },
-          {
-            "input": "./{projectRoot}",
-            "glob": "executors.json",
-            "output": "."
-          },
-          {
-            "input": "./{projectRoot}",
-            "glob": "migrations.json",
+            "glob": "*.json",
+            "ignore": ["tsconfig*.json", "project.json", ".eslintrc.json"],
             "output": "."
           }
         ]
@@ -78,13 +70,7 @@
     "@nrwl/linter:eslint": {
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/**/*.{ts,js,html}",
-          "{projectRoot}/generators.json",
-          "{projectRoot}/executors.json",
-          "{projectRoot}/package.json",
-          "{projectRoot}/migrations.json"
-        ]
+        "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}"]
       }
     },
     "@nrwl/jest:jest": {
@@ -100,8 +86,7 @@
           "watch": true
         },
         "ci": {
-          "ci": true,
-          "codeCoverage": true
+          "ci": true
         }
       }
     },
@@ -126,8 +111,8 @@
         "push": true,
         "preset": "conventional",
         "trackDeps": true,
-        "tagPrefix": "${projectName}@",
-        "commitMessageFormat": "chore(${projectName}): :package: release version ${version} [skip ci]"
+        "tagPrefix": "{projectName}@",
+        "commitMessageFormat": "chore({projectName}): :package: release version ${version} [skip ci]"
       }
     },
     "@jscutlery/semver:github": {

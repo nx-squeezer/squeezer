@@ -44,12 +44,10 @@ jobs:
           git tag -f last-release
           git push origin last-release --force
 
-      - uses: nashmaniac/create-issue-action@v1.1
-        if: failure()
+      - uses: dblock/create-a-github-issue@v3.1.1
         name: Create Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          title: 'bug(release): release pipeline failed'
-          token: ${{ secrets.GITHUB_TOKEN }}
-          assignees: ${{ github.actor }}
-          labels: bug
-          body: GitHub [release workflow](https://github.com/nx-squeezer/squeezer/actions/workflows/release.yml) failed
+          filename: .github/WORKFLOW_ISSUE.md
+          update_existing: true

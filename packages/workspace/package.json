@@ -55,6 +55,6 @@
     "@schemastore/tsconfig": "^0.0.10"
   },
   "nx-migrations": {
-    "migrations": "./migrations.json"
+    "migrations": "./nx-migrations.json"
   }
 }
