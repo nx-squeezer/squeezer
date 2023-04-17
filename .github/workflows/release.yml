@@ -1,8 +1,6 @@
 name: Release
 on:
   workflow_dispatch: # manual release
-  schedule:
-    - cron: '0 5 * * 2' # scheduled weekly release on Tuesday morning
 
 jobs:
   release:
