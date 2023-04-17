@@ -4,21 +4,15 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ## [1.0.5](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.4...ngx-async-injector@1.0.5) (2023-04-17)
 
-
-### Reverts
-
-* Revert "chore($ngx-async-injector): :package: release version 1.0.0 [skip ci]" ([c434583](https://github.com/nx-squeezer/squeezer/commit/c434583188011a7031f0d14bf6f8408abb4d523f))
-
 ## [1.0.4](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.3...ngx-async-injector@1.0.4) (2023-04-05)
 
 ## [1.0.3](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.2...ngx-async-injector@1.0.3) (2023-04-04)
 
 ## [1.0.2](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.1...ngx-async-injector@1.0.2) (2023-03-15)
 
-
 ### Bug Fixes
 
-* **ngx-async-injector:** :memo: add playground to README ([5234f18](https://github.com/nx-squeezer/squeezer/commit/5234f189e28f94015a7d12c2970b33efd422207f))
+- **ngx-async-injector:** :memo: add playground to README ([5234f18](https://github.com/nx-squeezer/squeezer/commit/5234f189e28f94015a7d12c2970b33efd422207f))
 
 ## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.0...ngx-async-injector@1.0.1) (2023-03-15)
 

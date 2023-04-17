@@ -6,31 +6,27 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ### Dependency Updates
 
-* `devkit` updated to version `2.1.1`
-
-### Reverts
-
-* Revert "chore($workspace): :package: release version 1.0.0 [skip ci]" ([f653c56](https://github.com/nx-squeezer/squeezer/commit/f653c56524f67fb35587c1879f8c534d65c06053))
+- `devkit` updated to version `0.3.0`
 
 ## [2.1.1](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.0...workspace@2.1.1) (2023-04-05)
 
 ### Dependency Updates
 
-* `devkit` updated to version `0.2.1`
+- `devkit` updated to version `0.2.1`
 
 ### Bug Fixes
 
-* **devkit:** :memo: fix dependencies ([#579](https://github.com/nx-squeezer/squeezer/issues/579)) ([7fac52b](https://github.com/nx-squeezer/squeezer/commit/7fac52b3a87746fc8f6addd28993a5b28321e441))
+- **devkit:** :memo: fix dependencies ([#579](https://github.com/nx-squeezer/squeezer/issues/579)) ([7fac52b](https://github.com/nx-squeezer/squeezer/commit/7fac52b3a87746fc8f6addd28993a5b28321e441))
 
 ## [2.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@2.0.3...workspace@2.1.0) (2023-04-05)
 
 ### Dependency Updates
 
-* `devkit` updated to version `0.2.0`
+- `devkit` updated to version `0.2.0`
 
 ### Features
 
-* :art: move library code from workspace into devkit ([#577](https://github.com/nx-squeezer/squeezer/issues/577)) ([9d82481](https://github.com/nx-squeezer/squeezer/commit/9d824817706f35f20fbd833dedb7dd2e21d18872))
+- :art: move library code from workspace into devkit ([#577](https://github.com/nx-squeezer/squeezer/issues/577)) ([9d82481](https://github.com/nx-squeezer/squeezer/commit/9d824817706f35f20fbd833dedb7dd2e21d18872))
 
 ## [2.0.3](https://github.com/nx-squeezer/squeezer/compare/workspace@2.0.2...workspace@2.0.3) (2023-04-05)
 
@@ -40,14 +36,13 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ## [2.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@1.4.2...workspace@2.0.0) (2023-03-13)
 
-
 ### ⚠ BREAKING CHANGES
 
-* Update to node 18
+- Update to node 18
 
 ### Features
 
-* :arrow_up: update to node 18 and npm 9 ([#517](https://github.com/nx-squeezer/squeezer/issues/517)) ([#525](https://github.com/nx-squeezer/squeezer/issues/525)) ([2630510](https://github.com/nx-squeezer/squeezer/commit/26305108d6fbb320b4d01a2ae963c6aaf7945be1))
+- :arrow_up: update to node 18 and npm 9 ([#517](https://github.com/nx-squeezer/squeezer/issues/517)) ([#525](https://github.com/nx-squeezer/squeezer/issues/525)) ([2630510](https://github.com/nx-squeezer/squeezer/commit/26305108d6fbb320b4d01a2ae963c6aaf7945be1))
 
 ## [1.4.2](https://github.com/nx-squeezer/squeezer/compare/workspace@1.4.1...workspace@1.4.2) (2023-03-07)
 
