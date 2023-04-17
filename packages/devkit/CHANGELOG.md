@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [0.3.0](https://github.com/nx-squeezer/squeezer/compare/devkit@0.2.1...devkit@0.3.0) (2023-04-17)
+
+
+### Features
+
+* **devkit:** :sparkles: ensureNxProject would work with previous signature ([#595](https://github.com/nx-squeezer/squeezer/issues/595)) ([769cd5e](https://github.com/nx-squeezer/squeezer/commit/769cd5efcfd86d7897914630db2e702328adf901))
+* **devkit:** :sparkles: make ensure nx project work with project name ([#588](https://github.com/nx-squeezer/squeezer/issues/588)) ([077b1b8](https://github.com/nx-squeezer/squeezer/commit/077b1b849eb78a74cbaa9fd450580dc499f4db4d))
+
+
+### Reverts
+
+* Revert "chore($devkit): :package: release version 0.1.0 [skip ci]" ([1d739c9](https://github.com/nx-squeezer/squeezer/commit/1d739c91f73708326fa85dcbdd7f27beebadba73))
+
 ## [0.2.1](https://github.com/nx-squeezer/squeezer/compare/devkit@0.2.0...devkit@0.2.1) (2023-04-05)
 
 
