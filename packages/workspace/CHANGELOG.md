@@ -2,6 +2,11 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.3](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.2...workspace@2.1.3) (2023-04-17)
+
+### Dependency Updates
+
+* `devkit` updated to version `2.1.2`
 ## [2.1.2](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.1...workspace@2.1.2) (2023-04-17)
 
 ### Dependency Updates
