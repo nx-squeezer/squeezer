@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.2](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.1...workspace@2.1.2) (2023-04-17)
+
+### Dependency Updates
+
+* `devkit` updated to version `2.1.1`
+
+### Reverts
+
+* Revert "chore($workspace): :package: release version 1.0.0 [skip ci]" ([f653c56](https://github.com/nx-squeezer/squeezer/commit/f653c56524f67fb35587c1879f8c534d65c06053))
+
 ## [2.1.1](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.0...workspace@2.1.1) (2023-04-05)
 
 ### Dependency Updates
