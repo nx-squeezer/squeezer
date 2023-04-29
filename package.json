@@ -74,7 +74,7 @@
     "@nrwl/jest": "15.9.2",
     "@nrwl/js": "15.9.2",
     "@nrwl/linter": "15.9.2",
-    "@nrwl/nx-cloud": "16.0.1",
+    "@nrwl/nx-cloud": "16.0.4",
     "@nrwl/nx-plugin": "15.9.2",
     "@nrwl/workspace": "15.9.2",
     "@schemastore/eslintrc": "0.0.7",
