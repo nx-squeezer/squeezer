@@ -5,7 +5,7 @@
   "projectType": "application",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/cypress:cypress",
+      "executor": "@nx/cypress:cypress",
       "options": {
         "devServerTarget": "ngx-async-injector-app:serve:development"
       },
@@ -16,7 +16,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint"
+      "executor": "@nx/linter:eslint"
     }
   },
   "tags": [],

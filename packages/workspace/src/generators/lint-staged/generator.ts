@@ -1,4 +1,4 @@
-import { formatFiles, installPackagesTask, Tree, readJson, writeJson } from '@nrwl/devkit';
+import { formatFiles, installPackagesTask, Tree, readJson, writeJson } from '@nx/devkit';
 
 import {
   addHuskyToPackageJson,

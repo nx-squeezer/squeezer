@@ -1,4 +1,4 @@
-import { formatFiles, readJson, Tree, writeJson } from '@nrwl/devkit';
+import { formatFiles, readJson, Tree, writeJson } from '@nx/devkit';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
 import { lintWorkspaceTask } from '@nx-squeezer/devkit';

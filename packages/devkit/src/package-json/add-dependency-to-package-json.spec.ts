@@ -1,5 +1,5 @@
-import { Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { addDependencyToPackageJson } from './add-dependency-to-package-json';
 import { readPackageJson } from './package-json';

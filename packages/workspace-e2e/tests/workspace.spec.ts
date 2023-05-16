@@ -5,7 +5,7 @@ import {
   readFile,
   runCommandAsync,
   updateFile,
-} from '@nrwl/nx-plugin/testing';
+} from '@nx/plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';

@@ -1,4 +1,4 @@
-import { formatFiles, generateFiles, Tree } from '@nrwl/devkit';
+import { formatFiles, generateFiles, Tree } from '@nx/devkit';
 import { parse, parseDocument, Scalar, stringify, YAMLSeq } from 'yaml';
 
 import { getGitRepoSlug, joinNormalize, securityFile, addBadgeToReadme } from '@nx-squeezer/devkit';

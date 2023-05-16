@@ -10,7 +10,7 @@ Shareable config preset for [Renovate](https://www.whitesourcesoftware.com/free-
 
 You can find an example configuration [here](https://github.com/nx-squeezer/squeezer/blob/main/renovate.config.js) and GitHub workflow [here](https://github.com/nx-squeezer/squeezer/blob/main/.github/workflows/renovate.yml).
 
-For Nx projects it is recommended to use the default preset and Nrwl workspace.
+For Nx projects it is recommended to use the default preset and Nx monorepo.
 
 This schematic will:
 
@@ -39,12 +39,12 @@ This [preset](https://github.com/nx-squeezer/squeezer/blob/main/default.json) in
 </details>
 
 <details>
-  <summary>Nrwl Workspace</summary>
+  <summary>Nx Monorepo</summary>
 
-This [preset](https://github.com/nx-squeezer/squeezer/blob/main/nrwlWorkspace.json) groups all dependencies related to [Nx](https://nx.dev/) and [Angular](https://angular.io/), including upgrade schematics:
+This [preset](https://github.com/nx-squeezer/squeezer/blob/main/nxMonorepo.json) groups all dependencies related to [Nx](https://nx.dev/) and [Angular](https://angular.io/), including upgrade schematics:
 
 ```json
-"extends": ["github>@nx-squeezer/squeezer:nrwlWorkspace"]
+"extends": ["github>@nx-squeezer/squeezer:nxMonorepo"]
 ```
 
 > It is incompatible with preset `"github>@nx-squeezer/squeezer:angularWorkspace"`, choose one or another.
@@ -59,6 +59,8 @@ This [preset](https://github.com/nx-squeezer/squeezer/blob/main/angularWorkspace
 ```json
 "extends": ["github>@nx-squeezer/squeezer:angularWorkspace"]
 ```
+
+> It is incompatible with preset `"github>@nx-squeezer/squeezer:nxMonorepo"`, choose one or another.
 
 </details>
 

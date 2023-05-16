@@ -1,5 +1,5 @@
-import { Tree, readJson } from '@nrwl/devkit';
-import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree, readJson } from '@nx/devkit';
+import { createTree, createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 
 import { lintWorkspaceTask } from '@nx-squeezer/devkit';

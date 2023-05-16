@@ -1,5 +1,5 @@
-import { addProjectConfiguration, Tree, readProjectConfiguration, updateProjectConfiguration } from '@nrwl/devkit';
-import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { addProjectConfiguration, Tree, readProjectConfiguration, updateProjectConfiguration } from '@nx/devkit';
+import { createTree, createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {
   codecovDefault,
@@ -14,7 +14,7 @@ import {
   writeProjectsToCodecov,
 } from './codecov';
 
-const jestExecutor = '@nrwl/jest:jest';
+const jestExecutor = '@nx/jest:jest';
 
 describe('@nx-squeezer/workspace codecov', () => {
   let tree: Tree;

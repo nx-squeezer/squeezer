@@ -1,6 +1,6 @@
 /* istanbul ignore file */
 
-import { ProjectGraph } from '@nrwl/devkit';
+import { ProjectGraph } from '@nx/devkit';
 
 import { readTsPathMappings } from './typescript';
 

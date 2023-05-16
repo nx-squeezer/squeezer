@@ -5,13 +5,13 @@
   "sourceRoot": "packages/devkit-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nrwl/nx-plugin:e2e",
+      "executor": "@nx/plugin:e2e",
       "options": {
         "target": "devkit:build"
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint"
+      "executor": "@nx/linter:eslint"
     }
   },
   "tags": [],

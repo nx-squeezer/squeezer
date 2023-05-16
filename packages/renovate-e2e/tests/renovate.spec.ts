@@ -1,4 +1,4 @@
-import { ensureNxProject, runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { ensureNxProject, runNxCommandAsync, uniq } from '@nx/plugin/testing';
 
 describe('renovate e2e', () => {
   // Setting up individual workspaces per

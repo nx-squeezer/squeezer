@@ -28,7 +28,7 @@ Monorepo with many tools and packages for [Nx](https://nx.dev/) and [Angular](ht
 Create new library with [local plugins](https://nx.dev/plugin-features/create-your-own-plugin#local-workspace-plugins):
 
 ```shell
-nx g @nrwl/nx-plugin:plugin my-plugin --importPath @nx-squeezer/my-plugin
+nx g @nx/plugin:plugin my-plugin --importPath @nx-squeezer/my-plugin
 ```
 
 After that, run the following commands to add additional tooling:

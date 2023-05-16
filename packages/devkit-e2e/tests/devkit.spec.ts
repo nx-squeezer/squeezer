@@ -1,4 +1,4 @@
-import { runNxCommandAsync, uniq } from '@nrwl/nx-plugin/testing';
+import { runNxCommandAsync, uniq } from '@nx/plugin/testing';
 
 import { ensureNxProject } from '@nx-squeezer/devkit';
 

@@ -1,5 +1,5 @@
-import { Tree, installPackagesTask, readJson, writeJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree, installPackagesTask, readJson, writeJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {
   addDevDependencyToPackageJson,
@@ -12,8 +12,8 @@ import { lintStagedGenerator } from './generator';
 import { lintStagedSchematic } from './generator.compat';
 import { lintStaged, lintStagedConfigPath, lintStagedDefaultConfig, LintStagedConfig } from './lint-staged';
 
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   installPackagesTask: jest.fn(),
 }));
 

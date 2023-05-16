@@ -1,5 +1,5 @@
-import { Tree } from '@nrwl/devkit';
-import { createTree } from '@nrwl/devkit/testing';
+import { Tree } from '@nx/devkit';
+import { createTree } from '@nx/devkit/testing';
 
 import { getGitRepo, getGitRepoSlug } from './get-git-repo';
 import { exec } from '../exec';

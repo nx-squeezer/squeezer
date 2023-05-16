@@ -1,5 +1,5 @@
-import { createProjectGraphAsync, getDependentPackagesForProject, readJsonFile, writeJsonFile } from '@nrwl/devkit';
-import { cleanup, tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { createProjectGraphAsync, getDependentPackagesForProject, readJsonFile, writeJsonFile } from '@nx/devkit';
+import { cleanup, tmpProjPath } from '@nx/plugin/testing';
 import { ensureDirSync } from 'fs-extra';
 
 import { ensureNxProject } from './ensure-nx-project';
@@ -8,8 +8,8 @@ import { runNxNewCommand } from './run-nx-new-command';
 import { runPackageManagerInstall } from './run-package-manager-install';
 
 jest.mock('fs-extra');
-jest.mock('@nrwl/nx-plugin/testing');
-jest.mock('@nrwl/devkit', () => ({
+jest.mock('@nx/plugin/testing');
+jest.mock('@nx/devkit', () => ({
   createProjectGraphAsync: jest.fn(),
   getDependentPackagesForProject: jest.fn(),
   readJsonFile: jest.fn(),

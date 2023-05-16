@@ -1,6 +1,6 @@
 /* eslint-disable @delagen/deprecation/deprecation -- https://github.com/nx-squeezer/squeezer/issues/680 */
-import { NxJsonConfiguration, readJson, Tree, writeJson } from '@nrwl/devkit';
-import { createTree, createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { NxJsonConfiguration, readJson, Tree, writeJson } from '@nx/devkit';
+import { createTree, createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { addImplicitDependencyToNxConfig } from './add-implicit-dependency-to-nx-config';
 import { nxConfigFile } from './nx';

@@ -1,5 +1,5 @@
-import { installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { installPackagesTask, readJson, Tree, writeJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {
   addHuskyToPackageJson,
@@ -18,8 +18,8 @@ import {
 import { commitlintGenerator } from './generator';
 import { commitlintSchematic } from './generator.compat';
 
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   installPackagesTask: jest.fn(),
 }));
 

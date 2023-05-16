@@ -1,12 +1,12 @@
 import { dirname } from 'path';
 
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 
 import { runNxNewCommand } from './run-nx-new-command';
 import { exec } from '../exec';
 
 jest.mock('path');
-jest.mock('@nrwl/nx-plugin/testing');
+jest.mock('@nx/plugin/testing');
 jest.mock('../exec');
 
 describe('@nx-squeezer/devkit runNxNewCommand', () => {

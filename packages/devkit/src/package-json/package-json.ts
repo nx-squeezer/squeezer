@@ -1,4 +1,4 @@
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
+import { readJson, Tree, writeJson } from '@nx/devkit';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 
 export const packageJsonFile = 'package.json';

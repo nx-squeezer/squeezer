@@ -1,5 +1,5 @@
-import { Tree, readJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree, readJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { parse, stringify } from 'yaml';
 
 import { readmeFile, getGitRepoSlug, securityFile } from '@nx-squeezer/devkit';

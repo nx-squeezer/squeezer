@@ -1,5 +1,5 @@
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { readJson, Tree, writeJson } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import addHtmlOverrideToPrettierConfig from './add-html-override-to-prettier-config';
 import { prettierConfigFile, prettierConfigJsonFile } from '../../generators';

@@ -1,4 +1,4 @@
-import { formatFiles, Tree } from '@nrwl/devkit';
+import { formatFiles, Tree } from '@nx/devkit';
 import fetch from 'node-fetch-commonjs';
 
 import { addImplicitDependencyToNxConfig, getGitRepoSlug, addBadgeToReadme } from '@nx-squeezer/devkit';
