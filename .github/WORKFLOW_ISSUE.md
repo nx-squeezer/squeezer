@@ -1,5 +1,5 @@
 ---
-title: 'bug: GitHub Workflow {{ workflow }} failed'
+title: 'bug: GitHub workflow {{ workflow }} failed'
 assignees: samuelfernandez
 labels: bug
 ---

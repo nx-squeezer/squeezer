@@ -46,6 +46,7 @@ jobs:
 
       - uses: dblock/create-a-github-issue@v3.1.1
         name: Create Issue
+        if: failure()
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
