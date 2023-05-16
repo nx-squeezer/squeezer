@@ -64,7 +64,7 @@
       }
     },
     "@nrwl/jest:jest": {
-      "outputs": ["coverage/{projectRoot}"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "{projectRoot}/jest.config.ts",
         "codeCoverage": true,
