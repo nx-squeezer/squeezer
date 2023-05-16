@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/devkit@0.3.1...devkit@1.0.0) (2023-05-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Upgrade to Angular and Nx 16
+
+### Features
+
+* :package: rescope to [@nx](https://github.com/nx) ([#681](https://github.com/nx-squeezer/squeezer/issues/681)) ([#682](https://github.com/nx-squeezer/squeezer/issues/682)) ([e2fd0a8](https://github.com/nx-squeezer/squeezer/commit/e2fd0a88b5e258c9cfe898d06cbda00d7bf44c8d))
+* **deps:** :arrow_up: update monorepo to Angular and Nx 16 ([#679](https://github.com/nx-squeezer/squeezer/issues/679)) ([733a9f8](https://github.com/nx-squeezer/squeezer/commit/733a9f88ff5d20961caa59b7da85d4cf33512cbc))
+
 ## [0.3.1](https://github.com/nx-squeezer/squeezer/compare/devkit@0.3.0...devkit@0.3.1) (2023-04-17)
 
 ## [0.3.0](https://github.com/nx-squeezer/squeezer/compare/devkit@0.2.1...devkit@0.3.0) (2023-04-17)
