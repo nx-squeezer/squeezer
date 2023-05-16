@@ -11,7 +11,7 @@ export const renovatePresets = [
   'groupAllNonMajor.json',
   'maintenance.json',
   'npm.json',
-  'nrwlWorkspace.json',
+  'nxMonorepo.json',
   'widenRangeLibraryDeps.json',
 ];
 export const renovateBranch = 'renovate-github/**';

@@ -93,7 +93,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
         'config:base',
         ':label(dependencies)',
         'local>test/test',
-        'local>test/test:nrwlWorkspace',
+        'local>test/test:nxMonorepo',
         ':assignee(user)',
       ],
     });
@@ -108,7 +108,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
         'config:base',
         ':label(dependencies)',
         'github>nx-squeezer/squeezer',
-        'github>nx-squeezer/squeezer:nrwlWorkspace',
+        'github>nx-squeezer/squeezer:nxMonorepo',
         ':assignee(user)',
       ],
     });
