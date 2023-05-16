@@ -1,6 +1,6 @@
 {
   "name": "@nx-squeezer/ngx-async-injector",
-  "version": "1.0.6",
+  "version": "2.0.0",
   "description": "Angular library that provides async dependency injection",
   "keywords": [
     "angular",
