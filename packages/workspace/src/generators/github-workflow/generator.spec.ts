@@ -71,6 +71,7 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
 
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
+    // eslint-disable-next-line @delagen/deprecation/deprecation -- https://github.com/nx-squeezer/squeezer/issues/680
     expect(nxConfig.implicitDependencies?.['.github/workflows/*.yml']).toBe('*');
   });
 

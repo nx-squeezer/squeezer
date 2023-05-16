@@ -45,6 +45,7 @@ describe('@nx-squeezer/workspace codecov generator', () => {
 
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
+    // eslint-disable-next-line @delagen/deprecation/deprecation -- https://github.com/nx-squeezer/squeezer/issues/680
     expect(nxConfig.implicitDependencies?.[codecovDotFile]).toBe('*');
   });
 

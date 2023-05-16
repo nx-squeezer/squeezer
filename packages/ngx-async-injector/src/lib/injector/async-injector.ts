@@ -8,6 +8,7 @@ import {
   Injector,
   OnDestroy,
   ProviderToken,
+  runInInjectionContext,
 } from '@angular/core';
 
 import { isMultiProvider } from '../functions/is-multi-provider';
@@ -222,7 +223,7 @@ export class AsyncInjector implements OnDestroy {
     const envInjector = inject(EnvironmentInjector);
     const runInContext = (fn: () => unknown) => {
       let result: unknown;
-      envInjector.runInContext(() => (result = fn()));
+      runInInjectionContext(envInjector, () => (result = fn()));
       return result;
     };
 
