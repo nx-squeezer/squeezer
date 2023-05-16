@@ -34,6 +34,7 @@
       "matchManagers": ["npm"],
       "matchPackagePatterns": [
         "^@nrwl/",
+        "^@nx/",
         "^nx$",
         "^@angular-devkit/",
         "^ng-packagr",
@@ -48,7 +49,14 @@
     {
       "groupName": "Nrwl workspace",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^@nrwl/", "^nx$", "^@nx-", "^@ng-easy/"],
+      "matchPackageNames": ["ngx-deploy-npm"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "groupName": "Nrwl workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@nrwl/", "^@nx/", "^nx$", "^@nx-", "^@ng-easy/"],
       "matchFiles": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
@@ -75,7 +83,8 @@
         "@angular/material",
         "@angular-eslint/schematics",
         "@ngrx/store",
-        "@ngrx/component-store"
+        "@ngrx/component-store",
+        "ngx-deploy-npm"
       ],
       "matchFiles": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
