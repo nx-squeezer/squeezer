@@ -7,7 +7,7 @@
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "useDaemonProcess": false,
         "canTrackAnalytics": false,
@@ -17,24 +17,14 @@
       }
     }
   },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".github/workflows/*.yml": "*",
-    ".codecov.yml": "*"
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
+  "namedInputs": {
+    "ci": ["{workspaceRoot}/.github/workflows/*.yml"],
+    "codecov": ["{workspaceRoot}/.codecov.yml"],
+    "default": ["ci", "codecov"]
   },
   "targetDefaults": {
     "@nrwl/js:tsc": {
+      "dependsOn": ["^build"],
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/{projectRoot}",
@@ -125,6 +115,9 @@
       "options": {
         "access": "public"
       }
+    },
+    "build": {
+      "dependsOn": ["^build"]
     }
   },
   "pluginsConfig": {
