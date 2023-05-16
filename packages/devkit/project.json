@@ -5,13 +5,13 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/js:tsc"
+      "executor": "@nx/js:tsc"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint"
+      "executor": "@nx/linter:eslint"
     },
     "test": {
-      "executor": "@nrwl/jest:jest"
+      "executor": "@nx/jest:jest"
     },
     "version": {
       "executor": "@jscutlery/semver:version",

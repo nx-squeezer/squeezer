@@ -1,4 +1,4 @@
-import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nrwl/devkit';
+import { formatFiles, installPackagesTask, readJson, Tree, writeJson } from '@nx/devkit';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import { addDevDependencyToPackageJson, lintWorkspaceTask, formatWorkspaceTask } from '@nx-squeezer/devkit';
@@ -13,7 +13,7 @@ export async function prettierGenerator(tree: Tree) {
   if (isEsLintPluginPresent(tree, prettierPlugin)) {
     return;
   }
-  addEsLintPlugin(tree, prettierPlugin, '@nrwl/nx');
+  addEsLintPlugin(tree, prettierPlugin, '@nx');
   addEsLintRules(tree, {
     files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
     extends: ['plugin:prettier/recommended'],

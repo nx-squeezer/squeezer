@@ -4,7 +4,7 @@
     "config:base",
     ":label(dependencies)",
     "local>nx-squeezer/squeezer",
-    "local>nx-squeezer/squeezer:nrwlWorkspace",
+    "local>nx-squeezer/squeezer:nxMonorepo",
     ":assignee(samuelfernandez)"
   ]
 }

@@ -1,4 +1,4 @@
-import { readJson, Tree, writeJson } from '@nrwl/devkit';
+import { readJson, Tree, writeJson } from '@nx/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
 import { getSet, areSetsEqual, removeDuplicates } from '@nx-squeezer/devkit';

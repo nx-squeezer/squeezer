@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 import { parseDocument, stringify, YAMLSeq } from 'yaml';
 
 export const ciFile = './.github/workflows/ci.yml';

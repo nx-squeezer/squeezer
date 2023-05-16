@@ -1,4 +1,4 @@
-import { formatFiles, generateFiles, names, Tree } from '@nrwl/devkit';
+import { formatFiles, generateFiles, names, Tree } from '@nx/devkit';
 
 import {
   joinNormalize,

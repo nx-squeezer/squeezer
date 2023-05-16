@@ -1,5 +1,5 @@
-import { NxJsonConfiguration, readJson, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { NxJsonConfiguration, readJson, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { parse } from 'yaml';
 
 import { getGitRepo, nxConfigFile, readmeFile, readPackageJson } from '@nx-squeezer/devkit';

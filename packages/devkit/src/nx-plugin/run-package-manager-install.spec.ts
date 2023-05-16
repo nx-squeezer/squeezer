@@ -1,12 +1,12 @@
 import { execSync } from 'child_process';
 
-import { getPackageManagerCommand } from '@nrwl/devkit';
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { getPackageManagerCommand } from '@nx/devkit';
+import { tmpProjPath } from '@nx/plugin/testing';
 
 import { runPackageManagerInstall } from './run-package-manager-install';
 
-jest.mock('@nrwl/devkit');
-jest.mock('@nrwl/nx-plugin/testing');
+jest.mock('@nx/devkit');
+jest.mock('@nx/plugin/testing');
 jest.mock('child_process');
 
 describe('@nx-squeezer/devkit runPackageManagerInstall', () => {

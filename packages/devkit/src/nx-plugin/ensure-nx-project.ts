@@ -8,8 +8,8 @@ import {
   WorkspaceLibrary,
   workspaceRoot,
   writeJsonFile,
-} from '@nrwl/devkit';
-import { cleanup, tmpProjPath } from '@nrwl/nx-plugin/testing';
+} from '@nx/devkit';
+import { cleanup, tmpProjPath } from '@nx/plugin/testing';
 import { ensureDirSync } from 'fs-extra';
 
 import { getLibraryImportPath } from './get-library-import-path';

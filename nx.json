@@ -23,7 +23,7 @@
     "default": ["ci", "codecov"]
   },
   "targetDefaults": {
-    "@nrwl/js:tsc": {
+    "@nx/js:tsc": {
       "dependsOn": ["^build"],
       "outputs": ["{options.outputPath}"],
       "options": {
@@ -57,13 +57,13 @@
         }
       }
     },
-    "@nrwl/linter:eslint": {
+    "@nx/linter:eslint": {
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}"]
       }
     },
-    "@nrwl/jest:jest": {
+    "@nx/jest:jest": {
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "{projectRoot}/jest.config.ts",
@@ -80,7 +80,7 @@
         }
       }
     },
-    "@nrwl/cypress:cypress": {
+    "@nx/cypress:cypress": {
       "options": {
         "cypressConfig": "{projectRoot}/cypress.config.ts",
         "testingType": "e2e"
@@ -91,7 +91,7 @@
         }
       }
     },
-    "@nrwl/nx-plugin:e2e": {
+    "@nx/plugin:e2e": {
       "options": {
         "jestConfig": "{projectRoot}/jest.config.ts"
       }
@@ -121,28 +121,28 @@
     }
   },
   "pluginsConfig": {
-    "@nrwl/js": {
+    "@nx/js": {
       "analyzeSourceFiles": true
     }
   },
   "generators": {
-    "@nrwl/js:library": {
+    "@nx/js:library": {
       "buildable": true,
       "publishable": true
     },
-    "@nrwl/angular:application": {
+    "@nx/angular:application": {
       "style": "css",
       "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "none"
     },
-    "@nrwl/angular:library": {
+    "@nx/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "jest",
       "buildable": true,
       "publishable": true
     },
-    "@nrwl/angular:component": {
+    "@nx/angular:component": {
       "style": "css"
     }
   }

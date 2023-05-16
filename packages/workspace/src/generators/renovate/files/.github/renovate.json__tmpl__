@@ -1,4 +1,4 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", ":label(dependencies)", "<% if (local) { %>local><%= gitRepoSlug %><% } else { %>github>nx-squeezer/squeezer<% } %>", "<% if (local) { %>local><%= gitRepoSlug %>:nrwlWorkspace<% } else { %>github>nx-squeezer/squeezer:nrwlWorkspace<% } %>"<% if (assignee) { %>, ":assignee(<%= assignee %>)"<% } %>]
+  "extends": ["config:base", ":label(dependencies)", "<% if (local) { %>local><%= gitRepoSlug %><% } else { %>github>nx-squeezer/squeezer<% } %>", "<% if (local) { %>local><%= gitRepoSlug %>:nxMonorepo<% } else { %>github>nx-squeezer/squeezer:nxMonorepo<% } %>"<% if (assignee) { %>, ":assignee(<%= assignee %>)"<% } %>]
 }

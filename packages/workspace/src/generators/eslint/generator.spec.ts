@@ -1,5 +1,5 @@
-import { addProjectConfiguration, installPackagesTask, Tree } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { addProjectConfiguration, installPackagesTask, Tree } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { lintWorkspaceTask } from '@nx-squeezer/devkit';
 
@@ -15,8 +15,8 @@ jest.mock('@nx-squeezer/devkit', () => ({
   lintWorkspaceTask: jest.fn(),
 }));
 
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   installPackagesTask: jest.fn(),
 }));
 

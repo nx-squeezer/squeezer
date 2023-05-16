@@ -58,7 +58,7 @@
       "defaultConfiguration": "development"
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint"
+      "executor": "@nx/linter:eslint"
     }
   },
   "tags": []

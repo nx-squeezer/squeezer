@@ -1,6 +1,6 @@
 import { join } from 'path';
 
-import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nrwl/devkit';
+import { formatFiles, getProjects, installPackagesTask, ProjectConfiguration, Tree } from '@nx/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 
 import { lintWorkspaceTask, addDevDependencyToPackageJson, joinNormalize } from '@nx-squeezer/devkit';

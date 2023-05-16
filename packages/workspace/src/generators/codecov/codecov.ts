@@ -1,4 +1,4 @@
-import { getProjects, ProjectConfiguration, Tree, updateProjectConfiguration } from '@nrwl/devkit';
+import { getProjects, ProjectConfiguration, Tree, updateProjectConfiguration } from '@nx/devkit';
 import { parse, stringify } from 'yaml';
 
 import { joinNormalize } from '@nx-squeezer/devkit';

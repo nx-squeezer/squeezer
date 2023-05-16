@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 import { gitMakeExecutable } from '@nx-squeezer/devkit';
 

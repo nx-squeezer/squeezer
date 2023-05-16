@@ -1,4 +1,4 @@
-import { Tree } from '@nrwl/devkit';
+import { Tree } from '@nx/devkit';
 
 import { exec } from '../exec';
 import { addDevDependencyToPackageJson, addScriptToPackageJson } from '../package-json';

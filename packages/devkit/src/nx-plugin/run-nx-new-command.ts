@@ -1,6 +1,6 @@
 import { dirname } from 'path';
 
-import { tmpProjPath } from '@nrwl/nx-plugin/testing';
+import { tmpProjPath } from '@nx/plugin/testing';
 
 import { exec } from '../exec';
 
@@ -17,7 +17,7 @@ export function runNxNewCommand(): void {
       `--nx-workspace-root=${localTmpDir}`,
       '--no-interactive',
       '--skip-install',
-      '--collection=@nrwl/workspace',
+      '--collection=@nx/workspace',
       '--npmScope=proj',
       '--preset=empty',
     ],

@@ -1,4 +1,4 @@
-import { formatFiles, readJson, Tree, writeJson } from '@nrwl/devkit';
+import { formatFiles, readJson, Tree, writeJson } from '@nx/devkit';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import { prettierConfigJsonFile } from '../../generators';

@@ -1,5 +1,5 @@
-import { Tree, readJson, installPackagesTask } from '@nrwl/devkit';
-import { createTreeWithEmptyWorkspace } from '@nrwl/devkit/testing';
+import { Tree, readJson, installPackagesTask } from '@nx/devkit';
+import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
@@ -17,8 +17,8 @@ jest.mock('@nx-squeezer/devkit', () => ({
   formatWorkspaceTask: jest.fn(),
 }));
 
-jest.mock('@nrwl/devkit', () => ({
-  ...jest.requireActual('@nrwl/devkit'),
+jest.mock('@nx/devkit', () => ({
+  ...jest.requireActual('@nx/devkit'),
   installPackagesTask: jest.fn(),
 }));
 
