@@ -2,6 +2,26 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.3...workspace@3.0.0) (2023-05-16)
+
+### Dependency Updates
+
+* `devkit` updated to version `2.1.3`
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Upgrade to Angular and Nx 16
+
+### Features
+
+* :package: rescope to [@nx](https://github.com/nx) ([#681](https://github.com/nx-squeezer/squeezer/issues/681)) ([#682](https://github.com/nx-squeezer/squeezer/issues/682)) ([e2fd0a8](https://github.com/nx-squeezer/squeezer/commit/e2fd0a88b5e258c9cfe898d06cbda00d7bf44c8d))
+* **deps:** :arrow_up: update monorepo to Angular and Nx 16 ([#679](https://github.com/nx-squeezer/squeezer/issues/679)) ([733a9f8](https://github.com/nx-squeezer/squeezer/commit/733a9f88ff5d20961caa59b7da85d4cf33512cbc))
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update dependency yaml to v2.2.2 [security] ([#635](https://github.com/nx-squeezer/squeezer/issues/635)) ([22bd595](https://github.com/nx-squeezer/squeezer/commit/22bd59522e807ac5cb9d5b83322bd2e148bf23d9))
+
 ## [2.1.3](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.2...workspace@2.1.3) (2023-04-17)
 
 ### Dependency Updates
