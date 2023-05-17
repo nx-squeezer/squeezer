@@ -6,7 +6,6 @@ import { readmeFile, getGitRepoSlug, securityFile, ciFile } from '@nx-squeezer/d
 
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
-import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 
@@ -48,7 +47,6 @@ describe('@nx-squeezer/renovate renovate generator', () => {
     tasks?.();
 
     expect(renovateConfigValidatorTask).toHaveBeenCalled();
-    expect(makeMigrationsScriptExecutableTask).toHaveBeenCalled();
   });
 
   it('should skip execution if a Renovate CI workflow already exists', async () => {
