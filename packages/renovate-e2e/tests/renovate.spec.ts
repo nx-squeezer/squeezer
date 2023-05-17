@@ -11,7 +11,7 @@ import {
 
 jest.setTimeout(120_000);
 
-describe('@nx-squeezer/workspace e2e', () => {
+describe('@nx-squeezer/renovate e2e', () => {
   // Setting up individual workspaces per
   // test can cause e2e runs to take a long time.
   // For this reason, we recommend each suite only
@@ -20,7 +20,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   // are not dependent on one another.
   beforeAll(async () => {
     // https://github.com/nrwl/nx/issues/4851#issuecomment-822604801
-    await ensureNxProject('workspace');
+    await ensureNxProject('renovate');
     updateFile(
       ciFile,
       `
@@ -40,7 +40,7 @@ on:
   });
 
   it('should setup Renovate CI workflow and add presets', async () => {
-    await runNxCommandAsync(`generate @nx-squeezer/workspace:renovate --useNxCloud --local --assignee=samuelfernandez`);
+    await runNxCommandAsync(`generate @nx-squeezer/renovate:setup --useNxCloud --local --assignee=samuelfernandez`);
 
     expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
     expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
