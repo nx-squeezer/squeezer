@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@3.0.0...workspace@3.1.0) (2023-05-17)
+
+### Dependency Updates
+
+* `devkit` updated to version `3.0.0`
+
+### Features
+
+* **devkit:** :sparkles: move github workflow utils from workspace to devkit project ([#684](https://github.com/nx-squeezer/squeezer/issues/684)) ([c56a48d](https://github.com/nx-squeezer/squeezer/commit/c56a48dbe451268d902adb53b494724cbbcffa81))
+
 ## [3.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@2.1.3...workspace@3.0.0) (2023-05-16)
 
 ### Dependency Updates
