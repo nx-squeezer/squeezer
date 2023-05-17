@@ -1,5 +1,6 @@
 export * from './exec';
 export * from './git';
+export * from './github-workflow';
 export * from './husky';
 export * from './npm';
 export * from './nx';

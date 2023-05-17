@@ -6,9 +6,9 @@ import {
   addScriptToPackageJson,
   getGitRepo,
   addBadgeToReadme,
+  ciFile,
 } from '@nx-squeezer/devkit';
 
-import { ciFile } from './github-workflow';
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
 export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {

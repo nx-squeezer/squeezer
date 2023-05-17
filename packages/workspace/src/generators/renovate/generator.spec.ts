@@ -2,14 +2,13 @@ import { Tree, readJson } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { parse, stringify } from 'yaml';
 
-import { readmeFile, getGitRepoSlug, securityFile } from '@nx-squeezer/devkit';
+import { readmeFile, getGitRepoSlug, securityFile, ciFile } from '@nx-squeezer/devkit';
 
 import { renovateGenerator } from './generator';
 import { renovateSchematic } from './generator.compat';
 import { makeMigrationsScriptExecutableTask } from './make-migrations-script-executable-task';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
-import { ciFile } from '../github-workflow';
 
 jest.mock('@nx-squeezer/devkit', () => ({
   ...jest.requireActual('@nx-squeezer/devkit'),
