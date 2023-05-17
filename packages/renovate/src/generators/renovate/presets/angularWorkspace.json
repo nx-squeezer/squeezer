@@ -1,0 +1,82 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^tslib", "^ts-node", "^zone\\.js"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^typescript"],
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^rxjs"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/", "^@nx-"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@angular-devkit/", "^ng-packagr", "^tslib", "^ts-node", "^@angular-eslint/"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "@angular/core",
+        "@angular/cli",
+        "@angular/cdk",
+        "@angular/material",
+        "@angular-eslint/schematics",
+        "@ngrx/store",
+        "@ngrx/component-store"
+      ],
+      "matchFiles": ["package.json"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npm run prepare --if-present",
+          "npx --no-install ng update {{{depName}}} --from={{{replace '^[^\\d]*' '' currentValue}}} --to={{{replace '^[^\\d]*' '' newValue}}} --migrate-only --allow-dirty --force",
+          "npm run format --if-present",
+          "npx --no-install ng lint --fix"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "groupName": "Angular workspace",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@ng-easy/", "^@nx-"],
+      "matchFiles": ["package.json"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npm run prepare --if-present",
+          "npx --no-install ng update {{{depName}}} --from={{{replace '^[^\\d]*' '' currentValue}}} --to={{{replace '^[^\\d]*' '' newValue}}} --migrate-only --allow-dirty --force",
+          "npm run format --if-present",
+          "npx --no-install ng lint --fix"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    }
+  ]
+}

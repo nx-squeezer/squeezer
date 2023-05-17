@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "generators": {
     "setup": {
-      "factory": "./src/generators/renovate/generator#renovateGenerator",
+      "factory": "./src/generators/renovate/generator.compat#renovateSchematic",
       "schema": "./src/generators/renovate/schema.json",
       "description": "Configures Renovate"
     }

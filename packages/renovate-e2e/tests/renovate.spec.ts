@@ -1,14 +1,36 @@
-import { ensureNxProject, runNxCommandAsync, uniq } from '@nx/plugin/testing';
+import { runNxCommandAsync, checkFilesExist, updateFile } from '@nx/plugin/testing';
 
-describe('renovate e2e', () => {
+import { securityFile, ensureNxProject, ciFile } from '@nx-squeezer/devkit';
+import {
+  renovateCiFile,
+  renovateConfigFile,
+  renovatePresets,
+  renovateFile,
+  renovateCreateMigrationsFile,
+} from '@nx-squeezer/workspace';
+
+jest.setTimeout(120_000);
+
+describe('@nx-squeezer/workspace e2e', () => {
   // Setting up individual workspaces per
   // test can cause e2e runs to take a long time.
   // For this reason, we recommend each suite only
   // consumes 1 workspace. The tests should each operate
   // on a unique project in the workspace, such that they
-  // are not dependant on one another.
-  beforeAll(() => {
-    ensureNxProject('@nx-squeezer/renovate', 'dist/packages/renovate');
+  // are not dependent on one another.
+  beforeAll(async () => {
+    // https://github.com/nrwl/nx/issues/4851#issuecomment-822604801
+    await ensureNxProject('workspace');
+    updateFile(
+      ciFile,
+      `
+name: CI
+on:
+  push:
+    branches:
+      - main
+    `
+    );
   });
 
   afterAll(async () => {
@@ -17,8 +39,17 @@ describe('renovate e2e', () => {
     await runNxCommandAsync('reset');
   });
 
-  it('should create renovate', async () => {
-    const project = uniq('renovate');
-    expect(project).not.toBeNull();
-  }, 120000);
+  it('should setup Renovate CI workflow and add presets', async () => {
+    await runNxCommandAsync(`generate @nx-squeezer/workspace:renovate --useNxCloud --local --assignee=samuelfernandez`);
+
+    expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
+    expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
+    expect(() => checkFilesExist(renovateFile)).not.toThrow();
+    expect(() => checkFilesExist(renovateCreateMigrationsFile)).not.toThrow();
+    expect(() => checkFilesExist(securityFile)).not.toThrow();
+
+    renovatePresets.forEach((preset) => {
+      expect(() => checkFilesExist(preset)).not.toThrow();
+    });
+  });
 });
