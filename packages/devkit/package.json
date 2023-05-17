@@ -30,6 +30,9 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
+  "dependencies": {
+    "yaml": "2.2.2"
+  },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
     "husky": "^8.0.0",

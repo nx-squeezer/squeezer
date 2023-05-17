@@ -12,9 +12,8 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { parse } from 'yaml';
 
-import { securityFile, readmeFile, joinNormalize, huskyPath, ensureNxProject } from '@nx-squeezer/devkit';
+import { securityFile, readmeFile, joinNormalize, huskyPath, ensureNxProject, ciFile } from '@nx-squeezer/devkit';
 import {
-  ciFile,
   codecovDotFile,
   eslintConfigFile,
   eslintPluginPrettier,
