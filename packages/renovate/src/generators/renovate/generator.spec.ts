@@ -16,7 +16,6 @@ jest.mock('@nx-squeezer/devkit', () => ({
 }));
 
 jest.mock('./renovate-config-validator-task');
-jest.mock('./make-migrations-script-executable-task');
 
 describe('@nx-squeezer/renovate renovate generator', () => {
   let tree: Tree;
