@@ -12,6 +12,18 @@
     },
     "test": {
       "executor": "@nx/jest:jest"
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "postTargets": ["renovate:github", "renovate:npm"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github"
+    },
+    "npm": {
+      "executor": "ngx-deploy-npm:deploy"
     }
   },
   "tags": []
