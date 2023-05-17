@@ -7,7 +7,7 @@ import {
   renovatePresets,
   renovateFile,
   renovateCreateMigrationsFile,
-} from '@nx-squeezer/workspace';
+} from '@nx-squeezer/renovate';
 
 jest.setTimeout(120_000);
 
