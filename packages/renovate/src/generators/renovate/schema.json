@@ -4,25 +4,30 @@
   "$id": "Renovate",
   "title": "",
   "type": "object",
+  "additionalProperties": false,
   "properties": {
-    "name": {
-      "type": "string",
-      "description": "",
-      "$default": {
-        "$source": "argv",
-        "index": 0
-      },
-      "x-prompt": "What name would you like to use?"
+    "useNxCloud": {
+      "type": "boolean",
+      "description": "Configure Renovate workflow to use Nx Cloud",
+      "default": true,
+      "x-prompt": "Do you want to use Nx Cloud?"
     },
-    "tags": {
-      "type": "string",
-      "description": "Add tags to the project (used for linting)",
-      "alias": "t"
+    "force": {
+      "type": "boolean",
+      "description": "Overwrites existing Renovate workflow",
+      "default": false
     },
-    "directory": {
+    "local": {
+      "type": "boolean",
+      "description": "Uses local presets instead of the ones provided by @nx-squeezer/squeezer",
+      "default": false,
+      "x-prompt": "Do you want to use local presets? To have latest updates it is preferred to use the ones provided by @nx-squeezer/squeezer instead of local ones."
+    },
+    "assignee": {
       "type": "string",
-      "description": "A directory where the project is placed"
+      "description": "Assignee for GitHub PRs",
+      "x-prompt": "Assignee for GitHub PRs"
     }
   },
-  "required": ["name"]
+  "required": ["useNxCloud", "local"]
 }

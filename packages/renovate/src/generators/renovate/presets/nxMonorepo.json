@@ -1,0 +1,106 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^tslib", "^ts-node", "^zone\\.js", "^cypress$", "^jest", "@types/jest", "^ts-jest"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^typescript"],
+      "matchUpdateTypes": ["major", "minor"],
+      "enabled": false
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^rxjs"],
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/", "^@nx-"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "fix"
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": [
+        "^@nrwl/",
+        "^@nx/",
+        "^nx$",
+        "^@angular-devkit/",
+        "^ng-packagr",
+        "^tslib",
+        "^ts-node",
+        "^@angular-eslint/",
+        "^@schematics/"
+      ],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["ngx-deploy-npm"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "semanticCommitType": "chore"
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^@nrwl/", "^@nx/", "^nx$", "^@nx-", "^@ng-easy/"],
+      "matchFiles": ["package.json"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npm run prepare --if-present",
+          "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
+          "npm install --ignore-scripts",
+          "npx --no-install nx migrate --run-migrations --if-exists",
+          "rm -f migrations.json",
+          "npx --no-install nx workspace-lint",
+          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "@angular/cli",
+        "@angular/core",
+        "@angular/cdk",
+        "@angular/material",
+        "@angular-eslint/schematics",
+        "@ngrx/store",
+        "@ngrx/component-store",
+        "ngx-deploy-npm"
+      ],
+      "matchFiles": ["package.json"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npm run prepare --if-present",
+          "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
+          "npm install --ignore-scripts",
+          "npx --no-install nx migrate --run-migrations --if-exists",
+          "rm -f migrations.json",
+          "npx --no-install nx workspace-lint",
+          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
+        ],
+        "fileFilters": ["**/**"]
+      }
+    }
+  ]
+}

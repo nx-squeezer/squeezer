@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "commitMessageAction": ":arrow_up: update",
+  "packageRules": [
+    {
+      "updateTypes": ["lockFileMaintenance"],
+      "commitMessageAction": ":lock: refresh"
+    },
+    {
+      "updateTypes": ["pin"],
+      "commitMessageAction": ":pushpin: pin"
+    },
+    {
+      "updateTypes": ["rollback"],
+      "commitMessageAction": ":arrow_down: roll back"
+    },
+    {
+      "updateTypes": ["digest"],
+      "commitMessageAction": ":bookmark: update"
+    }
+  ]
+}
