@@ -1,13 +1,7 @@
 import { runNxCommandAsync, checkFilesExist, updateFile } from '@nx/plugin/testing';
 
 import { securityFile, ensureNxProject, ciFile } from '@nx-squeezer/devkit';
-import {
-  renovateCiFile,
-  renovateConfigFile,
-  renovatePresets,
-  renovateFile,
-  renovateCreateMigrationsFile,
-} from '@nx-squeezer/renovate';
+import { renovateCiFile, renovateConfigFile, renovatePresets, renovateFile } from '@nx-squeezer/renovate';
 
 jest.setTimeout(120_000);
 
@@ -45,7 +39,6 @@ on:
     expect(() => checkFilesExist(renovateCiFile)).not.toThrow();
     expect(() => checkFilesExist(renovateConfigFile)).not.toThrow();
     expect(() => checkFilesExist(renovateFile)).not.toThrow();
-    expect(() => checkFilesExist(renovateCreateMigrationsFile)).not.toThrow();
     expect(() => checkFilesExist(securityFile)).not.toThrow();
 
     renovatePresets.forEach((preset) => {
