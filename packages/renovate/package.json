@@ -37,5 +37,9 @@
   },
   "dependencies": {
     "yaml": "2.2.2"
+  },
+  "peerDependencies": {
+    "@nx/devkit": "^16.0.0",
+    "renovate": "^35.1.0"
   }
 }
