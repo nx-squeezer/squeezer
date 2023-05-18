@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/renovate@0.1.0...renovate@1.0.0) (2023-05-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* **renovate:** Release first stable version
+
+### Features
+
+* **renovate:** :sparkles: release first stable version ([#687](https://github.com/nx-squeezer/squeezer/issues/687)) ([1490e33](https://github.com/nx-squeezer/squeezer/commit/1490e33f01eed217dada6374d471c73531a1a82a))
+
 ## 0.1.0 (2023-05-17)
 
 ### Dependency Updates
