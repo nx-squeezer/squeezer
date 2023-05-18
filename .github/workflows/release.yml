@@ -30,6 +30,13 @@ jobs:
 
       - name: NPM
         uses: ng-easy/npm-setup@v3.0.0
+        with:
+          nx-key: build
+
+        # Needed because of https://github.com/jscutlery/semver/issues/367
+      - name: Build
+        shell: bash
+        run: npx nx affected --base=last-release --target=build --parallel=3
 
       - name: Version
         shell: bash
