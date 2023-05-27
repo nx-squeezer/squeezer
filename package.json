@@ -49,10 +49,10 @@
     "ngx-deploy-npm": "6.0.0",
     "node-fetch-commonjs": "3.2.4",
     "prettier": "2.8.8",
-    "renovate": "35.95.1",
+    "renovate": "35.98.7",
     "rxjs": "7.8.1",
     "tslib": "2.5.0",
-    "yaml": "2.2.2",
+    "yaml": "2.3.0",
     "zone.js": "0.13.0"
   },
   "devDependencies": {
