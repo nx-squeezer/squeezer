@@ -5,10 +5,11 @@
   "sourceRoot": "packages/workspace-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nx/plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "workspace-e2e:prepare"
-      }
+        "runInBand": true
+      },
+      "dependsOn": ["workspace-e2e:prepare"]
     },
     "prepare": {
       "executor": "nx:run-commands",

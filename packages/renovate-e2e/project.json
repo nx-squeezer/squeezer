@@ -5,10 +5,11 @@
   "sourceRoot": "packages/renovate-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nx/plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "renovate-e2e:prepare"
-      }
+        "runInBand": true
+      },
+      "dependsOn": ["renovate-e2e:prepare"]
     },
     "prepare": {
       "executor": "nx:run-commands",
