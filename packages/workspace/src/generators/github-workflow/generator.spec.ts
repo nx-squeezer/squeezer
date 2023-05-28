@@ -213,10 +213,6 @@ const ciFileContent = () => ({
           name: 'Lint',
           run: 'npx nx affected --target=lint --parallel=3',
         },
-        {
-          name: 'Lint workspace',
-          run: 'npm run lint:workspace',
-        },
       ],
     },
     test: {

@@ -4,17 +4,15 @@
     {
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": [
-        "^tslib",
-        "^ts-node",
-        "^zone\\.js",
-        "^cypress$",
-        "^jest",
-        "@types/jest",
-        "^ts-jest",
-        "^rxjs"
-      ],
+      "matchPackagePatterns": ["^ts-node", "^zone\\.js", "^cypress$", "^jest", "@types/jest", "^ts-jest", "^rxjs"],
       "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^typescript"],
+      "matchUpdateTypes": ["major", "minor"],
       "enabled": false
     },
     {
@@ -22,13 +20,6 @@
       "matchManagers": ["npm"],
       "matchPackagePatterns": ["^tslib"],
       "matchUpdateTypes": ["major", "minor", "patch"],
-      "enabled": false
-    },
-    {
-      "groupName": "Nx monorepo",
-      "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^rxjs"],
-      "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
@@ -76,7 +67,6 @@
           "npm install --ignore-scripts",
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
-
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
         ],
         "fileFilters": ["**/**"]
