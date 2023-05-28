@@ -4,15 +4,24 @@
     {
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^tslib", "^ts-node", "^zone\\.js", "^cypress$", "^jest", "@types/jest", "^ts-jest"],
+      "matchPackagePatterns": [
+        "^tslib",
+        "^ts-node",
+        "^zone\\.js",
+        "^cypress$",
+        "^jest",
+        "@types/jest",
+        "^ts-jest",
+        "^rxjs"
+      ],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
     {
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^typescript"],
-      "matchUpdateTypes": ["major", "minor"],
+      "matchPackagePatterns": ["^tslib"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
       "enabled": false
     },
     {
