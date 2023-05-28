@@ -35,9 +35,6 @@ jobs:
       - name: Lint
         run: npx --no-install nx run-many --target=lint --parallel=3
 
-      - name: Lint workspace
-        run: npm run lint:workspace
-
       - name: Build
         run: npx --no-install nx run-many --target=build --parallel=3
 

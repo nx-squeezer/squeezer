@@ -240,7 +240,6 @@ const renovateConfigJsContent = () =>
     '^bash nx-create-migrations\\.sh$',
     '^npx --no-install nx migrate --run-migrations$',
     '^rm -f migrations.json || true$',
-    '^npx --no-install nx workspace-lint$',
     '^npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache$',
   ],
 };

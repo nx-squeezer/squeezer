@@ -69,7 +69,6 @@ describe('@nx-squeezer/workspace github workflow generator', () => {
     const packageJson = readPackageJson(tree);
 
     expect(packageJson.scripts?.nx).toBe('nx');
-    expect(packageJson.scripts?.['lint:workspace']).toBe('nx workspace-lint');
   });
 
   it('should declare the implicit dependency in nx.json', async () => {
@@ -213,10 +212,6 @@ const ciFileContent = () => ({
         {
           name: 'Lint',
           run: 'npx nx affected --target=lint --parallel=3',
-        },
-        {
-          name: 'Lint workspace',
-          run: 'npm run lint:workspace',
         },
       ],
     },
