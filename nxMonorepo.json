@@ -76,7 +76,6 @@
           "npm install --ignore-scripts",
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
-          "npx --no-install nx workspace-lint",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
         ],
         "fileFilters": ["**/**"]
@@ -105,7 +104,6 @@
           "npm install --ignore-scripts",
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
-          "npx --no-install nx workspace-lint",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
         ],
         "fileFilters": ["**/**"]

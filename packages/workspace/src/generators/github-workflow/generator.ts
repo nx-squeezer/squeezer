@@ -35,7 +35,6 @@ export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflo
   generateFiles(tree, joinNormalize(__dirname, 'files'), '.github/workflows', templateOptions);
   addImplicitDependencyToNxConfig(tree, { '.github/workflows/*.yml': '*' });
   addScriptToPackageJson(tree, 'nx', 'nx');
-  addScriptToPackageJson(tree, 'lint:workspace', 'nx workspace-lint');
 
   const gitRepo = getGitRepo(tree);
   if (gitRepo == null) {
