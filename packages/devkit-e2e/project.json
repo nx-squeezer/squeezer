@@ -5,10 +5,11 @@
   "sourceRoot": "packages/devkit-e2e/src",
   "targets": {
     "e2e": {
-      "executor": "@nx/plugin:e2e",
+      "executor": "@nx/jest:jest",
       "options": {
-        "target": "devkit:build"
-      }
+        "runInBand": true
+      },
+      "dependsOn": ["devkit:build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint"
