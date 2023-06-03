@@ -31,7 +31,7 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "yaml": "2.3.0"
+    "yaml": "2.3.1"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
