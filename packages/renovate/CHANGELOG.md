@@ -2,6 +2,20 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/renovate@1.0.0...renovate@1.0.1) (2023-07-07)
+
+### Dependency Updates
+
+* `devkit` updated to version `1.0.0`
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([1948e5b](https://github.com/nx-squeezer/squeezer/commit/1948e5b974ac63b06243d5cfca4fbde2ad76bace))
+* **deps:** :arrow_up: update all non-major dependencies ([701e487](https://github.com/nx-squeezer/squeezer/commit/701e48723d8e0d670042bfc139086cf7524085d1))
+* **renovate:** :bug: don't update tslib ([#715](https://github.com/nx-squeezer/squeezer/issues/715)) ([b598f81](https://github.com/nx-squeezer/squeezer/commit/b598f81039ba61db03e659a56f75882fef66f780))
+* **renovate:** :bug: fix nx migrate post upgrade command ([#718](https://github.com/nx-squeezer/squeezer/issues/718)) ([9fd0e2e](https://github.com/nx-squeezer/squeezer/commit/9fd0e2e3cce497178db72f5f5def3088e2f610e3))
+* **renovate:** :bug: tweak post upgrade command for nx migrate, remove workspace lint ([#717](https://github.com/nx-squeezer/squeezer/issues/717)) ([9f21437](https://github.com/nx-squeezer/squeezer/commit/9f214373f917673fb9414781a7cdfd5ac5167462))
+
 ## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/renovate@0.1.0...renovate@1.0.0) (2023-05-18)
 
 
