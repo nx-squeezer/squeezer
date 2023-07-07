@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.1.1](https://github.com/nx-squeezer/squeezer/compare/workspace@3.1.0...workspace@3.1.1) (2023-07-07)
+
+### Dependency Updates
+
+* `devkit` updated to version `3.1.0`
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([2c0010c](https://github.com/nx-squeezer/squeezer/commit/2c0010ccdf4f5a18849c106b9d5baaf0ab57efe2))
+* **deps:** :arrow_up: update all non-major dependencies ([1948e5b](https://github.com/nx-squeezer/squeezer/commit/1948e5b974ac63b06243d5cfca4fbde2ad76bace))
+* **deps:** :arrow_up: update all non-major dependencies ([701e487](https://github.com/nx-squeezer/squeezer/commit/701e48723d8e0d670042bfc139086cf7524085d1))
+* **renovate:** :bug: tweak post upgrade command for nx migrate, remove workspace lint ([#717](https://github.com/nx-squeezer/squeezer/issues/717)) ([9f21437](https://github.com/nx-squeezer/squeezer/commit/9f214373f917673fb9414781a7cdfd5ac5167462))
+
 ## [3.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@3.0.0...workspace@3.1.0) (2023-05-17)
 
 ### Dependency Updates
