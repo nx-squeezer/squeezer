@@ -49,10 +49,10 @@
     "renovate": "^35.1.0"
   },
   "devDependencies": {
-    "@schemastore/eslintrc": "^0.0.7",
-    "@schemastore/package": "^0.0.8",
+    "@schemastore/eslintrc": "^0.0.8",
+    "@schemastore/package": "^0.0.9",
     "@schemastore/prettierrc": "^0.0.10",
-    "@schemastore/tsconfig": "^0.0.10"
+    "@schemastore/tsconfig": "^0.0.11"
   },
   "nx-migrations": {
     "migrations": "./nx-migrations.json"
