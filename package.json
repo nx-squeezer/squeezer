@@ -99,7 +99,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-sonarjs": "0.19.0",
     "eslint-plugin-unused-imports": "2.0.0",
-    "eslint": "8.44.0",
+    "eslint": "8.45.0",
     "fs-extra": "11.1.1",
     "jest-environment-jsdom": "29.6.1",
     "jest-preset-angular": "13.1.1",
