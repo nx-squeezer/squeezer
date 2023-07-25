@@ -1,0 +1,209 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`@nx-squeezer/workspace github workflow generator should generate the GitHub CI workflow 1`] = `
+{
+  "jobs": {
+    "build": {
+      "env": {
+        "NX_CLOUD_AUTH_TOKEN": "\${{ secrets.NX_CLOUD_AUTH_TOKEN }}",
+      },
+      "name": "Build",
+      "needs": [
+        "npm",
+      ],
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout repo",
+          "uses": "actions/checkout@v3.0.2",
+          "with": {
+            "fetch-depth": 0,
+          },
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3.4.1",
+          "with": {
+            "node-version": "18.x",
+          },
+        },
+        {
+          "name": "NPM",
+          "uses": "ng-easy/npm-setup@v2.0.10",
+          "with": {
+            "nx-key": "build",
+          },
+        },
+        {
+          "name": "Nx Set SHAs",
+          "uses": "nrwl/nx-set-shas@v3.0.0",
+        },
+        {
+          "name": "Build",
+          "run": "npx nx affected --target=build --parallel=3",
+        },
+      ],
+    },
+    "e2e": {
+      "env": {
+        "NX_CLOUD_AUTH_TOKEN": "\${{ secrets.NX_CLOUD_AUTH_TOKEN }}",
+      },
+      "name": "e2e",
+      "needs": [
+        "npm",
+      ],
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout repo",
+          "uses": "actions/checkout@v3.0.2",
+          "with": {
+            "fetch-depth": 0,
+          },
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3.4.1",
+          "with": {
+            "node-version": "18.x",
+          },
+        },
+        {
+          "name": "NPM",
+          "uses": "ng-easy/npm-setup@v2.0.10",
+          "with": {
+            "nx-key": "e2e",
+          },
+        },
+        {
+          "name": "Nx Set SHAs",
+          "uses": "nrwl/nx-set-shas@v3.0.0",
+        },
+        {
+          "name": "e2e",
+          "run": "npx nx affected --target=e2e --parallel=1",
+        },
+      ],
+    },
+    "lint": {
+      "env": {
+        "NX_CLOUD_AUTH_TOKEN": "\${{ secrets.NX_CLOUD_AUTH_TOKEN }}",
+      },
+      "name": "Lint",
+      "needs": [
+        "npm",
+      ],
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout repo",
+          "uses": "actions/checkout@v3.0.2",
+          "with": {
+            "fetch-depth": 0,
+          },
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3.4.1",
+          "with": {
+            "node-version": "18.x",
+          },
+        },
+        {
+          "name": "NPM",
+          "uses": "ng-easy/npm-setup@v2.0.10",
+          "with": {
+            "nx-key": "lint",
+          },
+        },
+        {
+          "name": "Nx Set SHAs",
+          "uses": "nrwl/nx-set-shas@v3.0.0",
+        },
+        {
+          "name": "Lint",
+          "run": "npx nx affected --target=lint --parallel=3",
+        },
+      ],
+    },
+    "npm": {
+      "env": {
+        "NX_CLOUD_AUTH_TOKEN": "\${{ secrets.NX_CLOUD_AUTH_TOKEN }}",
+      },
+      "name": "NPM",
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout repo",
+          "uses": "actions/checkout@v3.0.2",
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3.4.1",
+          "with": {
+            "node-version": "18.x",
+          },
+        },
+        {
+          "name": "NPM",
+          "uses": "ng-easy/npm-setup@v2.0.10",
+        },
+      ],
+    },
+    "test": {
+      "env": {
+        "NX_CLOUD_AUTH_TOKEN": "\${{ secrets.NX_CLOUD_AUTH_TOKEN }}",
+      },
+      "name": "Test",
+      "needs": [
+        "npm",
+      ],
+      "runs-on": "ubuntu-latest",
+      "steps": [
+        {
+          "name": "Checkout repo",
+          "uses": "actions/checkout@v3.0.2",
+          "with": {
+            "fetch-depth": 0,
+          },
+        },
+        {
+          "name": "Setup Node.js",
+          "uses": "actions/setup-node@v3.4.1",
+          "with": {
+            "node-version": "18.x",
+          },
+        },
+        {
+          "name": "NPM",
+          "uses": "ng-easy/npm-setup@v2.0.10",
+          "with": {
+            "nx-key": "test",
+          },
+        },
+        {
+          "name": "Nx Set SHAs",
+          "uses": "nrwl/nx-set-shas@v3.0.0",
+        },
+        {
+          "name": "Test",
+          "run": "npx nx affected --target=test --parallel=3",
+        },
+      ],
+    },
+  },
+  "name": "CI",
+  "on": {
+    "pull_request": {
+      "branches": [
+        "main",
+      ],
+    },
+    "push": {
+      "branches": [
+        "main",
+      ],
+    },
+  },
+}
+`;

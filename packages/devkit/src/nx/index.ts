@@ -1,2 +1,2 @@
-export * from './add-implicit-dependency-to-nx-config';
+export * from './add-nx-named-input';
 export * from './nx';

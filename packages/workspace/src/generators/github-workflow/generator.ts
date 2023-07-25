@@ -2,7 +2,7 @@ import { formatFiles, generateFiles, names, Tree } from '@nx/devkit';
 
 import {
   joinNormalize,
-  addImplicitDependencyToNxConfig,
+  addNxNamedInput,
   addScriptToPackageJson,
   getGitRepo,
   addBadgeToReadme,
@@ -33,7 +33,7 @@ export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflo
   const templateOptions = { ...options, targets, tmpl: '' };
 
   generateFiles(tree, joinNormalize(__dirname, 'files'), '.github/workflows', templateOptions);
-  addImplicitDependencyToNxConfig(tree, { '.github/workflows/*.yml': '*' });
+  addNxNamedInput(tree, { ci: ['{workspaceRoot}/.github/workflows/*.yml'] }, true);
   addScriptToPackageJson(tree, 'nx', 'nx');
 
   const gitRepo = getGitRepo(tree);
