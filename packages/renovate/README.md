@@ -42,7 +42,7 @@ Presets:
 <details>
   <summary>Default Preset</summary>
 
-This [preset](https://github.com/nx-squeezer/squeezer/blob/main/default.json) includes all presets included in this repo except for [Nx](https://nx.dev/) and [Angular](https://angular.io/) workspaces, they have to be added manually:
+This [preset](https://github.com/nx-squeezer/squeezer/blob/main/default.json) includes all presets included in this repo except for [Nx](https://nx.dev/), [Angular](https://angular.io/) workspaces, and tooling preset they have to be added manually:
 
 ```json
 "extends": ["github>@nx-squeezer/squeezer"]
