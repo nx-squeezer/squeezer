@@ -2,6 +2,30 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.0](https://github.com/nx-squeezer/squeezer/compare/renovate@1.0.1...renovate@2.0.0) (2023-07-25)
+
+### Dependency Updates
+
+* `devkit` updated to version `1.0.1`
+
+### ⚠ BREAKING CHANGES
+
+* **renovate:** upgrade to renovate v36
+
+### Features
+
+* **renovate:** :sparkles: upgrade to renovate v36 ([#830](https://github.com/nx-squeezer/squeezer/issues/830)) ([5bec382](https://github.com/nx-squeezer/squeezer/commit/5bec38298855f909d43312c341e140bf178308e3))
+
+
+### Bug Fixes
+
+* :hammer: run renovate every hour ([#827](https://github.com/nx-squeezer/squeezer/issues/827)) ([3257bb0](https://github.com/nx-squeezer/squeezer/commit/3257bb0c42711d0fe94a256e139d8d138708a437))
+* **renovate:** :bug: disable major version for eslint prettier ([#828](https://github.com/nx-squeezer/squeezer/issues/828)) ([fa5dab2](https://github.com/nx-squeezer/squeezer/commit/fa5dab28f01a804f0d5e50c983a28966d6ea318a))
+* **renovate:** :bug: don't upgrade major version of @typescript-eslint/* ([#833](https://github.com/nx-squeezer/squeezer/issues/833)) ([26b32ba](https://github.com/nx-squeezer/squeezer/commit/26b32ba443d9787cc1908fed20fd62de8e11915a))
+* **renovate:** :bug: don't upgrade major version of prettier, leave it to nx ([#826](https://github.com/nx-squeezer/squeezer/issues/826)) ([030b3a4](https://github.com/nx-squeezer/squeezer/commit/030b3a4ec498a1e5d1a95440d2a53618c08540c3))
+* **renovate:** :bug: fix fork config ([#832](https://github.com/nx-squeezer/squeezer/issues/832)) ([3960da4](https://github.com/nx-squeezer/squeezer/commit/3960da4217e8581aff7e373335e0c0415ed014b7))
+* **renovate:** :bug: separate tooling preset ([#829](https://github.com/nx-squeezer/squeezer/issues/829)) ([2b5f1df](https://github.com/nx-squeezer/squeezer/commit/2b5f1dfb0c1386c3a51bd04bb2c9954033b818b9))
+
 ## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/renovate@1.0.0...renovate@1.0.1) (2023-07-07)
 
 ### Dependency Updates
