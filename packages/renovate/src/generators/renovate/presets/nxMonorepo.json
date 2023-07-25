@@ -66,7 +66,7 @@
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
       "matchPackagePatterns": ["^@nrwl/", "^@nx/", "^nx$", "^@nx-", "^@ng-easy/"],
-      "matchFiles": ["package.json"],
+      "matchFileNames": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
@@ -77,8 +77,7 @@
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
-        ],
-        "fileFilters": ["**/**"]
+        ]
       }
     },
     {
@@ -94,7 +93,7 @@
         "@ngrx/component-store",
         "ngx-deploy-npm"
       ],
-      "matchFiles": ["package.json"],
+      "matchFileNames": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
@@ -105,8 +104,7 @@
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
           "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
-        ],
-        "fileFilters": ["**/**"]
+        ]
       }
     }
   ]

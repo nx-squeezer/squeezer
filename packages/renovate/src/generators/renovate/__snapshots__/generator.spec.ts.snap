@@ -14,7 +14,6 @@ exports[`@nx-squeezer/renovate renovate generator should generate renovate-confi
   allowCustomCrateRegistries: true,
   allowScripts: true,
   exposeAllEnv: true,
-  allowPostUpgradeCommandTemplating: true,
   allowedPostUpgradeCommands: [
     '^npm ci --ignore-scripts$',
     '^npm install --ignore-scripts$',
