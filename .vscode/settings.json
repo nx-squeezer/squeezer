@@ -8,7 +8,6 @@
     "devkit",
     "devkit-e2e",
     "ngx-async-injector-app",
-    "ngx-async-injector-e2e",
     "ngx-async-injector",
     "renovate",
     "workspace",
