@@ -4,7 +4,16 @@
     {
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^ts-node", "^zone\\.js", "^cypress$", "^jest", "@types/jest", "^ts-jest", "^rxjs"],
+      "matchPackagePatterns": [
+        "^ts-node",
+        "^zone\\.js",
+        "^cypress$",
+        "^jest",
+        "@types/jest",
+        "^ts-jest",
+        "^rxjs",
+        "^prettier"
+      ],
       "matchUpdateTypes": ["major"],
       "enabled": false
     },
