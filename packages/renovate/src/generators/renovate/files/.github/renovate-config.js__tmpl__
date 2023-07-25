@@ -4,7 +4,7 @@ module.exports = {
   dryRun: null,
   gitAuthor: 'Renovate Bot GitHub <bot@renovateapp.com>',
   platform: 'github',
-  includeForks: false,
+  forkProcessing: 'disabled',
   dependencyDashboard: true,
   onboarding: true,
   autodiscover: false,
