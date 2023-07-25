@@ -5,7 +5,3 @@ export function areSetsEqual<T>(a: Set<T>, b: Set<T>): boolean {
 export function getSet<T>(items: T | T[]): Set<T> {
   return new Set(Array.isArray(items) ? items : [items]);
 }
-
-export function removeDuplicates<T>(items: T[]): T[] {
-  return Array.from([...new Set(items)]);
-}
