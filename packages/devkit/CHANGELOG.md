@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.0](https://github.com/nx-squeezer/squeezer/compare/devkit@1.1.1...devkit@1.2.0) (2023-07-25)
+
+
+### Features
+
+* **workspace:** :sparkles: migrate to named inputs ([#680](https://github.com/nx-squeezer/squeezer/issues/680)) ([#835](https://github.com/nx-squeezer/squeezer/issues/835)) ([faaebcf](https://github.com/nx-squeezer/squeezer/commit/faaebcf275589f7f9338e215a736854e0c3363a0))
+
 ## [1.1.1](https://github.com/nx-squeezer/squeezer/compare/devkit@1.1.0...devkit@1.1.1) (2023-07-07)
 
 
