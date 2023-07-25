@@ -7,7 +7,7 @@ exports[`@nx-squeezer/renovate renovate generator should generate renovate-confi
   dryRun: null,
   gitAuthor: 'Renovate Bot GitHub <bot@renovateapp.com>',
   platform: 'github',
-  includeForks: false,
+  forkProcessing: 'disabled',
   dependencyDashboard: true,
   onboarding: true,
   autodiscover: false,
