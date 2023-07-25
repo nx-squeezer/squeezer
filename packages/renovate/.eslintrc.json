@@ -24,7 +24,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["jest", "tslib", "@nx-squeezer/devkit"]
+            "ignoredDependencies": ["jest", "tslib", "@nx-squeezer/devkit", "renovate"]
           }
         ]
       }
