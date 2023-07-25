@@ -2,7 +2,7 @@ import { formatFiles, Tree } from '@nx/devkit';
 import fetch from 'node-fetch-commonjs';
 
 import {
-  addImplicitDependencyToNxConfig,
+  addNxNamedInput,
   getGitRepoSlug,
   addBadgeToReadme,
   existsGitHubCiWorkflow,
@@ -13,7 +13,7 @@ import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codeco
 
 export async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
-  addImplicitDependencyToNxConfig(tree, { [getCodecovFile(tree)]: '*' });
+  addNxNamedInput(tree, { codecov: ['{workspaceRoot}/' + getCodecovFile(tree)] }, true);
 
   if (existsGitHubCiWorkflow(tree)) {
     addGitHubCiJobStep(tree, 'test', {

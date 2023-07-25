@@ -5,7 +5,7 @@ import { parse, stringify } from 'yaml';
 
 import { getGitRepoSlug, nxConfigFile, readmeFile, ciFile } from '@nx-squeezer/devkit';
 
-import { readCodecov, codecovDotFile, readRawCodecov } from './codecov';
+import { readCodecov, readRawCodecov } from './codecov';
 import { codecovGenerator } from './generator';
 import { codecovSchematic } from './generator.compat';
 
@@ -44,8 +44,10 @@ describe('@nx-squeezer/workspace codecov generator', () => {
 
     const nxConfig = readJson<NxJsonConfiguration>(tree, nxConfigFile);
 
-    // eslint-disable-next-line @delagen/deprecation/deprecation -- https://github.com/nx-squeezer/squeezer/issues/680
-    expect(nxConfig.implicitDependencies?.[codecovDotFile]).toBe('*');
+    expect(nxConfig.namedInputs).toStrictEqual({
+      codecov: ['{workspaceRoot}/.codecov.yml'],
+      default: ['codecov'],
+    });
   });
 
   it('should add a badge in readme', async () => {
