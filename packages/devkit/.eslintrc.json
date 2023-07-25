@@ -20,7 +20,13 @@
     {
       "files": ["./package.json", "./generators.json", "./executors.json", "./migrations.json"],
       "rules": {
-        "@nx/nx-plugin-checks": "error"
+        "@nx/nx-plugin-checks": "error",
+        "@nx/dependency-checks": [
+          "error",
+          {
+            "ignoredDependencies": ["jest", "tslib", "husky", "prettier"]
+          }
+        ]
       }
     }
   ]
