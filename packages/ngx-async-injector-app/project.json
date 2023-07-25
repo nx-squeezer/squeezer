@@ -65,7 +65,7 @@
       "options": {
         "cypressConfig": "packages/ngx-async-injector-app/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "ngx-async-injector-app:serve:development"
+        "devServerTarget": "ngx-async-injector-app:serve:production"
       },
       "configurations": {
         "development": {
