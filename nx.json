@@ -60,7 +60,7 @@
     "@nx/linter:eslint": {
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}"]
+        "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}", "{projectRoot}/package.json"]
       }
     },
     "@nx/jest:jest": {
