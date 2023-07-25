@@ -1,7 +1,8 @@
 import { readJson, Tree, writeJson } from '@nx/devkit';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
+import { unique } from 'radash';
 
-import { getSet, areSetsEqual, removeDuplicates } from '@nx-squeezer/devkit';
+import { getSet, areSetsEqual } from '@nx-squeezer/devkit';
 
 export const eslintConfigFile = '.eslintrc.json';
 
@@ -66,7 +67,7 @@ export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule
     const newRule: EsLintConfigurationOverrideRule = { files: existingRule.files };
 
     if (rule.extends != null || existingRule.extends != null) {
-      newRule.extends = removeDuplicates([...(existingRule.extends ?? []), ...(rule.extends ?? [])]);
+      newRule.extends = unique([...(existingRule.extends ?? []), ...(rule.extends ?? [])]);
     }
 
     const mergedKeys = ['rules', 'parserOptions', 'settings'] as const;

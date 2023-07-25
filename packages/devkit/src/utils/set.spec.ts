@@ -1,4 +1,4 @@
-import { areSetsEqual, getSet, removeDuplicates } from './set';
+import { areSetsEqual, getSet } from './set';
 
 describe('@nx-squeezer/devkit set functions', () => {
   describe('areSetsEqual', () => {
@@ -18,12 +18,6 @@ describe('@nx-squeezer/devkit set functions', () => {
 
     it('create a set from a single element', () => {
       expect(getSet(1).size).toBe(1);
-    });
-  });
-
-  describe('removeDuplicates', () => {
-    it('should remove duplicates from an array', () => {
-      expect(removeDuplicates([1, 1, 2])).toStrictEqual([1, 2]);
     });
   });
 });

@@ -1,8 +1,8 @@
 import { Tree, NxJsonConfiguration, writeJson, readJson } from '@nx/devkit';
 import { InputDefinition } from 'nx/src/config/workspace-json-project-json';
+import { unique } from 'radash';
 
 import { nxConfigFile } from './nx';
-import { removeDuplicates } from '../utils';
 
 export function addNxNamedInput(
   tree: Tree,
@@ -19,7 +19,7 @@ export function addNxNamedInput(
 
   if (addToDefault) {
     const defaultNamedInputs = namedInputs.default ?? [];
-    nxConfig.namedInputs.default = removeDuplicates([...defaultNamedInputs, ...Object.keys(newNamedInputs)]);
+    nxConfig.namedInputs.default = unique([...defaultNamedInputs, ...Object.keys(newNamedInputs)]);
   }
 
   writeJson(tree, nxConfigFile, nxConfig);
