@@ -46,7 +46,7 @@
     "lint-staged": "^13.0.0",
     "nx": "^16.0.0",
     "prettier": "^2.8.0",
-    "renovate": "^35.1.0"
+    "renovate": "^36.23.0"
   },
   "devDependencies": {
     "@schemastore/eslintrc": "^0.0.8",
