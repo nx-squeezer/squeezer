@@ -90,6 +90,7 @@ describe('@nx-squeezer/renovate renovate generator', () => {
         ':label(dependencies)',
         'local>test/test',
         'local>test/test:nxMonorepo',
+        'local>test/test:tooling',
         ':assignee(user)',
       ],
     });
@@ -105,6 +106,7 @@ describe('@nx-squeezer/renovate renovate generator', () => {
         ':label(dependencies)',
         'github>nx-squeezer/squeezer',
         'github>nx-squeezer/squeezer:nxMonorepo',
+        'github>nx-squeezer/squeezer:tooling',
         ':assignee(user)',
       ],
     });
