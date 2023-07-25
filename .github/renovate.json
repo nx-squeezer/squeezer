@@ -5,6 +5,7 @@
     ":label(dependencies)",
     "local>nx-squeezer/squeezer",
     "local>nx-squeezer/squeezer:nxMonorepo",
+    "local>nx-squeezer/squeezer:tooling",
     ":assignee(samuelfernandez)"
   ]
 }
