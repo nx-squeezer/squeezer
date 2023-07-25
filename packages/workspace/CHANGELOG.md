@@ -10,8 +10,7 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 
 ### ⚠ BREAKING CHANGES
 
-* **workspace:** Use @nx-squeezer/renovate
-* **renovate:** upgrade to renovate v36
+* **workspace:** Renovate features have been moved out to the package [@nx-squeezer/renovate](https://www.npmjs.com/package/@nx-squeezer/renovate). Install it to receive the latest features.
 
 ### Features
 
