@@ -11,7 +11,6 @@ module.exports = {
   allowCustomCrateRegistries: true,
   allowScripts: true,
   exposeAllEnv: true,
-  allowPostUpgradeCommandTemplating: true,
   allowedPostUpgradeCommands: [
     '^npm ci --ignore-scripts$',
     '^npm install --ignore-scripts$',

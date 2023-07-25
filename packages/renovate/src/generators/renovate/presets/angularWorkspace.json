@@ -48,7 +48,7 @@
         "@ngrx/store",
         "@ngrx/component-store"
       ],
-      "matchFiles": ["package.json"],
+      "matchFileNames": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
@@ -57,15 +57,14 @@
           "npx --no-install ng update {{{depName}}} --from={{{replace '^[^\\d]*' '' currentValue}}} --to={{{replace '^[^\\d]*' '' newValue}}} --migrate-only --allow-dirty --force",
           "npm run format --if-present",
           "npx --no-install ng lint --fix"
-        ],
-        "fileFilters": ["**/**"]
+        ]
       }
     },
     {
       "groupName": "Angular workspace",
       "matchManagers": ["npm"],
       "matchPackagePatterns": ["^@ng-easy/", "^@nx-"],
-      "matchFiles": ["package.json"],
+      "matchFileNames": ["package.json"],
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
@@ -74,8 +73,7 @@
           "npx --no-install ng update {{{depName}}} --from={{{replace '^[^\\d]*' '' currentValue}}} --to={{{replace '^[^\\d]*' '' newValue}}} --migrate-only --allow-dirty --force",
           "npm run format --if-present",
           "npx --no-install ng lint --fix"
-        ],
-        "fileFilters": ["**/**"]
+        ]
       }
     }
   ]

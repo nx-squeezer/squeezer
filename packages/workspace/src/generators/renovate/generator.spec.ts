@@ -89,7 +89,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
       extends: [
-        'config:base',
+        'config:recommended',
         ':label(dependencies)',
         'local>test/test',
         'local>test/test:nxMonorepo',
@@ -104,7 +104,7 @@ describe('@nx-squeezer/workspace renovate generator', () => {
     expect(readJson(tree, renovateFile)).toStrictEqual({
       $schema: 'https://docs.renovatebot.com/renovate-schema.json',
       extends: [
-        'config:base',
+        'config:recommended',
         ':label(dependencies)',
         'github>nx-squeezer/squeezer',
         'github>nx-squeezer/squeezer:nxMonorepo',
