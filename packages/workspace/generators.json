@@ -38,11 +38,6 @@
       "schema": "./src/generators/prettier/schema.json",
       "description": "Configure Prettier"
     },
-    "renovate": {
-      "factory": "./src/generators/renovate/generator#renovateGenerator",
-      "schema": "./src/generators/renovate/schema.json",
-      "description": "Configures Renovate"
-    },
     "tsconfig": {
       "factory": "./src/generators/tsconfig/generator#tsConfigGenerator",
       "schema": "./src/generators/tsconfig/schema.json",
