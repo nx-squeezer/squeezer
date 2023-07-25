@@ -2,6 +2,28 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [4.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@3.1.1...workspace@4.0.0) (2023-07-25)
+
+### Dependency Updates
+
+* `devkit` updated to version `3.1.1`
+
+### ⚠ BREAKING CHANGES
+
+* **workspace:** Use @nx-squeezer/renovate
+* **renovate:** upgrade to renovate v36
+
+### Features
+
+* **renovate:** :sparkles: upgrade to renovate v36 ([#830](https://github.com/nx-squeezer/squeezer/issues/830)) ([5bec382](https://github.com/nx-squeezer/squeezer/commit/5bec38298855f909d43312c341e140bf178308e3))
+* **workspace:** :boom: migrate renovate schematics to standalone package ([#831](https://github.com/nx-squeezer/squeezer/issues/831)) ([fd95b68](https://github.com/nx-squeezer/squeezer/commit/fd95b6897488b6d0430a9a9f2c095b909f274b43))
+* **workspace:** :sparkles: migrate to named inputs ([#680](https://github.com/nx-squeezer/squeezer/issues/680)) ([#835](https://github.com/nx-squeezer/squeezer/issues/835)) ([faaebcf](https://github.com/nx-squeezer/squeezer/commit/faaebcf275589f7f9338e215a736854e0c3363a0))
+
+
+### Bug Fixes
+
+* :hammer: run renovate every hour ([#827](https://github.com/nx-squeezer/squeezer/issues/827)) ([3257bb0](https://github.com/nx-squeezer/squeezer/commit/3257bb0c42711d0fe94a256e139d8d138708a437))
+
 ## [3.1.1](https://github.com/nx-squeezer/squeezer/compare/workspace@3.1.0...workspace@3.1.1) (2023-07-07)
 
 ### Dependency Updates
