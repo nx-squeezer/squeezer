@@ -1,1 +1,1 @@
-export * from './lib/ngx-forms/ngx-forms.component';
+export * from './lib/providers';
