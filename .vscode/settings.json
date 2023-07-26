@@ -9,6 +9,7 @@
     "devkit-e2e",
     "ngx-async-injector-app",
     "ngx-async-injector",
+    "ngx-forms",
     "renovate",
     "workspace",
     "workspace-e2e"

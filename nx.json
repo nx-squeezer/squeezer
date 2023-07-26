@@ -1,10 +1,4 @@
 {
-  "extends": "nx/presets/npm.json",
-  "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "nx-squeezer",
-  "affected": {
-    "defaultBase": "main"
-  },
   "tasksRunnerOptions": {
     "default": {
       "runner": "nx-cloud",
@@ -16,6 +10,17 @@
         "accessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
       }
     }
+  },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
+  },
+  "extends": "nx/presets/npm.json",
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "nx-squeezer",
+  "affected": {
+    "defaultBase": "main"
   },
   "namedInputs": {
     "ci": ["{workspaceRoot}/.github/workflows/*.yml"],
@@ -118,11 +123,6 @@
     },
     "build": {
       "dependsOn": ["^build"]
-    }
-  },
-  "pluginsConfig": {
-    "@nx/js": {
-      "analyzeSourceFiles": true
     }
   },
   "generators": {

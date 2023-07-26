@@ -1,0 +1,32 @@
+{
+  "name": "ngx-forms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-forms/src",
+  "prefix": "nx-squeezer",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ngx-forms/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/ngx-forms/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/ngx-forms/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint"
+    }
+  },
+  "tags": []
+}
