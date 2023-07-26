@@ -10,6 +10,7 @@
     "ngx-async-injector-app",
     "ngx-async-injector",
     "ngx-forms",
+    "ngx-forms-app",
     "renovate",
     "workspace",
     "workspace-e2e"
