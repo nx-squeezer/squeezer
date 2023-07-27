@@ -20,14 +20,14 @@ class TestCvaDirective {}
   imports: [ReactiveFormsModule, TestCvaDirective],
   template: `
     <ng-container [formGroup]="formGroup">
-      <input type="text" formControlName="firstControl" ngxCva />
+      <input type="text" formControlName="control" ngxCva />
     </ng-container>
   `,
 })
 class TestComponent {
   private readonly formBuilder = inject(FormBuilder);
   readonly formGroup = this.formBuilder.group({
-    firstControl: [''],
+    control: [''],
   });
 }
 
@@ -45,22 +45,22 @@ describe('provideLazyValidator', () => {
   });
 
   it('should process valid values', fakeAsync(() => {
-    component.formGroup.controls.firstControl.setValue('valid');
+    component.formGroup.controls.control.setValue('valid');
     expect(component.formGroup.pending).toBeTruthy();
 
     tick(0);
 
     expect(component.formGroup.valid).toBeTruthy();
-    expect(component.formGroup.controls.firstControl.hasError('invalid')).toBeFalsy();
+    expect(component.formGroup.controls.control.hasError('invalid')).toBeFalsy();
   }));
 
   it('should process invalid values', fakeAsync(() => {
-    component.formGroup.controls.firstControl.setValue('invalid');
+    component.formGroup.controls.control.setValue('invalid');
     expect(component.formGroup.pending).toBeTruthy();
 
     tick(0);
 
     expect(component.formGroup.invalid).toBeTruthy();
-    expect(component.formGroup.controls.firstControl.hasError('invalid')).toBeTruthy();
+    expect(component.formGroup.controls.control.hasError('invalid')).toBeTruthy();
   }));
 });
