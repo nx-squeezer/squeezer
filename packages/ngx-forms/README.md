@@ -19,7 +19,7 @@ Use the following utilities to lazy load large and complex validators. Heavily i
 @Directive({
   selector: '[lazyValidator]',
   standalone: true,
-  providers: [provideLazyValidator(() => import('./validator'))],
+  providers: [provideLazyValidator(() => import('./validator'))], // Internally provides NG_ASYNC_VALIDATORS
 })
 export class ValidatorDirective {}
 ```
