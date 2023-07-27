@@ -1,6 +1,6 @@
 {
   "name": "@nx-squeezer/ngx-forms",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Angular library that provides utilities for forms",
   "keywords": [
     "angular",
