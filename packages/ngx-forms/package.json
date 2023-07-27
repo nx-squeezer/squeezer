@@ -1,6 +1,31 @@
 {
   "name": "@nx-squeezer/ngx-forms",
   "version": "0.0.1",
+  "description": "Angular library that provides utilities for forms",
+  "keywords": [
+    "angular",
+    "forms",
+    "validators",
+    "async"
+  ],
+  "author": "samuelfernandez",
+  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/ngx-forms",
+  "bugs": {
+    "url": "https://github.com/nx-squeezer/squeezer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nx-squeezer/squeezer.git",
+    "directory": "packages/ngx-forms"
+  },
+  "engines": {
+    "node": ">=18.10.0",
+    "npm": ">=9.5.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "peerDependencies": {
     "@angular/core": "^16.0.0",
     "@angular/forms": "^16.0.0"

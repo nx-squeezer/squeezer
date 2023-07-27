@@ -26,6 +26,18 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint"
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "postTargets": ["ngx-forms:github", "ngx-forms:npm"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github"
+    },
+    "npm": {
+      "executor": "ngx-deploy-npm:deploy"
     }
   },
   "tags": []
