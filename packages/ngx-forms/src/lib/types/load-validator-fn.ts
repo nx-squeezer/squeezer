@@ -1,3 +1,5 @@
 import { ValidatorFn } from '@angular/forms';
 
-export type LoadValidatorFn = () => Promise<ValidatorFn>;
+import { DefaultExport } from './default-export';
+
+export type LoadValidatorFn = () => Promise<DefaultExport<ValidatorFn>>;

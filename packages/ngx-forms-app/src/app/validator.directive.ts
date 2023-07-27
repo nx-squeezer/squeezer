@@ -5,6 +5,6 @@ import { provideLazyValidator } from '@nx-squeezer/ngx-forms';
 @Directive({
   selector: '[nxSqueezerValidator]',
   standalone: true,
-  providers: [provideLazyValidator(() => import('./validator').then((m) => m.default))],
+  providers: [provideLazyValidator(() => import('./validator'))],
 })
 export class ValidatorDirective {}

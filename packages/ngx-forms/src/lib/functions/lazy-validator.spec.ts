@@ -1,14 +1,30 @@
-import { fakeAsync, tick } from '@angular/core/testing';
-import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { AbstractControl, FormBuilder, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 import { lazyValidator } from './lazy-validator';
 
-describe('lazyValidator', () => {
-  const validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
-    return control.value === 'invalid' ? { invalid: true } : null;
-  };
+const validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  return control.value === 'invalid' ? { invalid: true } : null;
+};
 
-  const control = new FormControl('', { asyncValidators: [lazyValidator(() => Promise.resolve(validator))] });
+@Component({
+  standalone: true,
+})
+class TestComponent {
+  private readonly formBuilder = inject(FormBuilder);
+  readonly formGroup = this.formBuilder.group({
+    control: ['', { asyncValidators: [lazyValidator(() => Promise.resolve(validator))] }],
+  });
+}
+
+describe('lazyValidator', () => {
+  let control: FormControl;
+
+  beforeEach(() => {
+    const fixture = TestBed.createComponent(TestComponent);
+    control = fixture.componentInstance.formGroup.controls.control;
+  });
 
   it('should process valid values', fakeAsync(() => {
     control.setValue('valid');
