@@ -60,6 +60,19 @@
     },
     "lint": {
       "executor": "@nx/linter:eslint"
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/ngx-forms-app/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "ngx-forms-app:serve:production"
+      },
+      "configurations": {
+        "development": {
+          "devServerTarget": "ngx-async-injector-app:serve:development"
+        }
+      }
     }
   }
 }

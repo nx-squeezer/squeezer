@@ -37,7 +37,7 @@ export class AppComponent {
   private readonly formBuilder = inject(FormBuilder);
   readonly formGroup = this.formBuilder.group({
     directive: this.formBuilder.control('input'),
-    lazy: this.formBuilder.control('invalid', { asyncValidators: [lazyValidator(() => import('./validator'))] }),
+    lazy: this.formBuilder.control('input', { asyncValidators: [lazyValidator(() => import('./validator'))] }),
   });
 
   get showDirectiveError(): boolean {
