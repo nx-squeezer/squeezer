@@ -49,7 +49,7 @@
   },
   "devDependencies": {
     "@schemastore/eslintrc": "^0.0.8",
-    "@schemastore/package": "^0.0.9",
+    "@schemastore/package": "^0.0.10",
     "@schemastore/prettierrc": "^0.0.10",
     "@schemastore/tsconfig": "^0.0.11"
   },

@@ -45,6 +45,6 @@
     "typescript": "^4.9.0"
   },
   "devDependencies": {
-    "@schemastore/package": "^0.0.9"
+    "@schemastore/package": "^0.0.10"
   }
 }
