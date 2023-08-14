@@ -19,6 +19,7 @@
       "@nx-squeezer/ngx-async-injector": ["packages/ngx-async-injector/src/index.ts"],
       "@nx-squeezer/ngx-forms": ["packages/ngx-forms/src/index.ts"],
       "@nx-squeezer/renovate": ["packages/renovate/src/index.ts"],
+      "@nx-squeezer/utils": ["packages/utils/src/index.ts"],
       "@nx-squeezer/workspace": ["packages/workspace/src/index.ts"]
     },
     "forceConsistentCasingInFileNames": true,

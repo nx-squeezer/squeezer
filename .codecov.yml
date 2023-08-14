@@ -30,6 +30,9 @@ coverage:
       ngx-forms:
         flags:
           - ngx-forms
+      utils:
+        flags:
+          - utils
 flags:
   workspace:
     paths:
@@ -46,3 +49,6 @@ flags:
   ngx-forms:
     paths:
       - packages/ngx-forms
+  utils:
+    paths:
+      - packages/utils
