@@ -1,7 +1,8 @@
 import { inject, ChangeDetectorRef } from '@angular/core';
 import { AsyncValidator, AbstractControl, ValidationErrors } from '@angular/forms';
 
-import { extractDefaultExport } from '../functions/extract-default-export';
+import { extractDefaultExport } from '@nx-squeezer/utils';
+
 import { LOAD_VALIDATOR } from '../tokens/load-validator.token';
 
 /**
