@@ -2,6 +2,11 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.1](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@1.1.0...ngx-forms@1.1.1) (2023-08-14)
+
+### Dependency Updates
+
+* `utils` updated to version `1.1.0`
 ## [1.1.0](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@1.0.0...ngx-forms@1.1.0) (2023-08-14)
 
 ### Dependency Updates
