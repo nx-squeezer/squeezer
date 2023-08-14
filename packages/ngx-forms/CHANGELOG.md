@@ -2,6 +2,16 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.1.0](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@1.0.0...ngx-forms@1.1.0) (2023-08-14)
+
+### Dependency Updates
+
+* `utils` updated to version `1.0.0`
+
+### Features
+
+* **ngx-forms:** :package: import utils from @nx-squeezer/utils ([#889](https://github.com/nx-squeezer/squeezer/issues/889)) ([8a65440](https://github.com/nx-squeezer/squeezer/commit/8a654401a9629aea02cb01af2a84e8c9b789b79d))
+
 ## [1.0.0](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@0.1.0...ngx-forms@1.0.0) (2023-07-27)
 
 
