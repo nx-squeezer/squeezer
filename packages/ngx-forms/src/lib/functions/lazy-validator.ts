@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, inject } from '@angular/core';
 import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 
-import { extractDefaultExport } from './extract-default-export';
+import { extractDefaultExport } from '@nx-squeezer/utils';
+
 import { LoadValidatorFn } from '../types/load-validator-fn';
 
 export function lazyValidator(loadValidatorFn: LoadValidatorFn): AsyncValidatorFn {
