@@ -6,7 +6,7 @@
         "useDaemonProcess": false,
         "canTrackAnalytics": false,
         "showUsageWarnings": true,
-        "cacheableOperations": ["build", "lint", "test", "e2e"],
+        "cacheableOperations": ["build", "lint", "test", "docs", "e2e"],
         "accessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
       }
     }
@@ -18,7 +18,6 @@
   },
   "extends": "nx/presets/npm.json",
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "npmScope": "nx-squeezer",
   "affected": {
     "defaultBase": "main"
   },
@@ -151,6 +150,17 @@
     "ngx-deploy-npm:deploy": {
       "options": {
         "access": "public"
+      }
+    },
+    "@enio.ai/typedoc:typedoc": {
+      "outputs": ["{workspaceRoot}/docs/{projectRoot}"],
+      "options": {
+        "options": "typedoc.config.js"
+      },
+      "configurations": {
+        "watch": {
+          "watch": true
+        }
       }
     },
     "build": {
