@@ -12,6 +12,7 @@
     "ngx-forms",
     "ngx-forms-app",
     "renovate",
+    "utils",
     "workspace",
     "workspace-e2e"
   ],

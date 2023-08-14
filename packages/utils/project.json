@@ -5,13 +5,25 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/js:swc"
+      "executor": "@nx/js:tsc"
     },
     "lint": {
       "executor": "@nx/linter:eslint"
     },
     "test": {
       "executor": "@nx/jest:jest"
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "postTargets": ["utils:github", "utils:npm"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github"
+    },
+    "npm": {
+      "executor": "ngx-deploy-npm:deploy"
     }
   },
   "tags": []

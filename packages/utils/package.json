@@ -1,10 +1,28 @@
 {
   "name": "@nx-squeezer/utils",
   "version": "0.0.1",
-  "dependencies": {
-    "@swc/helpers": "~0.5.0"
+  "description": "This package contains TypeScript utilities for various purposes",
+  "keywords": [
+    "typescript",
+    "utilities"
+  ],
+  "author": "samuelfernandez",
+  "homepage": "https://github.com/nx-squeezer/squeezer/tree/main/packages/utils",
+  "bugs": {
+    "url": "https://github.com/nx-squeezer/squeezer/issues"
   },
-  "type": "commonjs",
-  "main": "./src/index.js",
-  "typings": "./src/index.d.ts"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nx-squeezer/squeezer.git",
+    "directory": "packages/utils"
+  },
+  "engines": {
+    "node": ">=18.10.0",
+    "npm": ">=9.5.0"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./src/index.js"
 }
