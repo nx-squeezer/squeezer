@@ -1,6 +1,6 @@
 {
   "name": "@nx-squeezer/renovate",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Tools to setup Renovate in Nx or Angular monorepos",
   "keywords": [
     "nx",
