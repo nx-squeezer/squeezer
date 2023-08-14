@@ -27,7 +27,6 @@
             "ignoredDependencies": [
               "jest",
               "tslib",
-              "@nx-squeezer/devkit",
               "@commitlint/cli",
               "@commitlint/config-conventional",
               "husky",
