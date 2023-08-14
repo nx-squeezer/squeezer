@@ -5,6 +5,7 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    concurrency: ci-${{ github.ref }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3.5.3
@@ -50,6 +51,15 @@ jobs:
         run: |
           git tag -f last-release
           git push origin last-release --force
+
+      - name: Docs
+        shell: bash
+        run: npx nx run-many --target=docs --all
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
+        with:
+          folder: docs
 
       - uses: dblock/create-a-github-issue@v3.1.1
         name: Create Issue
