@@ -3,20 +3,20 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "nx-squeezer",
-  "sourceRoot": "packages/ngx-forms-app/src",
+  "sourceRoot": "e2e/ngx-forms-app/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/ngx-forms-app",
-        "index": "packages/ngx-forms-app/src/index.html",
-        "main": "packages/ngx-forms-app/src/main.ts",
+        "outputPath": "dist/e2e/ngx-forms-app",
+        "index": "e2e/ngx-forms-app/src/index.html",
+        "main": "e2e/ngx-forms-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "packages/ngx-forms-app/tsconfig.app.json",
-        "assets": ["packages/ngx-forms-app/src/favicon.ico", "packages/ngx-forms-app/src/assets"],
-        "styles": ["packages/ngx-forms-app/src/styles.css"],
+        "tsConfig": "e2e/ngx-forms-app/tsconfig.app.json",
+        "assets": ["e2e/ngx-forms-app/src/favicon.ico", "e2e/ngx-forms-app/src/assets"],
+        "styles": ["e2e/ngx-forms-app/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -64,7 +64,7 @@
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/ngx-forms-app/cypress.config.ts",
+        "cypressConfig": "e2e/ngx-forms-app/cypress.config.ts",
         "testingType": "e2e",
         "devServerTarget": "ngx-forms-app:serve:production"
       },

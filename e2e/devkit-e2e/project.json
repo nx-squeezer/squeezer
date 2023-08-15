@@ -1,26 +1,20 @@
 {
-  "name": "renovate-e2e",
+  "name": "devkit-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/renovate-e2e/src",
+  "sourceRoot": "e2e/devkit-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["renovate-e2e:prepare"]
-    },
-    "prepare": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "nx build renovate --with-deps"
-      }
+      "dependsOn": ["devkit:build"]
     },
     "lint": {
       "executor": "@nx/linter:eslint"
     }
   },
   "tags": [],
-  "implicitDependencies": ["renovate"]
+  "implicitDependencies": ["devkit"]
 }

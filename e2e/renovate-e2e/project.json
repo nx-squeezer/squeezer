@@ -1,20 +1,20 @@
 {
-  "name": "workspace-e2e",
+  "name": "renovate-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/workspace-e2e/src",
+  "sourceRoot": "e2e/renovate-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["workspace-e2e:prepare"]
+      "dependsOn": ["renovate-e2e:prepare"]
     },
     "prepare": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "nx build workspace --with-deps"
+        "command": "nx build renovate --with-deps"
       }
     },
     "lint": {
@@ -22,5 +22,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["workspace"]
+  "implicitDependencies": ["renovate"]
 }

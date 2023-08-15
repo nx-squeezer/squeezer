@@ -2,20 +2,20 @@
   "name": "ngx-async-injector-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/ngx-async-injector-app/src",
+  "sourceRoot": "e2e/ngx-async-injector-app/src",
   "prefix": "nx-squeezer",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/packages/ngx-async-injector-app",
-        "index": "packages/ngx-async-injector-app/src/index.html",
-        "main": "packages/ngx-async-injector-app/src/main.ts",
+        "outputPath": "dist/e2e/ngx-async-injector-app",
+        "index": "e2e/ngx-async-injector-app/src/index.html",
+        "main": "e2e/ngx-async-injector-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "packages/ngx-async-injector-app/tsconfig.app.json",
-        "assets": ["packages/ngx-async-injector-app/src/favicon.ico", "packages/ngx-async-injector-app/src/assets"],
-        "styles": ["packages/ngx-async-injector-app/src/styles.css"],
+        "tsConfig": "e2e/ngx-async-injector-app/tsconfig.app.json",
+        "assets": ["e2e/ngx-async-injector-app/src/favicon.ico", "e2e/ngx-async-injector-app/src/assets"],
+        "styles": ["e2e/ngx-async-injector-app/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -63,7 +63,7 @@
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "packages/ngx-async-injector-app/cypress.config.ts",
+        "cypressConfig": "e2e/ngx-async-injector-app/cypress.config.ts",
         "testingType": "e2e",
         "devServerTarget": "ngx-async-injector-app:serve:production"
       },
