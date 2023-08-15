@@ -1,20 +1,26 @@
 {
-  "name": "devkit-e2e",
+  "name": "workspace-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "packages/devkit-e2e/src",
+  "sourceRoot": "e2e/workspace-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["devkit:build"]
+      "dependsOn": ["workspace-e2e:prepare"]
+    },
+    "prepare": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx build workspace --with-deps"
+      }
     },
     "lint": {
       "executor": "@nx/linter:eslint"
     }
   },
   "tags": [],
-  "implicitDependencies": ["devkit"]
+  "implicitDependencies": ["workspace"]
 }

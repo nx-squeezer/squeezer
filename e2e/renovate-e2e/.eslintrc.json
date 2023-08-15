@@ -10,7 +10,7 @@
       "files": ["*.ts", "*.tsx"],
       "rules": {},
       "parserOptions": {
-        "project": ["packages/devkit-e2e/tsconfig*.json"]
+        "project": ["e2e/renovate-e2e/tsconfig*.json"]
       }
     }
   ]
