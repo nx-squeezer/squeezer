@@ -32,14 +32,14 @@
     {
       "files": ["*.ts", "*.tsx"],
       "parserOptions": {
-        "project": ["packages/ngx-async-injector-app/tsconfig*.json"]
+        "project": ["apps/ngx-async-injector-app/tsconfig*.json"]
       }
     },
     {
       "files": ["cypress.config.ts", "*.cy.{ts,js,tsx,jsx}", "cypress/**/*.{ts,js,tsx,jsx}"],
       "rules": {},
       "parserOptions": {
-        "project": ["packages/ngx-async-injector-app/cypress/tsconfig.json"]
+        "project": ["apps/ngx-async-injector-app/cypress/tsconfig.json"]
       }
     }
   ]
