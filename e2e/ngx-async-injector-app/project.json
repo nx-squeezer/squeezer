@@ -1,22 +1,21 @@
 {
-  "name": "ngx-forms-app",
+  "name": "ngx-async-injector-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "e2e/ngx-async-injector-app/src",
   "prefix": "nx-squeezer",
-  "sourceRoot": "apps/ngx-forms-app/src",
-  "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/ngx-forms-app",
-        "index": "apps/ngx-forms-app/src/index.html",
-        "main": "apps/ngx-forms-app/src/main.ts",
+        "outputPath": "dist/e2e/ngx-async-injector-app",
+        "index": "e2e/ngx-async-injector-app/src/index.html",
+        "main": "e2e/ngx-async-injector-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/ngx-forms-app/tsconfig.app.json",
-        "assets": ["apps/ngx-forms-app/src/favicon.ico", "apps/ngx-forms-app/src/assets"],
-        "styles": ["apps/ngx-forms-app/src/styles.css"],
+        "tsConfig": "e2e/ngx-async-injector-app/tsconfig.app.json",
+        "assets": ["e2e/ngx-async-injector-app/src/favicon.ico", "e2e/ngx-async-injector-app/src/assets"],
+        "styles": ["e2e/ngx-async-injector-app/src/styles.css"],
         "scripts": []
       },
       "configurations": {
@@ -50,10 +49,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "ngx-forms-app:build:production"
+          "browserTarget": "ngx-async-injector-app:build:production"
         },
         "development": {
-          "browserTarget": "ngx-forms-app:build:development"
+          "browserTarget": "ngx-async-injector-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -64,9 +63,9 @@
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/ngx-forms-app/cypress.config.ts",
+        "cypressConfig": "e2e/ngx-async-injector-app/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "ngx-forms-app:serve:production"
+        "devServerTarget": "ngx-async-injector-app:serve:production"
       },
       "configurations": {
         "development": {
@@ -74,5 +73,6 @@
         }
       }
     }
-  }
+  },
+  "tags": []
 }
