@@ -4,7 +4,8 @@
     {
       "groupName": "typedoc",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["typedoc"]
+      "matchPackagePatterns": ["typedoc"],
+      "separateMajorMinor": false
     },
     {
       "groupName": "typedoc",
