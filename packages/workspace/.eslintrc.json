@@ -32,7 +32,12 @@
               "husky",
               "lint-staged",
               "nx",
-              "prettier"
+              "prettier",
+              "@nx/dependency-checks",
+              "@schemastore/eslintrc",
+              "@schemastore/package",
+              "@schemastore/prettierrc",
+              "@schemastore/tsconfig"
             ]
           }
         ]

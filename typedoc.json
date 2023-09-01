@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "packageRules": [
+    {
+      "groupName": "typedoc",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["typedoc"]
+    },
+    {
+      "groupName": "typedoc",
+      "description": "Pinned until plugins align version with latest typedoc version",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["typedoc"],
+      "allowedVersions": "< 0.24.0"
+    }
+  ]
+}

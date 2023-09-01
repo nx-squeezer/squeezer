@@ -106,7 +106,7 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["jest", "jest-preset-angular", "tslib"]
+            "ignoredDependencies": ["jest", "jest-preset-angular", "tslib", "@nx/dependency-checks"]
           }
         ]
       }
