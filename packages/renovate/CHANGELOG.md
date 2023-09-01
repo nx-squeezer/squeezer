@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.3](https://github.com/nx-squeezer/squeezer/compare/renovate@2.0.2...renovate@2.0.3) (2023-09-01)
+
+### Dependency Updates
+
+* `devkit` updated to version `2.0.2`
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([#912](https://github.com/nx-squeezer/squeezer/issues/912)) ([1983221](https://github.com/nx-squeezer/squeezer/commit/1983221e5b9ac6a0e67356661b7e625837869c8a))
+* **deps:** :arrow_up: update nx monorepo ([4b28d65](https://github.com/nx-squeezer/squeezer/commit/4b28d65fce0381af6284a643756b5c6e36280c72))
+
 ## [2.0.2](https://github.com/nx-squeezer/squeezer/compare/renovate@2.0.1...renovate@2.0.2) (2023-08-14)
 
 ### Dependency Updates
