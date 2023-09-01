@@ -21,5 +21,6 @@ module.exports = {
     '^npx --no-install nx migrate',
     '^rm -f migrations.json$',
     '^npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache$',
+    '^npx --no-install nx run-many --target=docs --all --parallel --fix --skip-nx-cache$',
   ],
 };

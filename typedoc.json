@@ -9,10 +9,36 @@
     },
     {
       "groupName": "typedoc",
-      "description": "Pinned until plugins align version with latest typedoc version",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["typedoc"],
+      "matchFileNames": ["package.json"],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm ci --ignore-scripts",
+          "npx --no-install nx run-many --target=docs --all --parallel --fix --skip-nx-cache"
+        ]
+      }
+    },
+    {
+      "groupName": "typedoc",
+      "description": "Pinned until @enio.ai/typedoc aligns version with latest typedoc version",
       "matchManagers": ["npm"],
       "matchPackageNames": ["typedoc"],
       "allowedVersions": "< 0.24.0"
+    },
+    {
+      "groupName": "typedoc",
+      "description": "Pinned until @enio.ai/typedoc aligns version with latest typedoc version",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["typedoc-plugin-rename-defaults"],
+      "allowedVersions": "<= 0.6.5"
+    },
+    {
+      "groupName": "typedoc",
+      "description": "Pinned until @enio.ai/typedoc aligns version with latest typedoc version",
+      "matchManagers": ["npm"],
+      "matchPackageNames": ["typedoc-theme-hierarchy"],
+      "allowedVersions": "< 4.0.0"
     }
   ]
 }
