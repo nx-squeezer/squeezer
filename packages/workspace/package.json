@@ -36,7 +36,7 @@
   "dependencies": {
     "@nx-squeezer/devkit": "^1.2.2",
     "node-fetch-commonjs": "3.3.1",
-    "yaml": "2.3.1"
+    "yaml": "2.3.2"
   },
   "peerDependencies": {
     "@commitlint/cli": "^17.0.0",
