@@ -24,7 +24,15 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["jest", "tslib", "husky", "prettier"]
+            "ignoredDependencies": [
+              "jest",
+              "tslib",
+              "@nx/plugin",
+              "@nx/dependency-checks",
+              "husky",
+              "prettier",
+              "@schemastore/package"
+            ]
           }
         ]
       }
