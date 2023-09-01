@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@nx-squeezer/devkit": "^1.2.2",
-    "yaml": "2.3.1"
+    "yaml": "2.3.2"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
