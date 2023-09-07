@@ -12,6 +12,7 @@
     "ngx-forms",
     "ngx-forms-app",
     "renovate",
+    "typedoc",
     "utils",
     "workspace",
     "workspace-e2e"

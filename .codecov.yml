@@ -15,40 +15,43 @@ coverage:
       default:
         target: 50%
         threshold: 10%
-      workspace:
-        flags:
-          - workspace
       devkit:
         flags:
           - devkit
       ngx-async-injector:
         flags:
           - ngx-async-injector
-      renovate:
-        flags:
-          - renovate
       ngx-forms:
         flags:
           - ngx-forms
+      renovate:
+        flags:
+          - renovate
+      typedoc:
+        flags:
+          - typedoc
       utils:
         flags:
           - utils
+      workspace:
+        flags:
+          - workspace
 flags:
-  workspace:
-    paths:
-      - packages/workspace
   devkit:
     paths:
       - packages/devkit
   ngx-async-injector:
     paths:
       - packages/ngx-async-injector
-  renovate:
-    paths:
-      - packages/renovate
   ngx-forms:
     paths:
       - packages/ngx-forms
+  renovate:
+    paths:
+      - packages/renovate
   utils:
     paths:
       - packages/utils
+  workspace:
+    paths:
+      - packages/workspace
