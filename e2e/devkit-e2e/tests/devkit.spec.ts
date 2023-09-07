@@ -10,7 +10,7 @@ describe('devkit e2e', () => {
   // on a unique project in the workspace, such that they
   // are not dependant on one another.
   beforeAll(() => {
-    ensureNxProject('@nx-squeezer/devkit', 'dist/packages/devkit');
+    ensureNxProject('devkit');
   });
 
   afterAll(() => {
