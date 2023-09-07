@@ -19,7 +19,7 @@ export function runNxNewCommand(): void {
       '--skip-install',
       '--collection=@nx/workspace',
       '--npmScope=proj',
-      '--preset=empty',
+      '--preset=apps',
     ],
     { cwd: localTmpDir }
   );
