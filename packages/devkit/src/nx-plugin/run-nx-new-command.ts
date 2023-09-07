@@ -4,7 +4,7 @@ import { tmpProjPath } from '@nx/plugin/testing';
 
 import { exec } from '../exec';
 
-// https://github.com/nrwl/nx/blob/master/packages/nx-plugin/src/utils/testing-utils/nx-project.ts
+// https://github.com/nrwl/nx/blob/master/packages/plugin/src/utils/testing-utils/nx-project.ts
 export function runNxNewCommand(): void {
   const localTmpDir = dirname(tmpProjPath());
 
@@ -19,7 +19,7 @@ export function runNxNewCommand(): void {
       '--skip-install',
       '--collection=@nx/workspace',
       '--npmScope=proj',
-      '--preset=empty',
+      '--preset=apps',
     ],
     { cwd: localTmpDir }
   );
