@@ -140,7 +140,6 @@
       "options": {
         "push": true,
         "preset": "conventional",
-        "trackDeps": true,
         "tagPrefix": "{projectName}@",
         "commitMessageFormat": "chore({projectName}): :package: release version ${version} [skip ci]"
       }
