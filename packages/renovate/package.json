@@ -36,7 +36,7 @@
     "migrations": "./nx-migrations.json"
   },
   "dependencies": {
-    "@nx-squeezer/devkit": "^1.2.2",
+    "@nx-squeezer/devkit": "^1.2.3",
     "yaml": "2.3.2"
   },
   "peerDependencies": {
