@@ -41,6 +41,6 @@
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
-    "renovate": "^36.0.0"
+    "renovate": "^37.6.2"
   }
 }
