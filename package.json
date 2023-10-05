@@ -53,8 +53,7 @@
     "rxjs": "7.8.1",
     "tslib": "2.5.0",
     "which": "4.0.0",
-    "yaml": "2.3.2",
-    "zone.js": "0.14.0"
+    "yaml": "2.3.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.2.3",
