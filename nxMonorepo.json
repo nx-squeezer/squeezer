@@ -71,7 +71,7 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
-          "npm ci --ignore-scripts",
+          "npm install --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
           "npm install --ignore-scripts",
@@ -98,7 +98,7 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
-          "npm ci --ignore-scripts",
+          "npm install --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
           "npm install --ignore-scripts",
