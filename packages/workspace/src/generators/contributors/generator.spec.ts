@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import { readmeFile, getGitRepoSlug } from '@nx-squeezer/devkit';
 
-import { contributorsGenerator } from './generator';
+import contributorsGenerator from './generator';
 import { contributorsSchematic } from './generator.compat';
 
 jest.mock('@nx-squeezer/devkit', () => ({

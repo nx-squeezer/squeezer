@@ -11,7 +11,7 @@ import {
 
 import { writeProjectsToCodecov, getCodecovFile, readRawCodecov } from './codecov';
 
-export async function codecovGenerator(tree: Tree) {
+export default async function codecovGenerator(tree: Tree) {
   writeProjectsToCodecov(tree);
   addNxNamedInput(tree, { codecov: ['{workspaceRoot}/' + getCodecovFile(tree)] }, true);
 

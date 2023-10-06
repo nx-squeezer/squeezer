@@ -1,3 +1,3 @@
 export * from './generator.compat';
-export * from './generator';
+export * as contributorsGenerator from './generator';
 export * from './schema';

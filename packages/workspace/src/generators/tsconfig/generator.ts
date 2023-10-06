@@ -5,7 +5,7 @@ import { lintWorkspaceTask } from '@nx-squeezer/devkit';
 
 import { tsConfigFile, tsConfigDefault } from './tsconfig';
 
-export async function tsConfigGenerator(tree: Tree) {
+export default async function tsConfigGenerator(tree: Tree) {
   if (!setTsConfig(tree)) {
     return;
   }

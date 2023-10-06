@@ -5,7 +5,7 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import { lintWorkspaceTask, formatWorkspaceTask } from '@nx-squeezer/devkit';
 
-import { prettierGenerator } from './generator';
+import prettierGenerator from './generator';
 import { prettierSchematic } from './generator.compat';
 import { prettierConfigFile, prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile } from './prettier';
 import { prettierDefaultConfig } from './prettier-default-config';

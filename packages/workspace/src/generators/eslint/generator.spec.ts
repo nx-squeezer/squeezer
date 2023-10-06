@@ -4,7 +4,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 import { lintWorkspaceTask } from '@nx-squeezer/devkit';
 
 import { writeEsLintConfig, readEsLintConfig, eslintConfigFile } from './eslint-config';
-import { eslintGenerator } from './generator';
+import eslintGenerator from './generator';
 import { eslintSchematic } from './generator.compat';
 import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
 

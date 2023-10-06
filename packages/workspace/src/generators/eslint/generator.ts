@@ -16,7 +16,7 @@ import {
 import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
 import { EsLintGeneratorSchema } from './schema';
 
-export async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
+export default async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {
     addEsLintRecommendedRules(tree);
   }

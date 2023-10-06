@@ -4,7 +4,7 @@ import { parse, stringify } from 'yaml';
 
 import { readmeFile, getGitRepoSlug, securityFile, ciFile } from '@nx-squeezer/devkit';
 
-import { renovateGenerator } from './generator';
+import renovateGenerator from './generator';
 import { renovateSchematic } from './generator.compat';
 import { renovateCiFile, renovateFile, renovateConfigFile, renovatePresets, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';

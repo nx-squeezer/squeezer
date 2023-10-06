@@ -1,4 +1,4 @@
 export * from './generator.compat';
-export * from './generator';
+export * as renovateGenerator from './generator';
 export * from './renovate';
 export * from './schema';

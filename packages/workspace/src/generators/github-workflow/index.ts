@@ -1,3 +1,3 @@
 export * from './generator.compat';
-export * from './generator';
+export * as gitHubWorkflowGenerator from './generator';
 export * from './schema';

@@ -11,7 +11,7 @@ import {
   ciFile,
 } from '@nx-squeezer/devkit';
 
-import { gitHubWorkflowGenerator } from './generator';
+import gitHubWorkflowGenerator from './generator';
 import { gitHubWorkflowSchematic } from './generator.compat';
 
 jest.mock('@nx-squeezer/devkit', () => ({
