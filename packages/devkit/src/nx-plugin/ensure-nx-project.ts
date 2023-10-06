@@ -1,16 +1,14 @@
 /* istanbul ignore file */
 import {
   createProjectGraphAsync,
-  ,
   ProjectGraph,
   ProjectGraphProjectNode,
   readJsonFile,
-  ,
   workspaceRoot,
   writeJsonFile,
 } from '@nx/devkit';
-import { getDependentPackagesForProject,WorkspaceLibrary } from '@nx/webpack';
 import { cleanup, tmpProjPath } from '@nx/plugin/testing';
+import { getDependentPackagesForProject, WorkspaceLibrary } from '@nx/webpack';
 import { ensureDirSync } from 'fs-extra';
 
 import { getLibraryImportPath } from './get-library-import-path';

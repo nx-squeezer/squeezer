@@ -4,7 +4,7 @@ import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemasto
 
 import { lintWorkspaceTask } from '@nx-squeezer/devkit';
 
-import { tsConfigGenerator } from './generator';
+import tsConfigGenerator from './generator';
 import { tsConfigSchematic } from './generator.compat';
 import { tsConfigFile, tsConfigDefault } from './tsconfig';
 

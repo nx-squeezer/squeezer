@@ -15,7 +15,7 @@ import {
   commitlintDefaultConfig,
 } from './commitlint';
 
-export async function commitlintGenerator(tree: Tree) {
+export default async function commitlintGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);
   addDevDependencyToPackageJson(tree, commitlintCli);
   addDevDependencyToPackageJson(tree, commitlintConfigConventional);

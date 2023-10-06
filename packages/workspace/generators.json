@@ -4,42 +4,42 @@
   "version": "0.0.1",
   "generators": {
     "codecov": {
-      "factory": "./src/generators/codecov/generator#codecovGenerator",
+      "factory": "./src/generators/codecov/generator",
       "schema": "./src/generators/codecov/schema.json",
       "description": "Configures Codecov"
     },
     "commitlint": {
-      "factory": "./src/generators/commitlint/generator#commitlintGenerator",
+      "factory": "./src/generators/commitlint/generator",
       "schema": "./src/generators/commitlint/schema.json",
       "description": "Configures commitlint to lint commit messages according to conventional commits"
     },
     "contributors": {
-      "factory": "./src/generators/contributors/generator#contributorsGenerator",
+      "factory": "./src/generators/contributors/generator",
       "schema": "./src/generators/contributors/schema.json",
       "description": "Adds contributors section to Readme.md"
     },
     "eslint": {
-      "factory": "./src/generators/eslint/generator#eslintGenerator",
+      "factory": "./src/generators/eslint/generator",
       "schema": "./src/generators/eslint/schema.json",
       "description": "Configures ESLint with additional rules"
     },
     "github-workflow": {
-      "factory": "./src/generators/github-workflow/generator#gitHubWorkflowGenerator",
+      "factory": "./src/generators/github-workflow/generator",
       "schema": "./src/generators/github-workflow/schema.json",
       "description": "Configures GitHub CI Workflow"
     },
     "lint-staged": {
-      "factory": "./src/generators/lint-staged/generator#lintStagedGenerator",
+      "factory": "./src/generators/lint-staged/generator",
       "schema": "./src/generators/lint-staged/schema.json",
       "description": "Configures lint-staged"
     },
     "prettier": {
-      "factory": "./src/generators/prettier/generator#prettierGenerator",
+      "factory": "./src/generators/prettier/generator",
       "schema": "./src/generators/prettier/schema.json",
       "description": "Configure Prettier"
     },
     "tsconfig": {
-      "factory": "./src/generators/tsconfig/generator#tsConfigGenerator",
+      "factory": "./src/generators/tsconfig/generator",
       "schema": "./src/generators/tsconfig/schema.json",
       "description": "Configures tsconfig.base.json"
     }

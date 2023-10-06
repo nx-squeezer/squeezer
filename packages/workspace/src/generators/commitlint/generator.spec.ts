@@ -15,7 +15,7 @@ import {
   commitlintConfigPath,
   commitlintDefaultConfig,
 } from './commitlint';
-import { commitlintGenerator } from './generator';
+import commitlintGenerator from './generator';
 import { commitlintSchematic } from './generator.compat';
 
 jest.mock('@nx/devkit', () => ({

@@ -6,7 +6,7 @@ import { parse, stringify } from 'yaml';
 import { getGitRepoSlug, nxConfigFile, readmeFile, ciFile } from '@nx-squeezer/devkit';
 
 import { readCodecov, readRawCodecov } from './codecov';
-import { codecovGenerator } from './generator';
+import codecovGenerator from './generator';
 import { codecovSchematic } from './generator.compat';
 
 jest.mock('node-fetch-commonjs');

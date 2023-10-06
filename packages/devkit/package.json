@@ -33,12 +33,12 @@
   "dependencies": {
     "fs-extra": "11.1.1",
     "which": "4.0.0",
-    "yaml": "2.3.2",
-    "@nx/webpack": "16.9.1"
+    "yaml": "2.3.2"
   },
   "peerDependencies": {
     "@nx/devkit": "^16.0.0",
     "@nx/plugin": "^16.0.0",
+    "@nx/webpack": "^16.9.0",
     "husky": "^8.0.0",
     "nx": "^16.0.0",
     "radash": "^11.0.0",

@@ -8,7 +8,7 @@ import {
   installHuskyTask,
 } from '@nx-squeezer/devkit';
 
-import { lintStagedGenerator } from './generator';
+import lintStagedGenerator from './generator';
 import { lintStagedSchematic } from './generator.compat';
 import { lintStaged, lintStagedConfigPath, lintStagedDefaultConfig, LintStagedConfig } from './lint-staged';
 

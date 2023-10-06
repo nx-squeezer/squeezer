@@ -7,7 +7,7 @@ import { prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile, prettierC
 import { prettierDefaultConfig } from './prettier-default-config';
 import { addEsLintPlugin, addEsLintRules, isEsLintPluginPresent } from '../eslint';
 
-export async function prettierGenerator(tree: Tree) {
+export default async function prettierGenerator(tree: Tree) {
   setPrettierConfig(tree);
 
   if (isEsLintPluginPresent(tree, prettierPlugin)) {

@@ -1,6 +1,6 @@
-import { createProjectGraphAsync, , readJsonFile, writeJsonFile } from '@nx/devkit';
-import { getDependentPackagesForProject } from '@nx/webpack';
+import { createProjectGraphAsync, readJsonFile, writeJsonFile } from '@nx/devkit';
 import { cleanup, tmpProjPath } from '@nx/plugin/testing';
+import { getDependentPackagesForProject } from '@nx/webpack';
 import { ensureDirSync } from 'fs-extra';
 
 import { ensureNxProject } from './ensure-nx-project';

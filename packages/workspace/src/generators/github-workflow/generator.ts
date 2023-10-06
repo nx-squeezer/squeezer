@@ -11,7 +11,7 @@ import {
 
 import { GitHubWorkflowGeneratorSchema } from './schema';
 
-export async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {
+export default async function gitHubWorkflowGenerator(tree: Tree, options: GitHubWorkflowGeneratorSchema) {
   if (!options.force && tree.exists(ciFile)) {
     console.log(`GitHub workflow already existing at path: ${ciFile}`);
     return;

@@ -9,7 +9,7 @@ import {
 
 import { lintStaged, LintStagedConfig, lintStagedConfigPath, lintStagedDefaultConfig } from './lint-staged';
 
-export async function lintStagedGenerator(tree: Tree) {
+export default async function lintStagedGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);
   addDevDependencyToPackageJson(tree, lintStaged);
 

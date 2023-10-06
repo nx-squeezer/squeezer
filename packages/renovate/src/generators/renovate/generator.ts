@@ -7,7 +7,7 @@ import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 
-export async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
+export default async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {
     console.log(`Renovate workflow already existing at path: ${renovateCiFile}`);
     return;
