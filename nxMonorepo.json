@@ -71,6 +71,7 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
+          "rm -f package-lock.json",
           "npm install --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
@@ -98,6 +99,7 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
+          "rm -f package-lock.json",
           "npm install --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
