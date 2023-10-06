@@ -1,0 +1,71 @@
+{
+  "name": "ngx-ssr-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "e2e/ngx-ssr-app/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/e2e/ngx-ssr-app",
+        "index": "e2e/ngx-ssr-app/src/index.html",
+        "main": "e2e/ngx-ssr-app/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "e2e/ngx-ssr-app/tsconfig.app.json",
+        "assets": ["e2e/ngx-ssr-app/src/favicon.ico", "e2e/ngx-ssr-app/src/assets"],
+        "styles": ["e2e/ngx-ssr-app/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "ngx-ssr-app:build:production"
+        },
+        "development": {
+          "browserTarget": "ngx-ssr-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  }
+}

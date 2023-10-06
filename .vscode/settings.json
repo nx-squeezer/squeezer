@@ -11,6 +11,7 @@
     "ngx-async-injector",
     "ngx-forms",
     "ngx-forms-app",
+    "ngx-ssr-app",
     "renovate",
     "typedoc",
     "utils",

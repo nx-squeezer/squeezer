@@ -24,6 +24,9 @@ coverage:
       ngx-forms:
         flags:
           - ngx-forms
+      ngx-ssr-app:
+        flags:
+          - ngx-ssr-app
       renovate:
         flags:
           - renovate
@@ -46,6 +49,9 @@ flags:
   ngx-forms:
     paths:
       - packages/ngx-forms
+  ngx-ssr-app:
+    paths:
+      - packages/ngx-ssr-app
   renovate:
     paths:
       - packages/renovate
