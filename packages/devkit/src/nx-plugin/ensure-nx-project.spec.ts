@@ -12,10 +12,12 @@ jest.mock('fs-extra');
 jest.mock('@nx/plugin/testing');
 jest.mock('@nx/devkit', () => ({
   createProjectGraphAsync: jest.fn(),
-  getDependentPackagesForProject: jest.fn(),
   readJsonFile: jest.fn(),
   writeJsonFile: jest.fn(),
   workspaceRoot: 'root',
+}));
+jest.mock('@nx/webpack', () => ({
+  getDependentPackagesForProject: jest.fn(),
 }));
 
 jest.mock('./run-nx-new-command');
