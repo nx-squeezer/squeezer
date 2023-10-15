@@ -44,7 +44,7 @@
     "@jscutlery/semver": "3.3.0",
     "@nx/devkit": "16.9.1",
     "husky": "8.0.3",
-    "lint-staged": "14.0.1",
+    "lint-staged": "15.0.0",
     "ngx-deploy-npm": "7.0.1",
     "node-fetch-commonjs": "3.3.2",
     "prettier": "2.8.8",
