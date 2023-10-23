@@ -1,19 +1,15 @@
 {
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "useDaemonProcess": false,
-        "canTrackAnalytics": false,
-        "showUsageWarnings": true,
-        "cacheableOperations": ["build", "lint", "test", "docs", "e2e"],
-        "accessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
-      }
-    }
-  },
   "pluginsConfig": {
     "@nx/js": {
       "analyzeSourceFiles": true
+    }
+  },
+  "tasksRunnerOptions": {
+    "default": {
+      "options": {
+        "canTrackAnalytics": false,
+        "showUsageWarnings": true
+      }
     }
   },
   "extends": "nx/presets/npm.json",
@@ -97,7 +93,7 @@
         }
       }
     },
-    "@nx/linter:eslint": {
+    "@nx/eslint:eslint": {
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}", "{projectRoot}/package.json"]
@@ -167,7 +163,20 @@
       }
     },
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+      "cache": true
+    },
+    "lint": {
+      "cache": true
+    },
+    "test": {
+      "cache": true
+    },
+    "docs": {
+      "cache": true
+    },
+    "e2e": {
+      "cache": true
     }
   },
   "generators": {
@@ -190,5 +199,7 @@
     "@nx/angular:component": {
       "style": "css"
     }
-  }
+  },
+  "useDaemonProcess": false,
+  "nxCloudAccessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
 }

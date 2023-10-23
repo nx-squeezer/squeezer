@@ -25,7 +25,7 @@
       "executor": "@nx/jest:jest"
     },
     "lint": {
-      "executor": "@nx/linter:eslint"
+      "executor": "@nx/eslint:lint"
     },
     "version": {
       "executor": "@jscutlery/semver:version",

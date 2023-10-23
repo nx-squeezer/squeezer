@@ -8,7 +8,7 @@
       "executor": "@nx/js:tsc"
     },
     "lint": {
-      "executor": "@nx/linter:eslint"
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest"

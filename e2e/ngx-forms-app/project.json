@@ -59,7 +59,7 @@
       "defaultConfiguration": "development"
     },
     "lint": {
-      "executor": "@nx/linter:eslint"
+      "executor": "@nx/eslint:lint"
     },
     "e2e": {
       "executor": "@nx/cypress:cypress",
