@@ -93,7 +93,7 @@
         }
       }
     },
-    "@nx/eslint:eslint": {
+    "@nx/eslint:lint": {
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.{ts,js,json,html}", "{projectRoot}/package.json"]
