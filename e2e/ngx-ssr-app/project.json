@@ -10,7 +10,7 @@
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/e2e/ngx-ssr-app",
+        "outputPath": "dist/e2e/ngx-ssr-app/browser",
         "index": "e2e/ngx-ssr-app/src/index.html",
         "main": "e2e/ngx-ssr-app/src/main.ts",
         "polyfills": ["zone.js"],
@@ -66,6 +66,41 @@
       "options": {
         "passWithNoTests": true
       }
+    },
+    "server": {
+      "executor": "@angular-devkit/build-angular:server",
+      "options": {
+        "outputPath": "dist/e2e/ngx-ssr-app/server",
+        "main": "e2e/ngx-ssr-app/server.ts",
+        "tsConfig": "e2e/ngx-ssr-app/tsconfig.server.json"
+      },
+      "configurations": {
+        "production": {
+          "outputHashing": "media"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "sourceMap": true,
+          "extractLicenses": false,
+          "vendorChunk": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve-ssr": {
+      "executor": "@nguniversal/builders:ssr-dev-server",
+      "configurations": {
+        "development": {
+          "browserTarget": "ngx-ssr-app:build:development",
+          "serverTarget": "ngx-ssr-app:server:development"
+        },
+        "production": {
+          "browserTarget": "ngx-ssr-app:build:production",
+          "serverTarget": "ngx-ssr-app:server:production"
+        }
+      },
+      "defaultConfiguration": "development"
     }
   }
 }
