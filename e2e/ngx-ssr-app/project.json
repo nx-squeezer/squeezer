@@ -101,6 +101,19 @@
         }
       },
       "defaultConfiguration": "development"
+    },
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "e2e/ngx-ssr-app/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "ngx-ssr-app:serve-ssr:production"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "ngx-ssr-app:serve-ssr:production"
+        }
+      }
     }
   }
 }
