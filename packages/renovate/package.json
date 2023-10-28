@@ -40,7 +40,7 @@
     "yaml": "2.3.3"
   },
   "peerDependencies": {
-    "@nx/devkit": "^17.0.0",
+    "@nx/devkit": "16.10.0",
     "renovate": "^37.6.2"
   }
 }
