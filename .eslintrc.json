@@ -6,7 +6,7 @@
   },
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "prettier", "sonarjs", "unused-imports", "@typescript-eslint", "@delagen/deprecation", "import"],
+  "plugins": ["@nx", "prettier", "sonarjs", "unused-imports", "@typescript-eslint", "deprecation", "import"],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
@@ -51,7 +51,7 @@
         "@typescript-eslint/no-explicit-any": ["off"],
         "@typescript-eslint/explicit-module-boundary-types": ["off"],
         "@typescript-eslint/ban-types": ["off"],
-        "@delagen/deprecation/deprecation": "error",
+        "deprecation/deprecation": "error",
         "import/order": [
           "error",
           {

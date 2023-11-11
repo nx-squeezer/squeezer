@@ -33,7 +33,7 @@ export const typescriptRule: EsLintConfigurationOverrideRule = {
 export const deprecationRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx'],
   rules: {
-    '@delagen/deprecation/deprecation': 'error',
+    'deprecation/deprecation': 'error',
   },
 };
 

@@ -137,7 +137,7 @@ describe('@nx-squeezer/workspace e2e', () => {
         'sonarjs',
         'unused-imports',
         '@typescript-eslint',
-        '@delagen/deprecation',
+        'deprecation',
         'import',
       ]);
       expect(eslintConfig.env).toStrictEqual({

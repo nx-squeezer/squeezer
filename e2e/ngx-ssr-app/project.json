@@ -50,10 +50,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "browserTarget": "ngx-ssr-app:build:production"
+          "buildTarget": "ngx-ssr-app:build:production"
         },
         "development": {
-          "browserTarget": "ngx-ssr-app:build:development"
+          "buildTarget": "ngx-ssr-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -89,7 +89,7 @@
       "defaultConfiguration": "production"
     },
     "serve-ssr": {
-      "executor": "@nguniversal/builders:ssr-dev-server",
+      "executor": "@angular-devkit/build-angular:ssr-dev-server",
       "configurations": {
         "development": {
           "browserTarget": "ngx-ssr-app:build:development",

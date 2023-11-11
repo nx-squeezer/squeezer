@@ -32,9 +32,9 @@
     },
     "deprecation": {
       "type": "boolean",
-      "description": "Applies @delagen/deprecation",
+      "description": "Applies deprecation",
       "default": true,
-      "x-prompt": "Do you want to apply @delagen/deprecation rules?"
+      "x-prompt": "Do you want to apply deprecation rules?"
     },
     "importOrder": {
       "type": "boolean",

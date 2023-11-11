@@ -99,7 +99,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
   );
 
   it(
-    'should apply @delagen/deprecation',
+    'should apply deprecation',
     async () => {
       addLibraries();
 
@@ -107,7 +107,7 @@ describe('@nx-squeezer/workspace eslint generator', () => {
 
       const eslintConfig = readEsLintConfig(tree);
 
-      expect(eslintConfig.plugins?.includes('@delagen/deprecation')).toBeTruthy();
+      expect(eslintConfig.plugins?.includes('deprecation')).toBeTruthy();
       expect(eslintConfig.overrides?.[0]).toStrictEqual(deprecationRule);
       expect(readEsLintConfig(tree, `libs/lib1/${eslintConfigFile}`).overrides?.[0]).toStrictEqual({
         files: ['*.ts', '*.tsx'],

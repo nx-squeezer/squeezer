@@ -228,9 +228,9 @@ export class AsyncInjector implements OnDestroy {
     };
 
     const injectionContext: InjectionContext = {
-      // eslint-disable-next-line @delagen/deprecation/deprecation
+      // eslint-disable-next-line deprecation/deprecation
       inject: <T>(token: ProviderToken<T>, options: InjectOptions | InjectFlags = InjectFlags.Default): T | null =>
-        // eslint-disable-next-line @delagen/deprecation/deprecation
+        // eslint-disable-next-line deprecation/deprecation
         runInContext(() => inject(token, options as any)) as T,
       resolve: <T>(injectionToken: InjectionToken<T>) => {
         this.processDependency(asyncStaticProvider.provide, injectionToken);
