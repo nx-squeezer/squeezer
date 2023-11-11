@@ -82,7 +82,7 @@ Adds a set of [ESLint](https://eslint.org/) rules to enhance code style in proje
 - `sonarjs/recommended`
 - `unused-imports`
 - `@typescript-eslint/recommended`
-- `@delagen/deprecation`
+- `deprecation`
 - `import/recommended`
 
 ## [github-workflow](src/generators/github-workflow/README.md)

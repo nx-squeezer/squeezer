@@ -87,8 +87,8 @@ function addTypescriptRecommendedRules(tree: Tree): void {
 function addDeprecationRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
   addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
-  addDevDependencyToPackageJson(tree, '@delagen/eslint-plugin-deprecation');
-  addEsLintPlugin(tree, '@delagen/deprecation');
+  addDevDependencyToPackageJson(tree, 'eslint-plugin-deprecation');
+  addEsLintPlugin(tree, 'deprecation');
   addEsLintRules(tree, deprecationRule);
   addParserOptionsToProjects(tree);
 }
