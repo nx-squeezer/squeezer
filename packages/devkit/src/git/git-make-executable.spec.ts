@@ -28,7 +28,7 @@ describe('@nx-squeezer/devkit gitMakeExecutable', () => {
   it('should throw error if exec fails', () => {
     (exec as jest.Mock).mockReturnValue({ error: '' });
 
-    expect(() => gitMakeExecutable(tree, file)).toThrowError(
+    expect(() => gitMakeExecutable(tree, file)).toThrow(
       `Could not add execution permissions to git index for file: ${file}`
     );
   });

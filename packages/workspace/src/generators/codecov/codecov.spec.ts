@@ -168,7 +168,7 @@ describe('@nx-squeezer/workspace codecov', () => {
     });
 
     it('should fail if jest config does not exist', () => {
-      expect(() => updateProjectJestCoverage(tree, jestConfigPath)).toThrowError(
+      expect(() => updateProjectJestCoverage(tree, jestConfigPath)).toThrow(
         `Jest config expected at path: ${jestConfigPath}`
       );
     });
