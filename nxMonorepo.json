@@ -35,9 +35,16 @@
     {
       "groupName": "Nx monorepo",
       "matchManagers": ["npm"],
-      "matchPackagePatterns": ["^@angular/", "^zone\\.js", "^@ngrx/", "^@ng-easy/", "^@nx-"],
-      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
-      "semanticCommitType": "fix"
+      "matchPackagePatterns": ["^tslib"],
+      "matchUpdateTypes": ["major", "minor", "patch"],
+      "enabled": false
+    },
+    {
+      "groupName": "Nx monorepo",
+      "matchManagers": ["npm"],
+      "matchPackagePatterns": ["^nx$"],
+      "matchDepTypes": ["overrides"],
+      "enabled": false
     },
     {
       "groupName": "Nx monorepo",
