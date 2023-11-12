@@ -43,7 +43,7 @@ describe('@nx-squeezer/devkit exec', () => {
 
     expect(exec('npm', ['run', 'test'])).toStrictEqual({ output: '', error: new Error('error') });
     expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
-    expect(console.error).toBeCalledWith(new Error('error'));
+    expect(console.error).toHaveBeenCalledWith(new Error('error'));
   });
 
   it('should catch string errors', () => {
@@ -55,6 +55,6 @@ describe('@nx-squeezer/devkit exec', () => {
 
     expect(exec('npm', ['run', 'test'])).toStrictEqual({ output: '', error: new Error('error') });
     expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
-    expect(console.error).toBeCalledWith(new Error('error'));
+    expect(console.error).toHaveBeenCalledWith(new Error('error'));
   });
 });
