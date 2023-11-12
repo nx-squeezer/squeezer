@@ -49,7 +49,7 @@ describe('AsyncInjector', () => {
 
       expect(() => {
         TestBed.inject(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('InjectionToken boolean not yet resolved.');
+      }).toThrow('InjectionToken boolean not yet resolved.');
     });
 
     it('should fail injection if async injection token not registered', async () => {
@@ -57,7 +57,7 @@ describe('AsyncInjector', () => {
 
       const asyncInjector = TestBed.inject(AsyncInjector);
 
-      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError('InjectionToken boolean not provided.');
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrow('InjectionToken boolean not provided.');
 
       await expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).rejects.toBe(
         'InjectionToken boolean not provided.'
@@ -104,7 +104,7 @@ describe('AsyncInjector', () => {
       await expect(promise).rejects.toEqual(`InjectionToken boolean failed resolution: failure`);
       expect(() => {
         asyncInjector.get(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('InjectionToken boolean failed during its resolution.');
+      }).toThrow('InjectionToken boolean failed during its resolution.');
     });
 
     it('should fail when registering token if duplicated', () => {
@@ -119,7 +119,7 @@ describe('AsyncInjector', () => {
 
       expect(() => {
         TestBed.inject(BOOLEAN_INJECTOR_TOKEN);
-      }).toThrowError('InjectionToken boolean already provided.');
+      }).toThrow('InjectionToken boolean already provided.');
     });
   });
 
@@ -266,12 +266,12 @@ describe('AsyncInjector', () => {
       expect(() => {
         TestBed.configureTestingModule({ providers: [provideAsync(trueMultiProvider, mixedMultiProvider)] });
         TestBed.inject(AsyncInjector);
-      }).toThrowError(multiError);
+      }).toThrow(multiError);
 
       expect(() => {
         TestBed.configureTestingModule({ providers: [provideAsync(mixedMultiProvider, trueMultiProvider)] });
         TestBed.inject(AsyncInjector);
-      }).toThrowError(multiError);
+      }).toThrow(multiError);
     });
   });
 
@@ -541,15 +541,15 @@ describe('AsyncInjector', () => {
       TestBed.configureTestingModule({ providers: [provideAsync()] });
       const asyncInjector = TestBed.inject(AsyncInjector);
 
-      expect(() => asyncInjector.init()).toThrowError('Async injection token already initialized.');
+      expect(() => asyncInjector.init()).toThrow('Async injection token already initialized.');
     });
 
     it('should not allow resolving providers before it is initialized', async () => {
       const injector = Injector.create({ providers: [{ provide: AsyncInjector }] });
       const asyncInjector = injector.get(AsyncInjector);
 
-      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorNotInitializedMsg);
-      expect(() => asyncInjector.resolveMany()).toThrowError(asyncInjectorNotInitializedMsg);
+      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrow(asyncInjectorNotInitializedMsg);
+      expect(() => asyncInjector.resolveMany()).toThrow(asyncInjectorNotInitializedMsg);
       await expect(() => asyncInjector.resolveAll()).rejects.toEqual(new Error(asyncInjectorNotInitializedMsg));
     });
 
@@ -557,7 +557,7 @@ describe('AsyncInjector', () => {
       const injector = Injector.create({ providers: [{ provide: AsyncInjector }] });
       const asyncInjector = injector.get(AsyncInjector);
 
-      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorNotInitializedMsg);
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrow(asyncInjectorNotInitializedMsg);
     });
   });
 
@@ -570,9 +570,9 @@ describe('AsyncInjector', () => {
       const asyncInjector = TestBed.inject(AsyncInjector);
       TestBed.resetTestingModule();
 
-      expect(() =>
-        asyncInjector.init({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })
-      ).toThrowError(asyncInjectorDestroyedMsg);
+      expect(() => asyncInjector.init({ provide: BOOLEAN_INJECTOR_TOKEN, useAsyncValue: booleanAsyncValue })).toThrow(
+        asyncInjectorDestroyedMsg
+      );
     });
 
     it('should not allow resolving providers after it is destroyed', async () => {
@@ -581,8 +581,8 @@ describe('AsyncInjector', () => {
       const asyncInjector = TestBed.inject(AsyncInjector);
       TestBed.resetTestingModule();
 
-      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorDestroyedMsg);
-      expect(() => asyncInjector.resolveMany()).toThrowError(asyncInjectorDestroyedMsg);
+      expect(() => asyncInjector.resolve(BOOLEAN_INJECTOR_TOKEN)).toThrow(asyncInjectorDestroyedMsg);
+      expect(() => asyncInjector.resolveMany()).toThrow(asyncInjectorDestroyedMsg);
       await expect(() => asyncInjector.resolveAll()).rejects.toEqual(new Error(asyncInjectorDestroyedMsg));
     });
 
@@ -592,7 +592,7 @@ describe('AsyncInjector', () => {
       const asyncInjector = TestBed.inject(AsyncInjector);
       TestBed.resetTestingModule();
 
-      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrowError(asyncInjectorDestroyedMsg);
+      expect(() => asyncInjector.get(BOOLEAN_INJECTOR_TOKEN)).toThrow(asyncInjectorDestroyedMsg);
     });
   });
 
@@ -628,7 +628,7 @@ describe('AsyncInjector', () => {
 
       await TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
-      expect(() => TestBed.createComponent(TestComponent)).toThrowError(/Use directive \*ngxResolveAsyncProviders/);
+      expect(() => TestBed.createComponent(TestComponent)).toThrow(/Use directive \*ngxResolveAsyncProviders/);
     });
 
     it('should init the async injector when using the directive', async () => {
