@@ -128,9 +128,6 @@
     "typescript": "5.2.2"
   },
   "overrides": {
-    "ngx-deploy-npm@7.0.1": {
-      "@nx/devkit": ">=16.10.0"
-    },
     "@enio.ai/typedoc@1.0.8": {
       "typedoc": "^0.25.3"
     },
