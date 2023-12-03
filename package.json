@@ -40,7 +40,7 @@
     "@angular/platform-browser-dynamic": "17.0.5",
     "@angular/platform-server": "17.0.5",
     "@angular/router": "17.0.5",
-    "@angular/ssr": "17.0.4",
+    "@angular/ssr": "17.0.5",
     "@commitlint/cli": "18.4.3",
     "@commitlint/config-conventional": "18.4.3",
     "@jscutlery/semver": "4.1.0",
