@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.3](https://github.com/nx-squeezer/squeezer/compare/utils@1.0.2...utils@1.0.3) (2023-12-03)
+
+
+### Bug Fixes
+
+* **deps:** ⬆️ update nx monorepo to v17 (major) ([#1013](https://github.com/nx-squeezer/squeezer/issues/1013)) ([009816c](https://github.com/nx-squeezer/squeezer/commit/009816c38a8c630610e0c67c1d893d7f7272f2a8))
+
 ## [1.0.2](https://github.com/nx-squeezer/squeezer/compare/utils@1.0.1...utils@1.0.2) (2023-09-01)
 
 ## [1.0.1](https://github.com/nx-squeezer/squeezer/compare/utils@1.0.0...utils@1.0.1) (2023-08-14)
