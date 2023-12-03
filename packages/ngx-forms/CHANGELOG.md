@@ -2,6 +2,22 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.0](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@1.1.2...ngx-forms@2.0.0) (2023-12-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* Upgrade to Angular v17
+
+### Features
+
+* :arrow_up: upgrade to Angular v17 ([58e28fa](https://github.com/nx-squeezer/squeezer/commit/58e28faca36cbed69ca37a57a22b81053d4fccb2))
+
+
+### Bug Fixes
+
+* **deps:** ⬆️ update nx monorepo to v17 (major) ([#1013](https://github.com/nx-squeezer/squeezer/issues/1013)) ([009816c](https://github.com/nx-squeezer/squeezer/commit/009816c38a8c630610e0c67c1d893d7f7272f2a8))
+
 ## [1.1.2](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@1.1.1...ngx-forms@1.1.2) (2023-09-01)
 
 ### Dependency Updates
