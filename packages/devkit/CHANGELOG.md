@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.2.4](https://github.com/nx-squeezer/squeezer/compare/devkit@1.2.3...devkit@1.2.4) (2023-12-03)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([826075f](https://github.com/nx-squeezer/squeezer/commit/826075f200297e38aeb455c20f29153ec2b3176d))
+* **deps:** :arrow_up: update all non-major dependencies ([9776c36](https://github.com/nx-squeezer/squeezer/commit/9776c36a37566705f8089a75cb526e989da61b08))
+* **deps:** ⬆️ update nx monorepo to v17 (major) ([#1013](https://github.com/nx-squeezer/squeezer/issues/1013)) ([009816c](https://github.com/nx-squeezer/squeezer/commit/009816c38a8c630610e0c67c1d893d7f7272f2a8))
+
 ## [1.2.3](https://github.com/nx-squeezer/squeezer/compare/devkit@1.2.2...devkit@1.2.3) (2023-09-01)
 
 
