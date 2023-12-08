@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [5.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@4.0.6...workspace@5.0.0) (2023-12-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **workspace:** Upgrade to Nx v17
+
+### Miscellaneous Chores
+
+* **workspace:** upgrade Nx to v17 ([b11e7e1](https://github.com/nx-squeezer/squeezer/commit/b11e7e18fb49ca947d19a68b0af42621837c8d51))
+
 ## [4.0.6](https://github.com/nx-squeezer/squeezer/compare/workspace@4.0.5...workspace@4.0.6) (2023-12-08)
 
 ## [4.0.5](https://github.com/nx-squeezer/squeezer/compare/workspace@4.0.4...workspace@4.0.5) (2023-12-03)
