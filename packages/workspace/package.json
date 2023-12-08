@@ -35,8 +35,8 @@
   "executors": "./executors.json",
   "dependencies": {
     "@nx-squeezer/devkit": "^2.0.0",
-    "node-fetch-commonjs": "^3.3.2",
-    "yaml": "^2.3.4"
+    "node-fetch-commonjs": "^3.3.0",
+    "yaml": "^2.3.0"
   },
   "peerDependencies": {
     "@commitlint/cli": "^18.0.0",
