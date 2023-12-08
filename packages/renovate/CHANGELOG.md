@@ -2,6 +2,17 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.0](https://github.com/nx-squeezer/squeezer/compare/renovate@2.0.5...renovate@3.0.0) (2023-12-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **renovate:** Upgrade to Nx v17
+
+### Miscellaneous Chores
+
+* **renovate:** upgrade Nx to v17 ([9ed28d1](https://github.com/nx-squeezer/squeezer/commit/9ed28d1faf5deb64788cafc230ee5c400102f25d))
+
 ## [2.0.5](https://github.com/nx-squeezer/squeezer/compare/renovate@2.0.4...renovate@2.0.5) (2023-12-08)
 
 ## [2.0.4](https://github.com/nx-squeezer/squeezer/compare/renovate@2.0.3...renovate@2.0.4) (2023-12-03)
