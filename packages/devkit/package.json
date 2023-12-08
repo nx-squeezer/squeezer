@@ -31,9 +31,9 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "fs-extra": "11.2.0",
-    "which": "4.0.0",
-    "yaml": "2.3.4"
+    "fs-extra": "^11.2.0",
+    "which": "^4.0.0",
+    "yaml": "^2.3.0"
   },
   "peerDependencies": {
     "@nx/devkit": "^17.0.0",
