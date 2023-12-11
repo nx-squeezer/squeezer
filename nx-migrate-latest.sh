@@ -10,5 +10,6 @@ npx nx migrate ngx-deploy-npm@latest
 npx nx migrate @enio.ai/typedoc@latest
 npm install
 npx nx migrate --run-migrations --if-exists
+npm install
 rm -f migrations.json
 npx nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
