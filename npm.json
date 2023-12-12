@@ -6,7 +6,7 @@
     {
       "groupName": "Node",
       "matchPackageNames": ["node", "npm"],
-      "matchUpdateTypes": ["major", "minor", "bump"],
+      "matchUpdateTypes": ["minor", "bump"],
       "enabled": false
     }
   ]
