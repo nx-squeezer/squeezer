@@ -17,7 +17,7 @@
     "url": "git+https://github.com/nx-squeezer/squeezer.git"
   },
   "engines": {
-    "node": ">=18.10.0",
+    "node": "^18.13.0 || ^20.9.0",
     "npm": ">=9.5.0"
   },
   "private": true,
@@ -139,4 +139,3 @@
     }
   }
 }
-
