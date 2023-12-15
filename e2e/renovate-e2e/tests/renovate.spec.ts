@@ -1,5 +1,3 @@
-import { performance } from 'perf_hooks';
-
 import { runNxCommandAsync, checkFilesExist, updateFile } from '@nx/plugin/testing';
 
 import { securityFile, ensureNxProject, ciFile } from '@nx-squeezer/devkit';
@@ -8,10 +6,6 @@ import { renovateCiFile, renovateConfigFile, renovatePresets, renovateFile } fro
 jest.setTimeout(120_000);
 
 describe('@nx-squeezer/renovate e2e', () => {
-  beforeAll(() => {
-    global.performance = performance as any;
-  });
-
   // Setting up individual workspaces per
   // test can cause e2e runs to take a long time.
   // For this reason, we recommend each suite only
@@ -37,7 +31,6 @@ on:
     // `nx reset` kills the daemon, and performs
     // some work which can help clean up e2e leftovers
     await runNxCommandAsync('reset');
-    global.performance = undefined as any;
   });
 
   it('should setup Renovate CI workflow and add presets', async () => {
