@@ -30,7 +30,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: NPM
-        uses: ng-easy/npm-setup@v3.0.0
+        uses: ng-easy/npm-setup@v4.0.0
         with:
           nx-key: build
 
