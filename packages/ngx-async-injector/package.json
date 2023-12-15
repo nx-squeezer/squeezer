@@ -20,7 +20,7 @@
     "directory": "packages/ngx-async-injector"
   },
   "engines": {
-    "node": ">=18.10.0",
+    "node": "^18.13.0 || ^20.9.0",
     "npm": ">=9.5.0"
   },
   "license": "MIT",
