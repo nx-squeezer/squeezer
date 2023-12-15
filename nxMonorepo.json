@@ -78,14 +78,16 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
-          "rm -f package-lock.json",
-          "npm install --ignore-scripts",
+          "npm ci --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
           "npm install --ignore-scripts",
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
-          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
+          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache",
+          "rm -f package-lock.json",
+          "rm -rf node_modules",
+          "npm install --ignore-scripts"
         ]
       }
     },
@@ -106,14 +108,16 @@
       "matchUpdateTypes": ["major", "minor", "patch", "pin"],
       "postUpgradeTasks": {
         "commands": [
-          "rm -f package-lock.json",
-          "npm install --ignore-scripts",
+          "npm ci --ignore-scripts",
           "npm run prepare --if-present",
           "npx --no-install nx migrate {{{depName}}} --from={{{depName}}}@{{{replace '^[^\\d]*' '' currentValue}}} --to={{{depName}}}@{{{replace '^[^\\d]*' '' newValue}}}",
           "npm install --ignore-scripts",
           "npx --no-install nx migrate --run-migrations --if-exists",
           "rm -f migrations.json",
-          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache"
+          "npx --no-install nx run-many --target=lint --all --parallel --fix --skip-nx-cache",
+          "rm -f package-lock.json",
+          "rm -rf node_modules",
+          "npm install --ignore-scripts"
         ]
       }
     }
