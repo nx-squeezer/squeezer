@@ -2,7 +2,7 @@ name: Migrate
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 0 * * *' # daily at 00:00
+    - cron: '0 0 * * FRI' # every Friday at 00:00
 
 jobs:
   migrate:
