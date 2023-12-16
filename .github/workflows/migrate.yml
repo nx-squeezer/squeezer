@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4.1.1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.0
@@ -39,9 +39,9 @@ jobs:
 
       - name: Run Migrations
         run: |
-          npm install --ignore-scripts
+          npm install --ignore-scripts --no-audit
           npx --no-install nx migrate --run-migrations --if-exists
-          npm install --ignore-scripts
+          npm install --ignore-scripts --no-audit
           rm -f migrations.json
 
       - name: Format
@@ -52,6 +52,7 @@ jobs:
         id: pull-request
         uses: peter-evans/create-pull-request@v5.0.2
         with:
+          token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: 'chore: :arrow_up: migrate Nx workspace'
           branch: nx-migrate
           delete-branch: true
@@ -59,6 +60,8 @@ jobs:
           assignees: samuelfernandez
 
       - name: Enable Auto-Merge
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh pr merge ${{ steps.pull-request.outputs.pull-request-number }} --auto --squash
 

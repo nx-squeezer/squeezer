@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4.1.1
 
       - name: Self-hosted Renovate
         uses: renovatebot/github-action@b8ce565a2e98de1fec9696a76fba7beb01ec29b2 # v39.2.3
