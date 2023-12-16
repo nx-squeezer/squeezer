@@ -1,0 +1,72 @@
+name: Migrate
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *' # daily at 00:00
+
+jobs:
+  migrate:
+    name: Migrate Nx Workspace
+    runs-on: ubuntu-latest
+    env:
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.0
+        with:
+          node-version: 20.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v4.0.0
+        with:
+          nx-key: migrate
+
+      - name: Migrate Nx and Angular
+        run: |
+          npx --no-install nx migrate latest
+          npx --no-install nx migrate @angular/core@latest
+          npx --no-install nx migrate @angular/cli@latest
+
+      - name: Migrate Plugins
+        run: |
+          npx --no-install nx migrate @enio.ai/typedoc@latest
+          npx --no-install nx migrate @jscutlery/semver@latest
+          npx --no-install nx migrate ngx-deploy-npm@latest
+
+      - name: Run Migrations
+        run: |
+          npm install --ignore-scripts
+          npx --no-install nx migrate --run-migrations --if-exists
+          npm install --ignore-scripts
+          rm -f migrations.json
+
+      - name: Format
+        run: |
+          npx --no-install nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
+
+      - name: Create Pull Request
+        id: pull-request
+        uses: peter-evans/create-pull-request@v5.0.2
+        with:
+          commit-message: 'chore: :arrow_up: migrate Nx workspace'
+          branch: nx-migrate
+          delete-branch: true
+          title: 'chore: :arrow_up: migrate Nx workspace'
+          assignees: samuelfernandez
+
+      - name: Enable Auto-Merge
+        run: |
+          gh pr merge ${{ steps.pull-request.outputs.pull-request-number }} --auto --squash
+
+      - uses: dblock/create-a-github-issue@v3.1.1
+        name: Create Issue
+        if: failure()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: .github/WORKFLOW_ISSUE.md
+          update_existing: true
