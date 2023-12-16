@@ -47,6 +47,7 @@ jobs:
       - name: Format
         run: |
           npx --no-install nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
+          rm .git/hooks -rf
 
       - name: Create Pull Request
         id: pull-request
@@ -57,6 +58,7 @@ jobs:
           branch: nx-migrate
           delete-branch: true
           title: 'chore: :arrow_up: migrate Nx workspace'
+          body: 'Automated changes by [Nx Migrate](https://github.com/nx-squeezer/squeezer/actions/workflows/migrate.yml) workflow.'
           assignees: samuelfernandez
 
       - name: Enable Auto-Merge
