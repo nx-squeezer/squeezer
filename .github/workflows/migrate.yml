@@ -52,7 +52,7 @@ jobs:
         id: pull-request
         uses: peter-evans/create-pull-request@v5.0.2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.MIGRATE_TOKEN }}
           commit-message: 'chore: :arrow_up: migrate Nx workspace'
           branch: nx-migrate
           delete-branch: true
@@ -61,7 +61,7 @@ jobs:
 
       - name: Enable Auto-Merge
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.MIGRATE_TOKEN }}
         run: |
           gh pr merge ${{ steps.pull-request.outputs.pull-request-number }} --auto --squash
 
