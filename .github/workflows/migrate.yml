@@ -47,7 +47,6 @@ jobs:
       - name: Format
         run: |
           npx --no-install nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
-          rm .git/hooks -rf
 
       - name: Create Pull Request
         id: pull-request
