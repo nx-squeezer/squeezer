@@ -68,7 +68,7 @@
     "@angular/cli": "17.0.7",
     "@angular/compiler-cli": "17.0.7",
     "@angular/language-service": "17.0.7",
-    "@commitlint/config-angular": "18.4.3",
+    "@commitlint/config-angular": "18.4.4",
     "@enio.ai/typedoc": "1.0.8",
     "@nx/angular": "17.2.5",
     "@nx/cypress": "17.2.5",
