@@ -15,9 +15,9 @@ npx --no-install nx migrate @enio.ai/typedoc@latest
 
 # Run Migrations
 rm package-lock.json
-npm install --ignore-scripts --no-audit
+npm install --no-audit
 npx --no-install nx migrate --run-migrations --if-exists
-npm install --ignore-scripts --no-audit
+npm install --no-audit
 rm -f migrations.json
 
 # Format
