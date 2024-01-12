@@ -1,15 +1,24 @@
 #!/bin/bash
-rm package-lock.json
 rm -rf node_modules
-npm install
-npx nx migrate latest
-npx nx migrate @angular/core@latest
-npx nx migrate @angular/cli@latest
-npx nx migrate @jscutlery/semver@latest
-npx nx migrate ngx-deploy-npm@latest
-npx nx migrate @enio.ai/typedoc@latest
-npm install
-npx nx migrate --run-migrations --if-exists
-npm install
+npm ci --no-audit
+
+# Migrate Nx and Angular
+npx --no-install nx migrate latest
+npx --no-install nx migrate @angular/core@latest
+npx --no-install nx migrate @angular/cli@latest
+npx --no-install nx migrate @schematics/angular@latest
+
+# Migrate Plugins
+npx --no-install nx migrate @jscutlery/semver@latest
+npx --no-install nx migrate ngx-deploy-npm@latest
+npx --no-install nx migrate @enio.ai/typedoc@latest
+
+# Run Migrations
+rm package-lock.json
+npm install --ignore-scripts --no-audit
+npx --no-install nx migrate --run-migrations --if-exists
+npm install --ignore-scripts --no-audit
 rm -f migrations.json
-npx nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
+
+# Format
+npx --no-install nx run-many --target=lint --all --parallel=3 --fix --skip-nx-cache
