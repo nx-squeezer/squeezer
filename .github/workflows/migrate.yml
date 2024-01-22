@@ -28,9 +28,11 @@ jobs:
       - name: Migrate Nx and Angular
         run: |
           npx --no-install nx migrate latest
+          npm install --no-audit
           npx --no-install nx migrate @angular/core@latest
           npx --no-install nx migrate @angular/cli@latest
           npx --no-install nx migrate @schematics/angular@latest
+          npm install --no-audit
 
       - name: Migrate Plugins
         run: |
