@@ -40,9 +40,9 @@ jobs:
 
       - name: Run Migrations
         run: |
-          npm install --ignore-scripts --no-audit
+          npm install --no-audit
           npx --no-install nx migrate --run-migrations --if-exists
-          npm install --ignore-scripts --no-audit
+          npm install --no-audit
           rm -f migrations.json
 
       - name: Format
