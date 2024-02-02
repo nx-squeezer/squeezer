@@ -18,7 +18,7 @@ export function installHuskyTask(tree: Tree) {
     console.log(`Husky already installed, skipping installation.`);
   } else {
     console.log(`Installing husky...`);
-    const { error } = exec('npx', ['husky', 'install'], { cwd: tree.root });
+    const { error } = exec('npx', ['husky', 'init'], { cwd: tree.root });
 
     if (error != null) {
       console.error(`Could not install husky in path: ${tree.root}`);
@@ -29,16 +29,19 @@ export function installHuskyTask(tree: Tree) {
 export function addHuskyHookTask(tree: Tree, hook: HuskyHooks, command: string) {
   const hookPath: string = joinNormalize(huskyPath, hook);
 
+  if (!tree.exists(hookPath)) {
+    console.error(`Husky hook does not exist in path: ${tree.root}`);
+    return;
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  if (tree.exists(hookPath) && tree.read(hookPath)!.toString().split('\n').includes(command)) {
+  const huskyContent: string[] = tree.read(hookPath)!.toString().split('\n');
+  if (huskyContent.includes(command)) {
     console.log(`Command "${command}" already added to ${hook} husky hook.`);
     return;
   }
 
   console.log(`Adding husky hook ${hook} with command "${command}"`);
-  const { error } = exec('npx', ['husky', 'add', `${huskyPath}/${hook}`, command], { cwd: tree.root });
-
-  if (error != null) {
-    console.error(`Could not add husky hook in path: ${tree.root}`);
-  }
+  huskyContent.push(command);
+  tree.write(hookPath, huskyContent.join('\n'));
 }

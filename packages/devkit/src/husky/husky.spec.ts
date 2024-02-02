@@ -35,7 +35,7 @@ describe('@nx-squeezer/devkit husky', () => {
 
       installHuskyTask(tree);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'install'], { cwd: '/virtual' });
+      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'init'], { cwd: '/virtual' });
     });
 
     it('should skip installation if already installed', () => {
@@ -60,48 +60,36 @@ describe('@nx-squeezer/devkit husky', () => {
     const hook: HuskyHooks = 'pre-commit';
     const command = 'npm run test';
 
-    it('should add husky hook if husky not installed', () => {
+    it('should fail if husky not installed', () => {
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
-        cwd: '/virtual',
-      });
+      expect(console.error).toHaveBeenCalledWith(`Husky hook does not exist in path: /virtual`);
     });
 
-    it('should add husky hook if husky installed but hook does not exist', () => {
+    it('should fail if husky installed but hook does not exist', () => {
       tree.write(joinNormalize(huskyPath, 'commit'), '');
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
-        cwd: '/virtual',
-      });
+      expect(console.error).toHaveBeenCalledWith(`Husky hook does not exist in path: /virtual`);
     });
 
-    it('should add husky hook if husky installed, hook exists but command is not defined', () => {
-      tree.write(joinNormalize(huskyPath, hook), '');
+    it('should add husky hook if husky installed, hook exists and command is not defined', () => {
+      const hookPath = joinNormalize(huskyPath, hook);
+      tree.write(hookPath, '');
 
       addHuskyHookTask(tree, hook, command);
 
-      expect(exec).toHaveBeenCalledWith(`npx`, ['husky', 'add', `${huskyPath}/${hook}`, command], {
-        cwd: '/virtual',
-      });
+      expect(tree.read(hookPath)?.toString()).toContain(command);
     });
 
     it('should skip adding the hook if already exists', () => {
-      tree.write(joinNormalize(huskyPath, hook), command);
+      const hookPath = joinNormalize(huskyPath, hook);
+      tree.write(hookPath, command);
 
       addHuskyHookTask(tree, hook, command);
 
       expect(console.log).toHaveBeenCalledWith(`Command "${command}" already added to ${hook} husky hook.`);
-    });
-
-    it('should not fail if exec sync fails', () => {
-      (exec as jest.Mock).mockReturnValue({ error: '' });
-
-      addHuskyHookTask(tree, hook, command);
-
-      expect(console.error).toHaveBeenCalledWith(`Could not add husky hook in path: /virtual`);
     });
   });
 });
