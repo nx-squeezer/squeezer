@@ -124,18 +124,10 @@
     "ts-node": "10.9.2",
     "tslib": "2.5.0",
     "typedoc": "0.25.7",
-    "typedoc-plugin-rename-defaults": "0.6.5",
-    "typedoc-theme-hierarchy": "3.2.1",
     "typescript": "5.2.2"
   },
   "overrides": {
     "@enio.ai/typedoc@1.0.8": {
-      "typedoc": "^0.25.3"
-    },
-    "typedoc-plugin-rename-defaults@0.6.5": {
-      "typedoc": "^0.25.3"
-    },
-    "typedoc-theme-hierarchy@3.2.1": {
       "typedoc": "^0.25.3"
     }
   }

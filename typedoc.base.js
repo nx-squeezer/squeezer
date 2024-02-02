@@ -13,7 +13,7 @@ module.exports = {
   externalSymbolLinkMappings: {},
   includes: '',
   emit: 'docs',
-  theme: 'hierarchy',
+  theme: 'default',
   includeVersion: true,
   readme: './README.md',
   disableSources: false,
@@ -54,6 +54,5 @@ module.exports = {
   requiredToBeDocumented: [],
   treatWarningsAsErrors: false,
   intentionallyNotExported: [],
-  logLevel: 'Info',
-  plugin: ['typedoc-plugin-rename-defaults', 'typedoc-theme-hierarchy'],
+  logLevel: 'Info'
 };
