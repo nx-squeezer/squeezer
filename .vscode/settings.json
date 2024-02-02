@@ -1,8 +1,26 @@
 {
-  "eslint.validate": ["json"],
   "editor.formatOnPaste": true,
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
   "conventionalCommits.scopes": [
     "deps",
     "devkit",
@@ -18,20 +36,10 @@
     "workspace",
     "workspace-e2e"
   ],
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
-  "[yaml]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[markdown]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[html]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-  },
+
   "coverage-gutters.showGutterCoverage": true,
   "coverage-gutters.showRulerCoverage": true,
-  "coverage-gutters.showLineCoverage": false
+  "coverage-gutters.showLineCoverage": false,
+  "eslint.format.enable": true,
+  "eslint.validate": ["json"]
 }
