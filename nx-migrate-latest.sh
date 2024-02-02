@@ -14,10 +14,11 @@ npx --no-install nx migrate ngx-deploy-npm@latest
 npx --no-install nx migrate @enio.ai/typedoc@latest
 
 # Run Migrations
+rm -rf node_modules
 rm package-lock.json
-npm install --no-audit
+npm install
 npx --no-install nx migrate --run-migrations --if-exists
-npm install --no-audit
+npm install
 rm -f migrations.json
 
 # Format
