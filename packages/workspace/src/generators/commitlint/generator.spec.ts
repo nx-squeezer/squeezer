@@ -5,7 +5,7 @@ import {
   addHuskyToPackageJson,
   addDevDependencyToPackageJson,
   installHuskyTask,
-  addHuskyHookTask,
+  addHuskyHook,
 } from '@nx-squeezer/devkit';
 
 import {
@@ -49,6 +49,12 @@ describe('@nx-squeezer/workspace commitlint generator', () => {
     expect(addDevDependencyToPackageJson).toHaveBeenCalledWith(tree, commitlintConfigConventional);
   });
 
+  it('should add husky hook', async () => {
+    await commitlintGenerator(tree);
+
+    expect(addHuskyHook).toHaveBeenCalledWith(tree, 'commit-msg', 'npx --no-install commitlint --edit $1');
+  });
+
   it('should create commitlint config', async () => {
     await commitlintGenerator(tree);
 
@@ -73,6 +79,5 @@ describe('@nx-squeezer/workspace commitlint generator', () => {
 
     expect(installPackagesTask).toHaveBeenCalled();
     expect(installHuskyTask).toHaveBeenCalled();
-    expect(addHuskyHookTask).toHaveBeenCalledWith(tree, 'commit-msg', 'npx --no-install commitlint --edit $1');
   });
 });

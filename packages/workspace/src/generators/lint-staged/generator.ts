@@ -4,7 +4,7 @@ import {
   addHuskyToPackageJson,
   addDevDependencyToPackageJson,
   installHuskyTask,
-  addHuskyHookTask,
+  addHuskyHook,
 } from '@nx-squeezer/devkit';
 
 import { lintStaged, LintStagedConfig, lintStagedConfigPath, lintStagedDefaultConfig } from './lint-staged';
@@ -18,12 +18,12 @@ export default async function lintStagedGenerator(tree: Tree) {
     : {};
 
   writeJson(tree, lintStagedConfigPath, { ...existingConfiguration, ...lintStagedDefaultConfig });
+  addHuskyHook(tree, 'pre-commit', 'npx lint-staged');
 
   await formatFiles(tree);
 
   return () => {
     installPackagesTask(tree);
     installHuskyTask(tree);
-    addHuskyHookTask(tree, 'pre-commit', 'npx lint-staged');
   };
 }

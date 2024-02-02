@@ -4,7 +4,7 @@ import {
   addHuskyToPackageJson,
   addDevDependencyToPackageJson,
   installHuskyTask,
-  addHuskyHookTask,
+  addHuskyHook,
 } from '@nx-squeezer/devkit';
 
 import {
@@ -25,12 +25,12 @@ export default async function commitlintGenerator(tree: Tree) {
     : {};
 
   writeJson(tree, commitlintConfigPath, { ...existingConfiguration, ...commitlintDefaultConfig });
+  addHuskyHook(tree, 'commit-msg', 'npx --no-install commitlint --edit $1');
 
   await formatFiles(tree);
 
   return () => {
     installPackagesTask(tree);
     installHuskyTask(tree);
-    addHuskyHookTask(tree, 'commit-msg', 'npx --no-install commitlint --edit $1');
   };
 }

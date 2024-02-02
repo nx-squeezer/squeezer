@@ -1,7 +1,7 @@
 import { Tree } from '@nx/devkit';
 import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
-import { addHuskyHookTask, addHuskyToPackageJson, husky, HuskyHooks, huskyPath, installHuskyTask } from './husky';
+import { addHuskyHook, addHuskyToPackageJson, husky, HuskyHooks, huskyPath, installHuskyTask } from './husky';
 import { exec } from '../exec';
 import { addDevDependencyToPackageJson, addScriptToPackageJson } from '../package-json';
 import { joinNormalize } from '../path';
@@ -56,13 +56,13 @@ describe('@nx-squeezer/devkit husky', () => {
     });
   });
 
-  describe('addHuskyHookTask', () => {
+  describe('addHuskyHook', () => {
     const hook: HuskyHooks = 'pre-commit';
     const hookPath = joinNormalize(huskyPath, hook);
     const command = 'npm run test';
 
     it('should add hook if husky installed but hook does not exist', () => {
-      addHuskyHookTask(tree, hook, command);
+      addHuskyHook(tree, hook, command);
 
       expect(tree.read(hookPath)?.toString()).toContain(command);
     });
@@ -70,7 +70,7 @@ describe('@nx-squeezer/devkit husky', () => {
     it('should add husky hook if husky installed, hook exists and command is not defined', () => {
       tree.write(hookPath, '');
 
-      addHuskyHookTask(tree, hook, command);
+      addHuskyHook(tree, hook, command);
 
       expect(tree.read(hookPath)?.toString()).toContain(command);
     });
@@ -78,7 +78,7 @@ describe('@nx-squeezer/devkit husky', () => {
     it('should skip adding the hook if already exists', () => {
       tree.write(hookPath, command);
 
-      addHuskyHookTask(tree, hook, command);
+      addHuskyHook(tree, hook, command);
 
       expect(console.log).toHaveBeenCalledWith(`Command "${command}" already added to ${hook} husky hook.`);
     });

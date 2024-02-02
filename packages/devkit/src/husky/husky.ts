@@ -26,7 +26,7 @@ export function installHuskyTask(tree: Tree) {
   }
 }
 
-export function addHuskyHookTask(tree: Tree, hook: HuskyHooks, command: string) {
+export function addHuskyHook(tree: Tree, hook: HuskyHooks, command: string) {
   const hookPath: string = joinNormalize(huskyPath, hook);
 
   const huskyContent: string[] = tree.read(hookPath)?.toString().split('\n') ?? [];
