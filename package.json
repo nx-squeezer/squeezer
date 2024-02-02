@@ -47,7 +47,7 @@
     "@nx/devkit": "17.2.8",
     "husky": "9.0.10",
     "lint-staged": "15.2.0",
-    "ngx-deploy-npm": "7.1.0",
+    "ngx-deploy-npm": "8.0.1",
     "node-fetch-commonjs": "3.3.2",
     "prettier": "2.8.8",
     "radash": "11.0.0",
