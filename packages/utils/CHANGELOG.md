@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [1.0.4](https://github.com/nx-squeezer/squeezer/compare/utils@1.0.3...utils@1.0.4) (2024-02-02)
+
+
+### Bug Fixes
+
+* upgrade nx to v17.2.0 ([#1099](https://github.com/nx-squeezer/squeezer/issues/1099)) ([85f83e1](https://github.com/nx-squeezer/squeezer/commit/85f83e1b998a0055ef117c0ca507626526b76cac))
+
 ## [1.0.3](https://github.com/nx-squeezer/squeezer/compare/utils@1.0.2...utils@1.0.3) (2023-12-03)
 
 
