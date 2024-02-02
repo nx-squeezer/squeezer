@@ -1,6 +1,6 @@
 {
   "name": "@nx-squeezer/workspace",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "description": "Executors and generators for Nx and Angular projects",
   "keywords": [
     "nx",
