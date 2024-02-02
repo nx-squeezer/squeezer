@@ -10,7 +10,7 @@ export type HuskyHooks = 'pre-commit' | 'commit-msg';
 
 export function addHuskyToPackageJson(tree: Tree) {
   addDevDependencyToPackageJson(tree, husky);
-  addScriptToPackageJson(tree, 'prepare', 'husky install');
+  addScriptToPackageJson(tree, 'prepare', 'husky');
 }
 
 export function installHuskyTask(tree: Tree) {
@@ -29,13 +29,7 @@ export function installHuskyTask(tree: Tree) {
 export function addHuskyHookTask(tree: Tree, hook: HuskyHooks, command: string) {
   const hookPath: string = joinNormalize(huskyPath, hook);
 
-  if (!tree.exists(hookPath)) {
-    console.error(`Husky hook does not exist in path: ${tree.root}`);
-    return;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const huskyContent: string[] = tree.read(hookPath)!.toString().split('\n');
+  const huskyContent: string[] = tree.read(hookPath)?.toString().split('\n') ?? [];
   if (huskyContent.includes(command)) {
     console.log(`Command "${command}" already added to ${hook} husky hook.`);
     return;

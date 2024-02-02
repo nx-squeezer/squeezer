@@ -25,7 +25,7 @@ describe('@nx-squeezer/devkit husky', () => {
       addHuskyToPackageJson(tree);
 
       expect(addDevDependencyToPackageJson).toHaveBeenCalledWith(tree, husky);
-      expect(addScriptToPackageJson).toHaveBeenCalledWith(tree, 'prepare', 'husky install');
+      expect(addScriptToPackageJson).toHaveBeenCalledWith(tree, 'prepare', 'husky');
     });
   });
 
@@ -58,24 +58,16 @@ describe('@nx-squeezer/devkit husky', () => {
 
   describe('addHuskyHookTask', () => {
     const hook: HuskyHooks = 'pre-commit';
+    const hookPath = joinNormalize(huskyPath, hook);
     const command = 'npm run test';
 
-    it('should fail if husky not installed', () => {
+    it('should add hook if husky installed but hook does not exist', () => {
       addHuskyHookTask(tree, hook, command);
 
-      expect(console.error).toHaveBeenCalledWith(`Husky hook does not exist in path: /virtual`);
-    });
-
-    it('should fail if husky installed but hook does not exist', () => {
-      tree.write(joinNormalize(huskyPath, 'commit'), '');
-
-      addHuskyHookTask(tree, hook, command);
-
-      expect(console.error).toHaveBeenCalledWith(`Husky hook does not exist in path: /virtual`);
+      expect(tree.read(hookPath)?.toString()).toContain(command);
     });
 
     it('should add husky hook if husky installed, hook exists and command is not defined', () => {
-      const hookPath = joinNormalize(huskyPath, hook);
       tree.write(hookPath, '');
 
       addHuskyHookTask(tree, hook, command);
@@ -84,7 +76,6 @@ describe('@nx-squeezer/devkit husky', () => {
     });
 
     it('should skip adding the hook if already exists', () => {
-      const hookPath = joinNormalize(huskyPath, hook);
       tree.write(hookPath, command);
 
       addHuskyHookTask(tree, hook, command);
