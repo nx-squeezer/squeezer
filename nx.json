@@ -148,7 +148,7 @@
     },
     "ngx-deploy-npm:deploy": {
       "options": {
-        "outputPath": "dist/{projectRoot}",
+        "distFolderPath": "dist/{projectRoot}",
         "access": "public"
       }
     },
