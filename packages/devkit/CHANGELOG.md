@@ -2,6 +2,15 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.0.1](https://github.com/nx-squeezer/squeezer/compare/devkit@2.0.0...devkit@2.0.1) (2024-02-02)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([#1097](https://github.com/nx-squeezer/squeezer/issues/1097)) ([fd00a7a](https://github.com/nx-squeezer/squeezer/commit/fd00a7af388edb30a52c5fde79cdb5a95a7dab05))
+* **deps:** upgrade Angular to 17.1.0 ([#1172](https://github.com/nx-squeezer/squeezer/issues/1172)) ([a1f0daf](https://github.com/nx-squeezer/squeezer/commit/a1f0daf11480e33f1fa2efa553da4db01a7502b1))
+* upgrade nx to v17.2.0 ([#1099](https://github.com/nx-squeezer/squeezer/issues/1099)) ([85f83e1](https://github.com/nx-squeezer/squeezer/commit/85f83e1b998a0055ef117c0ca507626526b76cac))
+
 ## [2.0.0](https://github.com/nx-squeezer/squeezer/compare/devkit@1.2.5...devkit@2.0.0) (2023-12-08)
 
 
