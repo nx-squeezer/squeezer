@@ -113,7 +113,7 @@ jobs:
         run: npx nx affected --target=test --parallel=3
 
       - name: Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         if: hashFiles('coverage/**/*') != ''
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
