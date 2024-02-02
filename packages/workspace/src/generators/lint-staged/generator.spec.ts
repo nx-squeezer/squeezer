@@ -3,7 +3,7 @@ import { createTreeWithEmptyWorkspace } from '@nx/devkit/testing';
 
 import {
   addDevDependencyToPackageJson,
-  addHuskyHookTask,
+  addHuskyHook,
   addHuskyToPackageJson,
   installHuskyTask,
 } from '@nx-squeezer/devkit';
@@ -42,6 +42,12 @@ describe('@nx-squeezer/workspace lint-staged generator', () => {
     expect(addDevDependencyToPackageJson).toHaveBeenCalledWith(tree, lintStaged);
   });
 
+  it('should add husky hook', async () => {
+    await lintStagedGenerator(tree);
+
+    expect(addHuskyHook).toHaveBeenCalledWith(tree, 'pre-commit', 'npx lint-staged');
+  });
+
   it('should create lint-staged config', async () => {
     await lintStagedGenerator(tree);
 
@@ -66,6 +72,5 @@ describe('@nx-squeezer/workspace lint-staged generator', () => {
 
     expect(installPackagesTask).toHaveBeenCalled();
     expect(installHuskyTask).toHaveBeenCalled();
-    expect(addHuskyHookTask).toHaveBeenCalledWith(tree, 'pre-commit', 'npx lint-staged');
   });
 });
