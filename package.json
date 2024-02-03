@@ -28,7 +28,7 @@
     "format": "nx run-many --target=lint --parallel=3 --all --fix",
     "nx": "nx",
     "test": "nx run-many --target=test --parallel=3 --all",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "dependencies": {
     "@angular/animations": "17.1.2",
