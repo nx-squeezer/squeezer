@@ -12,6 +12,7 @@ npx --no-install nx migrate @schematics/angular@latest
 npx --no-install nx migrate @jscutlery/semver@latest
 npx --no-install nx migrate ngx-deploy-npm@latest
 npx --no-install nx migrate @enio.ai/typedoc@latest
+npx --no-install nx migrate @twittwer/compodoc@latest
 
 # Run Migrations
 rm -rf node_modules

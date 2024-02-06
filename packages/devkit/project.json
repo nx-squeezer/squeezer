@@ -26,7 +26,7 @@
       "executor": "ngx-deploy-npm:deploy"
     },
     "docs": {
-      "executor": "@enio.ai/typedoc:typedoc"
+      "executor": "@twittwer/compodoc:compodoc"
     }
   },
   "tags": []

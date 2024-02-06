@@ -163,6 +163,19 @@
         }
       }
     },
+    "@twittwer/compodoc:compodoc": {
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "tsConfig": "{projectRoot}/tsconfig.lib.json",
+        "outputPath": "{workspaceRoot}/docs/{projectRoot}",
+        "disableCoverage": false
+      },
+      "configurations": {
+        "json": {
+          "exportFormat": "json"
+        }
+      }
+    },
     "build": {
       "dependsOn": ["^build"],
       "cache": true
