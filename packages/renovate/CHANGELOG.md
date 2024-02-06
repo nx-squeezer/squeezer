@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.1.0](https://github.com/nx-squeezer/squeezer/compare/renovate@3.0.1...renovate@3.1.0) (2024-02-06)
+
+
+### Features
+
+* widen peer dependency to include Nx v17 and v18 ([#1190](https://github.com/nx-squeezer/squeezer/issues/1190)) ([4b148a1](https://github.com/nx-squeezer/squeezer/commit/4b148a105efc328cbb287869081db2b5ea654c5e))
+
+
+### Bug Fixes
+
+* **deps:** set nx-squeezer/devkit as peer dep ([082c126](https://github.com/nx-squeezer/squeezer/commit/082c126c0401da0457b2ddb15bea19fe5894ae2f))
+
 ## [3.0.1](https://github.com/nx-squeezer/squeezer/compare/renovate@3.0.0...renovate@3.0.1) (2024-02-02)
 
 
