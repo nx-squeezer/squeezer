@@ -2,6 +2,23 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [6.0.0](https://github.com/nx-squeezer/squeezer/compare/workspace@5.0.2...workspace@6.0.0) (2024-02-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* **deps:** Upgrade to husky v9
+
+### Features
+
+* **deps:** :arrow_up: upgrade husky to v9 ([#1191](https://github.com/nx-squeezer/squeezer/issues/1191)) ([81d1ee4](https://github.com/nx-squeezer/squeezer/commit/81d1ee4a93f922dee1e0bbdb6f55f3d546165e70))
+* widen peer dependency to include Nx v17 and v18 ([#1190](https://github.com/nx-squeezer/squeezer/issues/1190)) ([4b148a1](https://github.com/nx-squeezer/squeezer/commit/4b148a105efc328cbb287869081db2b5ea654c5e))
+
+
+### Bug Fixes
+
+* **deps:** set nx-squeezer/devkit as peer dep ([082c126](https://github.com/nx-squeezer/squeezer/commit/082c126c0401da0457b2ddb15bea19fe5894ae2f))
+
 ## [5.0.2](https://github.com/nx-squeezer/squeezer/compare/workspace@5.0.1...workspace@5.0.2) (2024-02-02)
 
 ## [5.0.1](https://github.com/nx-squeezer/squeezer/compare/workspace@5.0.0...workspace@5.0.1) (2024-02-02)
