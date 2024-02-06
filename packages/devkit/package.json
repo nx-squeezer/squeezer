@@ -37,7 +37,7 @@
   },
   "peerDependencies": {
     "@nx/devkit": "18.0.0",
-    "@nx/plugin": "^17.0.0",
+    "@nx/plugin": "^18.0.2",
     "@nx/webpack": "18.0.0",
     "husky": "^9.0.10",
     "nx": "18.0.0",
