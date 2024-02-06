@@ -147,3 +147,31 @@ jobs:
 
       - name: e2e
         run: npx nx affected --target=e2e --parallel=1
+
+  docs:
+    name: Docs
+    needs: [npm]
+    runs-on: ubuntu-latest
+    env:
+      NX_CLOUD_AUTH_TOKEN: ${{ secrets.NX_CLOUD_AUTH_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4.1.1
+        with:
+          fetch-depth: 0 # Fetch all branches and commits so that Nx affected has a base to compare against
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4.0.1
+        with:
+          node-version: 20.x
+
+      - name: NPM
+        uses: ng-easy/npm-setup@v4.0.0
+        with:
+          nx-key: docs
+
+      - name: Nx Set SHAs
+        uses: nrwl/nx-set-shas@v4.0.4
+
+      - name: Lint
+        run: npx nx affected --target=docs --parallel=3
