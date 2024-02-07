@@ -68,6 +68,7 @@
     "@angular/cli": "17.1.2",
     "@angular/compiler-cli": "17.1.2",
     "@angular/language-service": "17.1.2",
+    "@babel/plugin-proposal-private-methods": "7.18.6",
     "@commitlint/config-angular": "18.6.0",
     "@compodoc/compodoc": "1.1.19",
     "@nx/angular": "18.0.0",

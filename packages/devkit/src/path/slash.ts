@@ -1,5 +1,5 @@
 /**
- * Copied over from https://github.com/sindresorhus/slash/blob/main/index.js
+ * Convert Windows backslash paths to slash paths. Copied from [GitHub](https://github.com/sindresorhus/slash/blob/main/index.js).
  */
 export function slash(path: string): string {
   const isExtendedLengthPath = /^\\\\\?\\/.test(path);

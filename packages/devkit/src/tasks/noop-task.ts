@@ -1,2 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-empty-function
+/* eslint-disable @typescript-eslint/no-empty-function */
+
+/**
+ * Task that performs no operation.
+ */
 export function noopTask() {}

@@ -24,6 +24,12 @@
     },
     "npm": {
       "executor": "ngx-deploy-npm:deploy"
+    },
+    "docs": {
+      "executor": "@twittwer/compodoc:compodoc",
+      "options": {
+        "coverageMinimumPerFile": 0
+      }
     }
   },
   "tags": []
