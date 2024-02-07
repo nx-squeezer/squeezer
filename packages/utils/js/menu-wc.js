@@ -15,7 +15,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
         <nav>
             <ul class="list">
                 <li class="title">
-                    <a href="index.html" data-type="index-link">utils</a>
+                    <a href="index.html" data-type="index-link">
+                        <img alt="" class="img-responsive" data-type="custom-logo" data-src="images/logo.png">
+                    </a>
                 </li>
 
                 <li class="divider"></li>
@@ -63,12 +65,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                     </li>
                     <li class="chapter">
                         <a data-type="chapter-link" href="coverage.html"><span class="icon ion-ios-stats"></span>Documentation coverage</a>
-                    </li>
-                    <li class="divider"></li>
-                    <li class="copyright">
-                        Documentation generated using <a href="https://compodoc.app/" target="_blank">
-                            <img data-src="images/compodoc-vectorise.png" class="img-responsive" data-type="compodoc-logo">
-                        </a>
                     </li>
             </ul>
         </nav>

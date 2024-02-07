@@ -1,0 +1,368 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-async-injector</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="./images/favicon.ico">
+	   <link rel="stylesheet" href="./styles/style.css">
+        <link rel="stylesheet" href="./styles/dark.css">
+        <link rel="stylesheet" href="./styles/vagrant.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="./" class="navbar-brand">ngx-async-injector</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content getting-started">
+                   <div class="content-data">
+
+<h1 id="nx-squeezerngx-async-injector-">@nx-squeezer/ngx-async-injector <!-- omit in toc --></h1>
+<p><a href="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml"><img src="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg" alt="CI" class="img-responsive"></a> <a href="https://www.npmjs.com/package/@nx-squeezer/ngx-async-injector"><img src="https://img.shields.io/npm/v/@nx-squeezer/ngx-async-injector/latest.svg" alt="npm latest version" class="img-responsive"></a> <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/CHANGELOG.md"><img src="https://img.shields.io/badge/CHANGELOG--orange.svg" alt="CHANGELOG" class="img-responsive"></a> <a href="https://codecov.io/gh/nx-squeezer/squeezer"><img src="https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg" alt="codecov" class="img-responsive"></a> <img src="https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot" alt="renovate" class="img-responsive"> <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release" class="img-responsive"></p>
+<ul>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#show-me-the-code">Show me the code</a></li>
+<li><a href="#examples">Examples</a><ul>
+<li><a href="#resolve-using-routes-resolver">Resolve using route&#39;s resolver</a></li>
+<li><a href="#resolve-using-a-structural-directive">Resolve using a structural directive</a></li>
+<li><a href="#resolve-configuration-from-api">Resolve configuration from API</a></li>
+</ul>
+</li>
+<li><a href="#api-documentation">API documentation</a><ul>
+<li><a href="#provideasync-function"><code>provideAsync</code> function</a></li>
+<li><a href="#resolve-and-resolvemany"><code>resolve</code> and <code>resolveMany</code></a></li>
+<li><a href="#ngxresolveasyncproviders-structural-directive"><code>*ngxResolveAsyncProviders</code> structural directive</a></li>
+</ul>
+</li>
+<li><a href="#installation">Installation</a></li>
+</ul>
+<h2 id="motivation">Motivation</h2>
+<p>Angular&#39;s dependency injection (DI) system is designed to be <a href="https://github.com/angular/angular/issues/23279#issuecomment-1165030809">synchronous</a>, since having asynchronous providers would make component rendering asynchronous and break existing renderer.</p>
+<p>As of today it is not possible to lazy load data asynchronously and consume it through a provider. The only option recommended by Angular when it needs to be loaded before the app initializes is using <a href="https://angular.io/api/core/APP_INITIALIZER"><code>APP_INITIALIZER</code></a>. However, it has several known cons because it is blocking and delays rendering the whole component tree and loading routes.</p>
+<p>Another common problem is the initial payload of the main bundle caused by needing to declare providers in root. When a provider is needed by various features it usually needs to be declared in the root injector, increasing the initial bundle size. It would be great that services could be declared in the root component, but lazy loaded when needed. It is true that using <code>providedIn: root</code> could be used in many scenarios, but there are others where using async <code>import()</code> of a dependency would be more useful, such as code splitting and fine grained lazy loading.</p>
+<p>For the scenarios described above, having a way to declare asynchronous providers, either by loading data from the server and later instantiating a service, or to lazy load them using <code>import()</code>, could help and give flexibility to implementers. This particular problem is what <code>@nx-squeezer/ngx-async-injector</code> solves.</p>
+<h2 id="show-me-the-code">Show me the code</h2>
+<p>The API that this library offers is very much similar to Angular&#39;s DI. Check this code as an example:</p>
+<div><pre class="line-numbers"><code class="language-ts">// main.ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    {
+      provide: MY_SERVICE,
+      useClass: MyService,
+    },
+  ],
+});
+
+// component
+class Component {
+  private readonly myService = inject(MY_SERVICE);
+}</code></pre></div><p>Could be made asynchronous and lazy loaded using <code>provideAsync()</code>:</p>
+<div><pre class="line-numbers"><code class="language-ts">// main.ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: MY_SERVICE,
+      useAsyncClass: () =&gt; import(&#39;./my-service&#39;).then((x) =&gt; x.MyService),
+    }),
+  ],
+});
+
+// component
+class Component {
+  private readonly myService = inject(MY_SERVICE);
+}</code></pre></div><p>That&#39;s it! Declaration is almost identical, and consumption is the same. But wait, when is the async provided actually loaded and resolved?</p>
+<p>It needs another piece that triggers it: async provider resolvers. Check this diagram:</p>
+<p><img src="https://raw.githubusercontent.com/nx-squeezer/squeezer/main/media/ngx-async-injector/resolver-diagram.png" alt="resolver diagram" class="img-responsive"></p>
+<p>Async providers need to be resolved before being used, and that is a responsibility of the application. It can be done while loading a route using a <a href="#resolve-using-routes-resolver">route resolver</a>, or with a <a href="#resolve-using-a-structural-directive">structural directive</a> that will delay rendering until they are loaded.</p>
+<p>Check this online <a href="https://stackblitz.com/edit/ngx-async-injector?file=src/main.ts">Stackblitz playground</a> with a live demo.</p>
+<h2 id="examples">Examples</h2>
+<h3 id="resolve-using-routes-resolver">Resolve using route&#39;s resolver</h3>
+<div><pre class="line-numbers"><code class="language-ts">export const appRoutes: Route[] = [
+  {
+    path: &#39;&#39;,
+    loadComponent: () =&gt; import(&#39;./route.component&#39;),
+    resolve: {
+      asyncProviders: () =&gt; resolveMany(MY_SERVICE),
+    },
+  },
+];</code></pre></div><p>In this case, the async provider will be resolved while the route loads, and the inside the component <code>MY_SERVICE</code> can be injected.</p>
+<h3 id="resolve-using-a-structural-directive">Resolve using a structural directive</h3>
+<div><pre class="line-numbers"><code class="language-ts">&#64;Component({
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
+  template: ` &lt;child-component *ngxResolveAsyncProviders=&quot;{ myService: MY_SERVICE }&quot; /&gt; `,
+  standalone: true,
+})
+export default class ParentComponent {
+  readonly MY_SERVICE = MY_SERVICE;
+}</code></pre></div><p>In this case, the async provider will be resolved when the parent component renders, and once completed the child component will be rendered having <code>MY_SERVICE</code> available.</p>
+<h3 id="resolve-configuration-from-api">Resolve configuration from API</h3>
+<div><pre class="line-numbers"><code class="language-ts">// Instead of using the common approach of APP_INITIALIZER, which blocks loading and rendering until resolved:
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () =&gt; inject(HttpClient).get(&#39;/config&#39;),
+      multi: true,
+    },
+  ],
+});
+
+// You could declare it with an async provider, which will be resolved on demand without blocking,
+// and yet available through DI:
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(),
+    {
+      provide: CONFIG_TOKEN,
+      useAsyncFactory: () =&gt; firstValueFrom(inject(HttpClient).get(&#39;/config&#39;)),
+    },
+  ],
+});</code></pre></div><h2 id="api-documentation">API documentation</h2>
+<p>Check the <a href="https://nx-squeezer.github.io/squeezer/packages/ngx-async-injector">full documentation</a> to see all available features.</p>
+<h3 id="provideasync-function"><a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/providers/provide-async.function.ts"><code>provideAsync</code></a> function</h3>
+<p>It is used to declare one or more async providers. For each provider, it requires the token, and then an async function that can be <code>useAsyncValue</code>, <code>useAsyncClass</code> or <code>useAsyncFactory</code>. It supports <code>multi</code> providers as well. It can be used in environment injectors, modules, components and directives. If multiple providers need to be declared in the same injector, use a single <code>provideAsync</code> function with multiple providers instead of using it multiple times.</p>
+<p>Async provider tokens are regular Angular <a href="https://angular.io/api/core/InjectionToken">injection tokens</a> typed with the resolved value of the async provider.</p>
+<p>Example of declaring a single async provider:</p>
+<div><pre class="line-numbers"><code class="language-ts">export const MY_SERVICE = new InjectionToken&lt;MyService&gt;(&#39;my-service-token&#39;);
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: MY_SERVICE,
+      useAsyncClass: () =&gt; import(&#39;./my-service&#39;).then((x) =&gt; x.MyService),
+    }),
+  ],
+});</code></pre></div><p>Example of declaring multiple providers, each one with different async functions:</p>
+<div><pre class="line-numbers"><code class="language-ts">bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: CLASS_PROVIDER,
+        useAsyncClass: () =&gt; import(&#39;./first-service&#39;).then((x) =&gt; x.FirstService),
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&gt; import(&#39;./value&#39;).then((x) =&gt; x.value),
+      },
+      {
+        provide: FACTORY_PROVIDER,
+        useAsyncFactory: () =&gt; import(&#39;./factory&#39;).then((x) =&gt; x.providerFactory),
+      }
+    ),
+  ],
+});
+
+// first-service.ts
+export class FirstService {}
+
+// value.ts
+export const value = &#39;value&#39;;
+
+// factory.ts
+export async function providerFactory() {
+  return await Promise.resolve(&#39;value&#39;);
+}</code></pre></div><p>Multi providers can also be declared as it happens with Angular:</p>
+<div><pre class="line-numbers"><code class="language-ts">bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&gt; import(&#39;./first-value&#39;).then((x) =&gt; x.value),
+        multi: true,
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&gt; import(&#39;./second-value&#39;).then((x) =&gt; x.value),
+        multi: true,
+      }
+    ),
+  ],
+});</code></pre></div><p>Finally, the lazy load behavior can be controlled by the <code>mode</code> flag. By default it is <code>lazy</code>, which means it won&#39;t be resolved until requested. <code>eager</code> on the contrary will trigger the load on declaration, even though resolvers are still needed to wait for completion. Example:</p>
+<div><pre class="line-numbers"><code class="language-ts">bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: VALUE_PROVIDER,
+      useAsyncValue: () =&gt; import(&#39;./first-value&#39;).then((x) =&gt; x.value),
+      mode: &#39;eager&#39;,
+    }),
+  ],
+});</code></pre></div><p>When using a factory provider, the function itself can be async. Regular <a href="https://angular.io/api/core/inject"><code>inject</code></a> function from Angular can be used before executing any async code since the injection context is preserved, however it can&#39;t be used afterwards. To solve that problem, and also to protect against cyclic dependencies between async providers, the factory provider function is called with a context that exposes two functions that are self explanatory, <code>inject</code> and <code>resolve</code>. Example:</p>
+<div><pre class="line-numbers"><code class="language-ts">import { InjectionContext } from &#39;&#64;nx-squeezer/ngx-async-injector&#39;;
+
+export async function providerFactory({ inject, resolve }: InjectionContext): Promise&lt;string&gt; {
+  const firstString = await resolve(FIRST_INJECTION_TOKEN);
+  const secondString = inject(SECOND_INJECTION_TOKEN);
+  return `${firstString} ${secondString}`;
+}</code></pre></div><h3 id="resolve-and-resolvemany"><a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve.ts"><code>resolve</code></a> and <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve-many.ts"><code>resolveMany</code></a></h3>
+<p><a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve.ts"><code>resolve</code></a> and <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/functions/resolve-many.ts"><code>resolveMany</code></a> functions can be used in route resolvers to ensure that certain async providers are resolved before a route loads. They could be used in other places as needed, since they return a promise that resolves when the async provider is resolved and returns its value. It can be compared to Angular&#39;s <a href="https://angular.io/api/core/inject"><code>inject</code></a> function, but for async providers.</p>
+<p>Example of how to use it in a route resolver:</p>
+<div><pre class="line-numbers"><code class="language-ts">export const routes: Route[] = [
+  {
+    path: &#39;&#39;,
+    loadComponent: () =&gt; import(&#39;./route.component&#39;),
+    providers: [
+      provideAsync(
+        {
+          provide: CLASS_PROVIDER,
+          useAsyncClass: () =&gt; import(&#39;./first-service&#39;).then((x) =&gt; x.FirstService),
+        },
+        {
+          provide: VALUE_PROVIDER,
+          useAsyncValue: () =&gt; import(&#39;./value&#39;).then((x) =&gt; x.value),
+        }
+      ),
+    ],
+    resolve: {
+      asyncProviders: () =&gt; resolveMany(CLASS_PROVIDER, VALUE_PROVIDER),
+    },
+  },
+];</code></pre></div><h3 id="ngxresolveasyncproviders-structural-directive"><a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/directives/resolve-async-providers.directive.ts"><code>*ngxResolveAsyncProviders</code></a> structural directive</h3>
+<p>This directive can be used to render a template after certain async providers have resolved. It can be useful to delay loading them as much as possible. The template can safely inject those resolved async providers.</p>
+<p>When no parameters are passed, it will load <em>all</em> async injectors in the injector hierarchy:</p>
+<div><pre class="line-numbers"><code class="language-ts">&#64;Component({
+  template: `&lt;child-component *ngxResolveAsyncProviders&gt;&lt;/child-component&gt;`,
+  providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ParentComponent {}
+
+&#64;Component({
+  selector: &#39;child-component&#39;,
+  template: `Async injector value: {{ injectedText }}`,
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ChildComponent {
+  readonly injectedText = inject(STRING_INJECTOR_TOKEN);
+}</code></pre></div><p>Additionally, it also supports a map of async provider tokens. Only those will be resolved instead of <em>all</em>. The resolved async providers are available as the context for the structural directive. Example:</p>
+<div><pre class="line-numbers"><code class="language-ts">&#64;Component({
+  template: `
+    &lt;!-- Use $implicit context from the structural directive, it is type safe --&gt;
+    &lt;child-component
+      *ngxResolveAsyncProviders=&quot;{ stringValue: stringInjectionToken }; let providers&quot;
+      [inputText]=&quot;providers.stringValue&quot;
+    &gt;&lt;/child-component&gt;
+
+    &lt;!-- Use the key from the context, it is type safe as well --&gt;
+    &lt;child-component
+      *ngxResolveAsyncProviders=&quot;{ stringValue: stringInjectionToken }; stringValue as stringValue&quot;
+      [inputText]=&quot;stringValue&quot;
+    &gt;&lt;/child-component&gt;
+  `,
+  providers: [provideAsync({ provide: STRING_INJECTOR_TOKEN, useAsyncValue: stringAsyncFactory })],
+  imports: [ResolveAsyncProvidersDirective, ChildComponent],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ParentComponent {
+  readonly stringInjectionToken = STRING_INJECTOR_TOKEN;
+}
+
+&#64;Component({
+  selector: &#39;child-component&#39;,
+  template: `Async injector value: {{ inputText }}`,
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class ChildComponent {
+  &#64;Input() inputText!: string;
+}</code></pre></div><h2 id="installation">Installation</h2>
+<p>Do you like this library? Go ahead and use it! It is production ready, with 100% code coverage, protected by integration tests, and uses semantic versioning. To install it:</p>
+<div><pre class="line-numbers"><code class="language-shell">npm install &#64;nx-squeezer/ngx-async-injector</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 0;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'getting-started';
+            var COMPODOC_CURRENT_PAGE_URL = 'index.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="./js/libs/custom-elements.min.js"></script>
+       <script src="./js/libs/lit-html.js"></script>
+
+       <script src="./js/menu-wc.js" defer></script>
+       <script nomodule src="./js/menu-wc_es5.js" defer></script>
+
+       <script src="./js/libs/bootstrap-native.js"></script>
+
+       <script src="./js/libs/es6-shim.min.js"></script>
+       <script src="./js/libs/EventDispatcher.js"></script>
+       <script src="./js/libs/promise.min.js"></script>
+       <script src="./js/libs/zepto.min.js"></script>
+
+       <script src="./js/compodoc.js"></script>
+
+       <script src="./js/tabs.js"></script>
+       <script src="./js/menu.js"></script>
+       <script src="./js/libs/clipboard.min.js"></script>
+       <script src="./js/libs/prism.js"></script>
+       <script src="./js/sourceCode.js"></script>
+          <script src="./js/search/search.js"></script>
+          <script src="./js/search/lunr.min.js"></script>
+          <script src="./js/search/search-lunr.js"></script>
+          <script src="./js/search/search_index.js"></script>
+       <script src="./js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

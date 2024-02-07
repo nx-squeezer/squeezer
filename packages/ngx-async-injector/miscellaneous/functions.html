@@ -1,0 +1,1051 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>ngx-async-injector</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+        <link rel="stylesheet" href="../styles/vagrant.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">ngx-async-injector</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content miscellaneous-functions">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Miscellaneous</li>
+  <li>Functions</li>
+</ol>
+
+<section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <ul class="index-list">
+                        <li>
+                            <a href="#hydrate" title="src/lib/injector/async-injector.ts" ><b>hydrate</b>&nbsp;&nbsp;&nbsp;(src/.../async-injector.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isAsyncClassProvider" title="src/lib/interfaces/async-class-provider.ts" ><b>isAsyncClassProvider</b>&nbsp;&nbsp;&nbsp;(src/.../async-class-provider.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isAsyncFactoryProvider" title="src/lib/interfaces/async-factory-provider.ts" ><b>isAsyncFactoryProvider</b>&nbsp;&nbsp;&nbsp;(src/.../async-factory-provider.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isAsyncValueProvider" title="src/lib/interfaces/async-value-provider.ts" ><b>isAsyncValueProvider</b>&nbsp;&nbsp;&nbsp;(src/.../async-value-provider.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isInjectionTokenCollection" title="src/lib/injector/async-injector.ts" ><b>isInjectionTokenCollection</b>&nbsp;&nbsp;&nbsp;(src/.../async-injector.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#isMultiProvider" title="src/lib/functions/is-multi-provider.ts" ><b>isMultiProvider</b>&nbsp;&nbsp;&nbsp;(src/.../is-multi-provider.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#provideAsync" title="src/lib/providers/provide-async.function.ts" ><b>provideAsync</b>&nbsp;&nbsp;&nbsp;(src/.../provide-async.function.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#provideAsync" title="src/lib/providers/provide-async.function.ts" ><b>provideAsync</b>&nbsp;&nbsp;&nbsp;(src/.../provide-async.function.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#provideAsync" title="src/lib/providers/provide-async.function.ts" ><b>provideAsync</b>&nbsp;&nbsp;&nbsp;(src/.../provide-async.function.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#resolveMany" title="src/lib/functions/resolve-many.ts" ><b>resolveMany</b>&nbsp;&nbsp;&nbsp;(src/.../resolve-many.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#resolveMany" title="src/lib/functions/resolve-many.ts" ><b>resolveMany</b>&nbsp;&nbsp;&nbsp;(src/.../resolve-many.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#resolveMany" title="src/lib/functions/resolve-many.ts" ><b>resolveMany</b>&nbsp;&nbsp;&nbsp;(src/.../resolve-many.ts)</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+    <h3>src/lib/injector/async-injector.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="hydrate"></a>
+                    <span class="name">
+                        <span ><b>hydrate</b></span>
+                        <a href="#hydrate"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>hydrate(injectable: <a href="../interfaces/AsyncInjectableRecord.html" target="_self">AsyncInjectableRecord</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectable</td>
+                                    <td>
+                                                <code><a href="../interfaces/AsyncInjectableRecord.html" target="_self" >AsyncInjectableRecord</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;T&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isInjectionTokenCollection"></a>
+                    <span class="name">
+                        <span ><b>isInjectionTokenCollection</b></span>
+                        <a href="#isInjectionTokenCollection"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isInjectionTokenCollection(injectionTokens)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectionTokens</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>InjectionToken&lt;&gt;[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/interfaces/async-class-provider.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAsyncClassProvider"></a>
+                    <span class="name">
+                        <span ><b>isAsyncClassProvider</b></span>
+                        <a href="#isAsyncClassProvider"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAsyncClassProvider(asyncStaticProvider: <a href="../undefineds/AsyncStaticProvider.html" target="_self">AsyncStaticProvider</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProvider</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncStaticProvider" target="_self" >AsyncStaticProvider</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>AsyncClassProvider&lt;T&gt; | AsyncClassMultiProvider&lt;T[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/interfaces/async-factory-provider.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAsyncFactoryProvider"></a>
+                    <span class="name">
+                        <span ><b>isAsyncFactoryProvider</b></span>
+                        <a href="#isAsyncFactoryProvider"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAsyncFactoryProvider(asyncStaticProvider: <a href="../undefineds/AsyncStaticProvider.html" target="_self">AsyncStaticProvider</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProvider</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncStaticProvider" target="_self" >AsyncStaticProvider</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>AsyncFactoryProvider&lt;T&gt; | AsyncFactoryMultiProvider&lt;T[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/interfaces/async-value-provider.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isAsyncValueProvider"></a>
+                    <span class="name">
+                        <span ><b>isAsyncValueProvider</b></span>
+                        <a href="#isAsyncValueProvider"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isAsyncValueProvider(asyncStaticProvider: <a href="../undefineds/AsyncStaticProvider.html" target="_self">AsyncStaticProvider</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProvider</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncStaticProvider" target="_self" >AsyncStaticProvider</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>AsyncValueProvider&lt;T&gt; | AsyncValueMultiProvider&lt;T[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/functions/is-multi-provider.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="isMultiProvider"></a>
+                    <span class="name">
+                        <span ><b>isMultiProvider</b></span>
+                        <a href="#isMultiProvider"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>isMultiProvider(asyncStaticProvider: <a href="../undefineds/AsyncStaticProvider.html" target="_self">AsyncStaticProvider</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProvider</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncStaticProvider" target="_self" >AsyncStaticProvider</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>AsyncValueMultiProvider&lt;T[]&gt; | AsyncClassMultiProvider&lt;T[]&gt; | AsyncFactoryMultiProvider&lt;T[]&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/providers/provide-async.function.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="provideAsync"></a>
+                    <span class="name">
+                        <span ><b>provideAsync</b></span>
+                        <a href="#provideAsync"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>provideAsync(asyncStaticProvider: <a href="../undefineds/AsyncStaticProvider.html" target="_self">AsyncStaticProvider</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>It is used to declare one or more async providers. For each provider, it requires the token, and then an async function that can be <code>useAsyncValue</code>, <code>useAsyncClass</code> or <code>useAsyncFactory</code>. It supports <code>multi</code> providers as well. It can be used in environment injectors, modules, components and directives. If multiple providers need to be declared in the same injector, use a single <code>provideAsync</code> function with multiple providers instead of using it multiple times.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProvider</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncStaticProvider" target="_self" >AsyncStaticProvider</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <b>Example :</b>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">Example of declaring a single async provider:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync({
+      provide: MY_SERVICE,
+      useAsyncClass: () =&amp;gt; import(&amp;#39;./my-service&amp;#39;).then((x) =&amp;gt; x.MyService),
+    }),
+  ],
+});
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">Example of declaring multiple providers, each one with different async functions:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: CLASS_PROVIDER,
+        useAsyncClass: () =&amp;gt; import(&amp;#39;./first-service&amp;#39;).then((x) =&amp;gt; x.FirstService),
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&amp;gt; import(&amp;#39;./value&amp;#39;).then((x) =&amp;gt; x.value),
+      },
+      {
+        provide: FACTORY_PROVIDER,
+        useAsyncFactory: () =&amp;gt; import(&amp;#39;./factory&amp;#39;).then((x) =&amp;gt; x.providerFactory),
+      }
+    ),
+  ],
+});
+
+// first-service.ts
+export class FirstService {}
+
+// value.ts
+export const value = &amp;#39;value&amp;#39;;
+
+// factory.ts
+export async function providerFactory() {
+  return await Promise.resolve(&amp;#39;value&amp;#39;);
+}
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">Multi providers can also be declared as it happens with Angular:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&amp;gt; import(&amp;#39;./first-value&amp;#39;).then((x) =&amp;gt; x.value),
+        multi: true
+      },
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&amp;gt; import(&amp;#39;./second-value&amp;#39;).then((x) =&amp;gt; x.value),
+        multi: true
+      },
+    ),
+  ],
+});
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">Finally, the lazy load behavior can be controlled by the &lt;code&gt;mode&lt;/code&gt; flag. By default it is &lt;code&gt;lazy&lt;/code&gt;, which means it won&amp;#39;t be resolved until requested. &lt;code&gt;eager&lt;/code&gt; on the contrary will trigger the load on declaration, even though resolvers are still needed to wait for completion. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;bootstrapApplication(AppComponent, {
+  providers: [
+    provideAsync(
+      {
+        provide: VALUE_PROVIDER,
+        useAsyncValue: () =&amp;gt; import(&amp;#39;./first-value&amp;#39;).then((x) =&amp;gt; x.value),
+        mode: &amp;#39;eager&amp;#39;
+      },
+    ),
+  ],
+});
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">When using a factory provider, the function itself can be async. Regular &lt;code&gt;inject&lt;/code&gt; function from Angular can be used before executing any async code since the injection context is preserved, however it can&amp;#39;t be used afterwards. To solve that problem, and also to protect against cyclic dependencies between async providers, the factory provider function is called with a context that exposes two functions that are self explanatory, &lt;code&gt;inject&lt;/code&gt; and &lt;code&gt;resolve&lt;/code&gt;. Example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;import { InjectionContext } from &amp;#39;@nx-squeezer/ngx-async-injector&amp;#39;;
+
+export async function providerFactory({ inject, resolve }: InjectionContext): Promise&amp;lt;string&amp;gt; {
+  const firstString = await resolve(FIRST_INJECTION_TOKEN);
+  const secondString = inject(SECOND_INJECTION_TOKEN);
+  return `${firstString} ${secondString}`;
+}
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>StaticProvider[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="provideAsync"></a>
+                    <span class="name">
+                        <span ><b>provideAsync</b></span>
+                        <a href="#provideAsync"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>provideAsync(asyncStaticProviders: <a href="../undefineds/AsyncProviderTypes.html" target="_self">AsyncProviderTypes</a>)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProviders</td>
+                                    <td>
+                                                <code><a href="../miscellaneous/typealiases.html#AsyncProviderTypes" target="_self" >AsyncProviderTypes</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>StaticProvider[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="provideAsync"></a>
+                    <span class="name">
+                        <span ><b>provideAsync</b></span>
+                        <a href="#provideAsync"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>provideAsync(...asyncStaticProviders: undefined)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>asyncStaticProviders</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>StaticProvider[]</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>    <h3>src/lib/functions/resolve-many.ts</h3>
+    <section>
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMany"></a>
+                    <span class="name">
+                        <span ><b>resolveMany</b></span>
+                        <a href="#resolveMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resolveMany(injectionTokens: T)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p><code>resolve</code> and <code>resolveMany</code> functions can be used in route resolvers to ensure that certain async providers are resolved before a route loads.
+They could be used in other places as needed, since they return a promise that resolves when the async provider is resolved and returns its value.
+It can be compared to Angular&#39;s <code>inject</code> function, but for async providers.</p>
+<p><code>resolveMany</code> supports either a list of async provider tokens, or a map of key-value pairs with the value being the token.
+The resolved value will have the same shape, either an array or a map of the resolved async providers.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectionTokens</td>
+                                    <td>
+                                            <code>T</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <b>Example :</b>
+                        <div>
+                            <pre class="line-numbers"><code class="language-html">&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;export const routes: Route[] = [
+  {
+    path: &amp;#39;&amp;#39;,
+    loadComponent: () =&amp;gt; import(&amp;#39;./route.component&amp;#39;),
+    providers: [
+      provideAsync(
+        {
+          provide: CLASS_PROVIDER,
+          useAsyncClass: () =&amp;gt; import(&amp;#39;./first-service&amp;#39;).then((x) =&amp;gt; x.FirstService),
+        },
+        {
+          provide: VALUE_PROVIDER,
+          useAsyncValue: () =&amp;gt; import(&amp;#39;./value&amp;#39;).then((x) =&amp;gt; x.value),
+        }
+      ),
+    ],
+    resolve: {
+      asyncProviders: () =&amp;gt; resolveMany(CLASS_PROVIDER, VALUE_PROVIDER),
+    },
+  }
+];
+&lt;/code&gt;&lt;/pre&gt;</code></pre>
+                        </div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;InjectionTokenTypeMap&lt;T&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMany"></a>
+                    <span class="name">
+                        <span ><b>resolveMany</b></span>
+                        <a href="#resolveMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resolveMany(...injectionTokens: T)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectionTokens</td>
+                                    <td>
+                                            <code>T</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;InjectionTokenTypeCollection&lt;&gt;&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="resolveMany"></a>
+                    <span class="name">
+                        <span ><b>resolveMany</b></span>
+                        <a href="#resolveMany"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>resolveMany(...injectionTokens: undefined)</code>
+                </td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-4">
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>injectionTokens</td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>    <code>Promise&lt;[] | literal type&gt;</code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'miscellaneous-functions';
+            var COMPODOC_CURRENT_PAGE_URL = 'functions.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>
