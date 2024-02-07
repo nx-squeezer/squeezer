@@ -6,7 +6,6 @@
     "local>nx-squeezer/squeezer",
     "local>nx-squeezer/squeezer:nxMonorepo",
     "local>nx-squeezer/squeezer:tooling",
-    "local>nx-squeezer/squeezer:typedoc",
     ":assignee(samuelfernandez)"
   ]
 }

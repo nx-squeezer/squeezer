@@ -31,7 +31,6 @@
     "ngx-forms-app",
     "ngx-ssr-app",
     "renovate",
-    "typedoc",
     "utils",
     "workspace",
     "workspace-e2e"
