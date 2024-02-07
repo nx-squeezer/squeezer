@@ -4,7 +4,11 @@ import { ProjectGraph } from '@nx/devkit';
 
 import { readTsPathMappings } from './typescript';
 
-// https://github.com/nrwl/nx/blob/master/packages/devkit/src/utils/module-federation/dependencies.ts
+/**
+ * https://github.com/nrwl/nx/blob/master/packages/devkit/src/utils/module-federation/dependencies.ts
+ *
+ * @ignore
+ */
 export function getLibraryImportPath(library: string, projectGraph: ProjectGraph): string | undefined {
   const tsConfigPathMappings = readTsPathMappings();
 

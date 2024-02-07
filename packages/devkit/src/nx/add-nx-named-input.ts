@@ -4,6 +4,9 @@ import { unique } from 'radash';
 
 import { nxConfigFile } from './nx';
 
+/**
+ * Generator that adds a named input to Nx configuration.
+ */
 export function addNxNamedInput(
   tree: Tree,
   newNamedInputs: { [inputName: string]: (string | InputDefinition)[] },

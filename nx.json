@@ -157,15 +157,24 @@
       "options": {
         "tsConfig": "{projectRoot}/tsconfig.lib.json",
         "outputPath": "{workspaceRoot}/docs/{projectRoot}",
+        "coverageMinimumPerFile": 100,
+        "coverageTestThresholdFail": true,
         "disableCoverage": false,
         "hideGenerator": true,
         "disableLifeCycleHooks": true,
         "disableInternal": true,
+        "disablePrivate": true,
         "customFavicon": "{workspaceRoot}/media/branding/favicon.ico",
-        "customLogo": "{workspaceRoot}/media/branding/logo.png",
+        "customLogo": "{workspaceRoot}/media/branding/banner.png",
         "theme": "vagrant"
       },
       "configurations": {
+        "watch": {
+          "serve": true,
+          "watch": true,
+          "coverageTestThresholdFail": false,
+          "coverageMinimumPerFile": 0
+        },
         "json": {
           "exportFormat": "json"
         }

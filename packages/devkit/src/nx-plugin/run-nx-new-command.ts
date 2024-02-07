@@ -4,7 +4,11 @@ import { tmpProjPath } from '@nx/plugin/testing';
 
 import { exec } from '../exec';
 
-// https://github.com/nrwl/nx/blob/master/packages/plugin/src/utils/testing-utils/nx-project.ts
+/**
+ * https://github.com/nrwl/nx/blob/master/packages/plugin/src/utils/testing-utils/nx-project.ts
+ *
+ * @ignore
+ */
 export function runNxNewCommand(): void {
   const localTmpDir = dirname(tmpProjPath());
 

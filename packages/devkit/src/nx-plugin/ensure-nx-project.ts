@@ -17,16 +17,27 @@ import { runPackageManagerInstall } from './run-package-manager-install';
 import { readTsPathMappings } from './typescript';
 import { packageJsonFile } from '../package-json';
 
+/**
+ * @ignore
+ */
 export interface Plugin {
   npmPackageName: string;
   pluginDistPath: string;
   workspaceLibraries: WorkspaceLibrary[];
 }
 
-// Inspiration:
-// https://github.com/Bielik20/nx-plugins/blob/3a0ea8e20a4481540634dbd125d057817e6b479e/packages/nx-core/src/testing-utils/ensure-complex-nx-project.ts
+/**
+ * @ignore
+ */
 export async function ensureNxProject(npmPackageName?: string, pluginDistPath?: string): Promise<void>;
+/**
+ * @ignore
+ */
 export async function ensureNxProject(...projectNames: string[]): Promise<void>;
+/**
+ * [Inspiration](https://github.com/Bielik20/nx-plugins/blob/3a0ea8e20a4481540634dbd125d057817e6b479e/packages/nx-core/src/testing-utils/ensure-complex-nx-project.ts).
+ * @ignore
+ */
 export async function ensureNxProject(...projectNames: (string | undefined)[]): Promise<void> {
   ensureDirSync(tmpProjPath());
   cleanup();
