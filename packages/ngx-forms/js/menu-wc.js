@@ -16,7 +16,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
             <ul class="list">
                 <li class="title">
                     <a href="index.html" data-type="index-link">
-                        <img alt="" class="img-responsive" data-type="custom-logo" data-src="images/logo.png">
+                        <img alt="" class="img-responsive" data-type="custom-logo" data-src="images/banner.png">
                     </a>
                 </li>
 

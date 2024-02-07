@@ -61,7 +61,37 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
-                                <a href="interfaces/RenovateGeneratorSchema.html" data-type="entity-link" >RenovateGeneratorSchema</a>
+                                <a href="interfaces/Codecov.html" data-type="entity-link" >Codecov</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/CodecovConfig.html" data-type="entity-link" >CodecovConfig</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/CodecovGeneratorSchema.html" data-type="entity-link" >CodecovGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/CommitlintConfig.html" data-type="entity-link" >CommitlintConfig</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/CommitlintGeneratorSchema.html" data-type="entity-link" >CommitlintGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/ContributorsGeneratorSchema.html" data-type="entity-link" >ContributorsGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/EsLintGeneratorSchema.html" data-type="entity-link" >EsLintGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/GitHubWorkflowGeneratorSchema.html" data-type="entity-link" >GitHubWorkflowGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/LintStagedGeneratorSchema.html" data-type="entity-link" >LintStagedGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/PrettierGeneratorSchema.html" data-type="entity-link" >PrettierGeneratorSchema</a>
+                            </li>
+                            <li class="link">
+                                <a href="interfaces/TsConfigGeneratorSchema.html" data-type="entity-link" >TsConfigGeneratorSchema</a>
                             </li>
                         </ul>
                     </li>
@@ -75,6 +105,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         <ul class="links collapse " ${ isNormalMode ? 'id="miscellaneous-links"' : 'id="xs-miscellaneous-links"' }>
                             <li class="link">
                                 <a href="miscellaneous/functions.html" data-type="entity-link">Functions</a>
+                            </li>
+                            <li class="link">
+                                <a href="miscellaneous/typealiases.html" data-type="entity-link">Type aliases</a>
                             </li>
                             <li class="link">
                                 <a href="miscellaneous/variables.html" data-type="entity-link">Variables</a>
