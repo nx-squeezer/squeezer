@@ -157,8 +157,6 @@
       "options": {
         "tsConfig": "{projectRoot}/tsconfig.lib.json",
         "outputPath": "{workspaceRoot}/docs/{projectRoot}",
-        "coverageMinimumPerFile": 100,
-        "coverageTestThresholdFail": true,
         "disableCoverage": false,
         "hideGenerator": true,
         "disableLifeCycleHooks": true,
@@ -169,6 +167,10 @@
         "theme": "vagrant"
       },
       "configurations": {
+        "coverage": {
+          "coverageTest": 100,
+          "coverageTestThresholdFail": true
+        },
         "watch": {
           "serve": true,
           "watch": true,

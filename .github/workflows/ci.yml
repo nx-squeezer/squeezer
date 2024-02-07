@@ -174,4 +174,4 @@ jobs:
         uses: nrwl/nx-set-shas@v4.0.4
 
       - name: Lint
-        run: npx nx affected --target=docs --parallel=3
+        run: npx nx affected --target=docs --configuration=coverage --parallel=3

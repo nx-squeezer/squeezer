@@ -27,8 +27,10 @@
     },
     "docs": {
       "executor": "@twittwer/compodoc:compodoc",
-      "options": {
-        "coverageMinimumPerFile": 0
+      "configurations": {
+        "coverage": {
+          "coverageTest": 0
+        }
       }
     }
   },
