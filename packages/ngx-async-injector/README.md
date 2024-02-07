@@ -137,6 +137,8 @@ bootstrapApplication(AppComponent, {
 
 ## API documentation
 
+Check the [full documentation](https://nx-squeezer.github.io/squeezer/packages/ngx-async-injector) to see all available features.
+
 ### [`provideAsync`](https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-async-injector/src/lib/providers/provide-async.function.ts) function
 
 It is used to declare one or more async providers. For each provider, it requires the token, and then an async function that can be `useAsyncValue`, `useAsyncClass` or `useAsyncFactory`. It supports `multi` providers as well. It can be used in environment injectors, modules, components and directives. If multiple providers need to be declared in the same injector, use a single `provideAsync` function with multiple providers instead of using it multiple times.
