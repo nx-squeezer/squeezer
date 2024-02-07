@@ -30,9 +30,6 @@ coverage:
       renovate:
         flags:
           - renovate
-      typedoc:
-        flags:
-          - typedoc
       utils:
         flags:
           - utils

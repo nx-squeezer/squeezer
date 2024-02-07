@@ -152,17 +152,6 @@
         "access": "public"
       }
     },
-    "@enio.ai/typedoc:typedoc": {
-      "outputs": ["{workspaceRoot}/docs/{projectRoot}"],
-      "options": {
-        "options": "typedoc.config.js"
-      },
-      "configurations": {
-        "watch": {
-          "watch": true
-        }
-      }
-    },
     "@twittwer/compodoc:compodoc": {
       "outputs": ["{options.outputPath}"],
       "options": {
