@@ -172,7 +172,6 @@
         "watch": {
           "serve": true,
           "watch": true,
-          "coverageTestThresholdFail": false,
           "coverageMinimumPerFile": 0
         },
         "json": {

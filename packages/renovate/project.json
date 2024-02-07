@@ -28,7 +28,7 @@
     "docs": {
       "executor": "@twittwer/compodoc:compodoc",
       "options": {
-        "coverageTestThresholdFail": false
+        "coverageMinimumPerFile": 0
       }
     }
   },

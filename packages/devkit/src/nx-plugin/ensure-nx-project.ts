@@ -65,6 +65,9 @@ export async function ensureNxProject(...projectNames: (string | undefined)[]): 
   runPackageManagerInstall();
 }
 
+/**
+ * @ignore
+ */
 function patchPackageJsonForPlugin(npmPackageName: string, distPath: string) {
   const path = tmpProjPath('package.json');
   const json = readJsonFile(path);
@@ -72,6 +75,9 @@ function patchPackageJsonForPlugin(npmPackageName: string, distPath: string) {
   writeJsonFile(path, json);
 }
 
+/**
+ * @ignore
+ */
 function patchProjectDistFolder(projectGraph: ProjectGraph, projectDependencyMap: Map<string, Plugin>, name: string) {
   if (projectDependencyMap.has(name)) {
     return;
@@ -90,6 +96,9 @@ function patchProjectDistFolder(projectGraph: ProjectGraph, projectDependencyMap
   }
 }
 
+/**
+ * @ignore
+ */
 function getPlugin(projectGraph: ProjectGraph, name: string): Plugin {
   const npmPackageName = getLibraryImportPath(name, projectGraph);
 
@@ -104,6 +113,9 @@ function getPlugin(projectGraph: ProjectGraph, name: string): Plugin {
   };
 }
 
+/**
+ * @ignore
+ */
 function getProjectNode(projectGraph: ProjectGraph, name: string): ProjectGraphProjectNode {
   const node = projectGraph.nodes[name];
   if (node == null) {
@@ -112,6 +124,9 @@ function getProjectNode(projectGraph: ProjectGraph, name: string): ProjectGraphP
   return node;
 }
 
+/**
+ * @ignore
+ */
 function getOutputPath(projectGraph: ProjectGraph, name: string): string {
   const node = getProjectNode(projectGraph, name);
   const buildTarget = node.data.targets?.build;
@@ -127,6 +142,9 @@ function getOutputPath(projectGraph: ProjectGraph, name: string): string {
   return outputPath;
 }
 
+/**
+ * @ignore
+ */
 function updatePackageInRoot(projectDependencyMap: Map<string, Plugin>, name: string) {
   const plugin = projectDependencyMap.get(name);
   if (plugin == null || plugin.workspaceLibraries.length === 0) {
@@ -141,6 +159,9 @@ function updatePackageInRoot(projectDependencyMap: Map<string, Plugin>, name: st
   writeJsonFile(packageJsonPath, packageJson);
 }
 
+/**
+ * @ignore
+ */
 function updatePackageInDist(projectDependencyMap: Map<string, Plugin>, plugin: Plugin) {
   const packageJsonPath = `${workspaceRoot}/${plugin.pluginDistPath}/${packageJsonFile}`;
   const packageJson = readJsonFile(packageJsonPath);

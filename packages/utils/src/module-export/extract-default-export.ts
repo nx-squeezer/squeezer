@@ -23,6 +23,9 @@ export function extractDefaultExport<T>(defaultExport: DefaultExport<T>): T {
   return isDefaultExport(defaultExport) ? defaultExport.default : defaultExport;
 }
 
+/**
+ * @ignore
+ */
 function isDefaultExport<T>(defaultExport: DefaultExport<T>): defaultExport is { default: T } {
   return (defaultExport as any).default != null;
 }
