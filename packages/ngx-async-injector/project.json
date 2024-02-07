@@ -38,6 +38,9 @@
     },
     "npm": {
       "executor": "ngx-deploy-npm:deploy"
+    },
+    "docs": {
+      "executor": "@twittwer/compodoc:compodoc"
     }
   },
   "tags": []
