@@ -15,6 +15,9 @@ import {
   commitlintDefaultConfig,
 } from './commitlint';
 
+/**
+ * Nx generator to setup commitlint.
+ */
 export default async function commitlintGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);
   addDevDependencyToPackageJson(tree, commitlintCli);

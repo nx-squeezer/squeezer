@@ -40,12 +40,7 @@
       "executor": "ngx-deploy-npm:deploy"
     },
     "docs": {
-      "executor": "@twittwer/compodoc:compodoc",
-      "configurations": {
-        "coverage": {
-          "coverageTest": 0
-        }
-      }
+      "executor": "@twittwer/compodoc:compodoc"
     }
   },
   "tags": []

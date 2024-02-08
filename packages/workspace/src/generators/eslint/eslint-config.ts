@@ -4,13 +4,26 @@ import { unique } from 'radash';
 
 import { getSet, areSetsEqual } from '@nx-squeezer/devkit';
 
+/**
+ * Filename of ESLint configuration.
+ */
 export const eslintConfigFile = '.eslintrc.json';
 
 type ArrayElement<ArrayType> = ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
+/**
+ * ESLint configuration override rules.
+ */
 export type EsLintConfigurationOverrideRules = Exclude<JSONSchemaForESLintConfigurationFiles['overrides'], undefined>;
+
+/**
+ * ESLint configuration override rule.
+ */
 export type EsLintConfigurationOverrideRule = ArrayElement<EsLintConfigurationOverrideRules>;
 
+/**
+ * Generator that reads ESLint configuration.
+ */
 export function readEsLintConfig(tree: Tree, path = eslintConfigFile): JSONSchemaForESLintConfigurationFiles {
   if (!tree.exists(eslintConfigFile)) {
     writeEsLintConfig(tree, { root: true, ignorePatterns: ['**/*'] }, eslintConfigFile);
@@ -19,6 +32,9 @@ export function readEsLintConfig(tree: Tree, path = eslintConfigFile): JSONSchem
   return readJson<JSONSchemaForESLintConfigurationFiles>(tree, path);
 }
 
+/**
+ * Generator that updates ESLint configuration.
+ */
 export function writeEsLintConfig(
   tree: Tree,
   eslintConfig: JSONSchemaForESLintConfigurationFiles,
@@ -27,11 +43,17 @@ export function writeEsLintConfig(
   writeJson(tree, path, eslintConfig);
 }
 
+/**
+ * Checks if an ESLInt plugin is present.
+ */
 export function isEsLintPluginPresent(tree: Tree, plugin: string): boolean {
   const eslintConfig = readEsLintConfig(tree);
   return eslintConfig.plugins?.includes(plugin) ?? false;
 }
 
+/**
+ * Adds an ESLInt plugin.
+ */
 export function addEsLintPlugin(tree: Tree, plugin: string, after?: string): void {
   if (isEsLintPluginPresent(tree, plugin)) {
     return;
@@ -51,6 +73,9 @@ export function addEsLintPlugin(tree: Tree, plugin: string, after?: string): voi
   writeEsLintConfig(tree, eslintConfig);
 }
 
+/**
+ * Adds ESLInt rules.
+ */
 export function addEsLintRules(tree: Tree, rule: EsLintConfigurationOverrideRule, path = eslintConfigFile): void {
   const eslintConfig = readEsLintConfig(tree, path);
 

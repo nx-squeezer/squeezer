@@ -1,17 +1,26 @@
 import { EsLintConfigurationOverrideRule } from './eslint-config';
 
+/**
+ * ESLint recommended rule.
+ */
 export const esLintRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
   extends: ['eslint:recommended'],
   rules: {},
 };
 
+/**
+ * ESLint SonarJS rule.
+ */
 export const sonarJSRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
   extends: ['plugin:sonarjs/recommended'],
   rules: {},
 };
 
+/**
+ * ESLint unused imports rule.
+ */
 export const unusedImportsRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx'],
   rules: {
@@ -19,6 +28,9 @@ export const unusedImportsRule: EsLintConfigurationOverrideRule = {
   },
 };
 
+/**
+ * ESLint typescript rule.
+ */
 export const typescriptRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx'],
   extends: ['plugin:@typescript-eslint/recommended'],
@@ -30,6 +42,9 @@ export const typescriptRule: EsLintConfigurationOverrideRule = {
   },
 };
 
+/**
+ * ESLint deprecation rule.
+ */
 export const deprecationRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx'],
   rules: {
@@ -37,6 +52,9 @@ export const deprecationRule: EsLintConfigurationOverrideRule = {
   },
 };
 
+/**
+ * ESLint import order rule.
+ */
 export const importOrderRule: EsLintConfigurationOverrideRule = {
   files: ['*.ts', '*.tsx'],
   extends: ['plugin:import/recommended', 'plugin:import/typescript'],

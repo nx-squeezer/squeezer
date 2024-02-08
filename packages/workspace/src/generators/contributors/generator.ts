@@ -2,6 +2,9 @@ import { formatFiles, Tree } from '@nx/devkit';
 
 import { readmeFile, getGitRepoSlug } from '@nx-squeezer/devkit';
 
+/**
+ * Nx generator to setup contributors in README.
+ */
 export default async function contributorsGenerator(tree: Tree) {
   if (!tree.exists(readmeFile)) {
     throw new Error(`Missing Readme file at: ${readmeFile}`);

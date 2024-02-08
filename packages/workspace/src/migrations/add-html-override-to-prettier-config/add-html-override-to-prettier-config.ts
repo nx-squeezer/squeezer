@@ -3,6 +3,9 @@ import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import { prettierConfigJsonFile } from '../../generators';
 
+/**
+ * Nx migration to add html to prettier configuration.
+ */
 export default async function addHtmlOverrideToPrettierConfig(tree: Tree) {
   if (!tree.exists(prettierConfigJsonFile)) {
     return;

@@ -5,6 +5,9 @@ import { lintWorkspaceTask } from '@nx-squeezer/devkit';
 
 import { tsConfigFile, tsConfigDefault } from './tsconfig';
 
+/**
+ * Nx generator to setup tsconfig and fix issues in the workspace.
+ */
 export default async function tsConfigGenerator(tree: Tree) {
   if (!setTsConfig(tree)) {
     return;
@@ -17,6 +20,9 @@ export default async function tsConfigGenerator(tree: Tree) {
   };
 }
 
+/**
+ * @internal
+ */
 function setTsConfig(tree: Tree): boolean {
   if (!tree.exists(tsConfigFile)) {
     console.error(`File ${tsConfigFile} not found.`);

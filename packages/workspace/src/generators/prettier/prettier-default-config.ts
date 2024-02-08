@@ -1,5 +1,8 @@
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
+/**
+ * Prettier default configuration.
+ */
 export const prettierDefaultConfig: Exclude<SchemaForPrettierrc, string> = {
   printWidth: 120,
   tabWidth: 2,

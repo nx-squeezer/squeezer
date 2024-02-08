@@ -16,6 +16,9 @@ import {
 import { deprecationRule, esLintRule, importOrderRule, sonarJSRule, typescriptRule, unusedImportsRule } from './rules';
 import { EsLintGeneratorSchema } from './schema';
 
+/**
+ * Nx generator to setup ESLint in a workspace.
+ */
 export default async function eslintGenerator(tree: Tree, options: EsLintGeneratorSchema) {
   if (options.eslintRecommended) {
     addEsLintRecommendedRules(tree);
@@ -49,6 +52,9 @@ export default async function eslintGenerator(tree: Tree, options: EsLintGenerat
   };
 }
 
+/**
+ * @internal
+ */
 function addEsLintRecommendedRules(tree: Tree): void {
   addEsLintRules(tree, esLintRule);
 
@@ -64,18 +70,27 @@ function addEsLintRecommendedRules(tree: Tree): void {
   writeEsLintConfig(tree, eslintConfig);
 }
 
+/**
+ * @internal
+ */
 function addSonarJsRecommendedRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-sonarjs');
   addEsLintPlugin(tree, 'sonarjs');
   addEsLintRules(tree, sonarJSRule);
 }
 
+/**
+ * @internal
+ */
 function addUnusedImportsRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-unused-imports');
   addEsLintPlugin(tree, 'unused-imports');
   addEsLintRules(tree, unusedImportsRule);
 }
 
+/**
+ * @internal
+ */
 function addTypescriptRecommendedRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
   addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
@@ -84,6 +99,9 @@ function addTypescriptRecommendedRules(tree: Tree): void {
   addParserOptionsToProjects(tree);
 }
 
+/**
+ * @internal
+ */
 function addDeprecationRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, '@typescript-eslint/parser');
   addDevDependencyToPackageJson(tree, '@typescript-eslint/eslint-plugin');
@@ -93,6 +111,9 @@ function addDeprecationRules(tree: Tree): void {
   addParserOptionsToProjects(tree);
 }
 
+/**
+ * @internal
+ */
 function addImportOrderRules(tree: Tree): void {
   addDevDependencyToPackageJson(tree, 'eslint-plugin-import');
   addDevDependencyToPackageJson(tree, 'eslint-import-resolver-typescript');
@@ -100,6 +121,9 @@ function addImportOrderRules(tree: Tree): void {
   addEsLintRules(tree, importOrderRule);
 }
 
+/**
+ * @internal
+ */
 function addParserOptionsToProjects(tree: Tree) {
   updateEsLintProjectConfig(tree, (project) => ({
     files: ['*.ts', '*.tsx'],
@@ -109,6 +133,9 @@ function addParserOptionsToProjects(tree: Tree) {
   }));
 }
 
+/**
+ * @internal
+ */
 function updateEsLintProjectConfig(
   tree: Tree,
   projectRule: (project: ProjectConfiguration) => EsLintConfigurationOverrideRule

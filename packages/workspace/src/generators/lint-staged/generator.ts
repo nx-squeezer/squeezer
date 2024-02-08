@@ -9,6 +9,9 @@ import {
 
 import { lintStaged, LintStagedConfig, lintStagedConfigPath, lintStagedDefaultConfig } from './lint-staged';
 
+/**
+ * Nx generator to setup lint-staged and husky.
+ */
 export default async function lintStagedGenerator(tree: Tree) {
   addHuskyToPackageJson(tree);
   addDevDependencyToPackageJson(tree, lintStaged);

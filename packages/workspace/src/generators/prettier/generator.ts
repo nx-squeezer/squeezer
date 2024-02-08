@@ -7,6 +7,9 @@ import { prettierPlugin, eslintPluginPrettier, prettierConfigJsonFile, prettierC
 import { prettierDefaultConfig } from './prettier-default-config';
 import { addEsLintPlugin, addEsLintRules, isEsLintPluginPresent } from '../eslint';
 
+/**
+ * Nx generator to setup prettier and format files in the workspace.
+ */
 export default async function prettierGenerator(tree: Tree) {
   setPrettierConfig(tree);
 
@@ -30,6 +33,9 @@ export default async function prettierGenerator(tree: Tree) {
   };
 }
 
+/**
+ * @internal
+ */
 function setPrettierConfig(tree: Tree): void {
   if (tree.exists(prettierConfigJsonFile)) {
     return;
