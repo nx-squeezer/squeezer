@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.0.4](https://github.com/nx-squeezer/squeezer/compare/devkit@3.0.3...devkit@3.0.4) (2024-02-08)
+
 ## [3.0.3](https://github.com/nx-squeezer/squeezer/compare/devkit@3.0.2...devkit@3.0.3) (2024-02-07)
 
 ## [3.0.2](https://github.com/nx-squeezer/squeezer/compare/devkit@3.0.1...devkit@3.0.2) (2024-02-07)
