@@ -1,6 +1,12 @@
 import { InjectionToken } from '@angular/core';
 
+/**
+ * Configuration of an async provider.
+ */
 export interface AsyncProviderConfig<T> {
+  /**
+   * Token to be provided.
+   */
   provide: InjectionToken<T>;
 
   /**

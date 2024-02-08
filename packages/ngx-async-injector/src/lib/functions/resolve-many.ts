@@ -40,9 +40,15 @@ import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfac
 export function resolveMany<T extends { [key: string]: InjectionToken<unknown> }>(
   injectionTokens: T
 ): Promise<InjectionTokenTypeMap<T>>;
+/**
+ * Overload for multiple injection tokens.
+ */
 export function resolveMany<T extends InjectionToken<unknown>[]>(
   ...injectionTokens: T
 ): Promise<InjectionTokenTypeCollection<[...T]>>;
+/**
+ * Overload for map of injection tokens.
+ */
 export function resolveMany(
   ...injectionTokens: (InjectionToken<unknown> | { [key: string]: InjectionToken<unknown> })[]
 ): Promise<unknown[] | { [key: string]: unknown }> {

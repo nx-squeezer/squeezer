@@ -96,10 +96,16 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
   private readonly templateRef = inject(TemplateRef);
   private readonly cdr = inject(ChangeDetectorRef);
 
+  /**
+   * List of providers to be resolved. If not defined, it will resolve all async providers in the DI tree.
+   */
   @Input('ngxResolveAsyncProviders') providers: TProviders | null = null;
 
   private destroyed = false;
 
+  /**
+   * Type guard that exposes resolved async validators.
+   */
   static ngTemplateContextGuard<T extends { [key: string]: InjectionToken<unknown> }>(
     _: ResolveAsyncProvidersDirective<T>,
     context: unknown
@@ -140,6 +146,9 @@ export class ResolveAsyncProvidersDirective<TProviders extends { [key: string]: 
   }
 }
 
+/**
+ * Type of the structural directive context that exposes resolved async validators.
+ */
 export type ResolveAsyncProvidersContext<TProviders extends { [key: string]: InjectionToken<unknown> }> = {
   $implicit: InjectionTokenTypeMap<TProviders>;
 } & InjectionTokenTypeMap<TProviders>;

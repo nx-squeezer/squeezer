@@ -2,6 +2,9 @@ import { AsyncClassMultiProvider, AsyncClassProvider } from './async-class-provi
 import { AsyncFactoryMultiProvider, AsyncFactoryProvider } from './async-factory-provider';
 import { AsyncValueMultiProvider, AsyncValueProvider } from './async-value-provider';
 
+/**
+ * Union type of static async providers.
+ */
 export type AsyncStaticProvider<T> =
   | AsyncValueProvider<T>
   | AsyncFactoryProvider<T>

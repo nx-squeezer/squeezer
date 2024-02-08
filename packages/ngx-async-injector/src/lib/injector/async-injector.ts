@@ -19,6 +19,9 @@ import { InjectionContext } from '../interfaces/injection-context';
 import { InjectionTokenTypeCollection, InjectionTokenTypeMap } from '../interfaces/injection-token-type';
 import { calculateCircularDependencyChain } from '../utils/calculate-circular-dependencies.function';
 
+/**
+ * @internal
+ */
 interface AsyncInjectableRecord<T> {
   injectionToken: InjectionToken<T>;
   valuePromise: () => Promise<T>;
@@ -28,7 +31,7 @@ interface AsyncInjectableRecord<T> {
 }
 
 /**
- * @private
+ * @internal
  */
 @Injectable()
 export class AsyncInjector implements OnDestroy {
@@ -280,6 +283,9 @@ export class AsyncInjector implements OnDestroy {
   }
 }
 
+/**
+ * @internal
+ */
 function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   if (injectable.promise) {
     return injectable.promise;
@@ -307,6 +313,9 @@ function hydrate<T>(injectable: AsyncInjectableRecord<T>): Promise<T> {
   return promise;
 }
 
+/**
+ * @internal
+ */
 function isInjectionTokenCollection(
   injectionTokens: (InjectionToken<unknown> | { [key: string]: InjectionToken<unknown> })[]
 ): injectionTokens is InjectionToken<unknown>[] {

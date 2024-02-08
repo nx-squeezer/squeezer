@@ -113,9 +113,15 @@ import { ASYNC_INJECTOR_INITIALIZER } from '../tokens/async-injector-initializer
  * ```
  */
 export function provideAsync<T>(asyncStaticProvider: AsyncStaticProvider<T>): StaticProvider[];
+/**
+ * Overload for a collection of async providers.
+ */
 export function provideAsync<T extends unknown[]>(
   ...asyncStaticProviders: AsyncProviderTypes<[...T]>
 ): StaticProvider[];
+/**
+ * Base implementation.
+ */
 export function provideAsync(...asyncStaticProviders: AsyncStaticProvider<unknown>[]): StaticProvider[] {
   const asyncProviders: StaticProvider[] = asyncStaticProviders.map(
     (asyncStaticProvider: AsyncStaticProvider<unknown>) => ({
