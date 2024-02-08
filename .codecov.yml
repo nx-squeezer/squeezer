@@ -24,6 +24,9 @@ coverage:
       ngx-forms:
         flags:
           - ngx-forms
+      ngx-signal-forms:
+        flags:
+          - ngx-signal-forms
       ngx-ssr-app:
         flags:
           - ngx-ssr-app
@@ -46,6 +49,9 @@ flags:
   ngx-forms:
     paths:
       - packages/ngx-forms
+  ngx-signal-forms:
+    paths:
+      - packages/ngx-signal-forms
   ngx-ssr-app:
     paths:
       - packages/ngx-ssr-app

@@ -41,6 +41,12 @@ npx nx g eslint
 npx nx g codecov
 ```
 
+### New Angular Library
+
+```shell
+npx nx g @nx/angular:lib name --directory packages/name --importPath=@nx-squeezer/name
+```
+
 ### Running Local Generators
 
 ```shell

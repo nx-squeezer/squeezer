@@ -1,0 +1,22 @@
+{
+  "name": "ngx-signal-forms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-signal-forms/src",
+  "prefix": "lib",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package"
+    },
+    "test": {
+      "executor": "@nx/jest:jest"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "docs": {
+      "executor": "@twittwer/compodoc:compodoc"
+    }
+  }
+}

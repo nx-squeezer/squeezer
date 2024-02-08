@@ -29,6 +29,7 @@
     "ngx-async-injector",
     "ngx-forms",
     "ngx-forms-app",
+    "ngx-signal-forms",
     "ngx-ssr-app",
     "renovate",
     "utils",
