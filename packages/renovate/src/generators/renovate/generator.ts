@@ -7,6 +7,9 @@ import { renovateCiFile, renovateBranch } from './renovate';
 import { renovateConfigValidatorTask } from './renovate-config-validator-task';
 import { RenovateGeneratorSchema } from './schema';
 
+/**
+ * Nx generator that adds Renovate to a workspace.
+ */
 export default async function renovateGenerator(tree: Tree, options: RenovateGeneratorSchema) {
   if (!options.force && tree.exists(renovateCiFile)) {
     console.log(`Renovate workflow already existing at path: ${renovateCiFile}`);
