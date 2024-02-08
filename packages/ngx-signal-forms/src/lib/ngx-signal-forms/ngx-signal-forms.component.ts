@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
+/**
+ * Test component
+ */
 @Component({
   standalone: true,
   imports: [CommonModule],
