@@ -62,9 +62,6 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#hydrate" title="src/lib/injector/async-injector.ts" ><b>hydrate</b>&nbsp;&nbsp;&nbsp;(src/.../async-injector.ts)</a>
-                        </li>
-                        <li>
                             <a href="#isAsyncClassProvider" title="src/lib/interfaces/async-class-provider.ts" ><b>isAsyncClassProvider</b>&nbsp;&nbsp;&nbsp;(src/.../async-class-provider.ts)</a>
                         </li>
                         <li>
@@ -72,9 +69,6 @@
                         </li>
                         <li>
                             <a href="#isAsyncValueProvider" title="src/lib/interfaces/async-value-provider.ts" ><b>isAsyncValueProvider</b>&nbsp;&nbsp;&nbsp;(src/.../async-value-provider.ts)</a>
-                        </li>
-                        <li>
-                            <a href="#isInjectionTokenCollection" title="src/lib/injector/async-injector.ts" ><b>isInjectionTokenCollection</b>&nbsp;&nbsp;&nbsp;(src/.../async-injector.ts)</a>
                         </li>
                         <li>
                             <a href="#isMultiProvider" title="src/lib/functions/is-multi-provider.ts" ><b>isMultiProvider</b>&nbsp;&nbsp;&nbsp;(src/.../is-multi-provider.ts)</a>
@@ -104,131 +98,7 @@
     </table>
 </section>
 
-    <h3>src/lib/injector/async-injector.ts</h3>
-    <section>
-    <h3></h3>    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="hydrate"></a>
-                    <span class="name">
-                        <span ><b>hydrate</b></span>
-                        <a href="#hydrate"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>hydrate(injectable: <a href="../interfaces/AsyncInjectableRecord.html" target="_self">AsyncInjectableRecord</a>)</code>
-                </td>
-            </tr>
-
-
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>injectable</td>
-                                    <td>
-                                                <code><a href="../interfaces/AsyncInjectableRecord.html" target="_self" >AsyncInjectableRecord</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>Promise&lt;T&gt;</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="isInjectionTokenCollection"></a>
-                    <span class="name">
-                        <span ><b>isInjectionTokenCollection</b></span>
-                        <a href="#isInjectionTokenCollection"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>isInjectionTokenCollection(injectionTokens)</code>
-                </td>
-            </tr>
-
-
-
-
-            <tr>
-                <td class="col-md-4">
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Optional</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>injectionTokens</td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>    <code>InjectionToken&lt;&gt;[]</code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</section>    <h3>src/lib/interfaces/async-class-provider.ts</h3>
+    <h3>src/lib/interfaces/async-class-provider.ts</h3>
     <section>
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
@@ -252,6 +122,8 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Type guard to check if a provider is an async class provider.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -317,6 +189,8 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Type guard to check if a provider is an async factory provider.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -382,6 +256,8 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Type guard to check if a provider is an async value provider.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -447,6 +323,8 @@
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Type guard to check if the provider is defined as multiple.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -669,6 +547,8 @@ export async function providerFactory({ inject, resolve }: InjectionContext): Pr
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Overload for a collection of async providers.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -732,6 +612,8 @@ export async function providerFactory({ inject, resolve }: InjectionContext): Pr
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Base implementation.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -887,6 +769,8 @@ The resolved value will have the same shape, either an array or a map of the res
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Overload for multiple injection tokens.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>
@@ -950,6 +834,8 @@ The resolved value will have the same shape, either an array or a map of the res
 
             <tr>
                 <td class="col-md-4">
+                    <div class="io-description"><p>Overload for map of injection tokens.</p>
+</div>
 
                     <div class="io-description">
                         <b>Parameters :</b>

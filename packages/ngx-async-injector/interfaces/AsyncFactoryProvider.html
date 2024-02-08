@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Type to define an async factory provider.</p>
+
+            </p>
 
             <p class="comment">
                 <h3>Extends</h3>
@@ -138,6 +145,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Async factory import.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -151,16 +164,34 @@ import { AsyncProviderConfig } from &#x27;./async-provider-config&#x27;;
 import { AsyncStaticProvider } from &#x27;./async-static-provider&#x27;;
 import { InjectionContext } from &#x27;./injection-context&#x27;;
 
+/**
+ * Type of an async factory provider.
+ */
 export type AsyncFactoryWithInjectionContext&lt;T&gt; &#x3D; (injectionContext: InjectionContext) &#x3D;&gt; T;
 
+/**
+ * Type to define an async factory provider.
+ */
 export interface AsyncFactoryProvider&lt;T&gt; extends AsyncProviderConfig&lt;T&gt; {
+  /**
+   * Async factory import.
+   */
   useAsyncFactory: () &#x3D;&gt; Promise&lt;AsyncFactoryWithInjectionContext&lt;T&gt;&gt;;
 }
 
+/**
+ * Type to define an async factory multi provider.
+ */
 export interface AsyncFactoryMultiProvider&lt;T extends unknown[]&gt; extends AsyncProviderConfig&lt;T&gt;, AsyncMultiProvider {
+  /**
+   * Async factory import.
+   */
   useAsyncFactory: () &#x3D;&gt; Promise&lt;AsyncFactoryWithInjectionContext&lt;ArrayItemType&lt;T&gt;&gt;&gt;;
 }
 
+/**
+ * Type guard to check if a provider is an async factory provider.
+ */
 export function isAsyncFactoryProvider&lt;T&gt;(
   asyncStaticProvider: AsyncStaticProvider&lt;T&gt;
 ): asyncStaticProvider is AsyncFactoryProvider&lt;T&gt; | AsyncFactoryMultiProvider&lt;T[]&gt; {

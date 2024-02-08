@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Type to define an async class provider.</p>
+
+            </p>
 
             <p class="comment">
                 <h3>Extends</h3>
@@ -138,6 +145,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Async class import.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -151,14 +164,29 @@ import { AsyncProviderConfig } from &#x27;./async-provider-config&#x27;;
 import { AsyncStaticProvider } from &#x27;./async-static-provider&#x27;;
 import { TypeWithoutConstructorParams } from &#x27;./type-without-constructor-params&#x27;;
 
+/**
+ * Type to define an async class provider.
+ */
 export interface AsyncClassProvider&lt;T&gt; extends AsyncProviderConfig&lt;T&gt; {
+  /**
+   * Async class import.
+   */
   useAsyncClass: () &#x3D;&gt; Promise&lt;TypeWithoutConstructorParams&lt;T&gt;&gt;;
 }
 
+/**
+ * Type to define an async class multi provider.
+ */
 export interface AsyncClassMultiProvider&lt;T extends unknown[]&gt; extends AsyncProviderConfig&lt;T&gt;, AsyncMultiProvider {
+  /**
+   * Async class import.
+   */
   useAsyncClass: () &#x3D;&gt; Promise&lt;TypeWithoutConstructorParams&lt;ArrayItemType&lt;T&gt;&gt;&gt;;
 }
 
+/**
+ * Type guard to check if a provider is an async class provider.
+ */
 export function isAsyncClassProvider&lt;T&gt;(
   asyncStaticProvider: AsyncStaticProvider&lt;T&gt;
 ): asyncStaticProvider is AsyncClassProvider&lt;T&gt; | AsyncClassMultiProvider&lt;T[]&gt; {

@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Configuration of an async provider.</p>
+
+            </p>
 
 
         <section>
@@ -184,6 +191,12 @@ If <code>lazy</code> (default), it will wait until the injection token is resolv
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Token to be provided.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -193,7 +206,13 @@ If <code>lazy</code> (default), it will wait until the injection token is resolv
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { InjectionToken } from &#x27;@angular/core&#x27;;
 
+/**
+ * Configuration of an async provider.
+ */
 export interface AsyncProviderConfig&lt;T&gt; {
+  /**
+   * Token to be provided.
+   */
   provide: InjectionToken&lt;T&gt;;
 
   /**

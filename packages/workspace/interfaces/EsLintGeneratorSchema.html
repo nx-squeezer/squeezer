@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Schema for ESLint generator.</p>
+
+            </p>
 
 
         <section>
@@ -173,6 +180,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies deprecation.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -211,6 +224,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies eslint:recommended.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -249,6 +268,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies import.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -287,6 +312,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies sonarjs:recommended.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -325,6 +356,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies @typescript-eslint/recommended.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -363,6 +400,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Applies unused-imports.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -371,11 +414,34 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface EsLintGeneratorSchema {
+  /**
+   * Applies eslint:recommended.
+   */
   eslintRecommended?: boolean;
+
+  /**
+   * Applies sonarjs:recommended.
+   */
   sonarJs?: boolean;
+
+  /**
+   * Applies unused-imports.
+   */
   unusedImports?: boolean;
+
+  /**
+   * Applies @typescript-eslint/recommended.
+   */
   typescriptRecommended?: boolean;
+
+  /**
+   * Applies deprecation.
+   */
   deprecation?: boolean;
+
+  /**
+   * Applies import.
+   */
   importOrder?: boolean;
 }
 </code></pre>

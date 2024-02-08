@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Injection context for async inject function.</p>
+
+            </p>
 
 
         <section>
@@ -132,6 +139,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Inject function.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -159,6 +172,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Resolve function.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -170,9 +189,18 @@
 
 import { AsyncInjector } from &#x27;../injector/async-injector&#x27;;
 
+/**
+ * Injection context for async inject function.
+ */
 export interface InjectionContext {
-  // eslint-disable-next-line deprecation/deprecation
+  /**
+   * Inject function.
+   */
   inject: typeof inject;
+
+  /**
+   * Resolve function.
+   */
   resolve: AsyncInjector[&#x27;resolve&#x27;];
 }
 </code></pre>

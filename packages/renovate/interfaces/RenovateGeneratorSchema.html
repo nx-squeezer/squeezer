@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Renovate generator schema.</p>
+
+            </p>
 
 
         <section>
@@ -156,6 +163,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Assignee for GitHub PRs.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -189,6 +202,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Overwrites existing Renovate workflow.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -222,6 +241,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Uses local presets instead of the ones provided by @nx-squeezer/squeezer.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -255,6 +280,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Configure Renovate workflow to use Nx Cloud.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -263,9 +294,24 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface RenovateGeneratorSchema {
+  /**
+   * Configure Renovate workflow to use Nx Cloud.
+   */
   useNxCloud: boolean;
+
+  /**
+   * Overwrites existing Renovate workflow.
+   */
   force: boolean;
+
+  /**
+   * Uses local presets instead of the ones provided by @nx-squeezer/squeezer.
+   */
   local: boolean;
+
+  /**
+   * Assignee for GitHub PRs.
+   */
   assignee?: string;
 }
 </code></pre>

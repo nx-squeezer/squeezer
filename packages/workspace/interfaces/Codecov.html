@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Codecov configuration.</p>
+
+            </p>
 
 
         <section>
@@ -151,6 +158,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Comment</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -184,6 +197,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Coverage</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -222,6 +241,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Flags</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -234,42 +259,86 @@ import { parse, stringify } from &#x27;yaml&#x27;;
 
 import { joinNormalize } from &#x27;@nx-squeezer/devkit&#x27;;
 
+/**
+ * Filename of codecov configuration.
+ */
 export const codecovFile &#x3D; &#x27;codecov.yml&#x27;;
+
+/**
+ * Filename of codecov dot configuration.
+ */
 export const codecovDotFile &#x3D; &#x27;.codecov.yml&#x27;;
 
+/**
+ * Codecov coverage configuration.
+ */
 export interface CodecovConfig {
+  /**
+   * Target project.
+   */
   target?: string;
+
+  /**
+   * Threshold for test coverage.
+   */
   threshold?: string;
+
+  /**
+   * Codecov flags.
+   */
   flags?: string[];
 }
 
+/**
+ * Codecov configuration.
+ */
 export interface Codecov {
+  /** Comment */
   comment?: {
+    /** Layout */
     layout: &#x27;reach&#x27;;
+    /** Behavior */
     behavior: &#x27;new&#x27;;
+    /** Require changes */
     require_changes: boolean;
   };
+  /** Coverage */
   coverage: {
+    /** Range */
     range: string;
+    /** Round */
     round: &#x27;nearest&#x27;;
+    /** Precision */
     precision: number;
+    /** Status */
     status: {
+      /** Patch */
       patch: {
+        /** Default */
         default: CodecovConfig;
       };
+      /** Project */
       project: {
+        /** Default */
         default: CodecovConfig;
+        /** configuration */
         [key: string]: CodecovConfig;
       };
     };
   };
+  /** Flags */
   flags?: {
+    /** Flag keys */
     [key: string]: {
+      /** Paths */
       paths: string[];
     };
   };
 }
 
+/**
+ * Default codecov configuration.
+ */
 export const codecovDefault: Codecov &#x3D; {
   comment: {
     layout: &#x27;reach&#x27;,
@@ -297,18 +366,30 @@ export const codecovDefault: Codecov &#x3D; {
   },
 };
 
+/**
+ * Returns the filename of current codecov configuration.
+ */
 export function getCodecovFile(tree: Tree): string {
   return tree.exists(codecovFile) ? codecovFile : codecovDotFile;
 }
 
+/**
+ * Reads codecov raw configuration.
+ */
 export function readRawCodecov(tree: Tree): string {
   return tree.read(getCodecovFile(tree))?.toString() ?? &#x27;&#x27;;
 }
 
+/**
+ * Reads codecov configuration.
+ */
 export function readCodecov(tree: Tree): Codecov {
   return parse(readRawCodecov(tree));
 }
 
+/**
+ * Generates codecov configuration.
+ */
 export function createCodecov(tree: Tree) {
   const codecovFile &#x3D; getCodecovFile(tree);
   if (tree.exists(codecovFile)) {
@@ -317,10 +398,16 @@ export function createCodecov(tree: Tree) {
   writeCodecov(tree, codecovDefault);
 }
 
+/**
+ * Saves codecov configuration.
+ */
 export function writeCodecov(tree: Tree, codecov: Codecov): void {
   tree.write(getCodecovFile(tree), stringify(codecov));
 }
 
+/**
+ * Adds projects to codecov configuration.
+ */
 export function writeProjectsToCodecov(tree: Tree): void {
   createCodecov(tree);
   const codecov &#x3D; readCodecov(tree);
@@ -367,6 +454,9 @@ export function writeProjectsToCodecov(tree: Tree): void {
   writeCodecov(tree, codecov);
 }
 
+/**
+ * Updates test coverage configuration for jest.
+ */
 export function updateProjectJestCoverage(tree: Tree, jestConfigPath: string) {
   const jestFileContent: string | undefined &#x3D; tree.read(jestConfigPath)?.toString();
 

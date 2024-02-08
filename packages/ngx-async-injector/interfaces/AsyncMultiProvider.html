@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Type of an async multi provider.</p>
+
+            </p>
 
 
         <section>
@@ -126,6 +133,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Flag that defines the provider as multiple.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -134,6 +147,9 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface AsyncMultiProvider {
+  /**
+   * Flag that defines the provider as multiple.
+   */
   multi: true;
 }
 </code></pre>

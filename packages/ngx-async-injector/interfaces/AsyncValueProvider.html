@@ -70,6 +70,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Type to define an async value provider.</p>
+
+            </p>
 
             <p class="comment">
                 <h3>Extends</h3>
@@ -138,6 +145,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Async value import.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -150,14 +163,29 @@ import { AsyncMultiProvider } from &#x27;./async-multi-provider&#x27;;
 import { AsyncProviderConfig } from &#x27;./async-provider-config&#x27;;
 import { AsyncStaticProvider } from &#x27;./async-static-provider&#x27;;
 
+/**
+ * Type to define an async value provider.
+ */
 export interface AsyncValueProvider&lt;T&gt; extends AsyncProviderConfig&lt;T&gt; {
+  /**
+   * Async value import.
+   */
   useAsyncValue: () &#x3D;&gt; Promise&lt;T&gt;;
 }
 
+/**
+ * Type to define an async value multi provider.
+ */
 export interface AsyncValueMultiProvider&lt;T extends unknown[]&gt; extends AsyncProviderConfig&lt;T&gt;, AsyncMultiProvider {
+  /**
+   * Async value import.
+   */
   useAsyncValue: () &#x3D;&gt; Promise&lt;ArrayItemType&lt;T&gt;&gt;;
 }
 
+/**
+ * Type guard to check if a provider is an async value provider.
+ */
 export function isAsyncValueProvider&lt;T&gt;(
   asyncStaticProvider: AsyncStaticProvider&lt;T&gt;
 ): asyncStaticProvider is AsyncValueProvider&lt;T&gt; | AsyncValueMultiProvider&lt;T[]&gt; {
