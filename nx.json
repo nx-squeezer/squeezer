@@ -132,6 +132,23 @@
         "jestConfig": "{projectRoot}/jest.config.ts"
       }
     },
+    "@nx/angular:package": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "{projectRoot}/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "{projectRoot}/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "{projectRoot}/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "@jscutlery/semver:version": {
       "options": {
         "push": true,
@@ -196,11 +213,6 @@
     },
     "e2e": {
       "cache": true
-    },
-    "@nx/angular:package": {
-      "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["default", "^default"]
     }
   },
   "generators": {

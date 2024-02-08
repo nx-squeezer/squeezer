@@ -6,20 +6,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "project": "packages/ngx-forms/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "packages/ngx-forms/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "packages/ngx-forms/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
+      "executor": "@nx/angular:package"
     },
     "test": {
       "executor": "@nx/jest:jest"

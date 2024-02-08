@@ -6,20 +6,7 @@
   "prefix": "nx-squeezer",
   "targets": {
     "build": {
-      "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "project": "packages/ngx-async-injector/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "packages/ngx-async-injector/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "packages/ngx-async-injector/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
+      "executor": "@nx/angular:package"
     },
     "test": {
       "executor": "@nx/jest:jest"

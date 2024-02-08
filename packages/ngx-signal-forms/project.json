@@ -7,20 +7,7 @@
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nx/angular:package",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
-      "options": {
-        "project": "{projectRoot}/ng-package.json"
-      },
-      "configurations": {
-        "production": {
-          "tsConfig": "{projectRoot}/tsconfig.lib.prod.json"
-        },
-        "development": {
-          "tsConfig": "{projectRoot}/tsconfig.lib.json"
-        }
-      },
-      "defaultConfiguration": "production"
+      "executor": "@nx/angular:package"
     },
     "test": {
       "executor": "@nx/jest:jest"
