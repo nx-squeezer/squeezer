@@ -1,0 +1,35 @@
+{
+  "name": "ngx-signal-forms",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/ngx-signal-forms/src",
+  "prefix": "lib",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "{projectRoot}/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "{projectRoot}/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "{projectRoot}/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "docs": {
+      "executor": "@twittwer/compodoc:compodoc"
+    }
+  }
+}

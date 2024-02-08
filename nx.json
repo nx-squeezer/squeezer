@@ -196,6 +196,11 @@
     },
     "e2e": {
       "cache": true
+    },
+    "@nx/angular:package": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["default", "^default"]
     }
   },
   "generators": {

@@ -18,6 +18,7 @@
       "@nx-squeezer/devkit": ["packages/devkit/src/index.ts"],
       "@nx-squeezer/ngx-async-injector": ["packages/ngx-async-injector/src/index.ts"],
       "@nx-squeezer/ngx-forms": ["packages/ngx-forms/src/index.ts"],
+      "@nx-squeezer/ngx-signal-forms": ["packages/ngx-signal-forms/src/index.ts"],
       "@nx-squeezer/renovate": ["packages/renovate/src/index.ts"],
       "@nx-squeezer/utils": ["packages/utils/src/index.ts"],
       "@nx-squeezer/workspace": ["packages/workspace/src/index.ts"]
