@@ -1,1 +1,4 @@
-export * from './lib/ngx-signal-forms/ngx-signal-forms.component';
+// Public API
+
+// Models
+export * from './lib/models/signal-control';
