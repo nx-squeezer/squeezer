@@ -1,19 +1,20 @@
 import { SignalControl, control } from './signal-control';
 
 describe('signalControl', () => {
-  it('should create the control with an initial value using the constructor', () => {
-    const initialValue = {};
-    const signalControl = new SignalControl(initialValue);
+  const initialValue = {};
+  let signalControl: SignalControl;
 
-    expect(signalControl.value()).toBe(initialValue);
-    expect(signalControl.initialValue).toBe(initialValue);
+  beforeEach(() => {
+    signalControl = control(initialValue);
   });
 
   it('should create the control with the factory function', () => {
-    const initialValue = {};
-    const signalControl = control(initialValue);
+    expect(signalControl()).toBe(initialValue);
+  });
 
-    expect(signalControl.value()).toBe(initialValue);
-    expect(signalControl.initialValue).toBe(initialValue);
+  describe('valid', () => {
+    it('should be valid when there are no validators', () => {
+      expect(signalControl.valid()).toBeTruthy();
+    });
   });
 });
