@@ -27,10 +27,16 @@ jobs:
 
       - name: Migrate @next
         run: |
-          echo '{"migrations":[]}' > migrations.json
           npx --no-install nx migrate next
-          npm install --force --ignore-scripts
+          npx --no-install nx migrate @angular/core@next
+          npx --no-install nx migrate @angular/cli@next
+          npx --no-install nx migrate @schematics/angular@next
+          rm -rf node_modules
+          rm package-lock.json
+          npm install --force
           npx --no-install nx migrate --run-migrations --if-exists
+          npm install --force
+          rm -f migrations.json
 
       - name: Lint
         run: npx --no-install nx run-many --target=lint --fix --parallel=3
