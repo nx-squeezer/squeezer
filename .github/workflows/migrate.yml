@@ -40,6 +40,8 @@ jobs:
 
       - name: Run Migrations
         run: |
+          rm -rf node_modules
+          rm package-lock.json
           npm install
           npx --no-install nx migrate --run-migrations --if-exists
           npm install
