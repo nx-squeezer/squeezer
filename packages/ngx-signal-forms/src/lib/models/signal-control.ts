@@ -1,24 +1,27 @@
-import { signal } from '@angular/core';
+import { Signal, WritableSignal, computed, signal } from '@angular/core';
+
+/**
+ * @internal
+ */
+interface SignalControlNode<T> extends WritableSignal<T> {
+  valid: Signal<boolean>;
+}
 
 /**
  * Model of a control backed with signals.
  */
-export class SignalControl<T = unknown> {
+export interface SignalControl<T = unknown> extends WritableSignal<T> {
   /**
-   * Value of the control.
+   * Valid state.
    */
-  readonly value = signal(this.initialValue);
-
-  /**
-   * Signal control constructor.
-   * @param initialValue Control's initial value.
-   */
-  constructor(readonly initialValue: T) {}
+  readonly valid: Signal<boolean>;
 }
 
 /**
  * Factory function to create a signal control.
  */
 export function control<T = unknown>(initialValue: T): SignalControl<T> {
-  return new SignalControl(initialValue);
+  const controlSignal = signal(initialValue) as SignalControlNode<T>;
+  controlSignal.valid = computed(() => true);
+  return controlSignal;
 }
