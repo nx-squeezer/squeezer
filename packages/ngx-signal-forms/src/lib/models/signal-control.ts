@@ -3,7 +3,7 @@ import { Signal, WritableSignal, computed, signal } from '@angular/core';
 /**
  * @internal
  */
-interface SignalControlNode<T> extends WritableSignal<T> {
+export interface SignalControlNode<T> extends WritableSignal<T> {
   valid: Signal<boolean>;
 }
 

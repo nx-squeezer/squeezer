@@ -1,6 +1,6 @@
 import { SignalControl, control } from './signal-control';
 
-describe('signalControl', () => {
+describe('SignalControl', () => {
   const initialValue = {};
   let signalControl: SignalControl;
 

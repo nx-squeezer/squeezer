@@ -1,4 +1,5 @@
 // Public API
 
 // Models
-export * from './lib/models/signal-control';
+export { SignalControl, control } from './lib/models/signal-control';
+export { SignalFormGroup, formGroup } from './lib/models/signal-form-group';
