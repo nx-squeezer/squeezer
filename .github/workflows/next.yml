@@ -31,6 +31,7 @@ jobs:
           npx --no-install nx migrate @angular/core@next
           npx --no-install nx migrate @angular/cli@next
           npx --no-install nx migrate @schematics/angular@next
+          npx --no-install nx migrate @ngrx/signals@next
           rm -rf node_modules
           rm package-lock.json
           npm install --force

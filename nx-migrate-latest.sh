@@ -7,6 +7,7 @@ npx --no-install nx migrate latest
 npx --no-install nx migrate @angular/core@latest
 npx --no-install nx migrate @angular/cli@latest
 npx --no-install nx migrate @schematics/angular@latest
+npx --no-install nx migrate @ngrx/signals@latest
 
 # Migrate Plugins
 npx --no-install nx migrate @jscutlery/semver@latest
