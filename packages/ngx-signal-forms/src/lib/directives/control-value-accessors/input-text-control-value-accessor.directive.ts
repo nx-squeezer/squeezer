@@ -1,13 +1,12 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, WritableSignal } from '@angular/core';
 
 import { SignalControlValueAccessor } from '../../models/control-value-accessor';
-import { SignalControl } from '../../models/signal-control';
 
 /**
  * Control value accessor for text inputs.
  */
 @Directive({
-  selector: `input[type="text"][ngxTextInput]`,
+  selector: `input[type="text"][ngxControl][ngxTextInput]`,
   standalone: true,
   host: {
     '(input)': 'control.set($event.target.value)',
@@ -16,7 +15,7 @@ import { SignalControl } from '../../models/signal-control';
 })
 export class InputTextControlValueAccessorDirective implements SignalControlValueAccessor<string> {
   /**
-   * Model control.
+   * Model.
    */
-  @Input({ alias: 'ngxTextInput', required: true }) control!: SignalControl<string>;
+  @Input({ alias: 'ngxControl', required: true }) control!: WritableSignal<string>;
 }
