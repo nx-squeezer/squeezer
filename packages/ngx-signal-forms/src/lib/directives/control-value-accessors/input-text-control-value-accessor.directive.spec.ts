@@ -4,6 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { InputTextControlValueAccessorDirective } from './input-text-control-value-accessor.directive';
 
 const text = 'text';
+const newText = 'new text';
 
 @Component({
   template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" /> `,
@@ -41,14 +42,20 @@ describe('InputTextControlValueAccessorDirective', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should reflect model to HTML input element', () => {
+  it('should reflect model initial state to HTML input element', () => {
     expect(component.control()).toBe(text);
     expect(component.inputElement.value).toBe(text);
   });
 
-  it('should update the control value when input changes', () => {
-    const newText = 'new text';
+  it('should reflect updates to model to HTML input element', () => {
+    component.control.set(newText);
 
+    TestBed.flushEffects();
+
+    expect(component.inputElement.value).toBe(newText);
+  });
+
+  it('should update the control value when input changes', () => {
     component.type(newText);
 
     expect(component.control()).toBe(newText);

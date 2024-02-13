@@ -7,6 +7,7 @@ import { ValidationErrors } from '@angular/forms';
 @Directive({
   selector: `[ngxControl]`,
   standalone: true,
+  exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T> {
   /**
