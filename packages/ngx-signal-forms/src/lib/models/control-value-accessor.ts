@@ -1,4 +1,4 @@
-import { SignalControl } from './signal-control';
+import { WritableSignal } from '@angular/core';
 
 /**
  * Signal control value accessor.
@@ -7,5 +7,5 @@ export interface SignalControlValueAccessor<T = unknown> {
   /**
    * Model control.
    */
-  control: SignalControl<T>;
+  control: WritableSignal<T>;
 }
