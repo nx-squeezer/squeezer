@@ -20,7 +20,7 @@ type SignalFormGroupControls<T extends object> = {
 };
 
 /**
- * Control directive.
+ * Form group directive.
  */
 @Directive({
   selector: `[ngxFormGroup]`,

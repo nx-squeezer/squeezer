@@ -64,7 +64,6 @@ describe('SignalFormGroupDirective', () => {
     await TestBed.configureTestingModule({
       providers: [{ provide: RENDER_INPUT, useValue: renderInput }],
       imports: [TestComponent],
-      teardown: { destroyAfterEach: true },
     }).compileComponents();
 
     const fixture = TestBed.createComponent(TestComponent);
