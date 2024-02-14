@@ -13,8 +13,6 @@ import { InputTextControlValueAccessorDirective } from './control-value-accessor
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalFormGroupDirective } from './signal-form-group.directive';
 
-jest.useFakeTimers({ advanceTimers: true });
-
 interface FormValue {
   text: string;
 }
@@ -70,8 +68,6 @@ describe('SignalFormGroupDirective', () => {
     const component = fixture.componentInstance;
     fixture.autoDetectChanges();
 
-    jest.advanceTimersByTime(20);
-
     return { component };
   }
 
@@ -113,8 +109,6 @@ describe('SignalFormGroupDirective', () => {
       const { component } = await setup();
 
       component.type(newText);
-
-      TestBed.flushEffects();
 
       expect(component.value()).toStrictEqual({ text: newText });
     });

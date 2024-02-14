@@ -1,16 +1,7 @@
-import {
-  DestroyRef,
-  Directive,
-  Injector,
-  Input,
-  WritableSignal,
-  effect,
-  inject,
-  signal,
-  untracked,
-} from '@angular/core';
+import { Directive, Input, WritableSignal, computed, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
+import { toWritable } from '../utils/to-writable';
 
 /**
  * @internal
@@ -28,8 +19,6 @@ type SignalFormGroupControls<T extends object> = {
   exportAs: 'ngxFormGroup',
 })
 export class SignalFormGroupDirective<T extends object> extends SignalControlDirective<T> {
-  private readonly injector = inject(Injector);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly formGroupControlsMap: SignalFormGroupControls<T> = {};
 
   /**
@@ -45,13 +34,10 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
   }
 
   private createControlSignal<K extends keyof T>(key: K): WritableSignal<T[K]> {
-    const value = untracked(() => this.control());
-    const control = signal(value[key]);
-
-    const scheduleEffect = setTimeout(() => {
-      effect(() => this.updateFormGroupField(key, control()), { allowSignalWrites: true, injector: this.injector });
-    }, 0);
-    this.destroyRef.onDestroy(() => clearTimeout(scheduleEffect));
+    const control = toWritable(
+      computed(() => this.control()[key]),
+      (value: T[K]) => this.updateFormGroupField(key, value)
+    );
 
     this.formGroupControlsMap[key] = control;
     return control;
@@ -64,19 +50,4 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
       this.control.set({ ...groupValue, [key]: value });
     }
   }
-
-  /**
-   * @internal
-   */
-  protected readonly updateValue = effect(() => applyFormGroupState(this.control(), this.formGroupControlsMap), {
-    allowSignalWrites: true,
-  });
-}
-
-/**
- * @internal
- */
-function applyFormGroupState<T extends object>(value: T, controlsMap: SignalFormGroupControls<T>) {
-  const keys = new Set([...Object.keys(value), ...Object.keys(controlsMap)]) as Set<keyof T>;
-  keys.forEach((key) => controlsMap[key]?.set(value[key]));
 }
