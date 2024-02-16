@@ -10,7 +10,7 @@ describe('toWritable', () => {
   beforeEach(() => {
     sourceSignal = signal(1);
     setFn = jest.fn().mockImplementation((value: number) => sourceSignal.set(value));
-    writableSignal = toWritable(sourceSignal.asReadonly(), setFn);
+    writableSignal = toWritable(() => sourceSignal(), setFn);
   });
 
   it('should use set interceptor when using set', () => {

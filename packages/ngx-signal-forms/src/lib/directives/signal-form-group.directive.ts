@@ -1,13 +1,14 @@
-import { Directive, Input, WritableSignal, computed, untracked } from '@angular/core';
+import { Directive, Input, WritableSignal, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
+import { ControlSignal, toControl } from '../utils/control-signal';
 import { toWritable } from '../utils/to-writable';
 
 /**
  * @internal
  */
 type SignalFormGroupControls<T extends object> = {
-  [K in keyof T]?: WritableSignal<T[K]>;
+  [K in keyof T]?: ControlSignal<T[K]>;
 };
 
 /**
@@ -33,11 +34,12 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
     return this.formGroupControlsMap[key] ?? this.createControlSignal(key);
   }
 
-  private createControlSignal<K extends keyof T>(key: K): WritableSignal<T[K]> {
-    const control = toWritable(
-      computed(() => this.control()[key]),
+  private createControlSignal<K extends keyof T>(key: K): ControlSignal<T[K]> {
+    const writableSignal = toWritable(
+      () => this.control()[key],
       (value: T[K]) => this.updateFormGroupField(key, value)
     );
+    const control = toControl(writableSignal);
 
     this.formGroupControlsMap[key] = control;
     return control;

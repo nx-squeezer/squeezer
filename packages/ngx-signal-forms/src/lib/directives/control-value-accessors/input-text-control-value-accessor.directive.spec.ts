@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, ViewChild, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './input-text-control-value-accessor.directive';
@@ -14,15 +14,12 @@ const newText = 'new text';
 })
 class TestComponent {
   readonly control = signal(text);
-  @ViewChild('inputTag', { static: true }) readonly inputElementRef!: ElementRef<HTMLInputElement>;
-
-  get inputElement(): HTMLInputElement {
-    return this.inputElementRef.nativeElement;
-  }
+  readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
+  readonly inputElement = computed(() => this.inputElementRef().nativeElement);
 
   type(str: string) {
-    this.inputElement.value = str;
-    this.inputElement.dispatchEvent(new Event('input'));
+    this.inputElement().value = str;
+    this.inputElement().dispatchEvent(new Event('input'));
   }
 }
 
@@ -44,7 +41,7 @@ describe('InputTextControlValueAccessorDirective', () => {
 
   it('should reflect model initial state to HTML input element', () => {
     expect(component.control()).toBe(text);
-    expect(component.inputElement.value).toBe(text);
+    expect(component.inputElement().value).toBe(text);
   });
 
   it('should reflect updates to model to HTML input element', () => {
@@ -52,7 +49,7 @@ describe('InputTextControlValueAccessorDirective', () => {
 
     TestBed.flushEffects();
 
-    expect(component.inputElement.value).toBe(newText);
+    expect(component.inputElement().value).toBe(newText);
   });
 
   it('should update the control value when input changes', () => {
