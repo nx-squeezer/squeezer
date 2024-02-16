@@ -1,11 +1,18 @@
 import { WritableSignal } from '@angular/core';
 
+/**
+ * @internal
+ */
 const CONTROL_SIGNAL = Symbol('control-signal');
 
 /**
  * Control signal that has additional information about that control.
  */
 export interface ControlSignal<T> extends WritableSignal<T> {
+  /**
+   * Object brand.
+   * @internal
+   */
   [CONTROL_SIGNAL]: WritableSignal<T>;
 }
 
