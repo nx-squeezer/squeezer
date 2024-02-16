@@ -1,27 +1,22 @@
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlDirective } from './signal-control.directive';
-import { control } from '../models/control-signal';
-import { RequiredValidationError } from '../models/validation-errors';
-import { Validator } from '../models/validator';
+import { requiredValidator } from '../validators/required-validator';
 
 const text = 'text';
 
 @Component({
-  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" [validators]="[requiredValidator]" /> `,
+  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="[requiredValidator]" /> `,
   standalone: true,
   imports: [InputTextControlValueAccessorDirective, SignalControlDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
-  readonly control = control(text);
+  readonly value = signal(text);
   readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
-
-  readonly requiredValidator: Validator<string, RequiredValidationError> = (value) => {
-    return value.trim().length === 0 ? { required: true } : null;
-  };
+  readonly requiredValidator = requiredValidator;
 }
 
 describe('SignalControlDirective', () => {
@@ -51,21 +46,21 @@ describe('SignalControlDirective', () => {
 
   describe('validity', () => {
     it('should detect valid state', () => {
-      component.control.set(text);
+      component.value.set(text);
 
-      expect(component.control.errors()).toBeNull();
-      expect(component.control.status()).toBe('VALID');
-      expect(component.control.valid()).toBeTruthy();
-      expect(component.control.invalid()).toBeFalsy();
+      expect(component.controlDirective().errors()).toBeNull();
+      expect(component.controlDirective().status()).toBe('VALID');
+      expect(component.controlDirective().valid()).toBeTruthy();
+      expect(component.controlDirective().invalid()).toBeFalsy();
     });
 
     it('should detect invalid state', () => {
-      component.control.set(' ');
+      component.value.set(' ');
 
-      expect(component.control.errors()).toStrictEqual({ required: true });
-      expect(component.control.status()).toBe('INVALID');
-      expect(component.control.valid()).toBeFalsy();
-      expect(component.control.invalid()).toBeTruthy();
+      expect(component.controlDirective().errors()).toStrictEqual({ required: true });
+      expect(component.controlDirective().status()).toBe('INVALID');
+      expect(component.controlDirective().valid()).toBeFalsy();
+      expect(component.controlDirective().invalid()).toBeTruthy();
     });
   });
 });
