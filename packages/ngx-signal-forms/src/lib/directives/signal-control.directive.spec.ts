@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewChild, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './control-value-accessors/input-text-control-value-accessor.directive';
@@ -14,8 +14,7 @@ const text = 'text';
 })
 class TestComponent {
   readonly control = signal(text);
-  @ViewChild('inputTag', { static: true, read: SignalControlDirective })
-  readonly controlDirective!: SignalControlDirective<string>;
+  readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
 }
 
 describe('SignalControlDirective', () => {
@@ -35,17 +34,17 @@ describe('SignalControlDirective', () => {
   });
 
   it('should compile the control directive', () => {
-    expect(component.controlDirective).toBeInstanceOf(SignalControlDirective);
+    expect(component.controlDirective()).toBeInstanceOf(SignalControlDirective);
   });
 
   it('should have the value of the value accessor', () => {
-    expect(component.controlDirective.control()).toBe(text);
+    expect(component.controlDirective().control()).toBe(text);
   });
 
   describe('valid', () => {
     it('should be valid when there are no validators', () => {
-      expect(component.controlDirective.errors()).toBeNull();
-      expect(component.controlDirective.valid()).toBeTruthy();
+      expect(component.controlDirective().errors()).toBeNull();
+      expect(component.controlDirective().valid()).toBeTruthy();
     });
   });
 });
