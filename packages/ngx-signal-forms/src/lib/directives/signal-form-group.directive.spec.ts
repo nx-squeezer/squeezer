@@ -81,8 +81,9 @@ describe('SignalFormGroupDirective', () => {
   describe('value', () => {
     it('should have the value set', async () => {
       const { component } = await setup();
+      const control = component.formGroupDirective().control();
 
-      expect(component.formGroupDirective().control()).toBe(initialValue);
+      expect(control()).toBe(initialValue);
     });
 
     it('should reflect model initial state to HTML input element', async () => {
@@ -111,8 +112,9 @@ describe('SignalFormGroupDirective', () => {
 
     it('should persist value even if child controls are not used', async () => {
       const { component } = await setup(false);
+      const control = component.formGroupDirective().control();
 
-      expect(component.formGroupDirective().control()).toBe(initialValue);
+      expect(control()).toBe(initialValue);
     });
   });
 
@@ -123,7 +125,6 @@ describe('SignalFormGroupDirective', () => {
       const textControl = component.formGroupDirective().get('text');
 
       expect(textControl).toBeTruthy();
-      expect(component.formGroupDirective().control().text).toBe(initialValue.text);
       expect(textControl()).toBe(initialValue.text);
     });
 
@@ -134,7 +135,6 @@ describe('SignalFormGroupDirective', () => {
       const textControl = component.formGroupDirective().get('text');
 
       expect(textControl).toBeTruthy();
-      expect(component.formGroupDirective().control().text).toBe(newText);
       expect(textControl()).toBe(newText);
     });
 
@@ -142,15 +142,6 @@ describe('SignalFormGroupDirective', () => {
       const { component } = await setup();
 
       expect(component.formGroupDirective().get('text')).toBe(component.formGroupDirective().get('text'));
-    });
-  });
-
-  describe('valid', () => {
-    it('should be valid when there are no validators', async () => {
-      const { component } = await setup();
-
-      expect(component.formGroupDirective().errors()).toBeNull();
-      expect(component.formGroupDirective().valid()).toBeTruthy();
     });
   });
 });

@@ -1,20 +1,27 @@
-import { ChangeDetectionStrategy, Component, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlDirective } from './signal-control.directive';
+import { control } from '../models/control-signal';
+import { RequiredValidationError } from '../models/validation-errors';
+import { Validator } from '../models/validator';
 
 const text = 'text';
 
 @Component({
-  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" /> `,
+  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" [validators]="[requiredValidator]" /> `,
   standalone: true,
   imports: [InputTextControlValueAccessorDirective, SignalControlDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
-  readonly control = signal(text);
+  readonly control = control(text);
   readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
+
+  readonly requiredValidator: Validator<string, RequiredValidationError> = (value) => {
+    return value.trim().length === 0 ? { required: true } : null;
+  };
 }
 
 describe('SignalControlDirective', () => {
@@ -38,13 +45,27 @@ describe('SignalControlDirective', () => {
   });
 
   it('should have the value of the value accessor', () => {
-    expect(component.controlDirective().control()).toBe(text);
+    const control = component.controlDirective().control();
+    expect(control()).toBe(text);
   });
 
-  describe('valid', () => {
-    it('should be valid when there are no validators', () => {
-      expect(component.controlDirective().errors()).toBeNull();
-      expect(component.controlDirective().valid()).toBeTruthy();
+  describe('validity', () => {
+    it('should detect valid state', () => {
+      component.control.set(text);
+
+      expect(component.control.errors()).toBeNull();
+      expect(component.control.status()).toBe('VALID');
+      expect(component.control.valid()).toBeTruthy();
+      expect(component.control.invalid()).toBeFalsy();
+    });
+
+    it('should detect invalid state', () => {
+      component.control.set(' ');
+
+      expect(component.control.errors()).toStrictEqual({ required: true });
+      expect(component.control.status()).toBe('INVALID');
+      expect(component.control.valid()).toBeFalsy();
+      expect(component.control.invalid()).toBeTruthy();
     });
   });
 });

@@ -1,7 +1,7 @@
-import { Directive, Input, WritableSignal, untracked } from '@angular/core';
+import { Directive, WritableSignal, input, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
-import { ControlSignal, toControl } from '../utils/control-signal';
+import { ControlSignal, toControl } from '../models/control-signal';
 import { toWritable } from '../utils/to-writable';
 
 /**
@@ -25,7 +25,7 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
   /**
    * Model.
    */
-  @Input({ alias: 'ngxFormGroup', required: true }) override control!: WritableSignal<T>;
+  override readonly control = input.required<WritableSignal<T>>({ alias: 'ngxFormGroup' });
 
   /**
    * Returns a signal with the value of the form group at a given key.
@@ -36,7 +36,7 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
 
   private createControlSignal<K extends keyof T>(key: K): ControlSignal<T[K]> {
     const writableSignal = toWritable(
-      () => this.control()[key],
+      () => this.control()()[key],
       (value: T[K]) => this.updateFormGroupField(key, value)
     );
     const control = toControl(writableSignal);
@@ -46,10 +46,11 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlDir
   }
 
   private updateFormGroupField<K extends keyof T>(key: K, value: T[K]) {
-    const groupValue = untracked(() => this.control());
+    const ngxControl = untracked(() => this.control());
+    const groupValue = untracked(() => ngxControl());
 
     if (!Object.is(groupValue[key], value)) {
-      this.control.set({ ...groupValue, [key]: value });
+      ngxControl.set({ ...groupValue, [key]: value });
     }
   }
 }

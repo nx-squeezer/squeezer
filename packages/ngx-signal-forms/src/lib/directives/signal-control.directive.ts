@@ -1,5 +1,8 @@
-import { Directive, Input, WritableSignal, computed } from '@angular/core';
-import { ValidationErrors } from '@angular/forms';
+import { Directive, WritableSignal, effect, input } from '@angular/core';
+
+import { isControl } from '../models/control-signal';
+import { ValidationErrors } from '../models/validation-errors';
+import { Validator } from '../models/validator';
 
 /**
  * Control directive.
@@ -9,19 +12,31 @@ import { ValidationErrors } from '@angular/forms';
   standalone: true,
   exportAs: 'ngxControl',
 })
-export class SignalControlDirective<T> {
+export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Model.
    */
-  @Input({ alias: 'ngxControl', required: true }) control!: WritableSignal<T>;
+  readonly control = input.required<WritableSignal<T>>({ alias: 'ngxControl' });
 
   /**
-   * Errors.
+   * Validators.
    */
-  readonly errors = computed<ValidationErrors | null>(() => null);
+  readonly validators = input<readonly Validator<T, V>[]>([]);
 
   /**
-   * Valid state.
+   * @internal
    */
-  readonly valid = computed(() => this.errors() == null);
+  protected setValidators = effect(
+    (onCleanup) => {
+      const control = this.control();
+      if (!isControl(control)) {
+        return;
+      }
+
+      control.validators.set(this.validators());
+
+      onCleanup(() => control.validators.set([]));
+    },
+    { allowSignalWrites: true }
+  );
 }
