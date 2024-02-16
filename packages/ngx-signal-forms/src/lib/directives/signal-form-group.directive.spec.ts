@@ -13,10 +13,16 @@ import { TestBed } from '@angular/core/testing';
 import { InputTextControlValueAccessorDirective } from './control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalFormGroupDirective } from './signal-form-group.directive';
+import { Validator } from '../models/validator';
+import { requiredValidator } from '../validators/required-validator';
 
 interface FormValue {
   text: string;
 }
+
+type TooLongValidationError = {
+  tooLong: true;
+};
 
 const text = 'text';
 const newText = 'newText';
@@ -26,9 +32,15 @@ const RENDER_INPUT = new InjectionToken<boolean>('render-input');
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup">
+    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="[formGroupValidator]">
       @if (renderInput) {
-      <input #inputTag type="text" ngxTextInput [ngxControl]="ngxFormGroup.get('text')" />
+      <input
+        #inputTag
+        type="text"
+        ngxTextInput
+        [ngxControl]="ngxFormGroup.get('text')"
+        [validators]="[requiredValidator]"
+      />
       }
     </form>
   `,
@@ -42,6 +54,10 @@ class TestComponent {
   readonly inputElementRef = viewChild<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef()?.nativeElement);
   readonly formGroupDirective = viewChild.required<SignalFormGroupDirective<FormValue>>(SignalFormGroupDirective);
+  readonly requiredValidator = requiredValidator;
+  readonly formGroupValidator: Validator<FormValue, TooLongValidationError> = (value) => {
+    return value.text.length > 5 ? { tooLong: true } : null;
+  };
 
   type(str: string) {
     const inputElement = this.inputElement();
@@ -142,6 +158,38 @@ describe('SignalFormGroupDirective', () => {
       const { component } = await setup();
 
       expect(component.formGroupDirective().get('text')).toBe(component.formGroupDirective().get('text'));
+    });
+  });
+
+  describe('validity', () => {
+    it('should detect valid state according to validators of the form group', async () => {
+      const { component } = await setup();
+      component.value.set(initialValue);
+
+      expect(component.formGroupDirective().errors()).toBeNull();
+      expect(component.formGroupDirective().status()).toBe('VALID');
+      expect(component.formGroupDirective().valid()).toBeTruthy();
+      expect(component.formGroupDirective().invalid()).toBeFalsy();
+    });
+
+    it('should detect invalid state according to validators of the form group', async () => {
+      const { component } = await setup();
+      component.value.set({ text: newText });
+
+      expect(component.formGroupDirective().errors()).toStrictEqual({ tooLong: true });
+      expect(component.formGroupDirective().status()).toBe('INVALID');
+      expect(component.formGroupDirective().valid()).toBeFalsy();
+      expect(component.formGroupDirective().invalid()).toBeTruthy();
+    });
+
+    it('should detect valid state according to validators of child controls', async () => {
+      const { component } = await setup();
+      component.value.set({ text: '' });
+
+      expect(component.formGroupDirective().errors()).toBeNull();
+      expect(component.formGroupDirective().status()).toBe('INVALID');
+      expect(component.formGroupDirective().valid()).toBeFalsy();
+      expect(component.formGroupDirective().invalid()).toBeTruthy();
     });
   });
 });
