@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, WritableSignal, effect, inject } from '@angular/core';
+import { Directive, ElementRef, WritableSignal, effect, inject, input } from '@angular/core';
 
 import { SignalControlValueAccessor } from '../../models/control-value-accessor';
 
@@ -9,7 +9,7 @@ import { SignalControlValueAccessor } from '../../models/control-value-accessor'
   selector: `input[type="text"][ngxControl][ngxTextInput]`,
   standalone: true,
   host: {
-    '(input)': 'control.set($event.target.value)',
+    '(input)': 'control().set($event.target.value)',
   },
   exportAs: 'ngxControlValueAccessor',
 })
@@ -19,12 +19,13 @@ export class InputTextControlValueAccessorDirective implements SignalControlValu
   /**
    * Model.
    */
-  @Input({ alias: 'ngxControl', required: true }) control!: WritableSignal<string>;
+  readonly control = input.required<WritableSignal<string>>({ alias: 'ngxControl' });
 
   /**
    * @internal
    */
   protected readonly updateValue = effect(() => {
-    this.elementRef.nativeElement.value = this.control();
+    const control = this.control();
+    this.elementRef.nativeElement.value = control();
   });
 }

@@ -1,4 +1,4 @@
-import { WritableSignal } from '@angular/core';
+import { InputSignal, WritableSignal } from '@angular/core';
 
 /**
  * Signal control value accessor.
@@ -7,5 +7,5 @@ export interface SignalControlValueAccessor<T = unknown> {
   /**
    * Model control.
    */
-  control: WritableSignal<T>;
+  readonly control: InputSignal<WritableSignal<T>>;
 }
