@@ -1,20 +1,10 @@
 import { Directive, Signal, WritableSignal, computed, effect, input } from '@angular/core';
 
+import { SignalControlContainer } from './signal-control-container';
 import { SignalControlStatus } from '../models/signal-control-status';
+import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';
 import { Validator } from '../models/validator';
-
-/**
- * @internal
- */
-const SIGNAL_CONTROL_DIRECTIVE = Symbol('signal-control-directive');
-
-/**
- * @internal
- */
-export function getSignalControlDirective<T>(writableSignal: WritableSignal<T>): SignalControlDirective<T> | undefined {
-  return (writableSignal as any)[SIGNAL_CONTROL_DIRECTIVE];
-}
 
 /**
  * Control directive.
@@ -28,15 +18,24 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Model.
    */
-  readonly control = input.required<WritableSignal<T>>({ alias: 'ngxControl' });
+  readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxControl' });
 
   /**
    * @internal
    */
-  protected branding = effect(() => {
-    const control = this.control();
-    (control as any)[SIGNAL_CONTROL_DIRECTIVE] = this;
-  });
+  protected registerControl = effect(
+    (cleanup) => {
+      const control = this.control();
+      const controlContainer: SignalControlContainer<any> | undefined = (control as any)[SIGNAL_CONTROL_CONTAINER];
+      const controlKey: string | number | undefined = (control as any)[SIGNAL_CONTROL_KEY];
+
+      if (controlContainer != null && controlKey != null) {
+        controlContainer.addControl(controlKey, this as unknown as SignalControlDirective<any, {}>);
+        cleanup(() => controlContainer.removeControl(controlKey));
+      }
+    },
+    { allowSignalWrites: true }
+  );
 
   /**
    * Validators.
@@ -46,10 +45,10 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Errors.
    */
-  readonly errors: Signal<ValidationErrors | null> = computed<ValidationErrors | null>(() => {
+  readonly errors: Signal<Readonly<ValidationErrors> | null> = computed<Readonly<ValidationErrors> | null>(() => {
     const control = this.control();
     const value = control();
-    const validationResult: ValidationErrors = this.validators().reduce(
+    const validationResult: Readonly<ValidationErrors> = this.validators().reduce(
       (result, validator) => ({ ...result, ...(validator(value) ?? {}) }),
       {}
     );
