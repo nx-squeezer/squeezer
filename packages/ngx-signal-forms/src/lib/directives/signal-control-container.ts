@@ -1,6 +1,7 @@
-import { DestroyRef, computed, inject } from '@angular/core';
+import { DestroyRef, WritableSignal, computed, inject } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
+import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { MapSignal } from '../signals/map-signal';
 
 /**
@@ -10,7 +11,9 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
   /**
    * @internal
    */
-  private readonly controlDirectivesMap = new MapSignal<T, SignalControlDirective<unknown>>();
+  protected readonly controlSignalsMap: { [K in keyof T]?: WritableSignal<Readonly<T[K]>> } = {};
+
+  private readonly controlDirectivesMap = new MapSignal<keyof T, SignalControlDirective<T[keyof T]>>();
 
   /**
    * The validation status of the form group and its child controls.
@@ -25,18 +28,14 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
 
     // Otherwise, check the status of all child controls, and as soon as a child control is invalid, return
     const controlDirectiveStatuses = this.controlDirectivesMap.values().map(({ status }) => status());
-    if (controlDirectiveStatuses.some((status) => status === 'INVALID')) {
-      return 'INVALID';
-    }
-
-    return 'VALID';
+    return controlDirectiveStatuses.some((status) => status === 'INVALID') ? 'INVALID' : 'VALID';
   });
 
   /**
    * Adds a control to the container.
    */
   addControl<K extends keyof T>(key: K, signalControlDirective: SignalControlDirective<T[K]>) {
-    this.controlDirectivesMap.set(key, signalControlDirective as SignalControlDirective<unknown>);
+    this.controlDirectivesMap.set(key, signalControlDirective as any);
   }
 
   /**
@@ -44,6 +43,16 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
    */
   removeControl<K extends keyof T>(key: K) {
     this.controlDirectivesMap.delete(key);
+  }
+
+  /**
+   * @internal
+   */
+  protected brandSignal<K extends keyof T, S extends WritableSignal<Readonly<T[K]>>>(writableSignal: S, key: K): S {
+    const signal: any = writableSignal;
+    signal[SIGNAL_CONTROL_CONTAINER] = this;
+    signal[SIGNAL_CONTROL_KEY] = key;
+    return signal;
   }
 
   /**

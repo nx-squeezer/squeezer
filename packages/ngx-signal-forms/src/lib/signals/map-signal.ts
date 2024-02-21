@@ -3,11 +3,11 @@ import { Signal, computed, signal } from '@angular/core';
 /**
  * Reactive Map.
  */
-export class MapSignal<T extends object, V> {
+export class MapSignal<K, V> {
   /**
    * @internal
    */
-  private readonly map = new Map<keyof T, V>();
+  private readonly map = new Map<K, V>();
 
   /**
    * @internal
@@ -32,7 +32,7 @@ export class MapSignal<T extends object, V> {
   /**
    * Returns true if an element in the Map existed and has been removed, or false if the element does not exist.
    */
-  delete(key: keyof T): boolean {
+  delete(key: K): boolean {
     const result = this.map.delete(key);
     this.notifyChanges();
     return result;
@@ -41,7 +41,7 @@ export class MapSignal<T extends object, V> {
   /**
    * Adds a new element with a specified key and value to the Map. If an element with the same key already exists, the element will be updated.
    */
-  set(key: keyof T, value: V): void {
+  set(key: K, value: V): void {
     this.map.set(key, value);
     this.notifyChanges();
   }
