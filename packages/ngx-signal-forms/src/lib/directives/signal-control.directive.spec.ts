@@ -1,3 +1,4 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
@@ -5,22 +6,37 @@ import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
-import { requiredValidator } from '../validators/required-validator';
+import { RequiredValidationError, requiredValidator } from '../validators/required-validator';
 
 const text = 'text';
 
 @Component({
-  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="[requiredValidator]" /> `,
+  template: `
+    <input
+      #inputTag
+      type="text"
+      ngxTextInput
+      [ngxControl]="value"
+      [validators]="[requiredValidator]"
+      #ngxControl="ngxControl"
+    />
+
+    @if (ngxControl.error('required'); as requiredError) {
+    <p #requiredError>{{ requiredError | json }}</p>
+    }
+  `,
   standalone: true,
-  imports: [InputTextControlValueAccessorDirective, SignalControlDirective],
+  imports: [InputTextControlValueAccessorDirective, SignalControlDirective, JsonPipe],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
   readonly value = signal(text);
-  readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
+  readonly controlDirective =
+    viewChild.required<SignalControlDirective<string, RequiredValidationError>>(SignalControlDirective);
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
   readonly requiredValidator = requiredValidator;
+  readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');
 }
 
 describe('SignalControlDirective', () => {
@@ -54,6 +70,8 @@ describe('SignalControlDirective', () => {
       component.value.set(text);
 
       expect(component.controlDirective().errors()).toBeNull();
+      expect(component.controlDirective().error('required')).toBeNull();
+      expect(component.controlDirective().error('randomError' as any)).toBeNull();
       expect(component.controlDirective().status()).toBe('VALID');
       expect(component.controlDirective().valid()).toBeTruthy();
       expect(component.controlDirective().invalid()).toBeFalsy();
@@ -61,6 +79,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().classes()).toBe(statusClasses.valid);
       expect(component.inputElement()).toHaveClass(statusClasses.valid);
       expect(component.inputElement()).not.toHaveClass(statusClasses.invalid);
+
+      expect(component.requiredError()).toBeFalsy();
     });
 
     it('should detect invalid state', () => {
@@ -69,6 +89,8 @@ describe('SignalControlDirective', () => {
       TestBed.flushEffects();
 
       expect(component.controlDirective().errors()).toStrictEqual({ required: true });
+      expect(component.controlDirective().error('required')).toBeTruthy();
+      expect(component.controlDirective().error('randomError' as any)).toBeNull();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
@@ -76,6 +98,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().classes()).toBe(statusClasses.invalid);
       expect(component.inputElement()).not.toHaveClass(statusClasses.valid);
       expect(component.inputElement()).toHaveClass(statusClasses.invalid);
+
+      expect(component.requiredError()?.nativeElement).toHaveTextContent('true');
     });
   });
 });

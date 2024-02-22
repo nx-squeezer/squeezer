@@ -7,6 +7,12 @@ import { ValidationErrors } from '../models/validation-errors';
 import { Validator } from '../models/validator';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 
+// TODO: pristine/dirty (value changed)
+// TODO: touched/untouched (blur)
+// TODO: disabled
+// TODO: DOM attributes/validators, from CVA
+// TODO: adjust visibility of errors based on interaction
+
 /**
  * Control directive.
  */
@@ -89,15 +95,23 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Errors.
    */
-  readonly errors: Signal<Readonly<ValidationErrors> | null> = computed<Readonly<ValidationErrors> | null>(() => {
+  readonly errors: Signal<Readonly<V> | null> = computed<Readonly<V> | null>(() => {
     const control = this.control();
     const value = control();
-    const validationResult: Readonly<ValidationErrors> = this.validators().reduce(
+    const validationResult: Readonly<V> = this.validators().reduce(
       (result, validator) => ({ ...result, ...(validator(value) ?? {}) }),
-      {}
+      {} as V
     );
     return Object.keys(validationResult).length > 0 ? validationResult : null;
   });
+
+  /**
+   * Reactive value of a specific error.
+   */
+  error<K extends keyof V>(key: K): V[K] | null {
+    const errors = this.errors();
+    return errors == null ? null : errors[key] ?? null;
+  }
 
   /**
    * The validation status of the control.
