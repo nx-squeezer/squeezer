@@ -33,8 +33,8 @@ class ChildTestComponent {
 class TestResolveAllProvidersComponent {
   constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
 
-  get textContent(): string {
-    return this.elementRef.nativeElement.textContent?.trim() ?? '';
+  get nativeElement(): HTMLElement | undefined {
+    return this.elementRef.nativeElement;
   }
 }
 
@@ -55,8 +55,8 @@ class TestResolveManyProvidersComponent {
 
   constructor(private readonly elementRef: ElementRef<HTMLElement>) {}
 
-  get textContent(): string {
-    return this.elementRef.nativeElement.textContent?.trim() ?? '';
+  get nativeElement(): HTMLElement | undefined {
+    return this.elementRef.nativeElement;
   }
 }
 
@@ -82,11 +82,11 @@ describe('ResolveAsyncProvidersDirective', () => {
     const fixture = TestBed.createComponent(TestResolveAllProvidersComponent);
     fixture.autoDetectChanges();
 
-    expect(fixture.componentInstance.textContent).toBe('');
+    expect(fixture.componentInstance.nativeElement).toHaveTextContent('');
 
     await new Promise(process.nextTick); // Resolve injectors
 
-    expect(fixture.componentInstance.textContent).toBe('Async injector value: text');
+    expect(fixture.componentInstance.nativeElement).toHaveTextContent('Async injector value: text');
   });
 
   it('should not render the template if destroyed before completing', () => {
@@ -105,11 +105,11 @@ describe('ResolveAsyncProvidersDirective', () => {
     const fixture = TestBed.createComponent(TestResolveManyProvidersComponent);
     fixture.autoDetectChanges();
 
-    expect(fixture.componentInstance.textContent).toBe('');
+    expect(fixture.componentInstance.nativeElement).toHaveTextContent('');
 
     await new Promise(process.nextTick); // Resolve injectors
 
-    expect(fixture.componentInstance.textContent).toBe('Async injector value: text text');
+    expect(fixture.componentInstance.nativeElement).toHaveTextContent('Async injector value: text text');
   });
 
   it('should provide a context guard', () => {

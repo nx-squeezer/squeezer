@@ -6,7 +6,16 @@
   },
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "prettier", "sonarjs", "unused-imports", "@typescript-eslint", "deprecation", "import"],
+  "plugins": [
+    "@nx",
+    "prettier",
+    "sonarjs",
+    "unused-imports",
+    "@typescript-eslint",
+    "deprecation",
+    "import",
+    "jest-dom"
+  ],
   "overrides": [
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.json", "*.md", "*.html"],
@@ -89,6 +98,7 @@
     },
     {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "extends": ["plugin:jest-dom/recommended"],
       "env": {
         "jest": true
       },
@@ -106,7 +116,13 @@
         "@nx/dependency-checks": [
           "error",
           {
-            "ignoredDependencies": ["jest", "jest-preset-angular", "tslib", "@nx/dependency-checks"]
+            "ignoredDependencies": [
+              "jest",
+              "jest-preset-angular",
+              "@testing-library/jest-dom",
+              "tslib",
+              "@nx/dependency-checks"
+            ]
           }
         ]
       }

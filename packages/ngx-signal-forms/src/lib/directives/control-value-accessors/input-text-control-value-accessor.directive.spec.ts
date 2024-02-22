@@ -40,7 +40,7 @@ describe('InputTextControlValueAccessorDirective', () => {
 
   it('should reflect model initial state to HTML input element', () => {
     expect(component.control()).toBe(text);
-    expect(component.inputElement().value).toBe(text);
+    expect(component.inputElement()).toHaveValue(text);
   });
 
   it('should reflect updates to model to HTML input element', () => {
@@ -48,7 +48,7 @@ describe('InputTextControlValueAccessorDirective', () => {
 
     TestBed.flushEffects();
 
-    expect(component.inputElement().value).toBe(newText);
+    expect(component.inputElement()).toHaveValue(newText);
   });
 
   it('should update the control value when input changes', () => {
