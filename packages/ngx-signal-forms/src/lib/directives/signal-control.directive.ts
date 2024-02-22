@@ -1,6 +1,6 @@
 import { Directive, Signal, WritableSignal, computed, effect, inject, input, signal } from '@angular/core';
 
-import { SignalControlContainer } from './signal-control-container';
+import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';

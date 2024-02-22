@@ -1,6 +1,6 @@
 import { Directive, WritableSignal, input } from '@angular/core';
 
-import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor';
+import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor.directive';
 
 /**
  * Control value accessor for text inputs.

@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
-import { SignalControlStatusClasses } from '../models/signal-control-status';
+import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 import { requiredValidator } from '../validators/required-validator';
 

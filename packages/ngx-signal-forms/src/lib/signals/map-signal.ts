@@ -2,6 +2,7 @@ import { Signal, computed, signal } from '@angular/core';
 
 /**
  * Reactive Map.
+ * @internal
  */
 export class MapSignal<K, V> {
   readonly #map = new Map<K, V>();

@@ -29,7 +29,7 @@ export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElem
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   afterValueUpdate(value: T): void {
-    return;
+    return; // Default noop implementation
   }
 
   readonly #updateValue = effect(() => {

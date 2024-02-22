@@ -1,6 +1,6 @@
 import { Directive, WritableSignal, input, untracked } from '@angular/core';
 
-import { SignalControlContainer } from './signal-control-container';
+import { SignalControlContainer } from './signal-control-container.directive';
 import { selectObjectProperty } from '../signals/select-object-property';
 
 /**
