@@ -9,4 +9,4 @@ export { SignalFormGroupDirective } from './lib/directives/signal-form-group.dir
 export { InputTextControlValueAccessorDirective } from './lib/directives/control-value-accessors/input-text-control-value-accessor.directive';
 
 // Models
-export { SignalControlValueAccessor } from './lib/models/control-value-accessor';
+export { SignalControlValueAccessor } from './lib/directives/signal-control-value-accessor';
