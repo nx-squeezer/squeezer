@@ -1,13 +1,13 @@
 import { Directive, Signal, WritableSignal, computed, effect, inject, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
+import { SignalControlValueAccessor } from './signal-control-value-accessor.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';
 import { Validator } from '../models/validator';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 
-// TODO: pristine/dirty (value changed)
 // TODO: touched/untouched (blur)
 // TODO: disabled
 // TODO: DOM attributes/validators, from CVA
@@ -25,6 +25,13 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T, V extends ValidationErrors = {}> {
+  /**
+   * Control value accessor.
+   */
+  readonly controlValueAccessor: SignalControlValueAccessor<T> = inject(SignalControlValueAccessor, {
+    self: true,
+  });
+
   /**
    * Control status classes that will be applied to the host element.
    */
@@ -64,7 +71,10 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
     return parentPath != null && key != null ? `${parentPath}.${key}` : this.defaultKey;
   });
 
-  readonly #registerControl = effect(
+  /**
+   * @internal
+   */
+  protected readonly registerControl = effect(
     (cleanup) => {
       const control = this.control();
       const controlContainer: SignalControlContainer<any> | undefined = (control as any)[SIGNAL_CONTROL_CONTAINER];
@@ -130,6 +140,7 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
 
   /**
    * CSS classes to be applied to the host element depending on the status.
+   * TODO: add pristine
    */
   readonly classes: Signal<string> = computed(() => {
     switch (this.status()) {
@@ -139,4 +150,14 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
         return this.statusClasses.invalid;
     }
   });
+
+  /**
+   * A control is pristine if the user has not yet changed the value in the UI.
+   */
+  readonly pristine: Signal<boolean> = this.controlValueAccessor.pristine;
+
+  /**
+   * A control is dirty if the user has changed the value in the UI.
+   */
+  readonly dirty: Signal<boolean> = computed(() => !this.pristine());
 }

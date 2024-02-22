@@ -1,6 +1,7 @@
-import { DestroyRef, WritableSignal, computed, inject } from '@angular/core';
+import { DestroyRef, Signal, WritableSignal, computed, inject } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
+import { SignalControlStatus } from '../models/signal-control-status';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { MapSignal } from '../signals/map-signal';
 
@@ -18,7 +19,7 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
   /**
    * The validation status of the form group and its child controls.
    */
-  override readonly status = computed(() => {
+  override readonly status: Signal<SignalControlStatus> = computed(() => {
     const errors = this.errors();
 
     // If the form group is invalid, there is no need to keep checking
@@ -29,6 +30,13 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
     // Otherwise, check the status of all child controls, and as soon as a child control is invalid, return
     const controlDirectiveStatuses = this.#controlDirectivesMap.values().map(({ status }) => status());
     return controlDirectiveStatuses.some((status) => status === 'INVALID') ? 'INVALID' : 'VALID';
+  });
+
+  /**
+   * A control is pristine if the user has not yet changed the value in the UI in any of its child controls.
+   */
+  override pristine: Signal<boolean> = computed(() => {
+    return !this.#controlDirectivesMap.values().some(({ dirty }) => dirty());
   });
 
   /**

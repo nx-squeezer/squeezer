@@ -1,4 +1,4 @@
-import { Directive, WritableSignal, input } from '@angular/core';
+import { Directive, WritableSignal, forwardRef, input } from '@angular/core';
 
 import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor.directive';
 
@@ -9,9 +9,12 @@ import { SignalControlValueAccessor } from '../directives/signal-control-value-a
   selector: `input[type="text"][ngxControl][ngxTextInput]`,
   standalone: true,
   host: {
-    '(input)': 'control().set($event.target.value)',
+    '(input)': 'updateValue($event.target.value)',
     '[value]': 'value()',
   },
+  providers: [
+    { provide: SignalControlValueAccessor, useExisting: forwardRef(() => InputTextControlValueAccessorDirective) },
+  ],
   exportAs: 'ngxControlValueAccessor',
 })
 export class InputTextControlValueAccessorDirective extends SignalControlValueAccessor<string, HTMLInputElement> {
