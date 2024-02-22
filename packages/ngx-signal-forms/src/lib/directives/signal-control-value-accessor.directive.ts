@@ -1,4 +1,4 @@
-import { ElementRef, InputSignal, WritableSignal, effect, inject, untracked } from '@angular/core';
+import { ElementRef, InputSignal, WritableSignal, computed, effect, inject, untracked } from '@angular/core';
 
 /**
  * Signal control value accessor.
@@ -20,14 +20,19 @@ export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElem
   abstract readonly control: InputSignal<WritableSignal<T>>;
 
   /**
-   * This method is called after the value is updated and can be used to reflect it in the DOM.
+   * Model value.
    */
-  abstract afterValueUpdate(value: T): void;
+  readonly value = computed(() => this.control()());
 
   /**
-   * @internal
+   * This method is called after the value is updated and can be used to reflect it in the DOM.
    */
-  protected readonly updateValue = effect(() => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  afterValueUpdate(value: T): void {
+    return; // Default noop implementation
+  }
+
+  readonly #updateValue = effect(() => {
     const control = this.control();
     const value = control();
     untracked(() => this.afterValueUpdate(value));
