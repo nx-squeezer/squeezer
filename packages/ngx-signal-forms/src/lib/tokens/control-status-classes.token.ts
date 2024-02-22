@@ -4,6 +4,7 @@ import { SignalControlStatusClasses } from '../models/signal-control-status-clas
 
 /**
  * Token that has the classes that will be applied to host elements depending.
+ * TODO: remove and use build time options
  */
 export const SIGNAL_CONTROL_STATUS_CLASSES = new InjectionToken<SignalControlStatusClasses>(
   'ngx-signal-forms.control-status-classes',

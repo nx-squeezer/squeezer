@@ -9,6 +9,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.
 import { RequiredValidationError, requiredValidator } from '../validators/required-validator';
 
 const text = 'text';
+const newText = 'new text';
 
 @Component({
   template: `
@@ -37,6 +38,11 @@ class TestComponent {
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
   readonly requiredValidator = requiredValidator;
   readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');
+
+  type(str: string) {
+    this.inputElement().value = str;
+    this.inputElement().dispatchEvent(new Event('input'));
+  }
 }
 
 describe('SignalControlDirective', () => {
@@ -58,11 +64,13 @@ describe('SignalControlDirective', () => {
 
   it('should compile the control directive', () => {
     expect(component.controlDirective()).toBeInstanceOf(SignalControlDirective);
+    expect(component.controlDirective().controlValueAccessor).toBeInstanceOf(InputTextControlValueAccessorDirective);
   });
 
   it('should have the value of the value accessor', () => {
     const control = component.controlDirective().control();
     expect(control()).toBe(text);
+    expect(component.controlDirective().controlValueAccessor?.value()).toBe(text);
   });
 
   describe('validity', () => {
@@ -100,6 +108,20 @@ describe('SignalControlDirective', () => {
       expect(component.inputElement()).toHaveClass(statusClasses.invalid);
 
       expect(component.requiredError()?.nativeElement).toHaveTextContent('true');
+    });
+  });
+
+  describe('pristine', () => {
+    it('should be pristine before interaction', () => {
+      expect(component.controlDirective().pristine()).toBeTruthy();
+      expect(component.controlDirective().dirty()).toBeFalsy();
+    });
+
+    it('should be dirty after interaction', () => {
+      component.type(newText);
+
+      expect(component.controlDirective().pristine()).toBeFalsy();
+      expect(component.controlDirective().dirty()).toBeTruthy();
     });
   });
 });

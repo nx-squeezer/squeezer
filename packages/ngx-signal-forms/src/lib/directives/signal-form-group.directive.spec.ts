@@ -178,4 +178,18 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().invalid()).toBeTruthy();
     });
   });
+
+  describe('pristine', () => {
+    it('should be pristine before interaction', () => {
+      expect(component.formGroupDirective().pristine()).toBeTruthy();
+      expect(component.formGroupDirective().dirty()).toBeFalsy();
+    });
+
+    it('should be dirty after interaction', () => {
+      component.type(newText);
+
+      expect(component.formGroupDirective().pristine()).toBeFalsy();
+      expect(component.formGroupDirective().dirty()).toBeTruthy();
+    });
+  });
 });

@@ -1,4 +1,14 @@
-import { ElementRef, InputSignal, WritableSignal, computed, effect, inject, untracked } from '@angular/core';
+import {
+  ElementRef,
+  InputSignal,
+  Signal,
+  WritableSignal,
+  computed,
+  effect,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 
 /**
  * Signal control value accessor.
@@ -22,19 +32,42 @@ export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElem
   /**
    * Model value.
    */
-  readonly value = computed(() => this.control()());
+  readonly value: Signal<T> = computed(() => this.control()());
 
   /**
-   * This method is called after the value is updated and can be used to reflect it in the DOM.
+   * Event callback when the value changes that can be used to reflect the state to the DOM.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  afterValueUpdate(value: T): void {
+  onValueUpdated(value: T): void {
     return; // Default noop implementation
   }
 
-  readonly #updateValue = effect(() => {
+  /**
+   * Updates the underlying value of the control and marks it as dirty.
+   */
+  updateValue(value: T): void {
+    this.control().set(value);
+    this.#pristine.set(false);
+  }
+
+  /**
+   * @internal
+   */
+  protected readonly watchValueChanges = effect(() => {
     const control = this.control();
     const value = control();
-    untracked(() => this.afterValueUpdate(value));
+    untracked(() => this.onValueUpdated(value));
   });
+
+  readonly #pristine: WritableSignal<boolean> = signal(true);
+
+  /**
+   * A control is pristine if the user has not yet changed the value in the UI.
+   */
+  readonly pristine: Signal<boolean> = this.#pristine.asReadonly();
+
+  /**
+   * A control is dirty if the user has changed the value in the UI.
+   */
+  readonly dirty: Signal<boolean> = computed(() => !this.pristine());
 }
