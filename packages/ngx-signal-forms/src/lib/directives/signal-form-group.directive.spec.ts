@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InputTextControlValueAccessorDirective } from './control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalFormGroupDirective } from './signal-form-group.directive';
+import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { Validator } from '../models/validator';
 import { requiredValidator } from '../validators/required-validator';
 

@@ -1,10 +1,11 @@
-import { Directive, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
+import { Directive, Signal, WritableSignal, computed, effect, inject, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';
 import { Validator } from '../models/validator';
+import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 
 /**
  * Control directive.
@@ -12,9 +13,22 @@ import { Validator } from '../models/validator';
 @Directive({
   selector: `[ngxControl]`,
   standalone: true,
+  host: {
+    '[class]': 'classes()',
+  },
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T, V extends ValidationErrors = {}> {
+  /**
+   * Control status classes that will be applied to the host element.
+   */
+  protected readonly statusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
+
+  /**
+   * Model.
+   */
+  readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxControl' });
+
   readonly #parent = signal<SignalControlContainer<any> | null>(null);
 
   /**
@@ -43,13 +57,6 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
     const key = this.key();
     return parentPath != null && key != null ? `${parentPath}.${key}` : this.defaultKey;
   });
-
-  // TODO: class for status
-
-  /**
-   * Model.
-   */
-  readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxControl' });
 
   readonly #registerControl = effect(
     (cleanup) => {
@@ -106,4 +113,16 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
    * Whether the control is in invalid state.
    */
   readonly invalid: Signal<boolean> = computed(() => this.status() === 'INVALID');
+
+  /**
+   * CSS classes to be applied to the host element depending on the status.
+   */
+  readonly classes: Signal<string> = computed(() => {
+    switch (this.status()) {
+      case 'VALID':
+        return this.statusClasses.valid;
+      case 'INVALID':
+        return this.statusClasses.invalid;
+    }
+  });
 }
