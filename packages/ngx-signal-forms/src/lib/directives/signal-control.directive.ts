@@ -1,4 +1,4 @@
-import { Directive, Signal, WritableSignal, computed, effect, input } from '@angular/core';
+import { Directive, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container';
 import { SignalControlStatus } from '../models/signal-control-status';
@@ -15,24 +15,61 @@ import { Validator } from '../models/validator';
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T, V extends ValidationErrors = {}> {
+  readonly #parent = signal<SignalControlContainer<any> | null>(null);
+
+  /**
+   * When the control is a child of a control container, this reactive value exposes a reference to its parent.
+   */
+  readonly parent = this.#parent.asReadonly();
+
+  /**
+   * Default key when the control is not a child of a control container.
+   */
+  readonly defaultKey: string = 'control';
+  readonly #key = signal<string | number | null>(null);
+
+  /**
+   * When the control is a child of a control container, this reactive value exposes the key to which it belongs.
+   */
+  readonly key = this.#key.asReadonly();
+
+  /**
+   * When the control is a child of a control container, this reactive value exposes its relative path.
+   * For standalone controls it returns the default key.
+   */
+  readonly path = computed((): string | null => {
+    const parent = this.parent();
+    const parentPath = parent?.path();
+    const key = this.key();
+    return parentPath != null && key != null ? `${parentPath}.${key}` : this.defaultKey;
+  });
+
+  // TODO: class for status
+
   /**
    * Model.
    */
   readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxControl' });
 
-  /**
-   * @internal
-   */
-  protected registerControl = effect(
+  readonly #registerControl = effect(
     (cleanup) => {
       const control = this.control();
       const controlContainer: SignalControlContainer<any> | undefined = (control as any)[SIGNAL_CONTROL_CONTAINER];
       const controlKey: string | number | undefined = (control as any)[SIGNAL_CONTROL_KEY];
 
-      if (controlContainer != null && controlKey != null) {
-        controlContainer.addControl(controlKey, this as unknown as SignalControlDirective<any, {}>);
-        cleanup(() => controlContainer.removeControl(controlKey));
+      if (controlContainer == null || controlKey == null) {
+        return;
       }
+
+      controlContainer.addControl(controlKey, this as unknown as SignalControlDirective<any, {}>);
+      this.#parent.set(controlContainer);
+      this.#key.set(controlKey);
+
+      cleanup(() => {
+        controlContainer.removeControl(controlKey);
+        this.#parent.set(null);
+        this.#key.set(null);
+      });
     },
     { allowSignalWrites: true }
   );

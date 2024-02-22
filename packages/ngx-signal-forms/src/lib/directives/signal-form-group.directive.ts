@@ -18,6 +18,11 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlCon
   override readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxFormGroup' });
 
   /**
+   * Default key when the control is not a child of a control container.
+   */
+  override readonly defaultKey: string = 'form-group';
+
+  /**
    * Returns a signal with the value of the form group at a given key.
    */
   get<K extends keyof T>(key: K): WritableSignal<Readonly<T[K]>> {

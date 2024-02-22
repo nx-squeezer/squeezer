@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './input-text-control-value-accessor.directive';
 
@@ -25,12 +25,11 @@ class TestComponent {
 
 describe('InputTextControlValueAccessorDirective', () => {
   let component: TestComponent;
-  let fixture: ComponentFixture<TestComponent>;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
+  beforeEach(() => {
+    TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
-    fixture = TestBed.createComponent(TestComponent);
+    const fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.autoDetectChanges();
   });
