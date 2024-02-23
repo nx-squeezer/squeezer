@@ -5,7 +5,6 @@ import { TestBed } from '@angular/core/testing';
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
-import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 import { RequiredValidationError, requiredValidator } from '../validators/required-validator';
 
 const text = 'text';
@@ -47,14 +46,12 @@ class TestComponent {
 
 describe('SignalControlDirective', () => {
   let component: TestComponent;
-  let statusClasses: SignalControlStatusClasses;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
     const fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
-    statusClasses = TestBed.inject(SIGNAL_CONTROL_STATUS_CLASSES);
     fixture.autoDetectChanges();
   });
 
@@ -82,9 +79,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().valid()).toBeTruthy();
       expect(component.controlDirective().invalid()).toBeFalsy();
 
-      expect(component.controlDirective().classes()).toBe(statusClasses.valid);
-      expect(component.inputElement()).toHaveClass(statusClasses.valid);
-      expect(component.inputElement()).not.toHaveClass(statusClasses.invalid);
+      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.valid);
+      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.invalid);
 
       expect(component.requiredError()).toBeFalsy();
     });
@@ -101,9 +97,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
 
-      expect(component.controlDirective().classes()).toBe(statusClasses.invalid);
-      expect(component.inputElement()).not.toHaveClass(statusClasses.valid);
-      expect(component.inputElement()).toHaveClass(statusClasses.invalid);
+      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.valid);
+      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.invalid);
 
       expect(component.requiredError()?.nativeElement).toHaveTextContent('true');
     });
@@ -112,14 +107,20 @@ describe('SignalControlDirective', () => {
   describe('pristine', () => {
     it('should be pristine before interaction', () => {
       expect(component.controlDirective().pristine()).toBeTruthy();
+      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.pristine);
+
       expect(component.controlDirective().dirty()).toBeFalsy();
+      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.dirty);
     });
 
     it('should be dirty after interaction', () => {
       component.type(newText);
 
       expect(component.controlDirective().pristine()).toBeFalsy();
+      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.pristine);
+
       expect(component.controlDirective().dirty()).toBeTruthy();
+      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.dirty);
     });
 
     it('can be set to dirty', () => {
