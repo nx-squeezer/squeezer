@@ -191,5 +191,26 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().pristine()).toBeFalsy();
       expect(component.formGroupDirective().dirty()).toBeTruthy();
     });
+
+    it('can be set to dirty, affecting child controls', () => {
+      expect(component.formGroupDirective().dirty()).toBeFalsy();
+      expect(component.controlDirective()?.dirty()).toBeFalsy();
+
+      component.formGroupDirective().markAsDirty();
+
+      expect(component.formGroupDirective().dirty()).toBeTruthy();
+      expect(component.controlDirective()?.dirty()).toBeTruthy();
+    });
+
+    it('can be set to pristine, affecting child controls', () => {
+      component.type(newText);
+      expect(component.formGroupDirective().pristine()).toBeFalsy();
+      expect(component.controlDirective()?.pristine()).toBeFalsy();
+
+      component.formGroupDirective().markAsPristine();
+
+      expect(component.formGroupDirective().pristine()).toBeTruthy();
+      expect(component.controlDirective()?.pristine()).toBeTruthy();
+    });
   });
 });

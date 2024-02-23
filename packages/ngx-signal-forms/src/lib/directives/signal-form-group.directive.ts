@@ -1,7 +1,6 @@
 import { Directive, WritableSignal, input, untracked } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
-import { SignalControlValueAccessor } from './signal-control-value-accessor.directive';
 import { selectObjectProperty } from '../signals/select-object-property';
 
 /**
@@ -10,7 +9,6 @@ import { selectObjectProperty } from '../signals/select-object-property';
 @Directive({
   selector: `[ngxFormGroup]`,
   standalone: true,
-  providers: [{ provide: SignalControlValueAccessor, useValue: {} }], // Noop CVA.
   exportAs: 'ngxFormGroup',
 })
 export class SignalFormGroupDirective<T extends object> extends SignalControlContainer<T> {

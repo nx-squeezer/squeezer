@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './input-text-control-value-accessor.directive';
 import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor.directive';
+import { SignalControlDirective } from '../directives/signal-control.directive';
 
 const text = 'text';
 const newText = 'new text';
@@ -10,13 +11,14 @@ const newText = 'new text';
 @Component({
   template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" /> `,
   standalone: true,
-  imports: [InputTextControlValueAccessorDirective],
+  imports: [InputTextControlValueAccessorDirective, SignalControlDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
   readonly control = signal(text);
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
+  readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
   readonly controlValueAccessor = viewChild.required(SignalControlValueAccessor);
 
   type(str: string) {
@@ -38,13 +40,14 @@ describe('InputTextControlValueAccessorDirective', () => {
 
   it('should create test component', () => {
     expect(component).toBeTruthy();
+    expect(component.controlValueAccessor()).toBeInstanceOf(SignalControlValueAccessor);
   });
 
   it('should reflect model initial state to HTML input element', () => {
     expect(component.control()).toBe(text);
     expect(component.inputElement()).toHaveValue(text);
-    expect(component.controlValueAccessor().pristine()).toBeTruthy();
-    expect(component.controlValueAccessor().dirty()).toBeFalsy();
+    expect(component.controlDirective().pristine()).toBeTruthy();
+    expect(component.controlDirective().dirty()).toBeFalsy();
   });
 
   it('should reflect updates to model to HTML input element', () => {
@@ -53,14 +56,14 @@ describe('InputTextControlValueAccessorDirective', () => {
     TestBed.flushEffects();
 
     expect(component.inputElement()).toHaveValue(newText);
-    expect(component.controlValueAccessor().pristine()).toBeTruthy();
+    expect(component.controlDirective().pristine()).toBeTruthy();
   });
 
   it('should update the control value when input changes', () => {
     component.type(newText);
 
     expect(component.control()).toBe(newText);
-    expect(component.controlValueAccessor().pristine()).toBeFalsy();
-    expect(component.controlValueAccessor().dirty()).toBeTruthy();
+    expect(component.controlDirective().pristine()).toBeFalsy();
+    expect(component.controlDirective().dirty()).toBeTruthy();
   });
 });

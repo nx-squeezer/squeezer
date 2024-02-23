@@ -64,13 +64,11 @@ describe('SignalControlDirective', () => {
 
   it('should compile the control directive', () => {
     expect(component.controlDirective()).toBeInstanceOf(SignalControlDirective);
-    expect(component.controlDirective().controlValueAccessor).toBeInstanceOf(InputTextControlValueAccessorDirective);
   });
 
   it('should have the value of the value accessor', () => {
     const control = component.controlDirective().control();
     expect(control()).toBe(text);
-    expect(component.controlDirective().controlValueAccessor?.value()).toBe(text);
   });
 
   describe('validity', () => {
@@ -122,6 +120,23 @@ describe('SignalControlDirective', () => {
 
       expect(component.controlDirective().pristine()).toBeFalsy();
       expect(component.controlDirective().dirty()).toBeTruthy();
+    });
+
+    it('can be set to dirty', () => {
+      expect(component.controlDirective().dirty()).toBeFalsy();
+
+      component.controlDirective().markAsDirty();
+
+      expect(component.controlDirective().dirty()).toBeTruthy();
+    });
+
+    it('can be set to pristine', () => {
+      component.type(newText);
+      expect(component.controlDirective().pristine()).toBeFalsy();
+
+      component.controlDirective().markAsPristine();
+
+      expect(component.controlDirective().pristine()).toBeTruthy();
     });
   });
 });
