@@ -13,6 +13,6 @@ export type RequiredValidationError = {
 /**
  * Required validator for text controls.
  */
-export const requiredValidator: Validator<string, RequiredValidationError> = (value) => {
+export const required: Validator<string, RequiredValidationError> = (value) => {
   return value.trim().length === 0 ? { required: true } : null;
 };

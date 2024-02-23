@@ -5,24 +5,21 @@ import { TestBed } from '@angular/core/testing';
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
-import { RequiredValidationError, requiredValidator } from '../validators/required-validator';
+import { combineValidators } from '../validators/combine-validators';
+import { MaxLengthValidationError, maxLength } from '../validators/max-length';
+import { RequiredValidationError, required } from '../validators/required';
 
 const text = 'text';
 const newText = 'new text';
 
 @Component({
   template: `
-    <input
-      #inputTag
-      type="text"
-      ngxTextInput
-      [ngxControl]="value"
-      [validators]="[requiredValidator]"
-      #ngxControl="ngxControl"
-    />
+    <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validator]="validator" #ngxControl="ngxControl" />
 
-    @if (ngxControl.error('required'); as requiredError) {
-    <p #requiredError>{{ requiredError | json }}</p>
+    @if (ngxControl.error('required'); as error) {
+    <p #requiredError>{{ error | json }}</p>
+    } @if (ngxControl.error('maxLength'); as error) {
+    <p #maxLengthError>{{ error | json }}</p>
     }
   `,
   standalone: true,
@@ -32,11 +29,14 @@ const newText = 'new text';
 class TestComponent {
   readonly value = signal(text);
   readonly controlDirective =
-    viewChild.required<SignalControlDirective<string, RequiredValidationError>>(SignalControlDirective);
+    viewChild.required<SignalControlDirective<string, RequiredValidationError | MaxLengthValidationError>>(
+      SignalControlDirective
+    );
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
-  readonly requiredValidator = requiredValidator;
+  readonly validator = combineValidators(required, maxLength(5));
   readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');
+  readonly maxLengthError = viewChild<ElementRef<HTMLParagraphElement>>('maxLengthError');
 
   type(str: string) {
     this.inputElement().value = str;
@@ -74,6 +74,7 @@ describe('SignalControlDirective', () => {
 
       expect(component.controlDirective().errors()).toBeNull();
       expect(component.controlDirective().error('required')).toBeNull();
+      expect(component.controlDirective().error('maxLength')).toBeNull();
       expect(component.controlDirective().error('randomError' as any)).toBeNull();
       expect(component.controlDirective().status()).toBe('VALID');
       expect(component.controlDirective().valid()).toBeTruthy();
@@ -85,13 +86,14 @@ describe('SignalControlDirective', () => {
       expect(component.requiredError()).toBeFalsy();
     });
 
-    it('should detect invalid state', () => {
+    it('should detect invalid state for required validator', () => {
       component.value.set(' ');
 
       TestBed.flushEffects();
 
       expect(component.controlDirective().errors()).toStrictEqual({ required: true });
       expect(component.controlDirective().error('required')).toBeTruthy();
+      expect(component.controlDirective().error('maxLength')).toBeNull();
       expect(component.controlDirective().error('randomError' as any)).toBeNull();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
@@ -101,6 +103,25 @@ describe('SignalControlDirective', () => {
       expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.invalid);
 
       expect(component.requiredError()?.nativeElement).toHaveTextContent('true');
+    });
+
+    it('should detect invalid state for max length validator', () => {
+      component.value.set(newText);
+
+      TestBed.flushEffects();
+
+      expect(component.controlDirective().errors()).toStrictEqual({ maxLength: true });
+      expect(component.controlDirective().error('required')).toBeNull();
+      expect(component.controlDirective().error('maxLength')).toBeTruthy();
+      expect(component.controlDirective().error('randomError' as any)).toBeNull();
+      expect(component.controlDirective().status()).toBe('INVALID');
+      expect(component.controlDirective().valid()).toBeFalsy();
+      expect(component.controlDirective().invalid()).toBeTruthy();
+
+      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.valid);
+      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.invalid);
+
+      expect(component.maxLengthError()?.nativeElement).toHaveTextContent('true');
     });
   });
 

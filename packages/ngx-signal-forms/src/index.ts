@@ -18,3 +18,8 @@ export { Validator } from './lib/models/validator';
 // Signals
 export { selectObjectProperty } from './lib/signals/select-object-property';
 export { toWritable } from './lib/signals/to-writable';
+
+// Validators
+export { combineValidators } from './lib/validators/combine-validators';
+export { maxLength } from './lib/validators/max-length';
+export { required } from './lib/validators/required';
