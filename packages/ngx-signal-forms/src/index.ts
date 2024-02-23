@@ -12,14 +12,12 @@ export { SignalFormGroupDirective } from './lib/directives/signal-form-group.dir
 // Models
 export { SignalControlStatusClasses } from './lib/models/signal-control-status-classes';
 export { SignalControlStatus } from './lib/models/signal-control-status';
-export { ValidationErrors } from './lib/models/validation-errors';
-export { Validator } from './lib/models/validator';
+export { SignalValidator, SignalValidationResult } from './lib/models/signal-validator';
 
 // Signals
 export { selectObjectProperty } from './lib/signals/select-object-property';
 export { toWritable } from './lib/signals/to-writable';
 
 // Validators
-export { combineValidators } from './lib/validators/combine-validators';
 export { maxLength } from './lib/validators/max-length';
 export { required } from './lib/validators/required';

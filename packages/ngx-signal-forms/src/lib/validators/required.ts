@@ -1,18 +1,12 @@
-import { Validator } from '../models/validator';
-
-/**
- * Required validation error.
- */
-export type RequiredValidationError = {
-  /**
-   * Error key.
-   */
-  required: true;
-};
+import { SignalValidator } from '../models/signal-validator';
 
 /**
  * Required validator for text controls.
  */
-export const required: Validator<string, RequiredValidationError> = (value) => {
-  return value.trim().length === 0 ? { required: true } : null;
-};
+export const required = (): SignalValidator<string, 'required'> => ({
+  key: 'required',
+  validate(value: string) {
+    return value.trim().length === 0;
+  },
+  config: {},
+});
