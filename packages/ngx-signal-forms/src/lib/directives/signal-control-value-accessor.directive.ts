@@ -1,19 +1,16 @@
-import {
-  ElementRef,
-  InputSignal,
-  Signal,
-  WritableSignal,
-  computed,
-  effect,
-  inject,
-  signal,
-  untracked,
-} from '@angular/core';
+import { ElementRef, InputSignal, Signal, WritableSignal, computed, effect, inject, untracked } from '@angular/core';
+
+import { SignalControlDirective } from './signal-control.directive';
 
 /**
  * Signal control value accessor.
  */
 export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElement = HTMLElement> {
+  /**
+   * Reference to the control directive.
+   */
+  protected readonly controlDirective = inject<SignalControlDirective<T>>(SignalControlDirective, { self: true });
+
   /**
    * Reference to the host element.
    */
@@ -47,7 +44,7 @@ export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElem
    */
   updateValue(value: T): void {
     this.control().set(value);
-    this.#pristine.set(false);
+    this.controlDirective.markAsDirty();
   }
 
   /**
@@ -58,16 +55,4 @@ export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElem
     const value = control();
     untracked(() => this.onValueUpdated(value));
   });
-
-  readonly #pristine: WritableSignal<boolean> = signal(true);
-
-  /**
-   * A control is pristine if the user has not yet changed the value in the UI.
-   */
-  readonly pristine: Signal<boolean> = this.#pristine.asReadonly();
-
-  /**
-   * A control is dirty if the user has changed the value in the UI.
-   */
-  readonly dirty: Signal<boolean> = computed(() => !this.pristine());
 }

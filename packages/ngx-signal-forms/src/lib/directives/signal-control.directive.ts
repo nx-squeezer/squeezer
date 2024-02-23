@@ -1,7 +1,6 @@
 import { Directive, Signal, WritableSignal, computed, effect, inject, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
-import { SignalControlValueAccessor } from './signal-control-value-accessor.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';
@@ -25,13 +24,6 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T, V extends ValidationErrors = {}> {
-  /**
-   * Control value accessor.
-   */
-  readonly controlValueAccessor: SignalControlValueAccessor<T> = inject(SignalControlValueAccessor, {
-    self: true,
-  });
-
   /**
    * Control status classes that will be applied to the host element.
    */
@@ -151,13 +143,29 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
     }
   });
 
+  readonly #pristine: WritableSignal<boolean> = signal(true);
+
   /**
    * A control is pristine if the user has not yet changed the value in the UI.
    */
-  readonly pristine: Signal<boolean> = this.controlValueAccessor.pristine;
+  readonly pristine: Signal<boolean> = this.#pristine.asReadonly();
 
   /**
    * A control is dirty if the user has changed the value in the UI.
    */
   readonly dirty: Signal<boolean> = computed(() => !this.pristine());
+
+  /**
+   * Marks the control as pristine.
+   */
+  markAsPristine(): void {
+    this.#pristine.set(true);
+  }
+
+  /**
+   * Marks the control as dirty. A control becomes dirty when the control's value is changed through the UI; compare markAsTouched.
+   */
+  markAsDirty(): void {
+    this.#pristine.set(false);
+  }
 }

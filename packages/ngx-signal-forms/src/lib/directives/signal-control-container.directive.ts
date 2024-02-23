@@ -36,8 +36,22 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
    * A control is pristine if the user has not yet changed the value in the UI in any of its child controls.
    */
   override pristine: Signal<boolean> = computed(() => {
-    return !this.#controlDirectivesMap.values().some(({ dirty }) => dirty());
+    return !this.#controlDirectivesMap.values().some((directive) => directive.dirty());
   });
+
+  /**
+   * Marks all the child controls as pristine.
+   */
+  override markAsPristine(): void {
+    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsPristine());
+  }
+
+  /**
+   * Marks all the child controls as dirty.
+   */
+  override markAsDirty(): void {
+    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsDirty());
+  }
 
   /**
    * Adds a control to the container.
