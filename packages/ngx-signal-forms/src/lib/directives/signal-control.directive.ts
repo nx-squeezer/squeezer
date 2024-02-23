@@ -12,6 +12,8 @@ import { Validator } from '../models/validator';
 // TODO: DOM attributes/validators, from CVA
 // TODO: adjust visibility of errors based on interaction
 
+type Keys<T> = T extends T ? keyof T : never;
+
 /**
  * Control directive.
  */
@@ -90,25 +92,26 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Validators.
    */
-  readonly validators = input<readonly Validator<T, V>[]>([]);
+  readonly validator = input<Validator<T, V>>();
 
   /**
    * Errors.
    */
   readonly errors: Signal<Readonly<V> | null> = computed<Readonly<V> | null>(() => {
+    const validator = this.validator();
+    if (validator == null) {
+      return null;
+    }
+
     const control = this.control();
     const value = control();
-    const validationResult: Readonly<V> = this.validators().reduce(
-      (result, validator) => ({ ...result, ...(validator(value) ?? {}) }),
-      {} as V
-    );
-    return Object.keys(validationResult).length > 0 ? validationResult : null;
+    return validator(value);
   });
 
   /**
    * Reactive value of a specific error.
    */
-  error<K extends keyof V>(key: K): V[K] | null {
+  error<K extends Keys<V>>(key: K): V[K] | null {
     const errors = this.errors();
     return errors == null ? null : errors[key] ?? null;
   }

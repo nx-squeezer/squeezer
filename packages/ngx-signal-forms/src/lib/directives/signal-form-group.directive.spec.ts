@@ -5,7 +5,7 @@ import { SignalControlDirective } from './signal-control.directive';
 import { SignalFormGroupDirective } from './signal-form-group.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { Validator } from '../models/validator';
-import { requiredValidator } from '../validators/required-validator';
+import { required } from '../validators/required';
 
 interface FormValue {
   text: string;
@@ -21,14 +21,14 @@ const initialValue: FormValue = { text };
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="[formGroupValidator]">
+    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validator]="formGroupValidator">
       @if (renderInput()) {
       <input
         #inputTag
         type="text"
         ngxTextInput
         [ngxControl]="ngxFormGroup.get('text')"
-        [validators]="[requiredValidator]"
+        [validator]="requiredValidator"
       />
       }
     </form>
@@ -44,7 +44,7 @@ class TestComponent {
   readonly inputElement = computed(() => this.inputElementRef()?.nativeElement);
   readonly formGroupDirective = viewChild.required<SignalFormGroupDirective<FormValue>>(SignalFormGroupDirective);
   readonly controlDirective = viewChild<SignalControlDirective<string>>(SignalControlDirective);
-  readonly requiredValidator = requiredValidator;
+  readonly requiredValidator = required;
   readonly formGroupValidator: Validator<FormValue, TooLongValidationError> = (value) => {
     return value.text.length > 5 ? { tooLong: true } : null;
   };
