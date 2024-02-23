@@ -1,11 +1,11 @@
-import { Directive, Signal, WritableSignal, computed, effect, inject, input, signal } from '@angular/core';
+import { Directive, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
+import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { ValidationErrors } from '../models/validation-errors';
 import { Validator } from '../models/validator';
-import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.token';
 
 // TODO: touched/untouched (blur)
 // TODO: disabled
@@ -19,16 +19,14 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/control-status-classes.
   selector: `[ngxControl]`,
   standalone: true,
   host: {
-    '[class]': 'classes()',
+    [`[class.${SignalControlStatusClasses.valid}]`]: 'valid()',
+    [`[class.${SignalControlStatusClasses.invalid}]`]: 'invalid()',
+    [`[class.${SignalControlStatusClasses.pristine}]`]: 'pristine()',
+    [`[class.${SignalControlStatusClasses.dirty}]`]: 'dirty()',
   },
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<T, V extends ValidationErrors = {}> {
-  /**
-   * Control status classes that will be applied to the host element.
-   */
-  protected readonly statusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
-
   /**
    * Model.
    */
@@ -129,19 +127,6 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
    * Whether the control is in invalid state.
    */
   readonly invalid: Signal<boolean> = computed(() => this.status() === 'INVALID');
-
-  /**
-   * CSS classes to be applied to the host element depending on the status.
-   * TODO: add pristine
-   */
-  readonly classes: Signal<string> = computed(() => {
-    switch (this.status()) {
-      case 'VALID':
-        return this.statusClasses.valid;
-      case 'INVALID':
-        return this.statusClasses.invalid;
-    }
-  });
 
   readonly #pristine: WritableSignal<boolean> = signal(true);
 
