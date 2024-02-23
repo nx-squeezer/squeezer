@@ -4,16 +4,12 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalFormGroupDirective } from './signal-form-group.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
-import { Validator } from '../models/validator';
+import { SignalValidator } from '../models/signal-validator';
 import { required } from '../validators/required';
 
 interface FormValue {
   text: string;
 }
-
-type TooLongValidationError = {
-  tooLong: true;
-};
 
 const text = 'text';
 const newText = 'newText';
@@ -21,14 +17,14 @@ const initialValue: FormValue = { text };
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validator]="formGroupValidator">
+    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="[formGroupValidator]">
       @if (renderInput()) {
       <input
         #inputTag
         type="text"
         ngxTextInput
         [ngxControl]="ngxFormGroup.get('text')"
-        [validator]="requiredValidator"
+        [validators]="[requiredValidator]"
       />
       }
     </form>
@@ -44,9 +40,11 @@ class TestComponent {
   readonly inputElement = computed(() => this.inputElementRef()?.nativeElement);
   readonly formGroupDirective = viewChild.required<SignalFormGroupDirective<FormValue>>(SignalFormGroupDirective);
   readonly controlDirective = viewChild<SignalControlDirective<string>>(SignalControlDirective);
-  readonly requiredValidator = required;
-  readonly formGroupValidator: Validator<FormValue, TooLongValidationError> = (value) => {
-    return value.text.length > 5 ? { tooLong: true } : null;
+  readonly requiredValidator = required();
+  readonly formGroupValidator: SignalValidator<FormValue, 'tooLong'> = {
+    key: 'tooLong',
+    validate: (value) => value.text.length > 5,
+    config: {},
   };
 
   type(str: string) {
@@ -154,7 +152,7 @@ describe('SignalFormGroupDirective', () => {
     it('should detect valid state according to validators of the form group', () => {
       component.value.set(initialValue);
 
-      expect(component.formGroupDirective().errors()).toBeNull();
+      expect(component.formGroupDirective().errors()).toStrictEqual([]);
       expect(component.formGroupDirective().status()).toBe('VALID');
       expect(component.formGroupDirective().valid()).toBeTruthy();
       expect(component.formGroupDirective().invalid()).toBeFalsy();
@@ -163,7 +161,7 @@ describe('SignalFormGroupDirective', () => {
     it('should detect invalid state according to validators of the form group', () => {
       component.value.set({ text: newText });
 
-      expect(component.formGroupDirective().errors()).toStrictEqual({ tooLong: true });
+      expect(component.formGroupDirective().errors()).toStrictEqual([{ key: 'tooLong', error: true, config: {} }]);
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();
       expect(component.formGroupDirective().invalid()).toBeTruthy();
@@ -172,7 +170,7 @@ describe('SignalFormGroupDirective', () => {
     it('should detect valid state according to validators of child controls', () => {
       component.value.set({ text: '' });
 
-      expect(component.formGroupDirective().errors()).toBeNull();
+      expect(component.formGroupDirective().errors()).toStrictEqual([]);
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();
       expect(component.formGroupDirective().invalid()).toBeTruthy();

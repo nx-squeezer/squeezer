@@ -5,16 +5,15 @@ import { TestBed } from '@angular/core/testing';
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
-import { combineValidators } from '../validators/combine-validators';
-import { MaxLengthValidationError, maxLength } from '../validators/max-length';
-import { RequiredValidationError, required } from '../validators/required';
+import { maxLength } from '../validators/max-length';
+import { required } from '../validators/required';
 
 const text = 'text';
 const newText = 'new text';
 
 @Component({
   template: `
-    <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validator]="validator" #ngxControl="ngxControl" />
+    <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="validators" #ngxControl="ngxControl" />
 
     @if (ngxControl.error('required'); as error) {
     <p #requiredError>{{ error | json }}</p>
@@ -28,13 +27,12 @@ const newText = 'new text';
 })
 class TestComponent {
   readonly value = signal(text);
-  readonly controlDirective =
-    viewChild.required<SignalControlDirective<string, RequiredValidationError | MaxLengthValidationError>>(
-      SignalControlDirective
-    );
+
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
-  readonly validator = combineValidators(required, maxLength(5));
+  readonly validators = [required(), maxLength(5)];
+  readonly controlDirective =
+    viewChild.required<SignalControlDirective<string, typeof this.validators>>(SignalControlDirective);
   readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');
   readonly maxLengthError = viewChild<ElementRef<HTMLParagraphElement>>('maxLengthError');
 
@@ -71,11 +69,10 @@ describe('SignalControlDirective', () => {
   describe('validity', () => {
     it('should detect valid state', () => {
       component.value.set(text);
-
-      expect(component.controlDirective().errors()).toBeNull();
-      expect(component.controlDirective().error('required')).toBeNull();
-      expect(component.controlDirective().error('maxLength')).toBeNull();
-      expect(component.controlDirective().error('randomError' as any)).toBeNull();
+      expect(component.controlDirective().errors()).toStrictEqual([]);
+      expect(component.controlDirective().error('required')).toBeFalsy();
+      expect(component.controlDirective().error('maxLength')).toBeFalsy();
+      expect(component.controlDirective().error('randomError' as any)).toBeFalsy();
       expect(component.controlDirective().status()).toBe('VALID');
       expect(component.controlDirective().valid()).toBeTruthy();
       expect(component.controlDirective().invalid()).toBeFalsy();
@@ -91,10 +88,10 @@ describe('SignalControlDirective', () => {
 
       TestBed.flushEffects();
 
-      expect(component.controlDirective().errors()).toStrictEqual({ required: true });
+      expect(component.controlDirective().errors()).toStrictEqual([{ key: 'required', error: true, config: {} }]);
       expect(component.controlDirective().error('required')).toBeTruthy();
-      expect(component.controlDirective().error('maxLength')).toBeNull();
-      expect(component.controlDirective().error('randomError' as any)).toBeNull();
+      expect(component.controlDirective().error('maxLength')).toBeFalsy();
+      expect(component.controlDirective().error('randomError' as any)).toBeFalsy();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
@@ -110,10 +107,10 @@ describe('SignalControlDirective', () => {
 
       TestBed.flushEffects();
 
-      expect(component.controlDirective().errors()).toStrictEqual({ maxLength: true });
-      expect(component.controlDirective().error('required')).toBeNull();
+      expect(component.controlDirective().errors()).toStrictEqual([{ key: 'maxLength', config: 5, error: true }]);
+      expect(component.controlDirective().error('required')).toBeFalsy();
       expect(component.controlDirective().error('maxLength')).toBeTruthy();
-      expect(component.controlDirective().error('randomError' as any)).toBeNull();
+      expect(component.controlDirective().error('randomError' as any)).toBeFalsy();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();

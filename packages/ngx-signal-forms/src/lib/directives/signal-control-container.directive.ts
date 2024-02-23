@@ -20,10 +20,8 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
    * The validation status of the form group and its child controls.
    */
   override readonly status: Signal<SignalControlStatus> = computed(() => {
-    const errors = this.errors();
-
     // If the form group is invalid, there is no need to keep checking
-    if (errors != null) {
+    if (this.errors().length > 0) {
       return 'INVALID';
     }
 

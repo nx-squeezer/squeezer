@@ -3,16 +3,18 @@ import { Directive, Signal, WritableSignal, computed, effect, input, signal } fr
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
+import {
+  ArrayElement,
+  SignalValidationResult,
+  SignalValidator,
+  SignalValidatorResults,
+} from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
-import { ValidationErrors } from '../models/validation-errors';
-import { Validator } from '../models/validator';
 
 // TODO: touched/untouched (blur)
 // TODO: disabled
 // TODO: DOM attributes/validators, from CVA
 // TODO: adjust visibility of errors based on interaction
-
-type Keys<T> = T extends T ? keyof T : never;
 
 /**
  * Control directive.
@@ -28,11 +30,11 @@ type Keys<T> = T extends T ? keyof T : never;
   },
   exportAs: 'ngxControl',
 })
-export class SignalControlDirective<T, V extends ValidationErrors = {}> {
+export class SignalControlDirective<TValue, TValidators extends SignalValidator<TValue, string>[] = []> {
   /**
    * Model.
    */
-  readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxControl' });
+  readonly control = input.required<WritableSignal<Readonly<TValue>>>({ alias: 'ngxControl' });
 
   readonly #parent = signal<SignalControlContainer<any> | null>(null);
 
@@ -76,7 +78,7 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
         return;
       }
 
-      controlContainer.addControl(controlKey, this as unknown as SignalControlDirective<any, {}>);
+      controlContainer.addControl(controlKey, this as unknown as SignalControlDirective<any>);
       this.#parent.set(controlContainer);
       this.#key.set(controlKey);
 
@@ -92,34 +94,49 @@ export class SignalControlDirective<T, V extends ValidationErrors = {}> {
   /**
    * Validators.
    */
-  readonly validator = input<Validator<T, V>>();
+  readonly validators = input<TValidators>([] as unknown as TValidators);
 
   /**
    * Errors.
    */
-  readonly errors: Signal<Readonly<V> | null> = computed<Readonly<V> | null>(() => {
-    const validator = this.validator();
-    if (validator == null) {
-      return null;
+  readonly errors: Signal<SignalValidatorResults<TValidators>> = computed((): SignalValidatorResults<TValidators> => {
+    const validators = this.validators();
+    if (validators.length === 0) {
+      return [] as SignalValidatorResults<TValidators>;
     }
 
     const control = this.control();
     const value = control();
-    return validator(value);
+    const errors: SignalValidationResult<any>[] = [];
+
+    for (const validator of validators) {
+      const error = validator.validate(value);
+      if (error) {
+        errors.push({ error, key: validator.key, config: validator.config });
+      }
+    }
+
+    return errors as SignalValidatorResults<TValidators>;
   });
+
+  readonly #errorMap: Signal<Map<string, SignalValidationResult<any>>> = computed(
+    () => new Map<string, SignalValidationResult<any>>(this.errors().map((error) => [error.key, error]))
+  );
 
   /**
    * Reactive value of a specific error.
    */
-  error<K extends Keys<V>>(key: K): V[K] | null {
-    const errors = this.errors();
-    return errors == null ? null : errors[key] ?? null;
+  error<K extends string>(
+    errorKey: K // TODO: infer correct keys
+  ): Extract<ArrayElement<SignalValidatorResults<TValidators>>, { key: K }> | undefined {
+    const error = this.#errorMap().get(errorKey);
+    return error?.error ? (error as any) : undefined;
   }
 
   /**
    * The validation status of the control.
    */
-  readonly status: Signal<SignalControlStatus> = computed(() => (this.errors() == null ? 'VALID' : 'INVALID'));
+  readonly status: Signal<SignalControlStatus> = computed(() => (this.errors().length > 0 ? 'INVALID' : 'VALID'));
 
   /**
    * The validation status of the control.

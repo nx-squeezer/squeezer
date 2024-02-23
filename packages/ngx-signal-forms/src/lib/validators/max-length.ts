@@ -1,19 +1,12 @@
-import { Validator } from '../models/validator';
-
-/**
- * Max length validation error.
- */
-export type MaxLengthValidationError = {
-  /**
-   * Error key.
-   */
-  maxLength: true;
-};
+import { SignalValidator } from '../models/signal-validator';
 
 /**
  * Max length validator for text controls.
  */
-export const maxLength: (maxLength: number) => Validator<string, MaxLengthValidationError> =
-  (maxLength: number) => (value) => {
-    return value.length > maxLength ? { maxLength: true } : null;
-  };
+export const maxLength = (maxLength: number): SignalValidator<string, 'maxLength', number> => ({
+  key: 'maxLength',
+  validate(value) {
+    return value.length > maxLength;
+  },
+  config: maxLength,
+});
