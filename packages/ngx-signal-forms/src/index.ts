@@ -18,6 +18,3 @@ export { Validator } from './lib/models/validator';
 // Signals
 export { selectObjectProperty } from './lib/signals/select-object-property';
 export { toWritable } from './lib/signals/to-writable';
-
-// Tokens
-export { SIGNAL_CONTROL_STATUS_CLASSES } from './lib/tokens/control-status-classes.token';
