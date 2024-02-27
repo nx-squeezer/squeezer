@@ -23,7 +23,6 @@ import {
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
-// TODO: touched/untouched (blur)
 // TODO: disabled
 // TODO: DOM attributes/validators, from CVA
 // TODO: adjust visibility of errors based on interaction
@@ -204,6 +203,32 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     this.#pristine.set(false);
   }
 
+  readonly #touched: WritableSignal<boolean> = signal(false);
+
+  /**
+   * A control is marked touched once the user has triggered a blur event on it.
+   */
+  readonly touched: Signal<boolean> = this.#touched.asReadonly();
+
+  /**
+   * A control is untouched if the user has not yet triggered a blur event on it.
+   */
+  readonly untouched: Signal<boolean> = computed(() => !this.touched());
+
+  /**
+   * Marks the control as touched. A control is touched by focus and blur events that do not change the value.
+   */
+  markAsTouched(): void {
+    this.#touched.set(true);
+  }
+
+  /**
+   * Marks the control as untouched.
+   */
+  markAsUntouched(): void {
+    this.#touched.set(false);
+  }
+
   /**
    * Class list to style the input.
    * @internal
@@ -213,5 +238,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.invalid]: this.invalid(),
     [this.statusClasses.pristine]: this.pristine(),
     [this.statusClasses.dirty]: this.dirty(),
+    [this.statusClasses.touched]: this.touched(),
+    [this.statusClasses.untouched]: this.untouched(),
   }));
 }

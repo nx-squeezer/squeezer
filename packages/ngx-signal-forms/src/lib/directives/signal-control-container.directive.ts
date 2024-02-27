@@ -56,6 +56,27 @@ export abstract class SignalControlContainer<
   }
 
   /**
+   * A control is marked touched once the user has triggered a blur event on it or in any of its child controls.
+   */
+  override touched: Signal<boolean> = computed(() => {
+    return this.#controlDirectivesMap.values().some((directive) => directive.touched());
+  });
+
+  /**
+   * Marks all the child controls as touched.
+   */
+  override markAsTouched(): void {
+    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsTouched());
+  }
+
+  /**
+   * Marks all the child controls as untouched.
+   */
+  override markAsUntouched(): void {
+    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsUntouched());
+  }
+
+  /**
    * Adds a control to the container.
    */
   addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>): void {

@@ -44,6 +44,11 @@ class TestComponent {
     this.inputElement().value = str;
     this.inputElement().dispatchEvent(new Event('input'));
   }
+
+  blur() {
+    this.inputElement().blur();
+    this.inputElement().dispatchEvent(new Event('blur'));
+  }
 }
 
 describe('SignalControlDirective', () => {
@@ -181,6 +186,43 @@ describe('SignalControlDirective', () => {
       component.controlDirective().markAsPristine();
 
       expect(component.controlDirective().pristine()).toBeTruthy();
+    });
+  });
+
+  describe('touched', () => {
+    it('should be untouched before interaction', () => {
+      expect(component.controlDirective().untouched()).toBeTruthy();
+      expect(component.inputElement()).toHaveClass(statusClasses.untouched);
+
+      expect(component.controlDirective().touched()).toBeFalsy();
+      expect(component.inputElement()).not.toHaveClass(statusClasses.touched);
+    });
+
+    it('should be touched after interaction', () => {
+      component.blur();
+
+      expect(component.controlDirective().untouched()).toBeFalsy();
+      expect(component.inputElement()).not.toHaveClass(statusClasses.untouched);
+
+      expect(component.controlDirective().touched()).toBeTruthy();
+      expect(component.inputElement()).toHaveClass(statusClasses.touched);
+    });
+
+    it('can be set to touched', () => {
+      expect(component.controlDirective().touched()).toBeFalsy();
+
+      component.controlDirective().markAsTouched();
+
+      expect(component.controlDirective().touched()).toBeTruthy();
+    });
+
+    it('can be set to untouched', () => {
+      component.blur();
+      expect(component.controlDirective().untouched()).toBeFalsy();
+
+      component.controlDirective().markAsUntouched();
+
+      expect(component.controlDirective().untouched()).toBeTruthy();
     });
   });
 });

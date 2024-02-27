@@ -13,6 +13,8 @@ export const SIGNAL_CONTROL_STATUS_CLASSES = new InjectionToken('ngx-signal-form
       invalid: 'ngx-invalid',
       pristine: 'ngx-pristine',
       dirty: 'ngx-dirty',
+      touched: 'ngx-touched',
+      untouched: 'ngx-untouched',
     };
   },
 });

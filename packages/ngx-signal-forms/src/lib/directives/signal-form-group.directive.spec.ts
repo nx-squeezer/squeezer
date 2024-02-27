@@ -58,6 +58,11 @@ class TestComponent {
     inputElement.value = str;
     inputElement.dispatchEvent(new Event('input'));
   }
+
+  blur() {
+    this.inputElement()?.blur();
+    this.inputElement()?.dispatchEvent(new Event('blur'));
+  }
 }
 
 describe('SignalFormGroupDirective', () => {
@@ -228,6 +233,47 @@ describe('SignalFormGroupDirective', () => {
 
       expect(component.formGroupDirective().pristine()).toBeTruthy();
       expect(component.controlDirective()?.pristine()).toBeTruthy();
+    });
+  });
+
+  describe('touched', () => {
+    it('should be untouched before interaction', () => {
+      expect(component.controlDirective()?.untouched()).toBeTruthy();
+      expect(component.controlDirective()?.touched()).toBeFalsy();
+
+      expect(component.formGroupDirective().untouched()).toBeTruthy();
+      expect(component.formGroupDirective().touched()).toBeFalsy();
+    });
+
+    it('should be touched after interaction', () => {
+      component.blur();
+
+      expect(component.controlDirective()?.untouched()).toBeFalsy();
+      expect(component.controlDirective()?.touched()).toBeTruthy();
+
+      expect(component.formGroupDirective().untouched()).toBeFalsy();
+      expect(component.formGroupDirective().touched()).toBeTruthy();
+    });
+
+    it('can be set to touched, affecting child controls', () => {
+      expect(component.formGroupDirective().touched()).toBeFalsy();
+      expect(component.controlDirective()?.touched()).toBeFalsy();
+
+      component.formGroupDirective().markAsTouched();
+
+      expect(component.formGroupDirective().touched()).toBeTruthy();
+      expect(component.controlDirective()?.touched()).toBeTruthy();
+    });
+
+    it('can be set to untouched, affecting child controls', () => {
+      component.blur();
+      expect(component.formGroupDirective().untouched()).toBeFalsy();
+      expect(component.controlDirective()?.untouched()).toBeFalsy();
+
+      component.formGroupDirective().markAsUntouched();
+
+      expect(component.formGroupDirective().untouched()).toBeTruthy();
+      expect(component.controlDirective()?.untouched()).toBeTruthy();
     });
   });
 });

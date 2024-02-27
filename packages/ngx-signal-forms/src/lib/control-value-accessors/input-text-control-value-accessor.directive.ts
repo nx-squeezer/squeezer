@@ -10,6 +10,7 @@ import { SignalControlValueAccessor } from '../directives/signal-control-value-a
   standalone: true,
   host: {
     '(input)': 'updateValue($event.target.value)',
+    '(blur)': 'markAsTouched()',
     '[value]': 'value()',
   },
   providers: [
