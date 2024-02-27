@@ -1,4 +1,14 @@
-import { Directive, InputSignal, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
+import {
+  Directive,
+  InputSignal,
+  InputSignalWithTransform,
+  Signal,
+  WritableSignal,
+  computed,
+  effect,
+  input,
+  signal,
+} from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
@@ -102,9 +112,18 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   );
 
   /**
-   * Validators. TODO: support single validator with type transformation
+   * Validators.
    */
-  readonly validators: InputSignal<Readonly<TValidators>> = input<Readonly<TValidators>>([] as unknown as TValidators);
+  readonly validators: InputSignalWithTransform<
+    Readonly<TValidators>,
+    Readonly<TValidators> | (TValidators extends infer TValidator ? TValidator : never)
+  > = input([] as unknown as Readonly<TValidators>, {
+    transform(
+      input: Readonly<TValidators> | (TValidators extends infer TValidator ? TValidator : never)
+    ): Readonly<TValidators> {
+      return Array.isArray(input) ? input : ([input] as any);
+    },
+  });
 
   /**
    * Errors.

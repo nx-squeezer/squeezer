@@ -17,14 +17,14 @@ const initialValue: FormValue = { text };
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="[formGroupValidator]">
+    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="formGroupValidator">
       @if (renderInput()) {
       <input
         #inputTag
         type="text"
         ngxTextInput
         [ngxControl]="ngxFormGroup.get('text')"
-        [validators]="[requiredValidator]"
+        [validators]="requiredValidator"
       />
       }
     </form>
@@ -46,7 +46,7 @@ class TestComponent {
     config: {},
   };
   readonly formGroupDirective =
-    viewChild.required<SignalFormGroupDirective<FormValue, (typeof this)['formGroupValidator'][]>>(
+    viewChild.required<SignalFormGroupDirective<FormValue, (typeof this.formGroupValidator)[]>>(
       SignalFormGroupDirective
     );
 
