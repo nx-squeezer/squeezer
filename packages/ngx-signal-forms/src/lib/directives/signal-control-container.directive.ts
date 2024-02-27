@@ -58,14 +58,14 @@ export abstract class SignalControlContainer<
   /**
    * Adds a control to the container.
    */
-  addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>) {
+  addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>): void {
     this.#controlDirectivesMap.set(key, signalControlDirective as any);
   }
 
   /**
    * Removes a control from the container.
    */
-  removeControl<K extends keyof TValue>(key: K) {
+  removeControl<K extends keyof TValue>(key: K): void {
     this.#controlDirectivesMap.delete(key);
   }
 

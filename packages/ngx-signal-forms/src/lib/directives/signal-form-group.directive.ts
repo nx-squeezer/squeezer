@@ -1,4 +1,4 @@
-import { Directive, WritableSignal, input, untracked } from '@angular/core';
+import { Directive, InputSignal, WritableSignal, input, untracked } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalValidator } from '../models/signal-validator';
@@ -19,7 +19,9 @@ export class SignalFormGroupDirective<
   /**
    * Model.
    */
-  override readonly control = input.required<WritableSignal<Readonly<TValue>>>({ alias: 'ngxFormGroup' });
+  override readonly control: InputSignal<WritableSignal<Readonly<TValue>>> = input.required<
+    WritableSignal<Readonly<TValue>>
+  >({ alias: 'ngxFormGroup' });
 
   /**
    * Default key when the control is not a child of a control container.

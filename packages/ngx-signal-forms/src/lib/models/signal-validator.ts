@@ -15,7 +15,7 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
   /**
    * Validator configuration.
    */
-  readonly config: TConfig;
+  readonly config: Readonly<TConfig>;
 }
 
 /**
@@ -30,7 +30,7 @@ export interface SignalValidationResult<TKey extends string, TConfig = {}> {
   /**
    * Validator configuration.
    */
-  readonly config: TConfig;
+  readonly config: Readonly<TConfig>;
 }
 
 /**
@@ -47,7 +47,7 @@ export type SignalValidatorResults<TValidators extends readonly unknown[]> = TVa
  */
 export type SignalValidatorKeys<TValidators extends readonly unknown[]> = TValidators extends (infer TValidator)[]
   ? TValidator extends SignalValidator<any, infer K>
-    ? K
+    ? Readonly<K>
     : never
   : never;
 
@@ -58,6 +58,6 @@ export type SignalValidatorResultByKey<
   TValidators extends readonly unknown[],
   K extends SignalValidatorKeys<TValidators>
 > = Extract<
-  SignalValidatorResults<TValidators> extends (infer TValidatorResult)[] ? TValidatorResult : never,
+  SignalValidatorResults<TValidators> extends (infer TValidatorResult)[] ? Readonly<TValidatorResult> : never,
   { key: K }
 >;
