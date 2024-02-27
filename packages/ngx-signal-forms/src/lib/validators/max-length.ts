@@ -2,12 +2,11 @@ import { SignalValidator } from '../models/signal-validator';
 
 /**
  * Max length validator for text controls.
- * TODO: make compatible with other types and nullable
  */
-export const maxLength = (maxLength: number): SignalValidator<string, 'maxLength', number> => ({
+export const maxLength = (maxLength: number): SignalValidator<string | null | undefined, 'maxLength', number> => ({
   key: 'maxLength',
-  validate(value: string): boolean {
-    return value.length <= maxLength;
+  validate(value: string | null | undefined): boolean {
+    return value != null && value.length <= maxLength;
   },
   config: maxLength,
 });
