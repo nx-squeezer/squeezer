@@ -6,13 +6,13 @@ import {
   WritableSignal,
   computed,
   effect,
+  inject,
   input,
   signal,
 } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
-import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import {
   SignalValidationResult,
   SignalValidator,
@@ -21,11 +21,13 @@ import {
   SignalValidatorResults,
 } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
+import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
 // TODO: touched/untouched (blur)
 // TODO: disabled
 // TODO: DOM attributes/validators, from CVA
 // TODO: adjust visibility of errors based on interaction
+// TODO: set id for label
 
 /**
  * Control directive.
@@ -34,14 +36,13 @@ import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols'
   selector: `[ngxControl]`,
   standalone: true,
   host: {
-    [`[class.${SignalControlStatusClasses.valid}]`]: 'valid()',
-    [`[class.${SignalControlStatusClasses.invalid}]`]: 'invalid()',
-    [`[class.${SignalControlStatusClasses.pristine}]`]: 'pristine()',
-    [`[class.${SignalControlStatusClasses.dirty}]`]: 'dirty()',
+    '[class]': 'classList()',
   },
   exportAs: 'ngxControl',
 })
 export class SignalControlDirective<TValue, TValidators extends SignalValidator<TValue, string>[] = []> {
+  private readonly statusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
+
   /**
    * Model.
    */
@@ -202,4 +203,15 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   markAsDirty(): void {
     this.#pristine.set(false);
   }
+
+  /**
+   * Class list to style the input.
+   * @internal
+   */
+  protected readonly classList: Signal<{ [x: string]: boolean }> = computed(() => ({
+    [this.statusClasses.valid]: this.valid(),
+    [this.statusClasses.invalid]: this.invalid(),
+    [this.statusClasses.pristine]: this.pristine(),
+    [this.statusClasses.dirty]: this.dirty(),
+  }));
 }

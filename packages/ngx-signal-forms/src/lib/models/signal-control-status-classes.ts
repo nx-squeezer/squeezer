@@ -1,18 +1,8 @@
 import { SignalControlStatus } from './signal-control-status';
 
 /**
- * @internal
+ * Type to define all CSS classes automatically added by the control directive.
  */
 export type SignalControlStatusClasses = {
   readonly [key in Lowercase<SignalControlStatus> | 'pristine' | 'dirty']: string;
-};
-
-/**
- * @internal
- */
-export const SignalControlStatusClasses: SignalControlStatusClasses = {
-  valid: 'ngx-valid',
-  invalid: 'ngx-invalid',
-  pristine: 'ngx-pristine',
-  dirty: 'ngx-dirty',
 };

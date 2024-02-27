@@ -6,6 +6,7 @@ import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import { SignalValidationResult } from '../models/signal-validator';
+import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 import { maxLength } from '../validators/max-length';
 import { required } from '../validators/required';
 
@@ -47,12 +48,14 @@ class TestComponent {
 
 describe('SignalControlDirective', () => {
   let component: TestComponent;
+  let statusClasses: SignalControlStatusClasses;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
     const fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
+    statusClasses = TestBed.inject(SIGNAL_CONTROL_STATUS_CLASSES);
     fixture.autoDetectChanges();
   });
 
@@ -99,8 +102,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().valid()).toBeTruthy();
       expect(component.controlDirective().invalid()).toBeFalsy();
 
-      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.valid);
-      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.invalid);
+      expect(component.inputElement()).toHaveClass(statusClasses.valid);
+      expect(component.inputElement()).not.toHaveClass(statusClasses.invalid);
 
       expect(component.requiredError()).toBeFalsy();
     });
@@ -118,8 +121,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
 
-      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.valid);
-      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.invalid);
+      expect(component.inputElement()).not.toHaveClass(statusClasses.valid);
+      expect(component.inputElement()).toHaveClass(statusClasses.invalid);
 
       expect(component.requiredError()?.nativeElement).toHaveTextContent(requiredMsg);
     });
@@ -137,8 +140,8 @@ describe('SignalControlDirective', () => {
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
 
-      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.valid);
-      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.invalid);
+      expect(component.inputElement()).not.toHaveClass(statusClasses.valid);
+      expect(component.inputElement()).toHaveClass(statusClasses.invalid);
 
       expect(component.maxLengthError()?.nativeElement).toHaveTextContent('This field is too long (8/5)');
     });
@@ -147,20 +150,20 @@ describe('SignalControlDirective', () => {
   describe('pristine', () => {
     it('should be pristine before interaction', () => {
       expect(component.controlDirective().pristine()).toBeTruthy();
-      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.pristine);
+      expect(component.inputElement()).toHaveClass(statusClasses.pristine);
 
       expect(component.controlDirective().dirty()).toBeFalsy();
-      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.dirty);
+      expect(component.inputElement()).not.toHaveClass(statusClasses.dirty);
     });
 
     it('should be dirty after interaction', () => {
       component.type(newText);
 
       expect(component.controlDirective().pristine()).toBeFalsy();
-      expect(component.inputElement()).not.toHaveClass(SignalControlStatusClasses.pristine);
+      expect(component.inputElement()).not.toHaveClass(statusClasses.pristine);
 
       expect(component.controlDirective().dirty()).toBeTruthy();
-      expect(component.inputElement()).toHaveClass(SignalControlStatusClasses.dirty);
+      expect(component.inputElement()).toHaveClass(statusClasses.dirty);
     });
 
     it('can be set to dirty', () => {

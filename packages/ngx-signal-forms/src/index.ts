@@ -24,6 +24,9 @@ export {
 export { selectObjectProperty } from './lib/signals/select-object-property';
 export { toWritable } from './lib/signals/to-writable';
 
+// Tokens
+export { SIGNAL_CONTROL_STATUS_CLASSES } from './lib/tokens/signal-control-status-classes.token';
+
 // Validators
 export { maxLength } from './lib/validators/max-length';
 export { required } from './lib/validators/required';
