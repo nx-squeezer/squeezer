@@ -50,6 +50,13 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
   }
 
   /**
+   * Marks the control as touched. A control is touched by focus and blur events that do not change the value.
+   */
+  markAsTouched(): void {
+    this.controlDirective.markAsTouched();
+  }
+
+  /**
    * @internal
    */
   protected readonly watchValueChanges = effect(() => {
