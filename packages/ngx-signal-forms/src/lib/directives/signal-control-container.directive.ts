@@ -2,19 +2,23 @@ import { DestroyRef, Signal, WritableSignal, computed, inject } from '@angular/c
 
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
+import { SignalValidator } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { MapSignal } from '../signals/map-signal';
 
 /**
  * Abstract class that represents a signal control container.
  */
-export abstract class SignalControlContainer<T extends object> extends SignalControlDirective<T> {
+export abstract class SignalControlContainer<
+  TValue extends object,
+  TValidators extends SignalValidator<TValue, string>[] = []
+> extends SignalControlDirective<TValue, TValidators> {
   /**
    * Map of signals corresponding to the child controls.
    */
-  protected readonly controlSignalsMap: { [K in keyof T]?: WritableSignal<Readonly<T[K]>> } = {};
+  protected readonly controlSignalsMap: { [K in keyof TValue]?: WritableSignal<Readonly<TValue[K]>> } = {};
 
-  readonly #controlDirectivesMap = new MapSignal<keyof T, SignalControlDirective<T[keyof T]>>();
+  readonly #controlDirectivesMap = new MapSignal<keyof TValue, SignalControlDirective<TValue[keyof TValue]>>();
 
   /**
    * The validation status of the form group and its child controls.
@@ -54,21 +58,24 @@ export abstract class SignalControlContainer<T extends object> extends SignalCon
   /**
    * Adds a control to the container.
    */
-  addControl<K extends keyof T>(key: K, signalControlDirective: SignalControlDirective<T[K]>) {
+  addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>) {
     this.#controlDirectivesMap.set(key, signalControlDirective as any);
   }
 
   /**
    * Removes a control from the container.
    */
-  removeControl<K extends keyof T>(key: K) {
+  removeControl<K extends keyof TValue>(key: K) {
     this.#controlDirectivesMap.delete(key);
   }
 
   /**
    * Adds hidden properties to a signal to hold a reference to the control container.
    */
-  protected brandSignal<K extends keyof T, S extends WritableSignal<Readonly<T[K]>>>(writableSignal: S, key: K): S {
+  protected brandSignal<K extends keyof TValue, S extends WritableSignal<Readonly<TValue[K]>>>(
+    writableSignal: S,
+    key: K
+  ): S {
     const signal: any = writableSignal;
     signal[SIGNAL_CONTROL_CONTAINER] = this;
     signal[SIGNAL_CONTROL_KEY] = key;

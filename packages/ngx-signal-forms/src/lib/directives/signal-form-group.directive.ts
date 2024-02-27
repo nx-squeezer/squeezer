@@ -1,6 +1,7 @@
 import { Directive, WritableSignal, input, untracked } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
+import { SignalValidator } from '../models/signal-validator';
 import { selectObjectProperty } from '../signals/select-object-property';
 
 /**
@@ -11,11 +12,14 @@ import { selectObjectProperty } from '../signals/select-object-property';
   standalone: true,
   exportAs: 'ngxFormGroup',
 })
-export class SignalFormGroupDirective<T extends object> extends SignalControlContainer<T> {
+export class SignalFormGroupDirective<
+  TValue extends object,
+  TValidators extends SignalValidator<TValue, string>[] = []
+> extends SignalControlContainer<TValue, TValidators> {
   /**
    * Model.
    */
-  override readonly control = input.required<WritableSignal<Readonly<T>>>({ alias: 'ngxFormGroup' });
+  override readonly control = input.required<WritableSignal<Readonly<TValue>>>({ alias: 'ngxFormGroup' });
 
   /**
    * Default key when the control is not a child of a control container.
@@ -25,11 +29,11 @@ export class SignalFormGroupDirective<T extends object> extends SignalControlCon
   /**
    * Returns a signal with the value of the form group at a given key.
    */
-  get<K extends keyof T>(key: K): WritableSignal<Readonly<T[K]>> {
+  get<K extends keyof TValue>(key: K): WritableSignal<Readonly<TValue[K]>> {
     return this.controlSignalsMap[key] ?? this.createControlSignal(key);
   }
 
-  private createControlSignal<K extends keyof T>(key: K): WritableSignal<Readonly<T[K]>> {
+  private createControlSignal<K extends keyof TValue>(key: K): WritableSignal<Readonly<TValue[K]>> {
     const sourceSignal = untracked(() => this.control());
     const controlSignal = selectObjectProperty(sourceSignal, key);
     this.controlSignalsMap[key] = this.brandSignal(controlSignal, key);

@@ -12,7 +12,13 @@ export { SignalFormGroupDirective } from './lib/directives/signal-form-group.dir
 // Models
 export { SignalControlStatusClasses } from './lib/models/signal-control-status-classes';
 export { SignalControlStatus } from './lib/models/signal-control-status';
-export { SignalValidator, SignalValidationResult } from './lib/models/signal-validator';
+export {
+  SignalValidator,
+  SignalValidationResult,
+  SignalValidatorResults,
+  SignalValidatorKeys,
+  SignalValidatorResultByKey,
+} from './lib/models/signal-validator';
 
 // Signals
 export { selectObjectProperty } from './lib/signals/select-object-property';

@@ -4,9 +4,10 @@ import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import {
-  ArrayElement,
   SignalValidationResult,
   SignalValidator,
+  SignalValidatorKeys,
+  SignalValidatorResultByKey,
   SignalValidatorResults,
 } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
@@ -35,6 +36,11 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
    * Model.
    */
   readonly control = input.required<WritableSignal<Readonly<TValue>>>({ alias: 'ngxControl' });
+
+  /**
+   * Model value.
+   */
+  readonly value: Signal<TValue> = computed(() => this.control()());
 
   readonly #parent = signal<SignalControlContainer<any> | null>(null);
 
@@ -92,7 +98,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   );
 
   /**
-   * Validators.
+   * Validators. TODO: support single validator with type transformation
    */
   readonly validators = input<TValidators>([] as unknown as TValidators);
 
@@ -110,9 +116,8 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     const errors: SignalValidationResult<any>[] = [];
 
     for (const validator of validators) {
-      const error = validator.validate(value);
-      if (error) {
-        errors.push({ error, key: validator.key, config: validator.config });
+      if (!validator.validate(value)) {
+        errors.push({ key: validator.key, config: validator.config });
       }
     }
 
@@ -126,11 +131,10 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * Reactive value of a specific error.
    */
-  error<K extends string>(
-    errorKey: K // TODO: infer correct keys
-  ): Extract<ArrayElement<SignalValidatorResults<TValidators>>, { key: K }> | undefined {
-    const error = this.#errorMap().get(errorKey);
-    return error?.error ? (error as any) : undefined;
+  error<K extends SignalValidatorKeys<TValidators>>(
+    errorKey: K
+  ): SignalValidatorResultByKey<TValidators, K> | undefined {
+    return this.#errorMap().get(errorKey) as any;
   }
 
   /**

@@ -3,19 +3,19 @@
  */
 export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
   /**
-   * Validate function, return true if it is invalid TODO: change to negative
+   * Validate function, return true if it is valid.
    */
   validate(value: Readonly<TValue>): boolean;
 
   /**
-   * Error key
+   * Error key.
    */
-  key: TKey;
+  readonly key: TKey;
 
   /**
    * Validator configuration.
    */
-  config: TConfig;
+  readonly config: TConfig;
 }
 
 /**
@@ -23,40 +23,41 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
  */
 export interface SignalValidationResult<TKey extends string, TConfig = {}> {
   /**
-   * Error key
+   * Error key.
    */
-  key: TKey;
-
-  /**
-   * If true, the error is active.
-   */
-  error: boolean;
+  readonly key: TKey;
 
   /**
    * Validator configuration.
    */
-  config: TConfig;
+  readonly config: TConfig;
 }
 
 /**
- * @internal
- * TODO: inline or clarify all of these type utils
+ * Type utility to derive the validator results from a collection of validators.
  */
-export type SignalValidatorResult<T> = T extends SignalValidator<any, infer K, infer C>
-  ? SignalValidationResult<K, C>
+export type SignalValidatorResults<TValidators extends readonly unknown[]> = TValidators extends (infer TValidator)[]
+  ? TValidator extends SignalValidator<any, infer K, infer C>
+    ? SignalValidationResult<K, C>[]
+    : never
   : never;
 
 /**
- * @internal
+ * Type utility to derive the validator keys from a collection of validators.
  */
-export type ArrayElement<T extends readonly unknown[]> = T extends (infer I)[] ? I : never;
+export type SignalValidatorKeys<TValidators extends readonly unknown[]> = TValidators extends (infer TValidator)[]
+  ? TValidator extends SignalValidator<any, infer K>
+    ? K
+    : never
+  : never;
 
 /**
- * @internal
+ * Type utility to get a validator result by key from a collection of validators.
  */
-export type SignalValidatorResults<T extends readonly unknown[]> = SignalValidatorResult<ArrayElement<T>>[];
-
-/**
- * @internal
- */
-export type SignalValidatorKeys<T> = T extends SignalValidator<any, infer K> ? K : never;
+export type SignalValidatorResultByKey<
+  TValidators extends readonly unknown[],
+  K extends SignalValidatorKeys<TValidators>
+> = Extract<
+  SignalValidatorResults<TValidators> extends (infer TValidatorResult)[] ? TValidatorResult : never,
+  { key: K }
+>;

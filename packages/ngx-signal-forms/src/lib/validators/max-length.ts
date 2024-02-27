@@ -6,7 +6,7 @@ import { SignalValidator } from '../models/signal-validator';
 export const maxLength = (maxLength: number): SignalValidator<string, 'maxLength', number> => ({
   key: 'maxLength',
   validate(value) {
-    return value.length > maxLength;
+    return value.length <= maxLength;
   },
   config: maxLength,
 });
