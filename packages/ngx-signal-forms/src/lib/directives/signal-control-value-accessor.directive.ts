@@ -5,44 +5,44 @@ import { SignalControlDirective } from './signal-control.directive';
 /**
  * Signal control value accessor.
  */
-export abstract class SignalControlValueAccessor<T = unknown, E extends HTMLElement = HTMLElement> {
+export abstract class SignalControlValueAccessor<TValue = unknown, TElement extends HTMLElement = HTMLElement> {
   /**
    * Reference to the control directive.
    */
-  protected readonly controlDirective = inject<SignalControlDirective<T>>(SignalControlDirective, { self: true });
+  protected readonly controlDirective = inject<SignalControlDirective<TValue>>(SignalControlDirective, { self: true });
 
   /**
    * Reference to the host element.
    */
-  protected readonly elementRef: ElementRef<E> = inject(ElementRef);
+  protected readonly elementRef: ElementRef<TElement> = inject(ElementRef);
 
   /**
    * Native element where the directive is applied.
    */
-  protected readonly nativeElement: E = this.elementRef.nativeElement;
+  protected readonly nativeElement: TElement = this.elementRef.nativeElement;
 
   /**
    * Model control.
    */
-  abstract readonly control: InputSignal<WritableSignal<T>>;
+  abstract readonly control: InputSignal<WritableSignal<TValue>>;
 
   /**
    * Model value.
    */
-  readonly value: Signal<T> = computed(() => this.control()());
+  readonly value: Signal<TValue> = computed(() => this.control()());
 
   /**
    * Event callback when the value changes that can be used to reflect the state to the DOM.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onValueUpdated(value: T): void {
+  onValueUpdated(value: TValue): void {
     return; // Default noop implementation
   }
 
   /**
    * Updates the underlying value of the control and marks it as dirty.
    */
-  updateValue(value: T): void {
+  updateValue(value: TValue): void {
     this.control().set(value);
     this.controlDirective.markAsDirty();
   }

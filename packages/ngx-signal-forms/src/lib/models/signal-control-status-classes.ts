@@ -4,7 +4,7 @@ import { SignalControlStatus } from './signal-control-status';
  * @internal
  */
 export type SignalControlStatusClasses = {
-  [key in Lowercase<SignalControlStatus> | 'pristine' | 'dirty']: string;
+  readonly [key in Lowercase<SignalControlStatus> | 'pristine' | 'dirty']: string;
 };
 
 /**
