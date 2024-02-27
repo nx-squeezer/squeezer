@@ -9,7 +9,9 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
   /**
    * Reference to the control directive.
    */
-  protected readonly controlDirective = inject<SignalControlDirective<TValue>>(SignalControlDirective, { self: true });
+  protected readonly controlDirective = inject<SignalControlDirective<Readonly<TValue>>>(SignalControlDirective, {
+    self: true,
+  });
 
   /**
    * Reference to the host element.
@@ -24,25 +26,25 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
   /**
    * Model control.
    */
-  abstract readonly control: InputSignal<WritableSignal<TValue>>;
+  abstract readonly control: InputSignal<WritableSignal<Readonly<TValue>>>;
 
   /**
    * Model value.
    */
-  readonly value: Signal<TValue> = computed(() => this.control()());
+  readonly value: Signal<Readonly<TValue>> = computed(() => this.control()());
 
   /**
    * Event callback when the value changes that can be used to reflect the state to the DOM.
    */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  onValueUpdated(value: TValue): void {
+  onValueUpdated(value: Readonly<TValue>): void {
     return; // Default noop implementation
   }
 
   /**
    * Updates the underlying value of the control and marks it as dirty.
    */
-  updateValue(value: TValue): void {
+  updateValue(value: Readonly<TValue>): void {
     this.control().set(value);
     this.controlDirective.markAsDirty();
   }

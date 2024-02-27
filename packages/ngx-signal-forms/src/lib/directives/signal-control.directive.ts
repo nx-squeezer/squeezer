@@ -1,4 +1,4 @@
-import { Directive, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
+import { Directive, InputSignal, Signal, WritableSignal, computed, effect, input, signal } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
@@ -35,36 +35,40 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * Model.
    */
-  readonly control = input.required<WritableSignal<Readonly<TValue>>>({ alias: 'ngxControl' });
+  readonly control: InputSignal<WritableSignal<Readonly<TValue>>> = input.required<WritableSignal<Readonly<TValue>>>({
+    alias: 'ngxControl',
+  });
 
   /**
    * Model value.
    */
-  readonly value: Signal<TValue> = computed(() => this.control()());
+  readonly value: Signal<Readonly<TValue>> = computed(() => this.control()());
 
-  readonly #parent = signal<SignalControlContainer<any> | null>(null);
+  readonly #parent: WritableSignal<SignalControlContainer<any, []> | null> = signal<SignalControlContainer<any> | null>(
+    null
+  );
 
   /**
    * When the control is a child of a control container, this reactive value exposes a reference to its parent.
    */
-  readonly parent = this.#parent.asReadonly();
+  readonly parent: Signal<SignalControlContainer<any, []> | null> = this.#parent.asReadonly();
 
   /**
    * Default key when the control is not a child of a control container.
    */
   readonly defaultKey: string = 'control';
-  readonly #key = signal<string | number | null>(null);
+  readonly #key: WritableSignal<string | number | null> = signal<string | number | null>(null);
 
   /**
    * When the control is a child of a control container, this reactive value exposes the key to which it belongs.
    */
-  readonly key = this.#key.asReadonly();
+  readonly key: Signal<string | number | null> = this.#key.asReadonly();
 
   /**
    * When the control is a child of a control container, this reactive value exposes its relative path.
    * For standalone controls it returns the default key.
    */
-  readonly path = computed((): string | null => {
+  readonly path: Signal<string | null> = computed((): string | null => {
     const parent = this.parent();
     const parentPath = parent?.path();
     const key = this.key();
@@ -100,29 +104,31 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * Validators. TODO: support single validator with type transformation
    */
-  readonly validators = input<TValidators>([] as unknown as TValidators);
+  readonly validators: InputSignal<Readonly<TValidators>> = input<Readonly<TValidators>>([] as unknown as TValidators);
 
   /**
    * Errors.
    */
-  readonly errors: Signal<SignalValidatorResults<TValidators>> = computed((): SignalValidatorResults<TValidators> => {
-    const validators = this.validators();
-    if (validators.length === 0) {
-      return [] as SignalValidatorResults<TValidators>;
-    }
-
-    const control = this.control();
-    const value = control();
-    const errors: SignalValidationResult<any>[] = [];
-
-    for (const validator of validators) {
-      if (!validator.validate(value)) {
-        errors.push({ key: validator.key, config: validator.config });
+  readonly errors: Signal<Readonly<SignalValidatorResults<TValidators>>> = computed(
+    (): Readonly<SignalValidatorResults<TValidators>> => {
+      const validators = this.validators();
+      if (validators.length === 0) {
+        return [] as SignalValidatorResults<TValidators>;
       }
-    }
 
-    return errors as SignalValidatorResults<TValidators>;
-  });
+      const control = this.control();
+      const value = control();
+      const errors: SignalValidationResult<any>[] = [];
+
+      for (const validator of validators) {
+        if (!validator.validate(value)) {
+          errors.push({ key: validator.key, config: validator.config });
+        }
+      }
+
+      return errors as SignalValidatorResults<TValidators>;
+    }
+  );
 
   readonly #errorMap: Signal<Map<string, SignalValidationResult<any>>> = computed(
     () => new Map<string, SignalValidationResult<any>>(this.errors().map((error) => [error.key, error]))
