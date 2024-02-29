@@ -25,8 +25,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
 
 // TODO: disabled
 // TODO: DOM attributes/validators, from CVA
-// TODO: adjust visibility of errors based on interaction
-// TODO: set id for label
+// TODO: set id for label and aria description for errors
 
 /**
  * Control directive.
@@ -141,7 +140,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
       for (const validator of validators) {
         if (!validator.validate(value)) {
-          errors.push({ key: validator.key, config: validator.config });
+          errors.push({ control: this as any, key: validator.key, config: validator.config });
         }
       }
 

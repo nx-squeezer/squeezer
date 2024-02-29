@@ -83,12 +83,12 @@ describe('SignalControlDirective', () => {
         | SignalValidationResult<'required', {}>
         | undefined;
       const maxLengthError = component.controlDirective().error('maxLength') satisfies
-        | SignalValidationResult<'maxLength', {}>
+        | SignalValidationResult<'maxLength', number>
         | undefined;
 
       const otherError = component.controlDirective().error('randomError' as any) satisfies
         | SignalValidationResult<'required', {}>
-        | SignalValidationResult<'maxLength', {}>
+        | SignalValidationResult<'maxLength', number>
         | undefined;
 
       expect(requiredError).toBeUndefined();
@@ -118,8 +118,14 @@ describe('SignalControlDirective', () => {
 
       TestBed.flushEffects();
 
-      expect(component.controlDirective().errors()).toStrictEqual([{ key: 'required', config: {} }]);
-      expect(component.controlDirective().error('required')).toStrictEqual({ key: 'required', config: {} });
+      expect(component.controlDirective().errors()).toStrictEqual([
+        { key: 'required', config: {}, control: component.controlDirective() },
+      ]);
+      expect(component.controlDirective().error('required')).toStrictEqual({
+        key: 'required',
+        config: {},
+        control: component.controlDirective(),
+      });
       expect(component.controlDirective().error('maxLength')).toBeUndefined();
       expect(component.controlDirective().error('randomError' as any)).toBeUndefined();
       expect(component.controlDirective().status()).toBe('INVALID');
@@ -137,9 +143,15 @@ describe('SignalControlDirective', () => {
 
       TestBed.flushEffects();
 
-      expect(component.controlDirective().errors()).toStrictEqual([{ key: 'maxLength', config: 5 }]);
+      expect(component.controlDirective().errors()).toStrictEqual([
+        { key: 'maxLength', config: 5, control: component.controlDirective() },
+      ]);
       expect(component.controlDirective().error('required')).toBeUndefined();
-      expect(component.controlDirective().error('maxLength')).toStrictEqual({ key: 'maxLength', config: 5 });
+      expect(component.controlDirective().error('maxLength')).toStrictEqual({
+        key: 'maxLength',
+        config: 5,
+        control: component.controlDirective(),
+      });
       expect(component.controlDirective().error('randomError' as any)).toBeUndefined();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
