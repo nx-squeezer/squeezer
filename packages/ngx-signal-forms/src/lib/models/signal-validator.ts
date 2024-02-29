@@ -1,3 +1,4 @@
+import { SignalControlDirective } from './../directives/signal-control.directive';
 /**
  * Type of a validator.
  */
@@ -22,6 +23,11 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
  * Validation result type of a validator.
  */
 export interface SignalValidationResult<TKey extends string, TConfig = {}> {
+  /**
+   * Parent control of validation error.
+   */
+  readonly control: SignalControlDirective<unknown, SignalValidator<unknown, TKey, TConfig>[]>;
+
   /**
    * Error key.
    */

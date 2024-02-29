@@ -183,8 +183,14 @@ describe('SignalFormGroupDirective', () => {
     it('should detect invalid state according to validators of the form group', () => {
       component.value.set({ text: newText });
 
-      expect(component.formGroupDirective().errors()).toStrictEqual([{ key: 'tooLong', config: {} }]);
-      expect(component.formGroupDirective().error('tooLong')).toStrictEqual({ key: 'tooLong', config: {} });
+      expect(component.formGroupDirective().errors()).toStrictEqual([
+        { key: 'tooLong', config: {}, control: component.formGroupDirective() },
+      ]);
+      expect(component.formGroupDirective().error('tooLong')).toStrictEqual({
+        key: 'tooLong',
+        config: {},
+        control: component.formGroupDirective(),
+      });
       expect(component.formGroupDirective().error('randomError' as any)).toBeUndefined();
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();
