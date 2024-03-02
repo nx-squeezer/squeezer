@@ -52,11 +52,11 @@
     "node-fetch-commonjs": "3.3.2",
     "prettier": "2.8.8",
     "radash": "12.0.0",
-    "renovate": "37.210.0",
+    "renovate": "37.218.0",
     "rxjs": "7.8.1",
     "tslib": "2.5.0",
     "which": "4.0.0",
-    "yaml": "2.3.4",
+    "yaml": "2.4.0",
     "zone.js": "0.14.4"
   },
   "devDependencies": {
