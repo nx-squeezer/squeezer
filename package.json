@@ -87,7 +87,7 @@
     "@schemastore/tsconfig": "0.0.11",
     "@schematics/angular": "17.2.2",
     "@swc-node/register": "1.8.0",
-    "@swc/cli": "0.3.9",
+    "@swc/cli": "0.3.10",
     "@swc/core": "1.4.2",
     "@swc/helpers": "0.5.6",
     "@swc/jest": "0.2.36",
