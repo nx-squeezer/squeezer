@@ -1,5 +1,5 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, effect, signal, viewChild } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SignalControlDirective } from './signal-control.directive';
@@ -36,7 +36,7 @@ class TestComponent {
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
   readonly validators = [required(), maxLength(5)];
   readonly controlDirective =
-    viewChild.required<SignalControlDirective<string, typeof this.validators>>(SignalControlDirective);
+    viewChild.required<SignalControlDirective<string | undefined, typeof this.validators>>(SignalControlDirective);
   readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');
   readonly maxLengthError = viewChild<ElementRef<HTMLParagraphElement>>('maxLengthError');
 
@@ -61,6 +61,12 @@ describe('SignalControlDirective', () => {
     const fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     statusClasses = TestBed.inject(SIGNAL_CONTROL_STATUS_CLASSES);
+
+    // Workaround so that flush effects runs and updates host properties
+    TestBed.runInInjectionContext(() => {
+      effect(() => component.controlDirective().disabled());
+    });
+
     fixture.autoDetectChanges();
   });
 
@@ -162,6 +168,18 @@ describe('SignalControlDirective', () => {
 
       expect(component.maxLengthError()?.nativeElement).toHaveTextContent('This field is too long (8/5)');
     });
+
+    it('should not have errors if disabled', () => {
+      component.value.set('');
+      component.controlDirective().disabled.set(true);
+
+      TestBed.flushEffects();
+
+      expect(component.controlDirective().errors()).toStrictEqual([]);
+      expect(component.controlDirective().status()).toBe('DISABLED');
+      expect(component.controlDirective().valid()).toBeFalsy();
+      expect(component.controlDirective().invalid()).toBeFalsy();
+    });
   });
 
   describe('pristine', () => {
@@ -235,6 +253,86 @@ describe('SignalControlDirective', () => {
       component.controlDirective().markAsUntouched();
 
       expect(component.controlDirective().untouched()).toBeTruthy();
+    });
+  });
+
+  describe('disabled', () => {
+    describe('value type extends undefined', () => {
+      it('should strictly type disabled input', () => {
+        const disabled = component.controlDirective().disabled() satisfies boolean;
+        expect(disabled).toBeFalsy();
+      });
+
+      it('should strictly type enabled property', () => {
+        const enabled = component.controlDirective().enabled() satisfies boolean;
+        expect(enabled).toBeTruthy();
+      });
+    });
+
+    describe('value type does not extend undefined', () => {
+      it('should strictly type disabled input', () => {
+        const control = component.controlDirective() as unknown as SignalControlDirective<string>;
+        const disabled = control.disabled() satisfies false;
+        expect(disabled).toBeFalsy();
+      });
+
+      it('should strictly type enabled property', () => {
+        const control = component.controlDirective() as unknown as SignalControlDirective<string>;
+        const enabled = control.enabled() satisfies true;
+        expect(enabled).toBeTruthy();
+      });
+    });
+
+    it('should have disabled status and attribute', () => {
+      expect(component.controlDirective().status()).not.toBe('DISABLED');
+      expect(component.inputElement()).toBeEnabled();
+
+      component.controlDirective().disabled.set(true);
+      TestBed.flushEffects();
+
+      expect(component.controlDirective().status()).toBe('DISABLED');
+      expect(component.inputElement()).toBeDisabled();
+    });
+
+    it('should have binding with enabled', () => {
+      expect(component.controlDirective().disabled()).toBeFalsy();
+      expect(component.controlDirective().enabled()).toBeTruthy();
+
+      component.controlDirective().disabled.set(true);
+
+      expect(component.controlDirective().disabled()).toBeTruthy();
+      expect(component.controlDirective().enabled()).toBeFalsy();
+
+      component.controlDirective().enabled.set(true);
+
+      expect(component.controlDirective().disabled()).toBeFalsy();
+      expect(component.controlDirective().enabled()).toBeTruthy();
+    });
+
+    it('should apply disabled class', () => {
+      expect(component.inputElement()).not.toHaveClass(statusClasses.disabled);
+
+      component.controlDirective().disabled.set(true);
+      TestBed.flushEffects();
+
+      expect(component.inputElement()).toHaveClass(statusClasses.disabled);
+    });
+
+    describe('value', () => {
+      it('should set the value to undefined when disabled', () => {
+        expect(component.controlDirective().value()).toBe(text);
+
+        component.controlDirective().enabled.set(false);
+
+        expect(component.controlDirective().value()).toBeUndefined();
+      });
+
+      it('should be enabled when setting value different than undefined', () => {
+        component.controlDirective().enabled.set(false);
+        component.controlDirective().value.set(text);
+
+        expect(component.controlDirective().enabled()).toBeTruthy();
+      });
     });
   });
 });

@@ -10,6 +10,7 @@ export { SignalControlDirective } from './lib/directives/signal-control.directiv
 export { SignalFormGroupDirective } from './lib/directives/signal-form-group.directive';
 
 // Models
+export { DisabledType, EnabledType } from './lib/models/disabled-type';
 export { SignalControlErrorStrategy } from './lib/models/signal-control-error-strategy';
 export { SignalControlStatusClasses } from './lib/models/signal-control-status-classes';
 export { SignalControlStatus } from './lib/models/signal-control-status';
@@ -23,6 +24,7 @@ export {
 
 // Signals
 export { composeSignal } from './lib/signals/compose-signal';
+export { interceptSignal, SignalInterceptor } from './lib/signals/intercept-signal';
 export { selectObjectProperty } from './lib/signals/select-object-property';
 
 // Tokens

@@ -2,16 +2,19 @@ import {
   Directive,
   InputSignal,
   InputSignalWithTransform,
+  ModelSignal,
   Signal,
   WritableSignal,
   computed,
   effect,
   inject,
   input,
+  model,
   signal,
 } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
+import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
 import {
   SignalValidationResult,
@@ -21,9 +24,10 @@ import {
   SignalValidatorResults,
 } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
+import { composeSignal } from '../signals/compose-signal';
+import { interceptSignal } from '../signals/intercept-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
-// TODO: disabled
 // TODO: DOM attributes/validators, from CVA
 // TODO: set id for label and aria description for errors
 
@@ -35,6 +39,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
   standalone: true,
   host: {
     '[class]': 'classList()',
+    '[attr.disabled]': 'disabledAttribute()',
   },
   exportAs: 'ngxControl',
 })
@@ -49,9 +54,25 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   });
 
   /**
+   * Disabled controls are exempt from validation checks and are not included in the aggregate value of their ancestor controls.
+   */
+  readonly disabled: ModelSignal<DisabledType<TValue>> = model(false as DisabledType<TValue>, { alias: 'ngxDisabled' });
+
+  /**
+   * Indicates if the control is not disabled.
+   */
+  readonly enabled: WritableSignal<EnabledType<TValue>> = composeSignal<EnabledType<TValue>>({
+    get: () => !this.disabled() as EnabledType<TValue>,
+    set: (enabled) => this.disabled.set(!enabled as DisabledType<TValue>),
+  });
+
+  /**
    * Model value.
    */
-  readonly value: Signal<Readonly<TValue>> = computed(() => this.control()());
+  readonly value: WritableSignal<Readonly<TValue>> = composeSignal({
+    get: () => this.control()(),
+    set: (value) => this.control().set(value),
+  });
 
   readonly #parent: WritableSignal<SignalControlContainer<any, []> | null> = signal<SignalControlContainer<any> | null>(
     null
@@ -129,13 +150,16 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
    */
   readonly errors: Signal<Readonly<SignalValidatorResults<TValidators>>> = computed(
     (): Readonly<SignalValidatorResults<TValidators>> => {
+      if (!this.enabled()) {
+        return [] as SignalValidatorResults<TValidators>;
+      }
+
       const validators = this.validators();
       if (validators.length === 0) {
         return [] as SignalValidatorResults<TValidators>;
       }
 
-      const control = this.control();
-      const value = control();
+      const value = this.value();
       const errors: SignalValidationResult<any>[] = [];
 
       for (const validator of validators) {
@@ -164,7 +188,15 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * The validation status of the control.
    */
-  readonly status: Signal<SignalControlStatus> = computed(() => (this.errors().length > 0 ? 'INVALID' : 'VALID'));
+  readonly status: Signal<SignalControlStatus> = computed((): SignalControlStatus => {
+    if (this.disabled()) {
+      return 'DISABLED';
+    } else if (this.errors().length > 0) {
+      return 'INVALID';
+    } else {
+      return 'VALID';
+    }
+  });
 
   /**
    * The validation status of the control.
@@ -190,6 +222,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   /**
    * Marks the control as pristine.
+   * TODO: Remove
    */
   markAsPristine(): void {
     this.#pristine.set(true);
@@ -197,6 +230,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   /**
    * Marks the control as dirty. A control becomes dirty when the control's value is changed through the UI; compare markAsTouched.
+   * TODO: Remove
    */
   markAsDirty(): void {
     this.#pristine.set(false);
@@ -216,6 +250,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   /**
    * Marks the control as touched. A control is touched by focus and blur events that do not change the value.
+   * TODO: Remove
    */
   markAsTouched(): void {
     this.#touched.set(true);
@@ -223,10 +258,43 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   /**
    * Marks the control as untouched.
+   * TODO: Remove
    */
   markAsUntouched(): void {
     this.#touched.set(false);
   }
+
+  /**
+   * Sync value and disabled statuses.
+   * @internal
+   */
+  protected readonly syncDisabled = effect((cleanup) => {
+    const disabledInterceptor = interceptSignal(this.disabled, {
+      onSet: (disabled) => {
+        if (disabled) {
+          this.control().set(undefined as any);
+        }
+      },
+    });
+
+    const valueInterceptor = interceptSignal(this.control(), {
+      onSet: (value) => {
+        if (value !== undefined) {
+          this.disabled.set(false);
+        }
+      },
+    });
+
+    cleanup(() => {
+      disabledInterceptor.restore();
+      valueInterceptor.restore();
+    });
+  });
+
+  /**
+   * @internal
+   */
+  protected readonly disabledAttribute = computed(() => (this.disabled() ? '' : null));
 
   /**
    * Class list to style the input.
@@ -239,5 +307,6 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.dirty]: this.dirty(),
     [this.statusClasses.touched]: this.touched(),
     [this.statusClasses.untouched]: this.untouched(),
+    [this.statusClasses.disabled]: this.disabled(),
   }));
 }

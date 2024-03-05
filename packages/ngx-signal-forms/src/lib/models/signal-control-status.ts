@@ -1,1 +1,1 @@
-export type SignalControlStatus = 'VALID' | 'INVALID';
+export type SignalControlStatus = 'VALID' | 'INVALID' | 'DISABLED';
