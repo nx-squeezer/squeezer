@@ -6,6 +6,8 @@ import { SignalValidator } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { MapSignal } from '../signals/map-signal';
 
+// TODO: manage disabled status
+
 /**
  * Abstract class that represents a signal control container.
  */
