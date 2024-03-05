@@ -1,6 +1,7 @@
 import { WritableSignal, computed, untracked } from '@angular/core';
 
 /**
+ * TODO: Change by setter/getter
  * Creates a writable signal from a readonly signal with a set function that can run side effects.
  */
 export function toWritable<T>(computation: () => T, setFn: (value: T) => void): WritableSignal<T> {

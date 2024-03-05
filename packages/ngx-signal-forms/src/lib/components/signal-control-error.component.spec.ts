@@ -1,20 +1,34 @@
 import { JsonPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  signal,
+  viewChild,
+  viewChildren,
+} from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { SignalControlErrorComponent } from './signal-control-error.component';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlErrorDirective } from '../directives/signal-control-error.directive';
 import { SignalControlDirective } from '../directives/signal-control.directive';
+import { maxLength } from '../validators/max-length';
 import { required } from '../validators/required';
 
+const newText = 'new text';
 const requiredMsg = 'This field is required';
+const maxLengthMsg = 'This field is too long';
 
 @Component({
   template: `
     <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="validators" #ngxControl="ngxControl" />
 
-    <ngx-control-error *ngxError="ngxControl.error('required')" #requiredError>${requiredMsg}</ngx-control-error>
+    <ngx-control-error *ngxError="ngxControl.error('required')" #errorMsg>${requiredMsg}</ngx-control-error>
+    <ngx-control-error *ngxError="ngxControl.error('maxLength'); let config" #errorMsg>
+      ${maxLengthMsg} ({{ ngxControl.value().length }}/{{ config }})
+    </ngx-control-error>
   `,
   standalone: true,
   imports: [
@@ -31,15 +45,11 @@ class TestComponent {
 
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
-  readonly validators = required();
+  readonly validators = [required(), maxLength(5)];
   readonly controlDirective =
-    viewChild.required<SignalControlDirective<string, (typeof this.validators)[]>>(SignalControlDirective);
-  readonly requiredError = viewChild<SignalControlErrorComponent, ElementRef<HTMLElement>>(
-    SignalControlErrorComponent,
-    {
-      read: ElementRef,
-    }
-  );
+    viewChild.required<SignalControlDirective<string, typeof this.validators>>(SignalControlDirective);
+  readonly errors = viewChildren<string, ElementRef>('errorMsg', { read: ElementRef });
+  readonly errorDirectives = viewChildren(SignalControlErrorDirective);
 
   type(str: string) {
     this.inputElement().value = str;
@@ -68,7 +78,7 @@ describe('SignalControlErrorComponent', () => {
   });
 
   it('should not show the error on initial state', () => {
-    expect(component.requiredError()).toBeFalsy();
+    expect(component.errors().length).toBe(0);
     expect(component.controlDirective().pristine()).toBeTruthy();
     expect(component.controlDirective().untouched()).toBeTruthy();
   });
@@ -78,7 +88,7 @@ describe('SignalControlErrorComponent', () => {
 
     TestBed.flushEffects();
 
-    expect(component.requiredError()).toBeFalsy();
+    expect(component.errors().length).toBe(0);
     expect(component.controlDirective().dirty()).toBeTruthy();
     expect(component.controlDirective().untouched()).toBeTruthy();
   });
@@ -88,7 +98,7 @@ describe('SignalControlErrorComponent', () => {
 
     TestBed.flushEffects();
 
-    expect(component.requiredError()).toBeFalsy();
+    expect(component.errors().length).toBe(0);
     expect(component.controlDirective().pristine()).toBeTruthy();
     expect(component.controlDirective().touched()).toBeTruthy();
   });
@@ -99,7 +109,8 @@ describe('SignalControlErrorComponent', () => {
 
     TestBed.flushEffects();
 
-    expect(component.requiredError()?.nativeElement).toHaveTextContent(requiredMsg);
+    expect(component.errors().length).toBe(1);
+    expect(component.errors()[0].nativeElement).toHaveTextContent(requiredMsg);
     expect(component.controlDirective().dirty()).toBeTruthy();
     expect(component.controlDirective().touched()).toBeTruthy();
   });
@@ -108,7 +119,7 @@ describe('SignalControlErrorComponent', () => {
     component.type('');
     component.blur();
 
-    expect(component.requiredError()?.nativeElement).toHaveTextContent(requiredMsg);
+    expect(component.errors()[0].nativeElement).toHaveTextContent(requiredMsg);
 
     TestBed.flushEffects();
 
@@ -116,8 +127,33 @@ describe('SignalControlErrorComponent', () => {
 
     TestBed.flushEffects();
 
-    expect(component.requiredError()).toBeFalsy();
+    expect(component.errors().length).toBe(0);
     expect(component.controlDirective().dirty()).toBeTruthy();
     expect(component.controlDirective().touched()).toBeTruthy();
+  });
+
+  it('should provide the configuration as the directive context', () => {
+    component.type(newText);
+    component.blur();
+
+    TestBed.flushEffects();
+
+    expect(component.errors().length).toBe(1);
+    expect(component.errors()[0].nativeElement).toHaveTextContent('This field is too long (8/5)');
+  });
+
+  describe('error directive typing', () => {
+    it('should resolve type for directive context', () => {
+      const directive = component.errorDirectives()[0];
+
+      expect(SignalControlErrorDirective.ngTemplateContextGuard(directive, {})).toBeTruthy();
+    });
+
+    it('should resolve type for directive input', () => {
+      const directive = component.errorDirectives()[0];
+
+      expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, {} as any)).toBeTruthy();
+      expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, undefined)).toBeFalsy();
+    });
   });
 });
