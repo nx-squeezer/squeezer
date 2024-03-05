@@ -49,6 +49,7 @@ class TestComponent {
   readonly controlDirective =
     viewChild.required<SignalControlDirective<string, typeof this.validators>>(SignalControlDirective);
   readonly errors = viewChildren<string, ElementRef>('errorMsg', { read: ElementRef });
+  readonly errorDirectives = viewChildren(SignalControlErrorDirective);
 
   type(str: string) {
     this.inputElement().value = str;
@@ -139,5 +140,20 @@ describe('SignalControlErrorComponent', () => {
 
     expect(component.errors().length).toBe(1);
     expect(component.errors()[0].nativeElement).toHaveTextContent('This field is too long (8/5)');
+  });
+
+  describe('error directive typing', () => {
+    it('should resolve type for directive context', () => {
+      const directive = component.errorDirectives()[0];
+
+      expect(SignalControlErrorDirective.ngTemplateContextGuard(directive, {})).toBeTruthy();
+    });
+
+    it('should resolve type for directive input', () => {
+      const directive = component.errorDirectives()[0];
+
+      expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, {} as any)).toBeTruthy();
+      expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, undefined)).toBeFalsy();
+    });
   });
 });
