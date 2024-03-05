@@ -22,8 +22,8 @@ export {
 } from './lib/models/signal-validator';
 
 // Signals
+export { composeSignal } from './lib/signals/compose-signal';
 export { selectObjectProperty } from './lib/signals/select-object-property';
-export { toWritable } from './lib/signals/to-writable';
 
 // Tokens
 export { SIGNAL_CONTROL_ERROR_STRATEGY } from './lib/tokens/signal-control-error-strategy.token';

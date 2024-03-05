@@ -1,8 +1,8 @@
 import { signal, WritableSignal } from '@angular/core';
 
-import { toWritable } from './to-writable';
+import { composeSignal } from './compose-signal';
 
-describe('toWritable', () => {
+describe('composeSignal', () => {
   let sourceSignal: WritableSignal<number>;
   let setFn: jest.Mock;
   let writableSignal: WritableSignal<number>;
@@ -10,7 +10,7 @@ describe('toWritable', () => {
   beforeEach(() => {
     sourceSignal = signal(1);
     setFn = jest.fn().mockImplementation((value: number) => sourceSignal.set(value));
-    writableSignal = toWritable(() => sourceSignal(), setFn);
+    writableSignal = composeSignal({ get: () => sourceSignal(), set: setFn });
   });
 
   it('should use set interceptor when using set', () => {
