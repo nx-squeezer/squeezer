@@ -14,7 +14,7 @@ import { selectObjectProperty } from '../signals/select-object-property';
 })
 export class SignalFormGroupDirective<
   TValue extends object,
-  TValidators extends SignalValidator<TValue, string>[] = []
+  TValidators extends SignalValidator<TValue, string>[] = [],
 > extends SignalControlContainer<TValue, TValidators> {
   /**
    * Model.

@@ -19,13 +19,13 @@ const initialValue: FormValue = { text };
   template: `
     <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="formGroupValidator">
       @if (renderInput()) {
-      <input
-        #inputTag
-        type="text"
-        ngxTextInput
-        [ngxControl]="ngxFormGroup.get('text')"
-        [validators]="requiredValidator"
-      />
+        <input
+          #inputTag
+          type="text"
+          ngxTextInput
+          [ngxControl]="ngxFormGroup.get('text')"
+          [validators]="requiredValidator"
+        />
       }
     </form>
   `,

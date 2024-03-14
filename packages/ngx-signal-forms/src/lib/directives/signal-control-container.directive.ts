@@ -13,7 +13,7 @@ import { MapSignal } from '../signals/map-signal';
  */
 export abstract class SignalControlContainer<
   TValue extends object,
-  TValidators extends SignalValidator<TValue, string>[] = []
+  TValidators extends SignalValidator<TValue, string>[] = [],
 > extends SignalControlDirective<TValue, TValidators> {
   /**
    * Map of signals corresponding to the child controls.
