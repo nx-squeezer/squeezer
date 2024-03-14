@@ -13,8 +13,66 @@
         <link rel="stylesheet" href="./styles/vagrant.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">ngx-forms</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -32,7 +90,7 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="nx-squeezerngx-forms-">@nx-squeezer/ngx-forms <!-- omit in toc --></h1>
+<h1>@nx-squeezer/ngx-forms <!-- omit in toc --></h1>
 <p><a href="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml"><img src="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg" alt="CI" class="img-responsive"></a> <a href="https://www.npmjs.com/package/@nx-squeezer/ngx-forms"><img src="https://img.shields.io/npm/v/@nx-squeezer/ngx-forms/latest.svg" alt="npm latest version" class="img-responsive"></a> <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/ngx-forms/CHANGELOG.md"><img src="https://img.shields.io/badge/CHANGELOG--orange.svg" alt="CHANGELOG" class="img-responsive"></a> <a href="https://codecov.io/gh/nx-squeezer/squeezer"><img src="https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg" alt="codecov" class="img-responsive"></a> <a href="https://nx-squeezer.github.io/squeezer/packages/ngx-forms/"><img src="https://nx-squeezer.github.io/squeezer/packages/ngx-forms/images/coverage-badge-documentation.svg" alt="compodoc" class="img-responsive"></a> <img src="https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot" alt="renovate" class="img-responsive"> <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release" class="img-responsive"></p>
 <p>This library provides useful extensions for Angular forms, check the <a href="https://nx-squeezer.github.io/squeezer/packages/ngx-forms">documentation</a> to see all available features.</p>
 <ul>
@@ -43,28 +101,28 @@
 </li>
 <li><a href="#installation">Installation</a></li>
 </ul>
-<h2 id="lazy-validation">Lazy Validation</h2>
+<h2>Lazy Validation</h2>
 <p>Use the following utilities to lazy load large and complex validators. Heavily inspired of this <a href="https://netbasal.com/optimizing-angular-form-validation-with-lazy-load-61265536a6f2">wonderful article</a> from <a href="https://github.com/NetanelBasal">@NetanelBasal</a>.</p>
-<h3 id="provide-lazy-validator-in-a-directive">Provide Lazy Validator in a Directive</h3>
-<div><pre class="line-numbers"><code class="language-ts">&#64;Directive({
+<h3>Provide Lazy Validator in a Directive</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">&#64;Directive({
   selector: &#39;[lazyValidator]&#39;,
   standalone: true,
   providers: [provideLazyValidator(() =&gt; import(&#39;./validator&#39;))], // Internally provides NG_ASYNC_VALIDATORS
 })
-export class ValidatorDirective {}</code></pre></div><div><pre class="line-numbers"><code class="language-ts">const validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null =&gt; {
+export class ValidatorDirective {}</code></pre></div><b>Example :</b><div><pre class="line-numbers"><code class="language-ts">const validator: ValidatorFn = (control: AbstractControl): ValidationErrors | null =&gt; {
   // Large and complex validator
 };
 
-export default validator; // Note that it works with the default export</code></pre></div><h3 id="in-a-form-control">In a Form Control</h3>
-<div><pre class="line-numbers"><code class="language-ts">export class FormComponent {
+export default validator; // Note that it works with the default export</code></pre></div><h3>In a Form Control</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-ts">export class FormComponent {
   private readonly formBuilder = inject(FormBuilder);
   readonly formGroup = this.formBuilder.group({
     lazy: this.formBuilder.control(&#39;invalid&#39;, { asyncValidators: [lazyValidator(() =&gt; import(&#39;./validator&#39;))] }),
   });
 }</code></pre></div><p>Note: the function <code>lazyValidator</code> uses internally <code>inject</code> so it has to be used in an injection context, such as field initalization.</p>
-<h2 id="installation">Installation</h2>
+<h2>Installation</h2>
 <p>Do you like this library? Go ahead and use it! It is production ready, with 100% code coverage, protected by integration tests, and uses semantic versioning. To install it:</p>
-<div><pre class="line-numbers"><code class="language-shell">npm install &#64;nx-squeezer/ngx-forms</code></pre></div>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">npm install &#64;nx-squeezer/ngx-forms</code></pre></div>
 
 
 

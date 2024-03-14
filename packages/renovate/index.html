@@ -13,8 +13,66 @@
         <link rel="stylesheet" href="./styles/vagrant.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">renovate</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -32,13 +90,13 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="nx-squeezerrenovate-">@nx-squeezer/renovate <!-- omit in toc --></h1>
+<h1>@nx-squeezer/renovate <!-- omit in toc --></h1>
 <p><a href="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml"><img src="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg" alt="CI" class="img-responsive"></a> <a href="https://www.npmjs.com/package/@nx-squeezer/renovate"><img src="https://img.shields.io/npm/v/@nx-squeezer/renovate/latest.svg" alt="npm latest version" class="img-responsive"></a> <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/workspace/CHANGELOG.md"><img src="https://img.shields.io/badge/CHANGELOG--orange.svg" alt="CHANGELOG" class="img-responsive"></a> <a href="https://codecov.io/gh/nx-squeezer/squeezer"><img src="https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg" alt="codecov" class="img-responsive"></a> <a href="https://nx-squeezer.github.io/squeezer/packages/renovate/"><img src="https://nx-squeezer.github.io/squeezer/packages/renovate/images/coverage-badge-documentation.svg" alt="compodoc" class="img-responsive"></a> <img src="https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot" alt="renovate" class="img-responsive"> <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release" class="img-responsive"></p>
 <p>Tools to setup <a href="https://www.whitesourcesoftware.com/free-developer-tools/renovate">Renovate</a> in <a href="https://nx.dev">Nx</a> or <a href="https://angular.io">Angular</a> monorepos, check the <a href="https://nx-squeezer.github.io/squeezer/packages/renovate">documentation</a> to see all available features.</p>
-<h2 id="setup">Setup</h2>
-<div><pre class="line-numbers"><code class="language-shell">npm install --save-dev &#64;nx-squeezer/renovate</code></pre></div><h2 id="generators">Generators</h2>
-<h3 id="setup-renovate">Setup Renovate</h3>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/renovate:setup</code></pre></div><p>Shareable config preset for <a href="https://www.whitesourcesoftware.com/free-developer-tools/renovate">Renovate</a>. Angular and Nx dependencies require post upgrade tasks, then Renovate must be configured as <a href="https://docs.renovatebot.com/self-hosting/">self-hosted</a>, an easy way to do it would be with <a href="https://github.com/renovatebot/github-action">Github Action Renovate</a>.</p>
+<h2>Setup</h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">npm install --save-dev &#64;nx-squeezer/renovate</code></pre></div><h2>Generators</h2>
+<h3>Setup Renovate</h3>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/renovate:setup</code></pre></div><p>Shareable config preset for <a href="https://www.whitesourcesoftware.com/free-developer-tools/renovate">Renovate</a>. Angular and Nx dependencies require post upgrade tasks, then Renovate must be configured as <a href="https://docs.renovatebot.com/self-hosting/">self-hosted</a>, an easy way to do it would be with <a href="https://github.com/renovatebot/github-action">Github Action Renovate</a>.</p>
 <p>You can find an example configuration <a href="https://github.com/nx-squeezer/squeezer/blob/main/renovate.config.js">here</a> and GitHub workflow <a href="https://github.com/nx-squeezer/squeezer/blob/main/.github/workflows/renovate.yml">here</a>.</p>
 <p>For Nx projects it is recommended to use the default preset for Nx monorepos.</p>
 <p>This generator will:</p>
@@ -59,13 +117,13 @@
   <summary>Default Preset</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/default.json">preset</a> includes all presets included in this repo except for <a href="https://nx.dev/">Nx</a>, <a href="https://angular.io/">Angular</a> workspaces, and tooling preset they have to be added manually:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer&quot;]</code></pre></div></details>
 
 <details>
   <summary>Nx Monorepo</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/nxMonorepo.json">preset</a> groups all dependencies related to <a href="https://nx.dev/">Nx</a> and <a href="https://angular.io/">Angular</a>, including upgrade schematics:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:nxMonorepo&quot;]</code></pre></div><blockquote>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:nxMonorepo&quot;]</code></pre></div><blockquote>
 <p>It is incompatible with preset <code>&quot;github&gt;@nx-squeezer/squeezer:angularWorkspace&quot;</code>, choose one or another.</p>
 </blockquote>
 </details>
@@ -74,7 +132,7 @@
   <summary>Angular Workspace</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/angularWorkspace.json">preset</a> groups all dependencies related to <a href="https://angular.io/">Angular</a>, including upgrade schematics:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:angularWorkspace&quot;]</code></pre></div><blockquote>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:angularWorkspace&quot;]</code></pre></div><blockquote>
 <p>It is incompatible with preset <code>&quot;github&gt;@nx-squeezer/squeezer:nxMonorepo&quot;</code>, choose one or another.</p>
 </blockquote>
 </details>
@@ -83,13 +141,13 @@
   <summary>Group All Non Major</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/groupAllNonMajor.json">preset</a> groups all non-major npm dependencies, including <code>bump</code> dependencies:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:groupAllNonMajor&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:groupAllNonMajor&quot;]</code></pre></div></details>
 
 <details>
   <summary>Tooling</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/tooling.json">preset</a> groups all dependencies related to linting and formatting:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:tooling&quot;]</code></pre></div><p>Examples:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:tooling&quot;]</code></pre></div><p>Examples:</p>
 <ul>
 <li><code>chore(deps): :arrow_up: update dependency</code></li>
 <li><code>fix(deps): :lock: refresh package-lock.json</code></li>
@@ -101,33 +159,33 @@
   <summary>GitHub Workflow Actions</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/githubActions.json">preset</a> groups all dependencies related to Github actions:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:githubActions&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:githubActions&quot;]</code></pre></div></details>
 
 <details>
   <summary>Gitmoji Conventional Commits</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/gitmoji.json">preset</a> adds a :sparkles: gitmoji :sparkles: to the commit message:</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:gitmoji&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:gitmoji&quot;]</code></pre></div></details>
 
 <details>
   <summary>NPM</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/npm.json">preset</a> updates <code>node</code> and <code>npm</code> only to LTS versions.</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:npm&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:npm&quot;]</code></pre></div></details>
 
 <details>
   <summary>Maintenance</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/maintenance.json">preset</a> configures maintenance of <code>package-lock.json</code> file as a separate PR.</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:maintenance&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:maintenance&quot;]</code></pre></div></details>
 
 <details>
   <summary>Widen Range for Library Dependencies</summary>
 
 <p>This <a href="https://github.com/nx-squeezer/squeezer/blob/main/widenRangeLibraryDeps.json">preset</a> causes Renovate to <em>not</em> update libraries&#39; <code>package.json</code>, only the root <code>package.json</code> will be updated for minor and patch versions. This has the purpose of keeping libraries with a wider compatibility range, within the last major version. This is the recommended configuration for library authors.</p>
-<div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:widenRangeLibraryDeps&quot;]</code></pre></div></details>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-json">&quot;extends&quot;: [&quot;github&gt;&#64;nx-squeezer/squeezer:widenRangeLibraryDeps&quot;]</code></pre></div></details>
 
-<h2 id="contributors">Contributors</h2>
+<h2>Contributors</h2>
 <p><a href="https://github.com/nx-squeezer/squeezer/graphs/contributors"><img src="https://contrib.rocks/image?repo=nx-squeezer/squeezer" alt="contributors" class="img-responsive"></a></p>
 
 

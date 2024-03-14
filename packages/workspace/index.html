@@ -13,8 +13,66 @@
         <link rel="stylesheet" href="./styles/vagrant.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">workspace</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -32,18 +90,18 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="nx-squeezerworkspace-">@nx-squeezer/workspace <!-- omit in toc --></h1>
+<h1>@nx-squeezer/workspace <!-- omit in toc --></h1>
 <p><a href="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml"><img src="https://github.com/nx-squeezer/squeezer/actions/workflows/ci.yml/badge.svg" alt="CI" class="img-responsive"></a> <a href="https://www.npmjs.com/package/@nx-squeezer/workspace"><img src="https://img.shields.io/npm/v/@nx-squeezer/workspace/latest.svg" alt="npm latest version" class="img-responsive"></a> <a href="https://github.com/nx-squeezer/squeezer/blob/main/packages/workspace/CHANGELOG.md"><img src="https://img.shields.io/badge/CHANGELOG--orange.svg" alt="CHANGELOG" class="img-responsive"></a> <a href="https://codecov.io/gh/nx-squeezer/squeezer"><img src="https://codecov.io/gh/nx-squeezer/squeezer/branch/main/graph/badge.svg" alt="codecov" class="img-responsive"></a> <a href="https://nx-squeezer.github.io/squeezer/packages/workspace/"><img src="https://nx-squeezer.github.io/squeezer/packages/workspace/images/coverage-badge-documentation.svg" alt="compodoc" class="img-responsive"></a> <img src="https://img.shields.io/badge/maintaied%20with-renovate-blue?logo=renovatebot" alt="renovate" class="img-responsive"> <img src="https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg" alt="semantic-release" class="img-responsive"></p>
 <p>Contributing and maintaining OSS projects can be boosted :rocket: through a set of tools :hammer: and processes :gear:. This package provides generators for <a href="https://nx.dev">Nx</a> and <a href="https://angular.io">Angular</a> to configure a variety of those tools with just a command, integrating without any friction with your existing repo. Check the <a href="https://nx-squeezer.github.io/squeezer/packages/workspace">documentation</a> to see all available features.</p>
-<h2 id="setup-">Setup <!-- omit in toc --></h2>
-<div><pre class="line-numbers"><code class="language-shell">npm install --save-dev &#64;nx-squeezer/workspace</code></pre></div><p>Recommended order to setup all the generators:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:prettier
+<h2>Setup <!-- omit in toc --></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">npm install --save-dev &#64;nx-squeezer/workspace</code></pre></div><p>Recommended order to setup all the generators:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:prettier
 nx g &#64;nx-squeezer/workspace:eslint
 nx g &#64;nx-squeezer/workspace:tsconfig
 nx g &#64;nx-squeezer/workspace:lint-staged
 nx g &#64;nx-squeezer/workspace:contributors
 nx g &#64;nx-squeezer/workspace:github-workflow
-nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><h2 id="generators-">Generators <!-- omit in toc --></h2>
+nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><h2>Generators <!-- omit in toc --></h2>
 <ul>
 <li><a href="#codecov">codecov</a></li>
 <li><a href="#commitlint">commitlint</a></li>
@@ -54,24 +112,24 @@ nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><h2 id="generators-">G
 <li><a href="#prettier">prettier</a></li>
 <li><a href="#tsconfig">tsconfig</a></li>
 </ul>
-<h2 id="codecov"><a href="src/generators/codecov/README.md">codecov</a></h2>
+<h2><a href="src/generators/codecov/README.md">codecov</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><p>Adds <a href="https://docs.codecov.com/docs"><code>codecov</code></a> to a project to have coverage information, including:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><p>Adds <a href="https://docs.codecov.com/docs"><code>codecov</code></a> to a project to have coverage information, including:</p>
 <ul>
 <li>Generating <a href="https://docs.codecov.com/docs/codecov-yaml">configuration file <code>.codecov.yml</code></a>.</li>
 <li>Configures individual projects with <code>test</code> target to expose coverage information.</li>
 <li>Updates CI file to upload coverage report.</li>
 <li>Adds badge to README.md.</li>
 </ul>
-<h2 id="commitlint"><a href="src/generators/commitlint/README.md">commitlint</a></h2>
+<h2><a href="src/generators/commitlint/README.md">commitlint</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:commitlint</code></pre></div><p>Uses <a href="https://github.com/conventional-changelog/commitlint"><code>commitlint</code></a> and <a href="https://github.com/typicode/husky"><code>husky</code></a> to lint commit messages to adhere to <a href="https://www.conventionalcommits.org/">conventional commits</a>. It uses the default configuration provided by <a href="https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional">@commitlint/config-conventional</a>.</p>
-<h2 id="contributors"><a href="src/generators/contributors/README.md">contributors</a></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:commitlint</code></pre></div><p>Uses <a href="https://github.com/conventional-changelog/commitlint"><code>commitlint</code></a> and <a href="https://github.com/typicode/husky"><code>husky</code></a> to lint commit messages to adhere to <a href="https://www.conventionalcommits.org/">conventional commits</a>. It uses the default configuration provided by <a href="https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional">@commitlint/config-conventional</a>.</p>
+<h2><a href="src/generators/contributors/README.md">contributors</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:contributors</code></pre></div><p>Adds contributors attribution to <code>README.md</code> using <a href="https://contrib.rocks/"><code>contrib.rocks</code></a>.</p>
-<h2 id="eslint"><a href="src/generators/eslint/README.md">eslint</a></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:contributors</code></pre></div><p>Adds contributors attribution to <code>README.md</code> using <a href="https://contrib.rocks/"><code>contrib.rocks</code></a>.</p>
+<h2><a href="src/generators/eslint/README.md">eslint</a></h2>
 <p>Setup command, which will prompt one by one the set of rules that can be added:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:eslint</code></pre></div><p>Adds a set of <a href="https://eslint.org/">ESLint</a> rules to enhance code style in projects. Shipped as a generator instead of a <a href="https://eslint.org/docs/latest/user-guide/configuring/">configuration package</a> so that it can be customized and edited by repo, and to automate the configuration of projects with TypeScript. Additionally, since it is an Nx plugin it can automatically apply upgrade changes if needed. The rules that it adds include:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:eslint</code></pre></div><p>Adds a set of <a href="https://eslint.org/">ESLint</a> rules to enhance code style in projects. Shipped as a generator instead of a <a href="https://eslint.org/docs/latest/user-guide/configuring/">configuration package</a> so that it can be customized and edited by repo, and to automate the configuration of projects with TypeScript. Additionally, since it is an Nx plugin it can automatically apply upgrade changes if needed. The rules that it adds include:</p>
 <ul>
 <li><code>eslint:recommended</code></li>
 <li><code>sonarjs/recommended</code></li>
@@ -80,9 +138,9 @@ nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><h2 id="generators-">G
 <li><code>deprecation</code></li>
 <li><code>import/recommended</code></li>
 </ul>
-<h2 id="github-workflow"><a href="src/generators/github-workflow/README.md">github-workflow</a></h2>
+<h2><a href="src/generators/github-workflow/README.md">github-workflow</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:github-workflow</code></pre></div><p>Adds a <a href="https://docs.github.com/en/actions/using-workflows">GitHub Action workflow</a> to automate the CI pipeline for your repo. It includes the following actions:</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:github-workflow</code></pre></div><p>Adds a <a href="https://docs.github.com/en/actions/using-workflows">GitHub Action workflow</a> to automate the CI pipeline for your repo. It includes the following actions:</p>
 <ul>
 <li>Checkout.</li>
 <li>Setup Node.</li>
@@ -98,16 +156,16 @@ nx g &#64;nx-squeezer/workspace:codecov</code></pre></div><h2 id="generators-">G
 <li>Provide default branch with <code>--branch=master</code> (default <code>main</code>).</li>
 <li>Use <a href="https://nx.app">Nx Cloud</a> <code>--useNxCloud</code> (default <code>true</code>).</li>
 </ul>
-<h2 id="lint-staged"><a href="src/generators/lint-staged/README.md">lint-staged</a></h2>
+<h2><a href="src/generators/lint-staged/README.md">lint-staged</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:lint-staged</code></pre></div><p>Uses <a href="https://github.com/okonet/lint-staged%5B"><code>lint-staged</code></a> and <a href="https://github.com/typicode/husky"><code>husky</code></a> to lint files when being committed to the repo.</p>
-<h2 id="prettier"><a href="src/generators/prettier/README.md">prettier</a></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:lint-staged</code></pre></div><p>Uses <a href="https://github.com/okonet/lint-staged%5B"><code>lint-staged</code></a> and <a href="https://github.com/typicode/husky"><code>husky</code></a> to lint files when being committed to the repo.</p>
+<h2><a href="src/generators/prettier/README.md">prettier</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:prettier</code></pre></div><p>Updates <a href="https://github.com/prettier/prettier"><code>prettier</code></a> configuration with some defaults, and adds <a href="https://github.com/prettier/eslint-plugin-prettier"><code>prettier/recommended</code></a> rule to ESLint configuration.</p>
-<h2 id="tsconfig"><a href="src/generators/tsconfig/README.md">tsconfig</a></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:prettier</code></pre></div><p>Updates <a href="https://github.com/prettier/prettier"><code>prettier</code></a> configuration with some defaults, and adds <a href="https://github.com/prettier/eslint-plugin-prettier"><code>prettier/recommended</code></a> rule to ESLint configuration.</p>
+<h2><a href="src/generators/tsconfig/README.md">tsconfig</a></h2>
 <p>Setup command:</p>
-<div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:tsconfig</code></pre></div><p>Updates the <code>tsconfig.json</code> file adding a default configuration with stricter options enabled.</p>
-<h2 id="contributors-">Contributors <!-- omit in toc --></h2>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-shell">nx g &#64;nx-squeezer/workspace:tsconfig</code></pre></div><p>Updates the <code>tsconfig.json</code> file adding a default configuration with stricter options enabled.</p>
+<h2>Contributors <!-- omit in toc --></h2>
 <p><a href="https://github.com/nx-squeezer/squeezer/graphs/contributors"><img src="https://contrib.rocks/image?repo=nx-squeezer/squeezer" alt="contributors" class="img-responsive"></a></p>
 
 

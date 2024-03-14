@@ -13,8 +13,66 @@
         <link rel="stylesheet" href="./styles/vagrant.css">
     </head>
     <body>
+          <script>
+               // Blocking script to avaoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
 
-        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+
+               if ($darkModeToggles.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-block d-sm-none">
             <a href="./" class="navbar-brand">ngx-async-injector</a>
             <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
         </div>
@@ -32,58 +90,63 @@
                <div class="content getting-started">
                    <div class="content-data">
 
-<h1 id="changelog">Changelog</h1>
+<h1>Changelog</h1>
 <p>This file was generated using <a href="https://github.com/jscutlery/semver">@jscutlery/semver</a>.</p>
-<h2 id="305-2024-02-08"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.4...ngx-async-injector@3.0.5">3.0.5</a> (2024-02-08)</h2>
-<h2 id="304-2024-02-07"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.3...ngx-async-injector@3.0.4">3.0.4</a> (2024-02-07)</h2>
-<h2 id="303-2024-02-07"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.2...ngx-async-injector@3.0.3">3.0.3</a> (2024-02-07)</h2>
-<h2 id="302-2024-02-07"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.1...ngx-async-injector@3.0.2">3.0.2</a> (2024-02-07)</h2>
-<h2 id="301-2024-02-02"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.0...ngx-async-injector@3.0.1">3.0.1</a> (2024-02-02)</h2>
-<h3 id="bug-fixes">Bug Fixes</h3>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.5...ngx-async-injector@3.1.0">3.1.0</a> (2024-03-14)</h2>
+<h3>Features</h3>
+<ul>
+<li><strong>ngx-signal-forms:</strong> :tada: scaffold signal forms library (<a href="https://github.com/nx-squeezer/squeezer/issues/1200">#1200</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/b84e59981bffee16c7416115f36c8389e8ba9084">b84e599</a>)</li>
+</ul>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.4...ngx-async-injector@3.0.5">3.0.5</a> (2024-02-08)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.3...ngx-async-injector@3.0.4">3.0.4</a> (2024-02-07)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.2...ngx-async-injector@3.0.3">3.0.3</a> (2024-02-07)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.1...ngx-async-injector@3.0.2">3.0.2</a> (2024-02-07)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.0...ngx-async-injector@3.0.1">3.0.1</a> (2024-02-02)</h2>
+<h3>Bug Fixes</h3>
 <ul>
 <li>upgrade nx to v17.2.0 (<a href="https://github.com/nx-squeezer/squeezer/issues/1099">#1099</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/85f83e1b998a0055ef117c0ca507626526b76cac">85f83e1</a>)</li>
 </ul>
-<h2 id="300-2023-12-03"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.2...ngx-async-injector@3.0.0">3.0.0</a> (2023-12-03)</h2>
-<h3 id="⚠-breaking-changes">⚠ BREAKING CHANGES</h3>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.2...ngx-async-injector@3.0.0">3.0.0</a> (2023-12-03)</h2>
+<h3>⚠ BREAKING CHANGES</h3>
 <ul>
 <li>Upgrade to Angular v17</li>
 </ul>
-<h3 id="features">Features</h3>
+<h3>Features</h3>
 <ul>
 <li>:arrow_up: upgrade to Angular v17 (<a href="https://github.com/nx-squeezer/squeezer/commit/58e28faca36cbed69ca37a57a22b81053d4fccb2">58e28fa</a>)</li>
 </ul>
-<h3 id="bug-fixes-1">Bug Fixes</h3>
+<h3>Bug Fixes</h3>
 <ul>
 <li><strong>deps:</strong> ⬆️ update nx monorepo to v17 (major) (<a href="https://github.com/nx-squeezer/squeezer/issues/1013">#1013</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/009816c38a8c630610e0c67c1d893d7f7272f2a8">009816c</a>)</li>
 </ul>
-<h2 id="202-2023-07-27"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.1...ngx-async-injector@2.0.2">2.0.2</a> (2023-07-27)</h2>
-<h2 id="201-2023-07-25"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.0...ngx-async-injector@2.0.1">2.0.1</a> (2023-07-25)</h2>
-<h2 id="200-2023-05-16"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.6...ngx-async-injector@2.0.0">2.0.0</a> (2023-05-16)</h2>
-<h3 id="⚠-breaking-changes-1">⚠ BREAKING CHANGES</h3>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.1...ngx-async-injector@2.0.2">2.0.2</a> (2023-07-27)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@2.0.0...ngx-async-injector@2.0.1">2.0.1</a> (2023-07-25)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.6...ngx-async-injector@2.0.0">2.0.0</a> (2023-05-16)</h2>
+<h3>⚠ BREAKING CHANGES</h3>
 <ul>
 <li><strong>deps:</strong> Upgrade to Angular and Nx 16</li>
 </ul>
-<h3 id="features-1">Features</h3>
+<h3>Features</h3>
 <ul>
 <li>:package: rescope to <a href="https://github.com/nx">@nx</a> (<a href="https://github.com/nx-squeezer/squeezer/issues/681">#681</a>) (<a href="https://github.com/nx-squeezer/squeezer/issues/682">#682</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/e2fd0a88b5e258c9cfe898d06cbda00d7bf44c8d">e2fd0a8</a>)</li>
 <li><strong>deps:</strong> :arrow_up: update monorepo to Angular and Nx 16 (<a href="https://github.com/nx-squeezer/squeezer/issues/679">#679</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/733a9f88ff5d20961caa59b7da85d4cf33512cbc">733a9f8</a>)</li>
 </ul>
-<h2 id="106-2023-04-17"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.5...ngx-async-injector@1.0.6">1.0.6</a> (2023-04-17)</h2>
-<h2 id="105-2023-04-17"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.4...ngx-async-injector@1.0.5">1.0.5</a> (2023-04-17)</h2>
-<h2 id="104-2023-04-05"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.3...ngx-async-injector@1.0.4">1.0.4</a> (2023-04-05)</h2>
-<h2 id="103-2023-04-04"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.2...ngx-async-injector@1.0.3">1.0.3</a> (2023-04-04)</h2>
-<h2 id="102-2023-03-15"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.1...ngx-async-injector@1.0.2">1.0.2</a> (2023-03-15)</h2>
-<h3 id="bug-fixes-2">Bug Fixes</h3>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.5...ngx-async-injector@1.0.6">1.0.6</a> (2023-04-17)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.4...ngx-async-injector@1.0.5">1.0.5</a> (2023-04-17)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.3...ngx-async-injector@1.0.4">1.0.4</a> (2023-04-05)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.2...ngx-async-injector@1.0.3">1.0.3</a> (2023-04-04)</h2>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.1...ngx-async-injector@1.0.2">1.0.2</a> (2023-03-15)</h2>
+<h3>Bug Fixes</h3>
 <ul>
 <li><strong>ngx-async-injector:</strong> :memo: add playground to README (<a href="https://github.com/nx-squeezer/squeezer/commit/5234f189e28f94015a7d12c2970b33efd422207f">5234f18</a>)</li>
 </ul>
-<h2 id="101-2023-03-15"><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.0...ngx-async-injector@1.0.1">1.0.1</a> (2023-03-15)</h2>
-<h3 id="bug-fixes-3">Bug Fixes</h3>
+<h2><a href="https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@1.0.0...ngx-async-injector@1.0.1">1.0.1</a> (2023-03-15)</h2>
+<h3>Bug Fixes</h3>
 <ul>
 <li><strong>ngx-async-injector:</strong> :package: widen deps and fix main entry point (<a href="https://github.com/nx-squeezer/squeezer/issues/527">#527</a>) (<a href="https://github.com/nx-squeezer/squeezer/commit/f23e1809935edb7b91dea8465460a9c5aaa851da">f23e180</a>)</li>
 </ul>
-<h2 id="100-2023-03-15">1.0.0 (2023-03-15)</h2>
-<h3 id="features-2">Features</h3>
+<h2>1.0.0 (2023-03-15)</h2>
+<h3>Features</h3>
 <ul>
 <li>:tada: initial release</li>
 </ul>
