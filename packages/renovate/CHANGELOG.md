@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.1.6](https://github.com/nx-squeezer/squeezer/compare/renovate@3.1.5...renovate@3.1.6) (2024-03-14)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([d547ee0](https://github.com/nx-squeezer/squeezer/commit/d547ee04b536da9ecb55328ea68e5b52e32cb85b))
+* **deps:** :arrow_up: update dependency yaml to v2.4.1 ([69c4b36](https://github.com/nx-squeezer/squeezer/commit/69c4b365764789a1d1e22e1f02cc5dcf63be41c5))
+
 ## [3.1.5](https://github.com/nx-squeezer/squeezer/compare/renovate@3.1.4...renovate@3.1.5) (2024-02-08)
 
 ## [3.1.4](https://github.com/nx-squeezer/squeezer/compare/renovate@3.1.3...renovate@3.1.4) (2024-02-07)
