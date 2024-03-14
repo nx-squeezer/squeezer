@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [6.1.0](https://github.com/nx-squeezer/squeezer/compare/workspace@6.0.4...workspace@6.1.0) (2024-03-14)
+
+
+### Features
+
+* :arrow_up: widen range to support prettier v3 ([#1334](https://github.com/nx-squeezer/squeezer/issues/1334)) ([cf4da96](https://github.com/nx-squeezer/squeezer/commit/cf4da96780db029ae561a6fec53c88bc3f9c0492))
+
+
+### Bug Fixes
+
+* **deps:** :arrow_up: update all non-major dependencies ([d547ee0](https://github.com/nx-squeezer/squeezer/commit/d547ee04b536da9ecb55328ea68e5b52e32cb85b))
+* **deps:** :arrow_up: update dependency yaml to v2.4.1 ([69c4b36](https://github.com/nx-squeezer/squeezer/commit/69c4b365764789a1d1e22e1f02cc5dcf63be41c5))
+
 ## [6.0.4](https://github.com/nx-squeezer/squeezer/compare/workspace@6.0.3...workspace@6.0.4) (2024-02-08)
 
 ## [6.0.3](https://github.com/nx-squeezer/squeezer/compare/workspace@6.0.2...workspace@6.0.3) (2024-02-07)
