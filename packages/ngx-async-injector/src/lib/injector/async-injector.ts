@@ -2,7 +2,6 @@ import {
   EnvironmentInjector,
   inject,
   Injectable,
-  InjectFlags,
   InjectionToken,
   InjectOptions,
   Injector,
@@ -230,11 +229,12 @@ export class AsyncInjector implements OnDestroy {
       return result;
     };
 
+    const injectFn = <T>(token: ProviderToken<T>, options: InjectOptions): T | null =>
+      runInContext(() => inject(token, options)) as T;
+
     const injectionContext: InjectionContext = {
       // eslint-disable-next-line deprecation/deprecation
-      inject: <T>(token: ProviderToken<T>, options: InjectOptions | InjectFlags = InjectFlags.Default): T | null =>
-        // eslint-disable-next-line deprecation/deprecation
-        runInContext(() => inject(token, options as any)) as T,
+      inject: injectFn as typeof inject,
       resolve: <T>(injectionToken: InjectionToken<T>) => {
         this.processDependency(asyncStaticProvider.provide, injectionToken);
         return this.resolve(injectionToken);
