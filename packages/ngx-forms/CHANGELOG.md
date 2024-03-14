@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [2.1.0](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@2.0.5...ngx-forms@2.1.0) (2024-03-14)
+
+
+### Features
+
+* **ngx-signal-forms:** :tada: scaffold signal forms library ([#1200](https://github.com/nx-squeezer/squeezer/issues/1200)) ([b84e599](https://github.com/nx-squeezer/squeezer/commit/b84e59981bffee16c7416115f36c8389e8ba9084))
+
 ## [2.0.5](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@2.0.4...ngx-forms@2.0.5) (2024-02-08)
 
 ## [2.0.4](https://github.com/nx-squeezer/squeezer/compare/ngx-forms@2.0.3...ngx-forms@2.0.4) (2024-02-07)
