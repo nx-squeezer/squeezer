@@ -20,9 +20,10 @@ const maxLengthMsg = 'This field is too long';
     <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="validators" #ngxControl="ngxControl" />
 
     @if (ngxControl.error('required'); as error) {
-    <p #requiredError>${requiredMsg}</p>
-    } @if (ngxControl.error('maxLength'); as error) {
-    <p #maxLengthError>${maxLengthMsg} ({{ ngxControl.value().length }}/{{ error.config }})</p>
+      <p #requiredError>${requiredMsg}</p>
+    }
+    @if (ngxControl.error('maxLength'); as error) {
+      <p #maxLengthError>${maxLengthMsg} ({{ ngxControl.value().length }}/{{ error.config }})</p>
     }
   `,
   standalone: true,

@@ -62,7 +62,7 @@ export type SignalValidatorKeys<TValidators extends readonly unknown[]> = TValid
  */
 export type SignalValidatorResultByKey<
   TValidators extends readonly unknown[],
-  K extends SignalValidatorKeys<TValidators>
+  K extends SignalValidatorKeys<TValidators>,
 > = Extract<
   SignalValidatorResults<TValidators> extends (infer TValidatorResult)[] ? Readonly<TValidatorResult> : never,
   { key: K }

@@ -14,7 +14,7 @@ import { SIGNAL_CONTROL_ERROR_STRATEGY } from '../tokens/signal-control-error-st
 export class SignalControlErrorDirective<
   TKey extends string,
   TConfig,
-  TValidationResult extends SignalValidationResult<TKey, TConfig>
+  TValidationResult extends SignalValidationResult<TKey, TConfig>,
 > {
   private readonly templateRef = inject(TemplateRef<{ $implicit: TConfig }>);
   private readonly vcr = inject(ViewContainerRef);
@@ -50,7 +50,7 @@ export class SignalControlErrorDirective<
   static ngTemplateGuard_ngxError<
     TKey extends string,
     TConfig,
-    TValidationResult extends SignalValidationResult<TKey, TConfig>
+    TValidationResult extends SignalValidationResult<TKey, TConfig>,
   >(
     dir: SignalControlErrorDirective<TKey, TConfig, TValidationResult>,
     state: TValidationResult | undefined
@@ -64,7 +64,7 @@ export class SignalControlErrorDirective<
   static ngTemplateContextGuard<
     TKey extends string,
     TConfig,
-    TValidationResult extends SignalValidationResult<TKey, TConfig>
+    TValidationResult extends SignalValidationResult<TKey, TConfig>,
   >(
     directive: SignalControlErrorDirective<TKey, TConfig, TValidationResult>,
     context: unknown
