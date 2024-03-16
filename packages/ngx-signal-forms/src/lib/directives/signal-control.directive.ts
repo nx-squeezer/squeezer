@@ -2,7 +2,6 @@ import {
   Directive,
   InputSignal,
   InputSignalWithTransform,
-  ModelSignal,
   Signal,
   WritableSignal,
   computed,
@@ -24,8 +23,9 @@ import {
   SignalValidatorResults,
 } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
-import { composeSignal } from '../signals/compose-signal';
+import { composedSignal } from '../signals/composed-signal';
 import { interceptSignal } from '../signals/intercept-signal';
+import { negatedSignal } from '../signals/negated-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
 // TODO: DOM attributes/validators, from CVA
@@ -56,20 +56,21 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * Disabled controls are exempt from validation checks and are not included in the aggregate value of their ancestor controls.
    */
-  readonly disabled: ModelSignal<DisabledType<TValue>> = model(false as DisabledType<TValue>, { alias: 'ngxDisabled' });
+  readonly disabled: WritableSignal<DisabledType<TValue>> = model(false as DisabledType<TValue>, {
+    alias: 'ngxDisabled',
+  });
 
   /**
    * Indicates if the control is not disabled.
    */
-  readonly enabled: WritableSignal<EnabledType<TValue>> = composeSignal<EnabledType<TValue>>({
-    get: () => !this.disabled() as EnabledType<TValue>,
-    set: (enabled) => this.disabled.set(!enabled as DisabledType<TValue>),
-  });
+  readonly enabled: WritableSignal<EnabledType<TValue>> = negatedSignal(() => this.disabled) as WritableSignal<
+    EnabledType<TValue>
+  >;
 
   /**
    * Model value.
    */
-  readonly value: WritableSignal<Readonly<TValue>> = composeSignal({
+  readonly value: WritableSignal<Readonly<TValue>> = composedSignal({
     get: () => this.control()(),
     set: (value) => this.control().set(value),
   });
@@ -208,67 +209,36 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
    */
   readonly invalid: Signal<boolean> = computed(() => this.status() === 'INVALID');
 
-  readonly #pristine: WritableSignal<boolean> = signal(true);
-
   /**
    * A control is pristine if the user has not yet changed the value in the UI.
    */
-  readonly pristine: Signal<boolean> = this.#pristine.asReadonly();
+  readonly pristine: WritableSignal<boolean> = signal(true);
 
   /**
    * A control is dirty if the user has changed the value in the UI.
    */
-  readonly dirty: Signal<boolean> = computed(() => !this.pristine());
-
-  /**
-   * Marks the control as pristine.
-   * TODO: Remove
-   */
-  markAsPristine(): void {
-    this.#pristine.set(true);
-  }
-
-  /**
-   * Marks the control as dirty. A control becomes dirty when the control's value is changed through the UI; compare markAsTouched.
-   * TODO: Remove
-   */
-  markAsDirty(): void {
-    this.#pristine.set(false);
-  }
-
-  readonly #touched: WritableSignal<boolean> = signal(false);
+  readonly dirty: WritableSignal<boolean> = negatedSignal(() => this.pristine);
 
   /**
    * A control is marked touched once the user has triggered a blur event on it.
    */
-  readonly touched: Signal<boolean> = this.#touched.asReadonly();
+  readonly touched: WritableSignal<boolean> = signal(false);
 
   /**
    * A control is untouched if the user has not yet triggered a blur event on it.
    */
-  readonly untouched: Signal<boolean> = computed(() => !this.touched());
-
-  /**
-   * Marks the control as touched. A control is touched by focus and blur events that do not change the value.
-   * TODO: Remove
-   */
-  markAsTouched(): void {
-    this.#touched.set(true);
-  }
-
-  /**
-   * Marks the control as untouched.
-   * TODO: Remove
-   */
-  markAsUntouched(): void {
-    this.#touched.set(false);
-  }
+  readonly untouched: WritableSignal<boolean> = negatedSignal(() => this.touched);
 
   /**
    * Sync value and disabled statuses.
    * @internal
    */
   protected readonly syncDisabled = effect((cleanup) => {
+    if (this.defaultKey !== 'control') {
+      // Control containers don't need to sync disabled status
+      return;
+    }
+
     const disabledInterceptor = interceptSignal(this.disabled, {
       onSet: (disabled) => {
         if (disabled) {

@@ -1,6 +1,6 @@
 import { WritableSignal, untracked } from '@angular/core';
 
-import { composeSignal } from './compose-signal';
+import { composedSignal } from './composed-signal';
 
 /**
  * Given a writable signal with an object value returns a signal that represents the value of a property.
@@ -10,7 +10,7 @@ export function selectObjectProperty<T extends object, K extends keyof T>(
   sourceSignal: WritableSignal<Readonly<T>>,
   key: K
 ): WritableSignal<Readonly<T[K]>> {
-  return composeSignal({
+  return composedSignal({
     get() {
       return sourceSignal()[key];
     },

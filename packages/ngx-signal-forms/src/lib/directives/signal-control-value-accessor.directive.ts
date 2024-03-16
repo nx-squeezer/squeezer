@@ -46,14 +46,14 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
    */
   updateValue(value: Readonly<TValue>): void {
     this.control().set(value);
-    this.controlDirective.markAsDirty();
+    this.controlDirective.dirty.set(true);
   }
 
   /**
    * Marks the control as touched. A control is touched by focus and blur events that do not change the value.
    */
   markAsTouched(): void {
-    this.controlDirective.markAsTouched();
+    this.controlDirective.touched.set(true);
   }
 
   /**
