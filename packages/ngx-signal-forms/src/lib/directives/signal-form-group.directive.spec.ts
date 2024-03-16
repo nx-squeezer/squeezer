@@ -38,7 +38,7 @@ class TestComponent {
   readonly value = signal<FormValue>(initialValue);
   readonly inputElementRef = viewChild<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef()?.nativeElement);
-  readonly controlDirective = viewChild<SignalControlDirective<string>>(SignalControlDirective);
+  readonly controlDirective = viewChild<SignalControlDirective<string | undefined>>(SignalControlDirective);
   readonly requiredValidator = required();
   readonly formGroupValidator: SignalValidator<FormValue, 'tooLong'> = {
     key: 'tooLong',
@@ -224,7 +224,7 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().dirty()).toBeFalsy();
       expect(component.controlDirective()?.dirty()).toBeFalsy();
 
-      component.formGroupDirective().markAsDirty();
+      component.formGroupDirective().dirty.set(true);
 
       expect(component.formGroupDirective().dirty()).toBeTruthy();
       expect(component.controlDirective()?.dirty()).toBeTruthy();
@@ -235,7 +235,7 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().pristine()).toBeFalsy();
       expect(component.controlDirective()?.pristine()).toBeFalsy();
 
-      component.formGroupDirective().markAsPristine();
+      component.formGroupDirective().pristine.set(true);
 
       expect(component.formGroupDirective().pristine()).toBeTruthy();
       expect(component.controlDirective()?.pristine()).toBeTruthy();
@@ -265,7 +265,7 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().touched()).toBeFalsy();
       expect(component.controlDirective()?.touched()).toBeFalsy();
 
-      component.formGroupDirective().markAsTouched();
+      component.formGroupDirective().touched.set(true);
 
       expect(component.formGroupDirective().touched()).toBeTruthy();
       expect(component.controlDirective()?.touched()).toBeTruthy();
@@ -276,10 +276,26 @@ describe('SignalFormGroupDirective', () => {
       expect(component.formGroupDirective().untouched()).toBeFalsy();
       expect(component.controlDirective()?.untouched()).toBeFalsy();
 
-      component.formGroupDirective().markAsUntouched();
+      component.formGroupDirective().untouched.set(true);
 
       expect(component.formGroupDirective().untouched()).toBeTruthy();
       expect(component.controlDirective()?.untouched()).toBeTruthy();
+    });
+  });
+
+  describe('disabled', () => {
+    it('should not be disabled even if child controls are', () => {
+      component.controlDirective()?.disabled.set(true);
+
+      expect(component.controlDirective()?.disabled()).toBeTruthy();
+      expect(component.formGroupDirective().disabled()).toBeFalsy();
+    });
+
+    it('should enable child controls', () => {
+      component.controlDirective()?.disabled.set(true);
+      component.formGroupDirective().enabled.set(true);
+
+      expect(component.controlDirective()?.enabled()).toBeTruthy();
     });
   });
 });

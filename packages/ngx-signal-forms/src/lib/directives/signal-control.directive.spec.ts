@@ -205,7 +205,7 @@ describe('SignalControlDirective', () => {
     it('can be set to dirty', () => {
       expect(component.controlDirective().dirty()).toBeFalsy();
 
-      component.controlDirective().markAsDirty();
+      component.controlDirective().dirty.set(true);
 
       expect(component.controlDirective().dirty()).toBeTruthy();
     });
@@ -214,7 +214,7 @@ describe('SignalControlDirective', () => {
       component.type(newText);
       expect(component.controlDirective().pristine()).toBeFalsy();
 
-      component.controlDirective().markAsPristine();
+      component.controlDirective().pristine.set(true);
 
       expect(component.controlDirective().pristine()).toBeTruthy();
     });
@@ -242,7 +242,7 @@ describe('SignalControlDirective', () => {
     it('can be set to touched', () => {
       expect(component.controlDirective().touched()).toBeFalsy();
 
-      component.controlDirective().markAsTouched();
+      component.controlDirective().touched.set(true);
 
       expect(component.controlDirective().touched()).toBeTruthy();
     });
@@ -251,7 +251,7 @@ describe('SignalControlDirective', () => {
       component.blur();
       expect(component.controlDirective().untouched()).toBeFalsy();
 
-      component.controlDirective().markAsUntouched();
+      component.controlDirective().untouched.set(true);
 
       expect(component.controlDirective().untouched()).toBeTruthy();
     });

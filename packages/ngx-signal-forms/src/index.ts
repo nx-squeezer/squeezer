@@ -23,8 +23,9 @@ export {
 } from './lib/models/signal-validator';
 
 // Signals
-export { composeSignal } from './lib/signals/compose-signal';
+export { composedSignal } from './lib/signals/composed-signal';
 export { interceptSignal, SignalInterceptor } from './lib/signals/intercept-signal';
+export { negatedSignal } from './lib/signals/negated-signal';
 export { selectObjectProperty } from './lib/signals/select-object-property';
 
 // Tokens

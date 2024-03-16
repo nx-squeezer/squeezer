@@ -35,7 +35,6 @@ export class SignalControlErrorDirective<
     const shouldRender: boolean = error != null && this.errorStrategy(error.control);
 
     if (error != null && shouldRender && !this.rendered) {
-      // TODO: remove untracked once angular does not track when creating a view
       untracked(() => this.vcr.createEmbeddedView(this.templateRef, { $implicit: error.config }));
       this.rendered = true;
     } else if (!shouldRender && this.rendered) {

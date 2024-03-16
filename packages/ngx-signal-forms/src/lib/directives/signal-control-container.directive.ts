@@ -4,9 +4,10 @@ import { SignalControlDirective } from './signal-control.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalValidator } from '../models/signal-validator';
 import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
+import { composedSignal } from '../signals/composed-signal';
 import { MapSignal } from '../signals/map-signal';
 
-// TODO: manage disabled status
+// TODO: expose child controls
 
 /**
  * Abstract class that represents a signal control container.
@@ -20,7 +21,7 @@ export abstract class SignalControlContainer<
    */
   protected readonly controlSignalsMap: { [K in keyof TValue]?: WritableSignal<Readonly<TValue[K]>> } = {};
 
-  readonly #controlDirectivesMap = new MapSignal<keyof TValue, SignalControlDirective<TValue[keyof TValue]>>();
+  private readonly controlDirectivesMap = new MapSignal<keyof TValue, SignalControlDirective<TValue[keyof TValue]>>();
 
   /**
    * The validation status of the form group and its child controls.
@@ -32,68 +33,51 @@ export abstract class SignalControlContainer<
     }
 
     // Otherwise, check the status of all child controls, and as soon as a child control is invalid, return
-    const controlDirectiveStatuses = this.#controlDirectivesMap.values().map(({ status }) => status());
+    const controlDirectiveStatuses = this.controlDirectivesMap.values().map(({ status }) => status());
     return controlDirectiveStatuses.some((status) => status === 'INVALID') ? 'INVALID' : 'VALID';
   });
 
   /**
-   * A control is pristine if the user has not yet changed the value in the UI in any of its child controls.
+   * A control container can't be disabled, but when set to false it will change the disabled status of its child controls.
    */
-  override pristine: Signal<boolean> = computed(() => {
-    return !this.#controlDirectivesMap.values().some((directive) => directive.dirty());
+  override disabled: WritableSignal<false> = composedSignal({
+    get: () => false,
+    set: () => this.controlDirectivesMap.values().forEach((directive) => directive.disabled.set(false)),
   });
 
   /**
-   * Marks all the child controls as pristine.
+   * A control container is pristine if the user has not yet changed the value in the UI in any of its child controls.
    */
-  override markAsPristine(): void {
-    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsPristine());
-  }
-
-  /**
-   * Marks all the child controls as dirty.
-   */
-  override markAsDirty(): void {
-    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsDirty());
-  }
-
-  /**
-   * A control is marked touched once the user has triggered a blur event on it or in any of its child controls.
-   */
-  override touched: Signal<boolean> = computed(() => {
-    return this.#controlDirectivesMap.values().some((directive) => directive.touched());
+  override pristine: WritableSignal<boolean> = composedSignal({
+    get: () => this.controlDirectivesMap.values().every((directive) => directive.pristine()),
+    set: (value) => this.controlDirectivesMap.values().forEach((directive) => directive.pristine.set(value)),
   });
 
   /**
-   * Marks all the child controls as touched.
+   * A control container is marked touched once the user has triggered a blur event on it or in any of its child controls.
    */
-  override markAsTouched(): void {
-    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsTouched());
-  }
-
-  /**
-   * Marks all the child controls as untouched.
-   */
-  override markAsUntouched(): void {
-    this.#controlDirectivesMap.values().forEach((directive) => directive.markAsUntouched());
-  }
+  override touched: WritableSignal<boolean> = composedSignal({
+    get: () => this.controlDirectivesMap.values().some((directive) => directive.touched()),
+    set: (value) => this.controlDirectivesMap.values().forEach((directive) => directive.touched.set(value)),
+  });
 
   /**
    * Adds a control to the container.
    */
   addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>): void {
-    this.#controlDirectivesMap.set(key, signalControlDirective as any);
+    this.controlDirectivesMap.set(key, signalControlDirective as any);
   }
 
   /**
    * Removes a control from the container.
    */
   removeControl<K extends keyof TValue>(key: K): void {
-    this.#controlDirectivesMap.delete(key);
+    this.controlDirectivesMap.delete(key);
   }
 
   /**
    * Adds hidden properties to a signal to hold a reference to the control container.
+   * TODO: try to remove brand
    */
   protected brandSignal<K extends keyof TValue, S extends WritableSignal<Readonly<TValue[K]>>>(
     writableSignal: S,
@@ -108,5 +92,5 @@ export abstract class SignalControlContainer<
   /**
    * Cleans up any references to child controls.
    */
-  protected readonly cleanup = inject(DestroyRef).onDestroy(() => this.#controlDirectivesMap.clear());
+  protected readonly cleanup = inject(DestroyRef).onDestroy(() => this.controlDirectivesMap.clear());
 }
