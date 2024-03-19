@@ -8,6 +8,9 @@ npx --no-install nx migrate @angular/core@latest
 npx --no-install nx migrate @angular/cli@latest
 npx --no-install nx migrate @schematics/angular@latest
 npx --no-install nx migrate ng-packagr@latest
+npx --no-install nx migrate @angular-eslint/eslint-plugin@latest
+npx --no-install nx migrate @angular-eslint/eslint-plugin-template@latest
+npx --no-install nx migrate @angular-eslint/template-parser@latest
 npx --no-install nx migrate @ngrx/signals@latest
 
 # Migrate Plugins
