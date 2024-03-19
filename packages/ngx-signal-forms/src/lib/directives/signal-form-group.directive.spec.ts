@@ -181,8 +181,8 @@ describe('SignalFormGroupDirective', () => {
     });
 
     it('should set the key and parent of child controls', () => {
-      expect(component.controlDirective()?.parent()).toBe(component.formGroupDirective());
-      expect(component.controlDirective()?.key()).toBe('text');
+      expect(component.controlDirective()?.parent).toBe(component.formGroupDirective());
+      expect(component.controlDirective()?.key).toBe('text');
     });
 
     it('should set the path of the form group and child controls', () => {

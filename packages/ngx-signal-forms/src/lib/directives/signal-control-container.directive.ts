@@ -1,9 +1,9 @@
 import { DestroyRef, Signal, WritableSignal, computed, inject } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
+import { AbstractSignalControlContainer } from '../models/abstract-signal-control-container';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalValidator } from '../models/signal-validator';
-import { SIGNAL_CONTROL_CONTAINER, SIGNAL_CONTROL_KEY } from '../models/symbols';
 import { composedSignal } from '../signals/composed-signal';
 import { MapSignal } from '../signals/map-signal';
 
@@ -13,9 +13,12 @@ import { MapSignal } from '../signals/map-signal';
  * Abstract class that represents a signal control container.
  */
 export abstract class SignalControlContainer<
-  TValue extends object,
-  TValidators extends SignalValidator<TValue, string>[] = [],
-> extends SignalControlDirective<TValue, TValidators> {
+    TValue extends object,
+    TValidators extends SignalValidator<TValue, string>[] = [],
+  >
+  extends SignalControlDirective<TValue, TValidators>
+  implements AbstractSignalControlContainer<TValue>
+{
   /**
    * Map of signals corresponding to the child controls.
    */
@@ -62,6 +65,11 @@ export abstract class SignalControlContainer<
   });
 
   /**
+   * @internal
+   */
+  activeKey: string | number | null = null;
+
+  /**
    * Adds a control to the container.
    */
   addControl<K extends keyof TValue>(key: K, signalControlDirective: SignalControlDirective<TValue[K]>): void {
@@ -73,20 +81,6 @@ export abstract class SignalControlContainer<
    */
   removeControl<K extends keyof TValue>(key: K): void {
     this.controlDirectivesMap.delete(key);
-  }
-
-  /**
-   * Adds hidden properties to a signal to hold a reference to the control container.
-   * TODO: try to remove brand
-   */
-  protected brandSignal<K extends keyof TValue, S extends WritableSignal<Readonly<TValue[K]>>>(
-    writableSignal: S,
-    key: K
-  ): S {
-    const signal: any = writableSignal;
-    signal[SIGNAL_CONTROL_CONTAINER] = this;
-    signal[SIGNAL_CONTROL_KEY] = key;
-    return signal;
   }
 
   /**
