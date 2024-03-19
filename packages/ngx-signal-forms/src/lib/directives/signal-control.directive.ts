@@ -15,6 +15,7 @@ import {
 import { AbstractSignalControlContainer } from '../models/abstract-signal-control-container';
 import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
+import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
 import {
   SignalValidationResult,
   SignalValidator,
@@ -46,15 +47,18 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * When the control is a child of a control container, this value exposes a reference to the parent.
    */
-  readonly parent = inject(AbstractSignalControlContainer, { optional: true, skipSelf: true });
+  readonly parent: AbstractSignalControlContainer<any> | null = inject(AbstractSignalControlContainer, {
+    optional: true,
+    skipSelf: true,
+  });
 
-  private readonly statusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
+  private readonly statusClasses: SignalControlStatusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
 
   /**
    * Registers the key of the control within its parent.
    */
   protected inferControlKey = (value: WritableSignal<Readonly<TValue>>): WritableSignal<Readonly<TValue>> => {
-    this.#key = (this.parent as any)?.activeKey ?? null;
+    this.#key = this.parent?.activeKey ?? null;
     return value;
   };
 
@@ -98,6 +102,9 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   #key: string | number | null = null;
 
+  /**
+   * Key of the control when it is a child
+   */
   get key(): string | number | null {
     return this.#key;
   }

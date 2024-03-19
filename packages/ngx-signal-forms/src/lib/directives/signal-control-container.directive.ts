@@ -8,6 +8,7 @@ import { composedSignal } from '../signals/composed-signal';
 import { MapSignal } from '../signals/map-signal';
 
 // TODO: expose child controls
+// TODO: Use binding on the value rather than on the control
 
 /**
  * Abstract class that represents a signal control container.
