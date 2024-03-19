@@ -18,9 +18,6 @@
     "appsDir": "e2e",
     "libsDir": "packages"
   },
-  "affected": {
-    "defaultBase": "main"
-  },
   "namedInputs": {
     "ci": ["{workspaceRoot}/.github/workflows/*.yml"],
     "codecov": ["{workspaceRoot}/.codecov.yml"],
@@ -237,5 +234,6 @@
     }
   },
   "useDaemonProcess": false,
-  "nxCloudAccessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ="
+  "nxCloudAccessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ=",
+  "defaultBase": "main"
 }
