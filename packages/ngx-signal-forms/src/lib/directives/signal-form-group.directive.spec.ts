@@ -1,4 +1,12 @@
-import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  computed,
+  signal,
+  viewChild,
+  viewChildren,
+} from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignalControlDirective } from './signal-control.directive';
@@ -17,13 +25,13 @@ const initialValue: FormValue = { text };
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #ngxFormGroup="ngxFormGroup" [validators]="formGroupValidator">
+    <form [ngxFormGroup]="value" #formGroup="ngxFormGroup" [validators]="formGroupValidator">
       @if (renderInput()) {
         <input
           #inputTag
           type="text"
           ngxTextInput
-          [ngxControl]="ngxFormGroup.get('text')"
+          [ngxControl]="formGroup.get('text')"
           [validators]="requiredValidator"
         />
       }
@@ -65,12 +73,39 @@ class TestComponent {
   }
 }
 
+interface ComplexFormValue {
+  date: string;
+  person: {
+    firstName: string;
+    lastName: string;
+  };
+}
+
+@Component({
+  template: `
+    <form #formTag [ngxFormGroup]="value" #rootFormGroup="ngxFormGroup">
+      <input type="text" ngxTextInput [ngxControl]="rootFormGroup.get('date')" />
+      <fieldset [ngxFormGroup]="rootFormGroup.get('person')" #personFormGroup="ngxFormGroup">
+        <input type="text" ngxTextInput [ngxControl]="personFormGroup.get('firstName')" />
+        <input type="text" ngxTextInput [ngxControl]="personFormGroup.get('lastName')" />
+      </fieldset>
+    </form>
+  `,
+  standalone: true,
+  imports: [InputTextControlValueAccessorDirective, SignalControlDirective, SignalFormGroupDirective],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+class TestComplexFormComponent {
+  readonly value = signal<ComplexFormValue>({ date: 'today', person: { firstName: 'Bob', lastName: 'Sponge' } });
+  readonly inputs = viewChildren(SignalControlDirective);
+}
+
 describe('SignalFormGroupDirective', () => {
   let component: TestComponent;
   let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
+    TestBed.configureTestingModule({ imports: [TestComponent, TestComplexFormComponent] }).compileComponents();
 
     fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
@@ -153,6 +188,17 @@ describe('SignalFormGroupDirective', () => {
     it('should set the path of the form group and child controls', () => {
       expect(component.formGroupDirective().path()).toBe('form-group');
       expect(component.controlDirective()?.path()).toBe('form-group.text');
+    });
+
+    it('should set the path of deeply nested controls', () => {
+      const fixture = TestBed.createComponent(TestComplexFormComponent);
+      const component = fixture.componentInstance;
+      fixture.autoDetectChanges();
+
+      expect(component.inputs().length).toBe(3);
+      expect(component.inputs()[0].path()).toBe('form-group.date');
+      expect(component.inputs()[1].path()).toBe('form-group.person.firstName');
+      expect(component.inputs()[2].path()).toBe('form-group.person.lastName');
     });
   });
 
