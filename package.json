@@ -123,7 +123,7 @@
     "node-fetch": "3.3.2",
     "nx": "18.1.2",
     "postcss": "8.4.37",
-    "postcss-import": "16.0.1",
+    "postcss-import": "16.1.0",
     "postcss-preset-env": "9.5.2",
     "postcss-url": "10.1.3",
     "ts-jest": "29.1.2",
