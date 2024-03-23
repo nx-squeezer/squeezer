@@ -1,8 +1,9 @@
-import { DestroyRef, Signal, WritableSignal, computed, inject, isSignal, untracked } from '@angular/core';
+import { Signal, WritableSignal, computed, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalValidator } from '../models/signal-validator';
+import { modelFrom } from '../signals/composed-model';
 import { composedSignal } from '../signals/composed-signal';
 import { MapSignal } from '../signals/map-signal';
 
@@ -15,34 +16,40 @@ export abstract class SignalControlContainer<
 > extends SignalControlDirective<TValue, TValidators> {
   // TODO: convert into a set
   private readonly controlDirectivesMap = new MapSignal<keyof TValue, SignalControlDirective<TValue[keyof TValue]>>();
-
   /**
    * Exposes child signals for controls.
    */
-  readonly controls = new Proxy<{ [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> }>({} as any, {
-    get: (target, key: string) => {
-      if (isSignal(target[key as keyof TValue])) {
-        return target[key as keyof TValue];
-      }
-
-      const interceptedSignal = composedSignal({
-        get: () => {
-          this.registry.key = key as string | number;
-          this.registry.controlContainer = this as unknown as SignalControlContainer<any>;
-          return this.value()[key as keyof TValue];
-        },
-        set: (value) => {
-          const objectValue = untracked(() => this.value());
-          if (!Object.is(objectValue[key as keyof TValue], value)) {
-            this.valueChange.emit({ ...objectValue, [key]: value });
+  override readonly value: WritableSignal<TValue> & { [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> } =
+    new Proxy<WritableSignal<TValue> & { [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> }>(
+      modelFrom({
+        input: () => this.model,
+        output: () => this.modelChange,
+      }) as any,
+      {
+        get: (target, key: string) => {
+          if (key in target) {
+            return target[key as keyof TValue];
           }
-        },
-      });
 
-      Object.defineProperty(target, key, { value: interceptedSignal, writable: false, configurable: false });
-      return interceptedSignal;
-    },
-  });
+          const keyedSignal = composedSignal({
+            get: () => {
+              this.registry.key = key as string | number;
+              this.registry.controlContainer = this as unknown as SignalControlContainer<any>;
+              return this.value()[key as keyof TValue];
+            },
+            set: (value) => {
+              const objectValue = untracked(() => this.value());
+              if (!Object.is(objectValue[key as keyof TValue], value)) {
+                this.value.set({ ...objectValue, [key]: value });
+              }
+            },
+          });
+
+          Object.defineProperty(target, key, { value: keyedSignal, writable: false, configurable: false });
+          return keyedSignal;
+        },
+      }
+    );
 
   /**
    * The validation status of the form group and its child controls.
@@ -95,9 +102,4 @@ export abstract class SignalControlContainer<
   removeControl<K extends keyof TValue>(key: K): void {
     this.controlDirectivesMap.delete(key);
   }
-
-  /**
-   * Cleans up any references to child controls.
-   */
-  protected readonly cleanup = inject(DestroyRef).onDestroy(() => this.controlDirectivesMap.clear());
 }
