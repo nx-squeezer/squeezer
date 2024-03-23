@@ -26,6 +26,7 @@ import {
   SignalValidatorResults,
 } from '../models/signal-validator';
 import { SignalControlContainerRegistry } from '../services/signal-control-container-registry.service';
+import { modelFrom } from '../signals/composed-model';
 import { negatedSignal } from '../signals/negated-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
@@ -67,17 +68,25 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   };
 
   /**
-   * Input value.
+   * Input model.
    */
-  readonly value: InputSignal<Readonly<TValue>> = input.required<Readonly<TValue>, Readonly<TValue>>({
+  readonly model: InputSignal<Readonly<TValue>> = input.required<Readonly<TValue>, Readonly<TValue>>({
     alias: 'ngxControl',
     transform: this.inferControlKey,
   });
 
   /**
-   * Output value.
+   * Output model.
    */
-  readonly valueChange: OutputEmitterRef<Readonly<TValue>> = output<Readonly<TValue>>({ alias: 'ngxControlChange' });
+  readonly modelChange: OutputEmitterRef<Readonly<TValue>> = output<Readonly<TValue>>({ alias: 'ngxControlChange' });
+
+  /**
+   * Control value.
+   */
+  readonly value: WritableSignal<Readonly<TValue>> = modelFrom({
+    input: () => this.model,
+    output: () => this.modelChange,
+  });
 
   /**
    * Disabled controls are exempt from validation checks and are not included in the aggregate value of their ancestor controls.
@@ -267,7 +276,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
       }
 
       if (this.disabled()) {
-        this.valueChange.emit(undefined as any);
+        this.value.set(undefined as any);
       }
     },
     { allowSignalWrites: true }

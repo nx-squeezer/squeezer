@@ -18,7 +18,7 @@ export class SignalFormGroupDirective<
   /**
    * Input value.
    */
-  override readonly value: InputSignal<Readonly<TValue>> = input.required<Readonly<TValue>, Readonly<TValue>>({
+  override readonly model: InputSignal<Readonly<TValue>> = input.required<Readonly<TValue>, Readonly<TValue>>({
     alias: 'ngxFormGroup',
     transform: this.inferControlKey,
   });
@@ -26,7 +26,7 @@ export class SignalFormGroupDirective<
   /**
    * Output value.
    */
-  override readonly valueChange: OutputEmitterRef<Readonly<TValue>> = output<Readonly<TValue>>({
+  override readonly modelChange: OutputEmitterRef<Readonly<TValue>> = output<Readonly<TValue>>({
     alias: 'ngxFormGroupChange',
   });
 
