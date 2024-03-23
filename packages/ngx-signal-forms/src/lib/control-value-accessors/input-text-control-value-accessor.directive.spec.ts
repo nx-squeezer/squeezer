@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { InputTextControlValueAccessorDirective } from './input-text-control-value-accessor.directive';
 import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor.directive';
@@ -9,13 +9,13 @@ const text = 'text';
 const newText = 'new text';
 
 @Component({
-  template: ` <input #inputTag type="text" ngxTextInput [ngxControl]="control" /> `,
+  template: ` <input #inputTag type="text" ngxTextInput [(ngxControl)]="value" /> `,
   standalone: true,
   imports: [InputTextControlValueAccessorDirective, SignalControlDirective],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 class TestComponent {
-  readonly control = signal(text);
+  readonly value = signal(text);
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
   readonly controlDirective = viewChild.required<SignalControlDirective<string>>(SignalControlDirective);
@@ -29,11 +29,12 @@ class TestComponent {
 
 describe('InputTextControlValueAccessorDirective', () => {
   let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
-    const fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.autoDetectChanges();
   });
@@ -44,16 +45,15 @@ describe('InputTextControlValueAccessorDirective', () => {
   });
 
   it('should reflect model initial state to HTML input element', () => {
-    expect(component.control()).toBe(text);
+    expect(component.value()).toBe(text);
     expect(component.inputElement()).toHaveValue(text);
     expect(component.controlDirective().pristine()).toBeTruthy();
     expect(component.controlDirective().dirty()).toBeFalsy();
   });
 
   it('should reflect updates to model to HTML input element', () => {
-    component.control.set(newText);
-
-    TestBed.flushEffects();
+    component.value.set(newText);
+    fixture.detectChanges();
 
     expect(component.inputElement()).toHaveValue(newText);
     expect(component.controlDirective().pristine()).toBeTruthy();
@@ -62,7 +62,7 @@ describe('InputTextControlValueAccessorDirective', () => {
   it('should update the control value when input changes', () => {
     component.type(newText);
 
-    expect(component.control()).toBe(newText);
+    expect(component.value()).toBe(newText);
     expect(component.controlDirective().pristine()).toBeFalsy();
     expect(component.controlDirective().dirty()).toBeTruthy();
   });

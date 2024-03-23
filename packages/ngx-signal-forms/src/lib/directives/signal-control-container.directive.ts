@@ -1,31 +1,48 @@
-import { DestroyRef, Signal, WritableSignal, computed, inject } from '@angular/core';
+import { DestroyRef, Signal, WritableSignal, computed, inject, isSignal, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
-import { AbstractSignalControlContainer } from '../models/abstract-signal-control-container';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalValidator } from '../models/signal-validator';
 import { composedSignal } from '../signals/composed-signal';
 import { MapSignal } from '../signals/map-signal';
 
-// TODO: expose child controls
-// TODO: Use binding on the value rather than on the control
-
 /**
  * Abstract class that represents a signal control container.
  */
 export abstract class SignalControlContainer<
-    TValue extends object,
-    TValidators extends SignalValidator<TValue, string>[] = [],
-  >
-  extends SignalControlDirective<TValue, TValidators>
-  implements AbstractSignalControlContainer<TValue>
-{
-  /**
-   * Map of signals corresponding to the child controls.
-   */
-  protected readonly controlSignalsMap: { [K in keyof TValue]?: WritableSignal<Readonly<TValue[K]>> } = {};
-
+  TValue extends object,
+  TValidators extends SignalValidator<TValue, string>[] = [],
+> extends SignalControlDirective<TValue, TValidators> {
+  // TODO: convert into a set
   private readonly controlDirectivesMap = new MapSignal<keyof TValue, SignalControlDirective<TValue[keyof TValue]>>();
+
+  /**
+   * Exposes child signals for controls.
+   */
+  readonly controls = new Proxy<{ [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> }>({} as any, {
+    get: (target, key: string) => {
+      if (isSignal(target[key as keyof TValue])) {
+        return target[key as keyof TValue];
+      }
+
+      const interceptedSignal = composedSignal({
+        get: () => {
+          this.registry.key = key as string | number;
+          this.registry.controlContainer = this as unknown as SignalControlContainer<any>;
+          return this.value()[key as keyof TValue];
+        },
+        set: (value) => {
+          const objectValue = untracked(() => this.value());
+          if (!Object.is(objectValue[key as keyof TValue], value)) {
+            this.valueChange.emit({ ...objectValue, [key]: value });
+          }
+        },
+      });
+
+      Object.defineProperty(target, key, { value: interceptedSignal, writable: false, configurable: false });
+      return interceptedSignal;
+    },
+  });
 
   /**
    * The validation status of the form group and its child controls.
@@ -64,11 +81,6 @@ export abstract class SignalControlContainer<
     get: () => this.controlDirectivesMap.values().some((directive) => directive.touched()),
     set: (value) => this.controlDirectivesMap.values().forEach((directive) => directive.touched.set(value)),
   });
-
-  /**
-   * @internal
-   */
-  activeKey: string | number | null = null;
 
   /**
    * Adds a control to the container.

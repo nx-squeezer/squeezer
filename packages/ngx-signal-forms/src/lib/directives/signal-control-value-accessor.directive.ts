@@ -1,4 +1,4 @@
-import { ElementRef, InputSignal, Signal, WritableSignal, computed, effect, inject, untracked } from '@angular/core';
+import { ElementRef, ModelSignal, effect, inject, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
 
@@ -9,7 +9,7 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
   /**
    * Reference to the control directive.
    */
-  protected readonly controlDirective = inject<SignalControlDirective<Readonly<TValue>>>(SignalControlDirective, {
+  private readonly controlDirective = inject<SignalControlDirective<Readonly<TValue>>>(SignalControlDirective, {
     self: true,
   });
 
@@ -24,14 +24,9 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
   protected readonly nativeElement: TElement = this.elementRef.nativeElement;
 
   /**
-   * Model control.
-   */
-  abstract readonly control: InputSignal<WritableSignal<Readonly<TValue>>>;
-
-  /**
    * Model value.
    */
-  readonly value: Signal<Readonly<TValue>> = computed(() => this.control()());
+  abstract readonly value: ModelSignal<Readonly<TValue>>;
 
   /**
    * Event callback when the value changes that can be used to reflect the state to the DOM.
@@ -45,7 +40,7 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
    * Updates the underlying value of the control and marks it as dirty.
    */
   updateValue(value: Readonly<TValue>): void {
-    this.control().set(value);
+    this.value.update(() => value);
     this.controlDirective.dirty.set(true);
   }
 
@@ -60,8 +55,7 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
    * @internal
    */
   protected readonly watchValueChanges = effect(() => {
-    const control = this.control();
-    const value = control();
+    const value = this.value();
     untracked(() => this.onValueUpdated(value));
   });
 }

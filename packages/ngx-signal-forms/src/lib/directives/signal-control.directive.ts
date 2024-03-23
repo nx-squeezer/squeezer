@@ -2,6 +2,7 @@ import {
   Directive,
   InputSignal,
   InputSignalWithTransform,
+  OutputEmitterRef,
   Signal,
   WritableSignal,
   computed,
@@ -9,10 +10,11 @@ import {
   inject,
   input,
   model,
+  output,
   signal,
 } from '@angular/core';
 
-import { AbstractSignalControlContainer } from '../models/abstract-signal-control-container';
+import { SignalControlContainer } from './signal-control-container.directive';
 import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
@@ -23,8 +25,7 @@ import {
   SignalValidatorResultByKey,
   SignalValidatorResults,
 } from '../models/signal-validator';
-import { composedSignal } from '../signals/composed-signal';
-import { interceptSignal } from '../signals/intercept-signal';
+import { SignalControlContainerRegistry } from '../services/signal-control-container-registry.service';
 import { negatedSignal } from '../signals/negated-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
@@ -45,33 +46,38 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
 })
 export class SignalControlDirective<TValue, TValidators extends SignalValidator<TValue, string>[] = []> {
   /**
-   * When the control is a child of a control container, this value exposes a reference to the parent.
+   * @internal
    */
-  readonly parent: AbstractSignalControlContainer<any> | null = inject(AbstractSignalControlContainer, {
-    optional: true,
-    skipSelf: true,
-  });
+  protected readonly registry = inject(SignalControlContainerRegistry);
 
   private readonly statusClasses: SignalControlStatusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
 
+  #parent: SignalControlContainer<any> | null = null;
+  #key: string | number | null = null;
+
   /**
-   * Registers the key of the control within its parent.
+   * @internal
    */
-  protected inferControlKey = (value: WritableSignal<Readonly<TValue>>): WritableSignal<Readonly<TValue>> => {
-    this.#key = this.parent?.activeKey ?? null;
+  protected inferControlKey = <T>(value: T): T => {
+    this.#parent = this.registry.controlContainer;
+    this.#key = this.registry.key;
+    this.registry.controlContainer = null;
+    this.registry.key = null;
     return value;
   };
 
   /**
-   * Model.
+   * Input value.
    */
-  readonly control: InputSignal<WritableSignal<Readonly<TValue>>> = input.required<
-    WritableSignal<Readonly<TValue>>,
-    WritableSignal<Readonly<TValue>>
-  >({
+  readonly value: InputSignal<Readonly<TValue>> = input.required<Readonly<TValue>, Readonly<TValue>>({
     alias: 'ngxControl',
     transform: this.inferControlKey,
   });
+
+  /**
+   * Output value.
+   */
+  readonly valueChange: OutputEmitterRef<Readonly<TValue>> = output<Readonly<TValue>>({ alias: 'ngxControlChange' });
 
   /**
    * Disabled controls are exempt from validation checks and are not included in the aggregate value of their ancestor controls.
@@ -88,19 +94,11 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   >;
 
   /**
-   * Model value.
+   * When the control is a child of a control container, this value exposes a reference to the parent.
    */
-  readonly value: WritableSignal<Readonly<TValue>> = composedSignal({
-    get: () => this.control()(),
-    set: (value) => this.control().set(value),
-  });
-
-  /**
-   * Default key when the control is not a child of a control container.
-   */
-  readonly defaultKey: string = 'control';
-
-  #key: string | number | null = null;
+  get parent(): SignalControlContainer<any> | null {
+    return this.#parent;
+  }
 
   /**
    * Key of the control when it is a child
@@ -110,31 +108,19 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   }
 
   /**
+   * Default key when the control is not a child of a control container.
+   */
+  readonly defaultKey: string = 'control';
+
+  /**
    * When the control is a child of a control container, this reactive value exposes its relative path.
    * For standalone controls it returns the default key.
    */
   readonly path: Signal<string | null> = computed((): string | null => {
     const parentPath = this.parent?.path();
-    return parentPath != null && this.#key != null ? `${parentPath}.${this.#key}` : this.defaultKey;
+    const key = this.key;
+    return parentPath != null && key != null ? `${parentPath}.${key}` : this.defaultKey;
   });
-
-  /**
-   * @internal
-   */
-  protected readonly registerControl = effect(
-    (cleanup) => {
-      const parent = this.parent;
-      const key = this.parent?.activeKey;
-
-      if (parent == null || key == null) {
-        return;
-      }
-
-      parent.addControl(key, this as unknown as SignalControlDirective<any>);
-      cleanup(() => parent.removeControl(key));
-    },
-    { allowSignalWrites: true }
-  );
 
   /**
    * Validators.
@@ -177,17 +163,18 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     }
   );
 
-  readonly #errorMap: Signal<Map<string, SignalValidationResult<any>>> = computed(
+  private readonly errorMap: Signal<Map<string, SignalValidationResult<any>>> = computed(
     () => new Map<string, SignalValidationResult<any>>(this.errors().map((error) => [error.key, error]))
   );
 
   /**
    * Reactive value of a specific error.
+   * TODO: convert in proxy
    */
   error<K extends SignalValidatorKeys<TValidators>>(
     errorKey: K
   ): SignalValidatorResultByKey<TValidators, K> | undefined {
-    return this.#errorMap().get(errorKey) as any;
+    return this.errorMap().get(errorKey) as any;
   }
 
   /**
@@ -234,38 +221,6 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   readonly untouched: WritableSignal<boolean> = negatedSignal(() => this.touched);
 
   /**
-   * Sync value and disabled statuses.
-   * @internal
-   */
-  protected readonly syncDisabled = effect((cleanup) => {
-    if (this.defaultKey !== 'control') {
-      // Control containers don't need to sync disabled status
-      return;
-    }
-
-    const disabledInterceptor = interceptSignal(this.disabled, {
-      onSet: (disabled) => {
-        if (disabled) {
-          this.control().set(undefined as any);
-        }
-      },
-    });
-
-    const valueInterceptor = interceptSignal(this.control(), {
-      onSet: (value) => {
-        if (value !== undefined) {
-          this.disabled.set(false);
-        }
-      },
-    });
-
-    cleanup(() => {
-      disabledInterceptor.restore();
-      valueInterceptor.restore();
-    });
-  });
-
-  /**
    * @internal
    */
   protected readonly disabledAttribute = computed(() => (this.disabled() ? '' : null));
@@ -283,4 +238,56 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.untouched]: this.untouched(),
     [this.statusClasses.disabled]: this.disabled(),
   }));
+
+  /**
+   * @internal
+   */
+  protected readonly watchValueChanges = effect(
+    () => {
+      // Only controls need to sync the disabled status
+      if (this.defaultKey !== 'control') {
+        return;
+      }
+
+      if (this.value() !== undefined) {
+        this.disabled.set(false);
+      }
+    },
+    { allowSignalWrites: true }
+  );
+
+  /**
+   * @internal
+   */
+  protected readonly watchDisabledChanges = effect(
+    () => {
+      // Only controls need to sync the disabled status
+      if (this.defaultKey !== 'control') {
+        return;
+      }
+
+      if (this.disabled()) {
+        this.valueChange.emit(undefined as any);
+      }
+    },
+    { allowSignalWrites: true }
+  );
+
+  /**
+   * @internal
+   */
+  protected readonly registerControl = effect(
+    (cleanup) => {
+      const parent = this.parent;
+      const key = this.key;
+
+      if (parent == null || key == null) {
+        return;
+      }
+
+      parent.addControl(key, this as unknown as SignalControlDirective<any>);
+      cleanup(() => parent.removeControl(key));
+    },
+    { allowSignalWrites: true }
+  );
 }

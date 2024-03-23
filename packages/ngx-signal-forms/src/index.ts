@@ -24,7 +24,6 @@ export {
 
 // Signals
 export { composedSignal } from './lib/signals/composed-signal';
-export { interceptSignal, SignalInterceptor } from './lib/signals/intercept-signal';
 export { negatedSignal } from './lib/signals/negated-signal';
 export { selectObjectProperty } from './lib/signals/select-object-property';
 

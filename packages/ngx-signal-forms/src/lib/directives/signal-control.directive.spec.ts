@@ -1,6 +1,6 @@
 import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, ElementRef, computed, effect, signal, viewChild } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
@@ -17,7 +17,14 @@ const maxLengthMsg = 'This field is too long';
 
 @Component({
   template: `
-    <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="validators" #ngxControl="ngxControl" />
+    <input
+      #inputTag
+      type="text"
+      ngxTextInput
+      [(ngxControl)]="value"
+      [validators]="validators"
+      #ngxControl="ngxControl"
+    />
 
     @if (ngxControl.error('required'); as error) {
       <p #requiredError>${requiredMsg}</p>
@@ -54,16 +61,17 @@ class TestComponent {
 
 describe('SignalControlDirective', () => {
   let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
   let statusClasses: SignalControlStatusClasses;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
-    const fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     statusClasses = TestBed.inject(SIGNAL_CONTROL_STATUS_CLASSES);
 
-    // Workaround so that flush effects runs and updates host properties
+    // Workaround so that flush effects runs and updates host properties and view
     TestBed.runInInjectionContext(() => {
       effect(() => component.controlDirective().disabled());
     });
@@ -80,8 +88,7 @@ describe('SignalControlDirective', () => {
   });
 
   it('should have the value of the value accessor', () => {
-    const control = component.controlDirective().control();
-    expect(control()).toBe(text);
+    expect(component.controlDirective().value()).toBe(text);
   });
 
   describe('validity', () => {
@@ -105,6 +112,7 @@ describe('SignalControlDirective', () => {
 
     it('should detect valid state', () => {
       component.value.set(text);
+      fixture.detectChanges();
 
       expect(component.controlDirective().errors()).toStrictEqual([]);
       expect(component.controlDirective().error('required')).toBeUndefined();
@@ -122,8 +130,9 @@ describe('SignalControlDirective', () => {
 
     it('should detect invalid state for required validator', () => {
       component.value.set('');
+      fixture.detectChanges();
 
-      TestBed.flushEffects();
+      expect(component.controlDirective().value()).toBe('');
 
       expect(component.controlDirective().errors()).toStrictEqual([
         { key: 'required', config: {}, control: component.controlDirective() },
@@ -147,8 +156,7 @@ describe('SignalControlDirective', () => {
 
     it('should detect invalid state for max length validator', () => {
       component.value.set(newText);
-
-      TestBed.flushEffects();
+      fixture.detectChanges();
 
       expect(component.controlDirective().errors()).toStrictEqual([
         { key: 'maxLength', config: 5, control: component.controlDirective() },
@@ -174,7 +182,7 @@ describe('SignalControlDirective', () => {
       component.value.set('');
       component.controlDirective().disabled.set(true);
 
-      TestBed.flushEffects();
+      fixture.detectChanges();
 
       expect(component.controlDirective().errors()).toStrictEqual([]);
       expect(component.controlDirective().status()).toBe('DISABLED');
@@ -324,13 +332,17 @@ describe('SignalControlDirective', () => {
         expect(component.controlDirective().value()).toBe(text);
 
         component.controlDirective().enabled.set(false);
+        TestBed.flushEffects();
 
         expect(component.controlDirective().value()).toBeUndefined();
       });
 
       it('should be enabled when setting value different than undefined', () => {
         component.controlDirective().enabled.set(false);
-        component.controlDirective().value.set(text);
+        fixture.detectChanges();
+
+        component.value.set(text);
+        fixture.detectChanges();
 
         expect(component.controlDirective().enabled()).toBeTruthy();
       });

@@ -23,7 +23,14 @@ const maxLengthMsg = 'This field is too long';
 
 @Component({
   template: `
-    <input #inputTag type="text" ngxTextInput [ngxControl]="value" [validators]="validators" #ngxControl="ngxControl" />
+    <input
+      #inputTag
+      type="text"
+      ngxTextInput
+      [(ngxControl)]="value"
+      [validators]="validators"
+      #ngxControl="ngxControl"
+    />
 
     <ngx-control-error *ngxError="ngxControl.error('required')" #errorMsg>${requiredMsg}</ngx-control-error>
     <ngx-control-error *ngxError="ngxControl.error('maxLength'); let config" #errorMsg>

@@ -1,4 +1,4 @@
-import { Directive, WritableSignal, forwardRef, input } from '@angular/core';
+import { Directive, forwardRef, model } from '@angular/core';
 
 import { SignalControlValueAccessor } from '../directives/signal-control-value-accessor.directive';
 
@@ -22,5 +22,5 @@ export class InputTextControlValueAccessorDirective extends SignalControlValueAc
   /**
    * Model.
    */
-  readonly control = input.required<WritableSignal<string>>({ alias: 'ngxControl' });
+  readonly value = model.required<string>({ alias: 'ngxControl' });
 }
