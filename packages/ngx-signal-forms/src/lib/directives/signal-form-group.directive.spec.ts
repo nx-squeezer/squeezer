@@ -25,13 +25,13 @@ const initialValue: FormValue = { text };
 
 @Component({
   template: `
-    <form [ngxFormGroup]="value" #formGroup="ngxFormGroup" [validators]="formGroupValidator">
+    <form [(ngxFormGroup)]="value" #formGroup="ngxFormGroup" [validators]="formGroupValidator">
       @if (renderInput()) {
         <input
           #inputTag
           type="text"
           ngxTextInput
-          [ngxControl]="formGroup.get('text')"
+          [(ngxControl)]="formGroup.controls.text"
           [validators]="requiredValidator"
         />
       }
@@ -83,11 +83,11 @@ interface ComplexFormValue {
 
 @Component({
   template: `
-    <form #formTag [ngxFormGroup]="value" #rootFormGroup="ngxFormGroup">
-      <input type="text" ngxTextInput [ngxControl]="rootFormGroup.get('date')" />
-      <fieldset [ngxFormGroup]="rootFormGroup.get('person')" #personFormGroup="ngxFormGroup">
-        <input type="text" ngxTextInput [ngxControl]="personFormGroup.get('firstName')" />
-        <input type="text" ngxTextInput [ngxControl]="personFormGroup.get('lastName')" />
+    <form #formTag [(ngxFormGroup)]="value" #rootFormGroup="ngxFormGroup">
+      <input type="text" ngxTextInput [(ngxControl)]="rootFormGroup.controls.date" />
+      <fieldset [(ngxFormGroup)]="rootFormGroup.controls.person" #personFormGroup="ngxFormGroup">
+        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.controls.firstName" />
+        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.controls.lastName" />
       </fieldset>
     </form>
   `,
@@ -122,9 +122,7 @@ describe('SignalFormGroupDirective', () => {
 
   describe('value', () => {
     it('should have the value set', () => {
-      const control = component.formGroupDirective().control();
-
-      expect(control()).toBe(initialValue);
+      expect(component.formGroupDirective().value()).toBe(initialValue);
     });
 
     it('should reflect model initial state to HTML input element', () => {
@@ -133,8 +131,7 @@ describe('SignalFormGroupDirective', () => {
 
     it('should reflect updates to model to HTML input element', () => {
       component.value.set({ text: newText });
-
-      TestBed.flushEffects();
+      fixture.detectChanges();
 
       expect(component.inputElement()?.value).toBe(newText);
     });
@@ -149,16 +146,14 @@ describe('SignalFormGroupDirective', () => {
       component.renderInput.set(false);
       fixture.detectChanges();
 
-      const control = component.formGroupDirective().control();
-
       expect(component.controlDirective()).toBeFalsy();
-      expect(control()).toBe(initialValue);
+      expect(component.formGroupDirective().value()).toBe(initialValue);
     });
   });
 
   describe('child controls', () => {
     it('child control should have initial value', () => {
-      const textControl = component.formGroupDirective().get('text');
+      const textControl = component.formGroupDirective().controls.text;
 
       expect(textControl).toBeTruthy();
       expect(textControl()).toBe(initialValue.text);
@@ -166,10 +161,10 @@ describe('SignalFormGroupDirective', () => {
 
     it('child control should have value on lazy binding', () => {
       component.renderInput.set(false);
+      component.value.set({ text: newText });
       fixture.detectChanges();
 
-      component.value.set({ text: newText });
-      const textControl = component.formGroupDirective().get('text');
+      const textControl = component.formGroupDirective().controls.text;
 
       expect(component.controlDirective()).toBeFalsy();
       expect(textControl).toBeTruthy();
@@ -177,7 +172,7 @@ describe('SignalFormGroupDirective', () => {
     });
 
     it('should use the same instance if getting a child control multiple times', () => {
-      expect(component.formGroupDirective().get('text')).toBe(component.formGroupDirective().get('text'));
+      expect(component.formGroupDirective().controls.text).toBe(component.formGroupDirective().controls.text);
     });
 
     it('should set the key and parent of child controls', () => {
@@ -217,6 +212,7 @@ describe('SignalFormGroupDirective', () => {
 
     it('should detect valid state according to validators of the form group', () => {
       component.value.set(initialValue);
+      fixture.detectChanges();
 
       expect(component.formGroupDirective().errors()).toStrictEqual([]);
       expect(component.formGroupDirective().error('tooLong')).toBeUndefined();
@@ -228,6 +224,7 @@ describe('SignalFormGroupDirective', () => {
 
     it('should detect invalid state according to validators of the form group', () => {
       component.value.set({ text: newText });
+      fixture.detectChanges();
 
       expect(component.formGroupDirective().errors()).toStrictEqual([
         { key: 'tooLong', config: {}, control: component.formGroupDirective() },
@@ -245,6 +242,7 @@ describe('SignalFormGroupDirective', () => {
 
     it('should detect valid state according to validators of child controls', () => {
       component.value.set({ text: '' });
+      fixture.detectChanges();
 
       expect(component.formGroupDirective().errors()).toStrictEqual([]);
       expect(component.formGroupDirective().status()).toBe('INVALID');
