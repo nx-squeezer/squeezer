@@ -178,7 +178,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
 
   /**
    * Reactive value of a specific error.
-   * TODO: convert in proxy
+   * TODO: convert into proxy
    */
   error<K extends SignalValidatorKeys<TValidators>>(
     errorKey: K
