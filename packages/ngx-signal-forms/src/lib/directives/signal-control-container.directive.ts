@@ -6,6 +6,8 @@ import { SignalValidator } from '../models/signal-validator';
 import { modelFrom } from '../signals/composed-model';
 import { composedSignal } from '../signals/composed-signal';
 
+// TODO: implement form array
+
 /**
  * Abstract class that represents a signal control container.
  */
@@ -15,7 +17,7 @@ export abstract class SignalControlContainer<
 > extends SignalControlDirective<TValue, TValidators> {
   readonly #controls: WritableSignal<{ [key in keyof TValue]?: SignalControlDirective<Readonly<TValue[key]>> }> =
     signal<{
-      [key in keyof TValue]?: SignalControlDirective<TValue[key]>;
+      [key in keyof TValue]?: SignalControlDirective<Readonly<TValue[key]>>;
     }>({});
 
   /**
