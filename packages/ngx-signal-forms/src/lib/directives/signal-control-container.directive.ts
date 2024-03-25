@@ -13,54 +13,52 @@ export abstract class SignalControlContainer<
   TValue extends object,
   TValidators extends SignalValidator<TValue, string>[] = [],
 > extends SignalControlDirective<TValue, TValidators> {
-  readonly #controls: WritableSignal<{ [key in keyof TValue]?: SignalControlDirective<TValue[key]> }> = signal<{
-    [key in keyof TValue]?: SignalControlDirective<TValue[key]>;
-  }>({});
+  readonly #controls: WritableSignal<{ [key in keyof TValue]?: SignalControlDirective<Readonly<TValue[key]>> }> =
+    signal<{
+      [key in keyof TValue]?: SignalControlDirective<TValue[key]>;
+    }>({});
 
   /**
-   * Exposes child controls by key.
+   * Exposes child signal values by key and also a reactive value with existing child controls.
    */
-  readonly controls: Signal<{ [key in keyof TValue]?: SignalControlDirective<TValue[key], []> }> =
-    this.#controls.asReadonly();
+  readonly controls: Signal<{ [key in keyof TValue]?: SignalControlDirective<Readonly<TValue[key]>> }> & {
+    [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>>;
+  } = new Proxy(this.#controls.asReadonly() as any, {
+    get: (target, key: string) => {
+      if (key in target) {
+        return target[key as keyof TValue];
+      }
 
-  private readonly controlDirectives: Signal<SignalControlDirective<TValue[keyof TValue]>[]> = computed(() => {
-    return [...Object.values(this.controls())] as SignalControlDirective<TValue[keyof TValue]>[];
+      const keyedSignal = composedSignal({
+        get: () => {
+          this.registry.key = key as string | number;
+          this.registry.controlContainer = this as unknown as SignalControlContainer<any>;
+          return this.value()[key as keyof TValue];
+        },
+        set: (value) => {
+          const objectValue = untracked(() => this.value());
+          if (!Object.is(objectValue[key as keyof TValue], value)) {
+            this.value.set({ ...objectValue, [key]: value });
+          }
+        },
+      });
+
+      Object.defineProperty(target, key, { value: keyedSignal, writable: false, configurable: false });
+      return keyedSignal;
+    },
   });
+
+  private readonly controlDirectives: Signal<SignalControlDirective<Readonly<TValue[keyof TValue]>>[]> = computed(
+    () => [...Object.values(this.controls())] as SignalControlDirective<Readonly<TValue[keyof TValue]>>[]
+  );
 
   /**
    * Exposes child signals for controls.
    */
-  override readonly value: WritableSignal<TValue> & { [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> } =
-    new Proxy<WritableSignal<TValue> & { [K in keyof TValue]: WritableSignal<Readonly<TValue[K]>> }>(
-      modelFrom({
-        input: () => this.model,
-        output: () => this.modelChange,
-      }) as any,
-      {
-        get: (target, key: string) => {
-          if (key in target) {
-            return target[key as keyof TValue];
-          }
-
-          const keyedSignal = composedSignal({
-            get: () => {
-              this.registry.key = key as string | number;
-              this.registry.controlContainer = this as unknown as SignalControlContainer<any>;
-              return this.value()[key as keyof TValue];
-            },
-            set: (value) => {
-              const objectValue = untracked(() => this.value());
-              if (!Object.is(objectValue[key as keyof TValue], value)) {
-                this.value.set({ ...objectValue, [key]: value });
-              }
-            },
-          });
-
-          Object.defineProperty(target, key, { value: keyedSignal, writable: false, configurable: false });
-          return keyedSignal;
-        },
-      }
-    );
+  override readonly value: WritableSignal<TValue> = modelFrom({
+    input: () => this.model,
+    output: () => this.modelChange,
+  });
 
   /**
    * The validation status of the form group and its child controls.

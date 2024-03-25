@@ -31,7 +31,7 @@ const initialValue: FormValue = { text };
           #inputTag
           type="text"
           ngxTextInput
-          [(ngxControl)]="formGroup.value.text"
+          [(ngxControl)]="formGroup.controls.text"
           [validators]="requiredValidator"
         />
       }
@@ -84,10 +84,10 @@ interface ComplexFormValue {
 @Component({
   template: `
     <form #formTag [(ngxFormGroup)]="value" #rootFormGroup="ngxFormGroup">
-      <input type="text" ngxTextInput [(ngxControl)]="rootFormGroup.value.date" />
-      <fieldset [(ngxFormGroup)]="rootFormGroup.value.person" #personFormGroup="ngxFormGroup">
-        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.value.firstName" />
-        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.value.lastName" />
+      <input type="text" ngxTextInput [(ngxControl)]="rootFormGroup.controls.date" />
+      <fieldset [(ngxFormGroup)]="rootFormGroup.controls.person" #personFormGroup="ngxFormGroup">
+        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.controls.firstName" />
+        <input type="text" ngxTextInput [(ngxControl)]="personFormGroup.controls.lastName" />
       </fieldset>
     </form>
   `,
@@ -153,7 +153,7 @@ describe('SignalFormGroupDirective', () => {
 
   describe('child controls', () => {
     it('child control should have initial value', () => {
-      const textControl = component.formGroupDirective().value.text;
+      const textControl = component.formGroupDirective().controls.text;
 
       expect(textControl).toBeTruthy();
       expect(component.formGroupDirective().controls().text).toBeTruthy();
@@ -166,7 +166,7 @@ describe('SignalFormGroupDirective', () => {
       component.value.set({ text: newText });
       fixture.detectChanges();
 
-      const textControl = component.formGroupDirective().value.text;
+      const textControl = component.formGroupDirective().controls.text;
 
       expect(component.controlDirective()).toBeFalsy();
       expect(component.formGroupDirective().controls().text).toBeFalsy();
@@ -175,7 +175,7 @@ describe('SignalFormGroupDirective', () => {
     });
 
     it('should use the same instance if getting a child control multiple times', () => {
-      expect(component.formGroupDirective().value.text).toBe(component.formGroupDirective().value.text);
+      expect(component.formGroupDirective().controls.text).toBe(component.formGroupDirective().controls.text);
       expect(component.formGroupDirective().controls().text).toBe(component.formGroupDirective().controls().text);
     });
 
