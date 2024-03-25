@@ -156,7 +156,9 @@ describe('SignalFormGroupDirective', () => {
       const textControl = component.formGroupDirective().value.text;
 
       expect(textControl).toBeTruthy();
+      expect(component.formGroupDirective().controls().text).toBeTruthy();
       expect(textControl()).toBe(initialValue.text);
+      expect(component.formGroupDirective().controls().text?.value()).toBe(initialValue.text);
     });
 
     it('child control should have value on lazy binding', () => {
@@ -167,15 +169,18 @@ describe('SignalFormGroupDirective', () => {
       const textControl = component.formGroupDirective().value.text;
 
       expect(component.controlDirective()).toBeFalsy();
+      expect(component.formGroupDirective().controls().text).toBeFalsy();
       expect(textControl).toBeTruthy();
       expect(textControl()).toBe(newText);
     });
 
     it('should use the same instance if getting a child control multiple times', () => {
       expect(component.formGroupDirective().value.text).toBe(component.formGroupDirective().value.text);
+      expect(component.formGroupDirective().controls().text).toBe(component.formGroupDirective().controls().text);
     });
 
     it('should set the key and parent of child controls', () => {
+      expect(component.formGroupDirective().controls().text).toBe(component.controlDirective());
       expect(component.controlDirective()?.parent).toBe(component.formGroupDirective());
       expect(component.controlDirective()?.key).toBe('text');
     });

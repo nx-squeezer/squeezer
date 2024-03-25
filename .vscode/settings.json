@@ -10,7 +10,7 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -41,5 +41,9 @@
   "coverage-gutters.showRulerCoverage": true,
   "coverage-gutters.showLineCoverage": false,
   "eslint.format.enable": true,
-  "eslint.validate": ["json"]
+  "eslint.validate": ["json", "jsonc"],
+  "jest.runMode": {
+    "type": "on-save",
+    "deferred": false
+  }
 }
