@@ -26,10 +26,10 @@ const maxLengthMsg = 'This field is too long';
       #ngxControl="ngxControl"
     />
 
-    @if (ngxControl.error('required'); as error) {
+    @if (ngxControl.errors().required; as error) {
       <p #requiredError>${requiredMsg}</p>
     }
-    @if (ngxControl.error('maxLength'); as error) {
+    @if (ngxControl.errors().maxLength; as error) {
       <p #maxLengthError>${maxLengthMsg} ({{ ngxControl.value().length }}/{{ error.config }})</p>
     }
   `,
@@ -93,31 +93,22 @@ describe('SignalControlDirective', () => {
 
   describe('validity', () => {
     it('should infer correct types', () => {
-      const requiredError = component.controlDirective().error('required') satisfies
+      const requiredError = component.controlDirective().errors().required satisfies
         | SignalValidationResult<'required', {}>
         | undefined;
-      const maxLengthError = component.controlDirective().error('maxLength') satisfies
-        | SignalValidationResult<'maxLength', number>
-        | undefined;
-
-      const otherError = component.controlDirective().error('randomError' as any) satisfies
-        | SignalValidationResult<'required', {}>
+      const maxLengthError = component.controlDirective().errors().maxLength satisfies
         | SignalValidationResult<'maxLength', number>
         | undefined;
 
       expect(requiredError).toBeUndefined();
       expect(maxLengthError).toBeUndefined();
-      expect(otherError).toBeUndefined();
     });
 
     it('should detect valid state', () => {
       component.value.set(text);
       fixture.detectChanges();
 
-      expect(component.controlDirective().errors()).toStrictEqual([]);
-      expect(component.controlDirective().error('required')).toBeUndefined();
-      expect(component.controlDirective().error('maxLength')).toBeUndefined();
-      expect(component.controlDirective().error('randomError' as any)).toBeUndefined();
+      expect(component.controlDirective().errors()).toStrictEqual({});
       expect(component.controlDirective().status()).toBe('VALID');
       expect(component.controlDirective().valid()).toBeTruthy();
       expect(component.controlDirective().invalid()).toBeFalsy();
@@ -134,16 +125,9 @@ describe('SignalControlDirective', () => {
 
       expect(component.controlDirective().value()).toBe('');
 
-      expect(component.controlDirective().errors()).toStrictEqual([
-        { key: 'required', config: {}, control: component.controlDirective() },
-      ]);
-      expect(component.controlDirective().error('required')).toStrictEqual({
-        key: 'required',
-        config: {},
-        control: component.controlDirective(),
+      expect(component.controlDirective().errors()).toStrictEqual({
+        required: { key: 'required', config: {}, control: component.controlDirective() },
       });
-      expect(component.controlDirective().error('maxLength')).toBeUndefined();
-      expect(component.controlDirective().error('randomError' as any)).toBeUndefined();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
@@ -158,16 +142,9 @@ describe('SignalControlDirective', () => {
       component.value.set(newText);
       fixture.detectChanges();
 
-      expect(component.controlDirective().errors()).toStrictEqual([
-        { key: 'maxLength', config: 5, control: component.controlDirective() },
-      ]);
-      expect(component.controlDirective().error('required')).toBeUndefined();
-      expect(component.controlDirective().error('maxLength')).toStrictEqual({
-        key: 'maxLength',
-        config: 5,
-        control: component.controlDirective(),
+      expect(component.controlDirective().errors()).toStrictEqual({
+        maxLength: { key: 'maxLength', config: 5, control: component.controlDirective() },
       });
-      expect(component.controlDirective().error('randomError' as any)).toBeUndefined();
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeTruthy();
@@ -184,7 +161,7 @@ describe('SignalControlDirective', () => {
 
       fixture.detectChanges();
 
-      expect(component.controlDirective().errors()).toStrictEqual([]);
+      expect(component.controlDirective().errors()).toStrictEqual({});
       expect(component.controlDirective().status()).toBe('DISABLED');
       expect(component.controlDirective().valid()).toBeFalsy();
       expect(component.controlDirective().invalid()).toBeFalsy();

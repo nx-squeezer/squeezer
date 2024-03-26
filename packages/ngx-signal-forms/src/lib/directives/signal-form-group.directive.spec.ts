@@ -204,24 +204,18 @@ describe('SignalFormGroupDirective', () => {
 
   describe('validity', () => {
     it('should infer correct types', () => {
-      const requiredError = component.formGroupDirective().error('tooLong') satisfies
-        | SignalValidationResult<'tooLong', {}>
-        | undefined;
-      const otherError = component.formGroupDirective().error('randomError' as any) satisfies
+      const requiredError = component.formGroupDirective().errors().tooLong satisfies
         | SignalValidationResult<'tooLong', {}>
         | undefined;
 
       expect(requiredError).toBeUndefined();
-      expect(otherError).toBeUndefined();
     });
 
     it('should detect valid state according to validators of the form group', () => {
       component.value.set(initialValue);
       fixture.detectChanges();
 
-      expect(component.formGroupDirective().errors()).toStrictEqual([]);
-      expect(component.formGroupDirective().error('tooLong')).toBeUndefined();
-      expect(component.formGroupDirective().error('randomError' as any)).toBeUndefined();
+      expect(component.formGroupDirective().errors()).toStrictEqual({});
       expect(component.formGroupDirective().status()).toBe('VALID');
       expect(component.formGroupDirective().valid()).toBeTruthy();
       expect(component.formGroupDirective().invalid()).toBeFalsy();
@@ -231,15 +225,9 @@ describe('SignalFormGroupDirective', () => {
       component.value.set({ text: newText });
       fixture.detectChanges();
 
-      expect(component.formGroupDirective().errors()).toStrictEqual([
-        { key: 'tooLong', config: {}, control: component.formGroupDirective() },
-      ]);
-      expect(component.formGroupDirective().error('tooLong')).toStrictEqual({
-        key: 'tooLong',
-        config: {},
-        control: component.formGroupDirective(),
+      expect(component.formGroupDirective().errors()).toStrictEqual({
+        tooLong: { key: 'tooLong', config: {}, control: component.formGroupDirective() },
       });
-      expect(component.formGroupDirective().error('randomError' as any)).toBeUndefined();
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();
       expect(component.formGroupDirective().invalid()).toBeTruthy();
@@ -249,7 +237,7 @@ describe('SignalFormGroupDirective', () => {
       component.value.set({ text: '' });
       fixture.detectChanges();
 
-      expect(component.formGroupDirective().errors()).toStrictEqual([]);
+      expect(component.formGroupDirective().errors()).toStrictEqual({});
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();
       expect(component.formGroupDirective().invalid()).toBeTruthy();

@@ -18,13 +18,7 @@ import { SignalControlContainer } from './signal-control-container.directive';
 import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
-import {
-  SignalValidationResult,
-  SignalValidator,
-  SignalValidatorKeys,
-  SignalValidatorResultByKey,
-  SignalValidatorResults,
-} from '../models/signal-validator';
+import { SignalValidator, SignalValidatorCombinedResults } from '../models/signal-validator';
 import { SignalControlContainerRegistry } from '../services/signal-control-container-registry.service';
 import { modelFrom } from '../signals/composed-model';
 import { negatedSignal } from '../signals/negated-signal';
@@ -146,45 +140,31 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   });
 
   /**
-   * Errors.
+   * Reactive value that exposes active validation errors by key.
    */
-  readonly errors: Signal<Readonly<SignalValidatorResults<TValidators>>> = computed(
-    (): Readonly<SignalValidatorResults<TValidators>> => {
+  readonly errors: Signal<Readonly<SignalValidatorCombinedResults<TValidators>>> = computed(
+    (): Readonly<SignalValidatorCombinedResults<TValidators>> => {
       if (!this.enabled()) {
-        return [] as SignalValidatorResults<TValidators>;
+        return {};
       }
 
       const validators = this.validators();
       if (validators.length === 0) {
-        return [] as SignalValidatorResults<TValidators>;
+        return {};
       }
 
       const value = this.value();
-      const errors: SignalValidationResult<any>[] = [];
+      const errors: SignalValidatorCombinedResults<TValidators> = {};
 
       for (const validator of validators) {
         if (!validator.validate(value)) {
-          errors.push({ control: this as any, key: validator.key, config: validator.config });
+          (errors as any)[validator.key] = { control: this as any, key: validator.key, config: validator.config };
         }
       }
 
-      return errors as SignalValidatorResults<TValidators>;
+      return errors;
     }
   );
-
-  private readonly errorMap: Signal<Map<string, SignalValidationResult<any>>> = computed(
-    () => new Map<string, SignalValidationResult<any>>(this.errors().map((error) => [error.key, error]))
-  );
-
-  /**
-   * Reactive value of a specific error.
-   * TODO: convert into proxy
-   */
-  error<K extends SignalValidatorKeys<TValidators>>(
-    errorKey: K
-  ): SignalValidatorResultByKey<TValidators, K> | undefined {
-    return this.errorMap().get(errorKey) as any;
-  }
 
   /**
    * The validation status of the control.
@@ -192,7 +172,7 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   readonly status: Signal<SignalControlStatus> = computed((): SignalControlStatus => {
     if (this.disabled()) {
       return 'DISABLED';
-    } else if (this.errors().length > 0) {
+    } else if (Object.keys(this.errors()).length > 0) {
       return 'INVALID';
     } else {
       return 'VALID';
