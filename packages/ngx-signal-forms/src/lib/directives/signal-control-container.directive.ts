@@ -67,7 +67,7 @@ export abstract class SignalControlContainer<
    */
   override readonly status: Signal<SignalControlStatus> = computed(() => {
     // If the form group is invalid, there is no need to keep checking
-    if (this.errors().length > 0) {
+    if (Object.keys(this.errors()).length > 0) {
       return 'INVALID';
     }
 

@@ -32,8 +32,8 @@ const maxLengthMsg = 'This field is too long';
       #ngxControl="ngxControl"
     />
 
-    <ngx-control-error *ngxError="ngxControl.error('required')" #errorMsg>${requiredMsg}</ngx-control-error>
-    <ngx-control-error *ngxError="ngxControl.error('maxLength'); let config" #errorMsg>
+    <ngx-control-error *ngxError="ngxControl.errors().required" #errorMsg>${requiredMsg}</ngx-control-error>
+    <ngx-control-error *ngxError="ngxControl.errors().maxLength; let config" #errorMsg>
       ${maxLengthMsg} ({{ ngxControl.value().length }}/{{ config }})
     </ngx-control-error>
   `,

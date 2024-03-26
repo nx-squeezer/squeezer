@@ -67,3 +67,10 @@ export type SignalValidatorResultByKey<
   SignalValidatorResults<TValidators> extends (infer TValidatorResult)[] ? Readonly<TValidatorResult> : never,
   { key: K }
 >;
+
+/**
+ * Type utility to get validation results keyed by error key.
+ */
+export type SignalValidatorCombinedResults<TValidators extends readonly unknown[]> = {
+  [key in SignalValidatorKeys<TValidators>]?: SignalValidatorResultByKey<TValidators, key>;
+};
