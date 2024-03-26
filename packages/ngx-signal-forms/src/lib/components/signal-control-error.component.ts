@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, computed, effect, inject } from '@angular/core';
 
 import { SignalControlErrorDirective } from '../directives/signal-control-error.directive';
+import { SignalValidationResult } from '../models/signal-validator';
 
 /**
  * Component to display form errors.
@@ -33,12 +34,8 @@ export class SignalControlErrorComponent {
    */
   protected readonly registerDescription = effect(
     (cleanup) => {
-      const id = this.id();
-      const error = this.controlErrorDirective.ngxError();
-
-      if (id == null || error == null) {
-        return;
-      }
+      const id = this.id() as string;
+      const error = this.controlErrorDirective.ngxError() as SignalValidationResult<string, unknown>;
 
       error.control.addErrorDescription(id);
       cleanup(() => error.control.removeErrorDescription(id));
