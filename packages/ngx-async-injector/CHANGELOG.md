@@ -2,6 +2,8 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [3.1.1](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.1.0...ngx-async-injector@3.1.1) (2024-03-26)
+
 ## [3.1.0](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.5...ngx-async-injector@3.1.0) (2024-03-14)
 
 ## [3.0.5](https://github.com/nx-squeezer/squeezer/compare/ngx-async-injector@3.0.4...ngx-async-injector@3.0.5) (2024-02-08)
