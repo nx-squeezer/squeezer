@@ -416,11 +416,18 @@ export type SignalValidatorKeys&lt;TValidators extends readonly unknown[]&gt; &#
  */
 export type SignalValidatorResultByKey&lt;
   TValidators extends readonly unknown[],
-  K extends SignalValidatorKeys&lt;TValidators&gt;
+  K extends SignalValidatorKeys&lt;TValidators&gt;,
 &gt; &#x3D; Extract&lt;
   SignalValidatorResults&lt;TValidators&gt; extends (infer TValidatorResult)[] ? Readonly&lt;TValidatorResult&gt; : never,
   { key: K }
 &gt;;
+
+/**
+ * Type utility to get validation results keyed by error key.
+ */
+export type SignalValidatorCombinedResults&lt;TValidators extends readonly unknown[]&gt; &#x3D; {
+  [key in SignalValidatorKeys&lt;TValidators&gt;]?: SignalValidatorResultByKey&lt;TValidators, key&gt;;
+};
 </code></pre>
     </div>
 </div>

@@ -149,6 +149,10 @@
 
 
 
+            <tr>
+                <td class="col-md-3">host</td>
+                <td class="col-md-9"><code>{<br>}</code></td>
+            </tr>
 
 
 
@@ -197,7 +201,10 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectionStrategy, Component } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectionStrategy, Component, computed, effect, inject } from &#x27;@angular/core&#x27;;
+
+import { SignalControlErrorDirective } from &#x27;../directives/signal-control-error.directive&#x27;;
+import { SignalValidationResult } from &#x27;../models/signal-validator&#x27;;
 
 /**
  * Component to display form errors.
@@ -205,10 +212,40 @@
 @Component({
   selector: &#x27;ngx-control-error&#x27;,
   template: &#x27;&lt;ng-content/&gt;&#x27;,
+  host: {
+    &#x27;[id]&#x27;: &#x27;id()&#x27;,
+  },
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SignalControlErrorComponent {}
+export class SignalControlErrorComponent {
+  private readonly controlErrorDirective &#x3D; inject(SignalControlErrorDirective, { skipSelf: true, host: true });
+
+  /**
+   * @internal
+   */
+  protected readonly id &#x3D; computed(() &#x3D;&gt; {
+    const error &#x3D; this.controlErrorDirective.ngxError();
+    if (error &#x3D;&#x3D; null) {
+      return;
+    }
+    return &#x60;ngx-control-error.${error.control.path()}.${error.key}&#x60;;
+  });
+
+  /**
+   * @internal
+   */
+  protected readonly registerDescription &#x3D; effect(
+    (cleanup) &#x3D;&gt; {
+      const id &#x3D; this.id() as string;
+      const error &#x3D; this.controlErrorDirective.ngxError() as SignalValidationResult&lt;string, unknown&gt;;
+
+      error.control.addErrorDescription(id);
+      cleanup(() &#x3D;&gt; error.control.removeErrorDescription(id));
+    },
+    { allowSignalWrites: true }
+  );
+}
 </code></pre>
     </div>
 

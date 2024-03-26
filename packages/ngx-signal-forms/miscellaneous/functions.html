@@ -120,10 +120,10 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#composeSignal" title="src/lib/signals/compose-signal.ts" ><b>composeSignal</b>&nbsp;&nbsp;&nbsp;(src/.../compose-signal.ts)</a>
+                            <a href="#composedSignal" title="src/lib/signals/composed-signal.ts" ><b>composedSignal</b>&nbsp;&nbsp;&nbsp;(src/.../composed-signal.ts)</a>
                         </li>
                         <li>
-                            <a href="#interceptSignal" title="src/lib/signals/intercept-signal.ts" ><b>interceptSignal</b>&nbsp;&nbsp;&nbsp;(src/.../intercept-signal.ts)</a>
+                            <a href="#modelFrom" title="src/lib/signals/composed-model.ts" ><b>modelFrom</b>&nbsp;&nbsp;&nbsp;(src/.../composed-model.ts)</a>
                         </li>
                         <li>
                             <a href="#selectObjectProperty" title="src/lib/signals/select-object-property.ts" ><b>selectObjectProperty</b>&nbsp;&nbsp;&nbsp;(src/.../select-object-property.ts)</a>
@@ -135,22 +135,22 @@
     </table>
 </section>
 
-    <h3>src/lib/signals/compose-signal.ts</h3>
+    <h3>src/lib/signals/composed-signal.ts</h3>
     <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="composeSignal"></a>
+                    <a name="composedSignal"></a>
                     <span class="name">
-                        <span ><b>composeSignal</b></span>
-                        <a href="#composeSignal"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>composedSignal</b></span>
+                        <a href="#composedSignal"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>composeSignal(__namedParameters: {get: T, set: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">void</a>})</code>
+<code>composedSignal(__namedParameters: {get: T, set: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">void</a>})</code>
                 </td>
             </tr>
 
@@ -212,22 +212,22 @@
             </tr>
         </tbody>
     </table>
-</section>    <h3>src/lib/signals/intercept-signal.ts</h3>
+</section>    <h3>src/lib/signals/composed-model.ts</h3>
     <section data-compodoc="block-methods">
     <h3></h3>    <table class="table table-sm table-bordered">
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="interceptSignal"></a>
+                    <a name="modelFrom"></a>
                     <span class="name">
-                        <span ><b>interceptSignal</b></span>
-                        <a href="#interceptSignal"><span class="icon ion-ios-link"></span></a>
+                        <span ><b>modelFrom</b></span>
+                        <a href="#modelFrom"><span class="icon ion-ios-link"></span></a>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>interceptSignal(signal: WritableSignal, __namedParameters: {onSet: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">void</a>})</code>
+<code>modelFrom(__namedParameters: {input: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a>, output: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a>})</code>
                 </td>
             </tr>
 
@@ -236,7 +236,7 @@
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Method that intercepts a signal setter and calls a function when that happens. Returns a reference to restore it as it was.</p>
+                        <div class="io-description"><p>Creates a writable signal from a pair of input/output.</p>
 </div>
 
                             <div class="io-description">
@@ -252,9 +252,9 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                                <td>signal</td>
+                                                <td>input</td>
                                             <td>
-                                                        <code>WritableSignal</code>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
                                             </td>
 
                                             <td>
@@ -264,9 +264,9 @@
 
                                         </tr>
                                         <tr>
-                                                <td>onSet</td>
+                                                <td>output</td>
                                             <td>
-                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank" >function</a></code>
                                             </td>
 
                                             <td>
@@ -279,7 +279,7 @@
                                 </table>
                             </div>
                         <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/SignalInterceptor.html" target="_self" >SignalInterceptor</a></code>
+                            <b>Returns : </b>    <code>WritableSignal&lt;T&gt;</code>
 
                         </div>
                             <div class="io-description">

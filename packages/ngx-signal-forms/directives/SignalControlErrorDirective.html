@@ -242,8 +242,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="64"
-                                    class="link-to-prism">src/lib/directives/signal-control-error.directive.ts:64</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="63"
+                                    class="link-to-prism">src/lib/directives/signal-control-error.directive.ts:63</a></div>
                         </td>
                     </tr>
 
@@ -334,8 +334,8 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/lib/directives/signal-control-error.directive.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="49"
+                                    class="link-to-prism">src/lib/directives/signal-control-error.directive.ts:49</a></div>
                         </td>
                     </tr>
 
@@ -466,7 +466,7 @@ import { SIGNAL_CONTROL_ERROR_STRATEGY } from &#x27;../tokens/signal-control-err
 export class SignalControlErrorDirective&lt;
   TKey extends string,
   TConfig,
-  TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;
+  TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;,
 &gt; {
   private readonly templateRef &#x3D; inject(TemplateRef&lt;{ $implicit: TConfig }&gt;);
   private readonly vcr &#x3D; inject(ViewContainerRef);
@@ -487,7 +487,6 @@ export class SignalControlErrorDirective&lt;
     const shouldRender: boolean &#x3D; error !&#x3D; null &amp;&amp; this.errorStrategy(error.control);
 
     if (error !&#x3D; null &amp;&amp; shouldRender &amp;&amp; !this.rendered) {
-      // TODO: remove untracked once angular does not track when creating a view
       untracked(() &#x3D;&gt; this.vcr.createEmbeddedView(this.templateRef, { $implicit: error.config }));
       this.rendered &#x3D; true;
     } else if (!shouldRender &amp;&amp; this.rendered) {
@@ -502,7 +501,7 @@ export class SignalControlErrorDirective&lt;
   static ngTemplateGuard_ngxError&lt;
     TKey extends string,
     TConfig,
-    TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;
+    TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;,
   &gt;(
     dir: SignalControlErrorDirective&lt;TKey, TConfig, TValidationResult&gt;,
     state: TValidationResult | undefined
@@ -516,7 +515,7 @@ export class SignalControlErrorDirective&lt;
   static ngTemplateContextGuard&lt;
     TKey extends string,
     TConfig,
-    TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;
+    TValidationResult extends SignalValidationResult&lt;TKey, TConfig&gt;,
   &gt;(
     directive: SignalControlErrorDirective&lt;TKey, TConfig, TValidationResult&gt;,
     context: unknown

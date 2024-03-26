@@ -123,6 +123,9 @@
                             <a href="#maxLength" title="src/lib/validators/max-length.ts" ><b>maxLength</b>&nbsp;&nbsp;&nbsp;(src/.../max-length.ts)</a>
                         </li>
                         <li>
+                            <a href="#negatedSignal" title="src/lib/signals/negated-signal.ts" ><b>negatedSignal</b>&nbsp;&nbsp;&nbsp;(src/.../negated-signal.ts)</a>
+                        </li>
+                        <li>
                             <a href="#required" title="src/lib/validators/required.ts" ><b>required</b>&nbsp;&nbsp;&nbsp;(src/.../required.ts)</a>
                         </li>
                         <li>
@@ -169,6 +172,39 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-description"><p>Max length validator for text controls.</p>
+</div>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+    <h3>src/lib/signals/negated-signal.ts</h3>
+    <section data-compodoc="block-properties">
+    <h3></h3>    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="negatedSignal"></a>
+                    <span class="name">
+                        <span ><b>negatedSignal</b></span>
+                        <a href="#negatedSignal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>(originalSignalGetter: () &#x3D;&gt; WritableSignal&lt;boolean&gt;): WritableSignal&lt;boolean&gt; &#x3D;&gt;
+  composedSignal({
+    get: () &#x3D;&gt; !originalSignalGetter()(),
+    set: (enabled) &#x3D;&gt; originalSignalGetter().set(!enabled),
+  })</code>
+                    </td>
+                </tr>
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Creates a negated writable signal for a source boolean writable signal.</p>
 </div>
                 </td>
             </tr>
