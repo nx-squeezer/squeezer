@@ -12,6 +12,7 @@ import {
   model,
   output,
   signal,
+  untracked,
 } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
@@ -25,7 +26,6 @@ import { negatedSignal } from '../signals/negated-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 
 // TODO: DOM attributes/validators, from CVA
-// TODO: set id for label and aria description for errors
 
 /**
  * Control directive.
@@ -36,6 +36,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
   host: {
     '[class]': 'classList()',
     '[attr.disabled]': 'disabledAttribute()',
+    '[attr.aria-describedby]': 'ariaDescribedBy()',
   },
   exportAs: 'ngxControl',
 })
@@ -227,6 +228,29 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.untouched]: this.untouched(),
     [this.statusClasses.disabled]: this.disabled(),
   }));
+
+  readonly #errorDescriptionElementIds = signal<readonly string[]>([]);
+
+  /**
+   * @internal
+   */
+  addErrorDescription(elementId: string) {
+    const currentDescriptions = untracked(() => this.#errorDescriptionElementIds());
+    this.#errorDescriptionElementIds.set([...currentDescriptions, elementId]);
+  }
+
+  /**
+   * @internal
+   */
+  removeErrorDescription(elementId: string) {
+    const currentDescriptions = untracked(() => this.#errorDescriptionElementIds());
+    this.#errorDescriptionElementIds.set(currentDescriptions.filter((currentId) => currentId !== elementId));
+  }
+
+  /**
+   * @internal
+   */
+  protected readonly ariaDescribedBy = computed(() => this.#errorDescriptionElementIds().join(' '));
 
   /**
    * @internal

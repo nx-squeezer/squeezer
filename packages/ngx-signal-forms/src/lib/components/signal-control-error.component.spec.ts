@@ -20,6 +20,7 @@ import { required } from '../validators/required';
 const newText = 'new text';
 const requiredMsg = 'This field is required';
 const maxLengthMsg = 'This field is too long';
+const ariaDescribedBy = 'aria-describedby';
 
 @Component({
   template: `
@@ -108,6 +109,7 @@ describe('SignalControlErrorComponent', () => {
     expect(component.errors().length).toBe(0);
     expect(component.controlDirective().pristine()).toBeTruthy();
     expect(component.controlDirective().touched()).toBeTruthy();
+    expect(component.inputElement()).toHaveAttribute(ariaDescribedBy, '');
   });
 
   it('should show the error after blur when there was interaction', () => {
@@ -118,6 +120,8 @@ describe('SignalControlErrorComponent', () => {
 
     expect(component.errors().length).toBe(1);
     expect(component.errors()[0].nativeElement).toHaveTextContent(requiredMsg);
+    expect(component.errors()[0].nativeElement.id).toBe('ngx-control-error.control.required');
+    expect(component.inputElement()).toHaveAttribute(ariaDescribedBy, 'ngx-control-error.control.required');
     expect(component.controlDirective().dirty()).toBeTruthy();
     expect(component.controlDirective().touched()).toBeTruthy();
   });
@@ -146,7 +150,10 @@ describe('SignalControlErrorComponent', () => {
     TestBed.flushEffects();
 
     expect(component.errors().length).toBe(1);
+
     expect(component.errors()[0].nativeElement).toHaveTextContent('This field is too long (8/5)');
+    expect(component.errors()[0].nativeElement.id).toBe('ngx-control-error.control.maxLength');
+    expect(component.inputElement()).toHaveAttribute(ariaDescribedBy, 'ngx-control-error.control.maxLength');
   });
 
   describe('error directive typing', () => {
