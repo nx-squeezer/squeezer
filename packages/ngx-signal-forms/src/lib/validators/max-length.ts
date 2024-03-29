@@ -9,4 +9,7 @@ export const maxLength = (maxLength: number): SignalValidator<string | null | un
     return value != null && value.length <= maxLength;
   },
   config: maxLength,
+  attributes: {
+    maxlength: String(maxLength),
+  },
 });
