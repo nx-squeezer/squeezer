@@ -1,3 +1,5 @@
+import { Signal } from '@angular/core';
+
 import { SignalControlDirective } from './../directives/signal-control.directive';
 /**
  * Type of a validator.
@@ -14,15 +16,20 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
   readonly key: TKey;
 
   /**
-   * Validator configuration.
+   * Validator configuration. TODO: make optional
    */
   readonly config: Readonly<TConfig>;
+
+  /**
+   * Attributes to apply on host element.
+   */
+  readonly attributes?: Record<string, string | boolean | null | Signal<string | boolean | null>>;
 }
 
 /**
  * Validation result type of a validator.
  */
-export interface SignalValidationResult<TKey extends string, TConfig = {}> {
+export interface SignalValidationResult<TKey extends string, TConfig = undefined> {
   /**
    * Parent control of validation error.
    */
@@ -34,7 +41,7 @@ export interface SignalValidationResult<TKey extends string, TConfig = {}> {
   readonly key: TKey;
 
   /**
-   * Validator configuration.
+   * Validator configuration. TODO: make optional
    */
   readonly config: Readonly<TConfig>;
 }

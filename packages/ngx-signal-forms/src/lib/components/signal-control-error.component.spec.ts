@@ -8,12 +8,13 @@ import {
   viewChild,
   viewChildren,
 } from '@angular/core';
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignalControlErrorComponent } from './signal-control-error.component';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlErrorDirective } from '../directives/signal-control-error.directive';
 import { SignalControlDirective } from '../directives/signal-control.directive';
+import { SignalValidator } from '../models/signal-validator';
 import { maxLength } from '../validators/max-length';
 import { required } from '../validators/required';
 
@@ -29,7 +30,7 @@ const ariaDescribedBy = 'aria-describedby';
       type="text"
       ngxTextInput
       [(ngxControl)]="value"
-      [validators]="validators"
+      [validators]="validators()"
       #ngxControl="ngxControl"
     />
 
@@ -53,9 +54,14 @@ class TestComponent {
 
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
-  readonly validators = [required(), maxLength(5)];
+  readonly validators = signal([required(), maxLength(5)]);
   readonly controlDirective =
-    viewChild.required<SignalControlDirective<string, typeof this.validators>>(SignalControlDirective);
+    viewChild.required<
+      SignalControlDirective<
+        string,
+        (SignalValidator<string, 'required', {}> | SignalValidator<string | null | undefined, 'maxLength', number>)[]
+      >
+    >(SignalControlDirective);
   readonly errors = viewChildren<string, ElementRef>('errorMsg', { read: ElementRef });
   readonly errorDirectives = viewChildren(SignalControlErrorDirective);
 
@@ -72,11 +78,12 @@ class TestComponent {
 
 describe('SignalControlErrorComponent', () => {
   let component: TestComponent;
+  let fixture: ComponentFixture<TestComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({ imports: [TestComponent] }).compileComponents();
 
-    const fixture = TestBed.createComponent(TestComponent);
+    fixture = TestBed.createComponent(TestComponent);
     component = fixture.componentInstance;
     fixture.autoDetectChanges();
   });
@@ -168,6 +175,22 @@ describe('SignalControlErrorComponent', () => {
 
       expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, {} as any)).toBeTruthy();
       expect(SignalControlErrorDirective.ngTemplateGuard_ngxError(directive, undefined)).toBeFalsy();
+    });
+  });
+
+  describe('accessibility', () => {
+    it('should apply the required and maxlength attributes', () => {
+      expect(component.inputElement()).toBeRequired();
+      expect(component.inputElement()).toHaveAttribute('maxlength', '5');
+    });
+
+    it('should remove the required and maxlength attributes when validators are no longer applied', () => {
+      component.validators.set([]);
+
+      fixture.detectChanges();
+
+      expect(component.inputElement()).not.toBeRequired();
+      expect(component.inputElement()).not.toHaveAttribute('maxlength');
     });
   });
 });

@@ -1,5 +1,6 @@
 import {
   Directive,
+  ElementRef,
   InputSignal,
   InputSignalWithTransform,
   OutputEmitterRef,
@@ -16,6 +17,7 @@ import {
 } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
+import { applyAttributes } from '../functions/apply-attributes';
 import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
@@ -24,8 +26,6 @@ import { SignalControlContainerRegistry } from '../services/signal-control-conta
 import { modelFrom } from '../signals/composed-model';
 import { negatedSignal } from '../signals/negated-signal';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
-
-// TODO: DOM attributes/validators, from CVA
 
 /**
  * Control directive.
@@ -36,7 +36,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
   host: {
     '[class]': 'classList()',
     '[attr.disabled]': 'disabledAttribute()',
-    '[attr.aria-describedby]': 'ariaDescribedBy()',
+    '[attr.aria-describedby]': 'ariaDescribedBy()', //TODO: apply on CVA element rather than on host
   },
   exportAs: 'ngxControl',
 })
@@ -45,6 +45,8 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
    * @internal
    */
   protected readonly registry = inject(SignalControlContainerRegistry);
+
+  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
 
   private readonly statusClasses: SignalControlStatusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
 
@@ -228,6 +230,18 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.untouched]: this.untouched(),
     [this.statusClasses.disabled]: this.disabled(),
   }));
+
+  /**
+   * @internal
+   */
+  protected readonly watchAttributesChanges = applyAttributes(
+    signal(this.elementRef.nativeElement),
+    computed(() =>
+      this.validators().reduce((attributes, validator) => {
+        return { ...attributes, ...(validator.attributes ?? {}) };
+      }, {})
+    )
+  );
 
   readonly #errorDescriptionElementIds = signal<readonly string[]>([]);
 
