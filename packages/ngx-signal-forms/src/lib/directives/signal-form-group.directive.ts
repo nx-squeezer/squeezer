@@ -13,7 +13,7 @@ import { SignalValidator } from '../models/signal-validator';
 })
 export class SignalFormGroupDirective<
   TValue extends object,
-  TValidators extends SignalValidator<TValue, string>[] = [],
+  TValidators extends SignalValidator<TValue, string, any>[] = [],
 > extends SignalControlContainer<TValue, TValidators> {
   /**
    * Input value.
