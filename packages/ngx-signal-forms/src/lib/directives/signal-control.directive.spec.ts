@@ -5,7 +5,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignalControlDirective } from './signal-control.directive';
 import { InputTextControlValueAccessorDirective } from '../control-value-accessors/input-text-control-value-accessor.directive';
 import { SignalControlStatusClasses } from '../models/signal-control-status-classes';
-import { SignalValidationResult } from '../models/signal-validator';
+import { SignalValidationResult, SignalValidator } from '../models/signal-validator';
 import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-classes.token';
 import { maxLength } from '../validators/max-length';
 import { required } from '../validators/required';
@@ -14,6 +14,11 @@ const text = 'text';
 const newText = 'new text';
 const requiredMsg = 'This field is required';
 const maxLengthMsg = 'This field is too long';
+
+const noopValidator: SignalValidator<string, 'noop'> = {
+  key: 'noop',
+  validate: () => true,
+};
 
 @Component({
   template: `
@@ -42,7 +47,7 @@ class TestComponent {
 
   readonly inputElementRef = viewChild.required<ElementRef<HTMLInputElement>>('inputTag');
   readonly inputElement = computed(() => this.inputElementRef().nativeElement);
-  readonly validators = [required(), maxLength(5)];
+  readonly validators = [required(), maxLength(5), noopValidator];
   readonly controlDirective =
     viewChild.required<SignalControlDirective<string | undefined, typeof this.validators>>(SignalControlDirective);
   readonly requiredError = viewChild<ElementRef<HTMLParagraphElement>>('requiredError');

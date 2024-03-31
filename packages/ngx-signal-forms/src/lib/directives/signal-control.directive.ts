@@ -1,6 +1,6 @@
 import {
   Directive,
-  ElementRef,
+  Injector,
   InputSignal,
   InputSignalWithTransform,
   OutputEmitterRef,
@@ -17,6 +17,7 @@ import {
 } from '@angular/core';
 
 import { SignalControlContainer } from './signal-control-container.directive';
+import { SignalControlValueAccessor } from './signal-control-value-accessor.directive';
 import { applyAttributes } from '../functions/apply-attributes';
 import { DisabledType, EnabledType } from '../models/disabled-type';
 import { SignalControlStatus } from '../models/signal-control-status';
@@ -35,8 +36,6 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
   standalone: true,
   host: {
     '[class]': 'classList()',
-    '[attr.disabled]': 'disabledAttribute()',
-    '[attr.aria-describedby]': 'ariaDescribedBy()', //TODO: apply on CVA element rather than on host
   },
   exportAs: 'ngxControl',
 })
@@ -46,9 +45,16 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
    */
   protected readonly registry = inject(SignalControlContainerRegistry);
 
-  private readonly elementRef = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly injector = inject(Injector);
 
   private readonly statusClasses: SignalControlStatusClasses = inject(SIGNAL_CONTROL_STATUS_CLASSES);
+
+  /**
+   * Native element where the control is applied derived from the control value accessor.
+   */
+  readonly nativeElement: Signal<HTMLElement | null> = computed(
+    () => this.injector.get(SignalControlValueAccessor, null, { self: true })?.nativeElement() ?? null
+  );
 
   #parent: SignalControlContainer<any> | null = null;
   #key: string | number | null = null;
@@ -231,18 +237,6 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
     [this.statusClasses.disabled]: this.disabled(),
   }));
 
-  /**
-   * @internal
-   */
-  protected readonly watchAttributesChanges = applyAttributes(
-    signal(this.elementRef.nativeElement),
-    computed(() =>
-      this.validators().reduce((attributes, validator) => {
-        return { ...attributes, ...(validator.attributes ?? {}) };
-      }, {})
-    )
-  );
-
   readonly #errorDescriptionElementIds = signal<readonly string[]>([]);
 
   /**
@@ -264,7 +258,24 @@ export class SignalControlDirective<TValue, TValidators extends SignalValidator<
   /**
    * @internal
    */
-  protected readonly ariaDescribedBy = computed(() => this.#errorDescriptionElementIds().join(' '));
+  protected readonly ariaDescribedByAttribute = computed(() => this.#errorDescriptionElementIds().join(' '));
+
+  /**
+   * @internal
+   */
+  protected readonly watchAttributesChanges = applyAttributes(
+    this.nativeElement,
+    computed((): Record<string, string | null> => {
+      const attributes: Record<string, string | null> = this.validators().reduce((attributes, validator) => {
+        return { ...attributes, ...(validator.attributes ?? {}) };
+      }, {});
+
+      attributes['disabled'] = this.disabledAttribute();
+      attributes['aria-describedby'] = this.ariaDescribedByAttribute();
+
+      return attributes;
+    })
+  );
 
   /**
    * @internal

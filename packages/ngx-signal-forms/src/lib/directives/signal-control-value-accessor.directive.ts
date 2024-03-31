@@ -1,4 +1,4 @@
-import { ElementRef, ModelSignal, effect, inject, untracked } from '@angular/core';
+import { ElementRef, ModelSignal, Signal, computed, effect, inject, untracked } from '@angular/core';
 
 import { SignalControlDirective } from './signal-control.directive';
 
@@ -13,15 +13,14 @@ export abstract class SignalControlValueAccessor<TValue = unknown, TElement exte
     self: true,
   });
 
-  /**
-   * Reference to the host element.
-   */
-  protected readonly elementRef: ElementRef<TElement> = inject(ElementRef);
+  readonly #elementRef: ElementRef<TElement> = inject(ElementRef);
+
+  readonly #nativeElement: TElement = this.#elementRef.nativeElement;
 
   /**
    * Native element where the directive is applied.
    */
-  protected readonly nativeElement: TElement = this.elementRef.nativeElement;
+  readonly nativeElement: Signal<TElement> = computed(() => this.#nativeElement);
 
   /**
    * Model value.
