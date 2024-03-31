@@ -1,5 +1,3 @@
-import { Signal } from '@angular/core';
-
 import { SignalControlDirective } from './../directives/signal-control.directive';
 /**
  * Type of a validator.
@@ -23,7 +21,7 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = undefine
   /**
    * Attributes to apply on host element.
    */
-  readonly attributes?: Record<string, string | boolean | null | Signal<string | boolean | null>>;
+  readonly attributes?: Record<string, string>;
 }
 
 /**
