@@ -10,7 +10,6 @@ const requiredValidator: SignalValidator<string | null | undefined, 'required'> 
   validate(value): boolean {
     return value != null && value.length > 0;
   },
-  config: {},
   attributes: {
     required: '',
   },

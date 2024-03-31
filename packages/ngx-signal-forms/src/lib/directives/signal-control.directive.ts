@@ -40,7 +40,7 @@ import { SIGNAL_CONTROL_STATUS_CLASSES } from '../tokens/signal-control-status-c
   },
   exportAs: 'ngxControl',
 })
-export class SignalControlDirective<TValue, TValidators extends SignalValidator<TValue, string>[] = []> {
+export class SignalControlDirective<TValue, TValidators extends SignalValidator<TValue, string, any>[] = []> {
   /**
    * @internal
    */

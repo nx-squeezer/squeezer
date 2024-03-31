@@ -51,7 +51,6 @@ class TestComponent {
   readonly formGroupValidator: SignalValidator<FormValue, 'tooLong'> = {
     key: 'tooLong',
     validate: (value) => value.text.length <= 5,
-    config: {},
   };
   readonly formGroupDirective =
     viewChild.required<SignalFormGroupDirective<FormValue, (typeof this.formGroupValidator)[]>>(
@@ -205,7 +204,7 @@ describe('SignalFormGroupDirective', () => {
   describe('validity', () => {
     it('should infer correct types', () => {
       const requiredError = component.formGroupDirective().errors().tooLong satisfies
-        | SignalValidationResult<'tooLong', {}>
+        | SignalValidationResult<'tooLong'>
         | undefined;
 
       expect(requiredError).toBeUndefined();
@@ -225,8 +224,8 @@ describe('SignalFormGroupDirective', () => {
       component.value.set({ text: newText });
       fixture.detectChanges();
 
-      expect(component.formGroupDirective().errors()).toStrictEqual({
-        tooLong: { key: 'tooLong', config: {}, control: component.formGroupDirective() },
+      expect(component.formGroupDirective().errors()).toEqual({
+        tooLong: { key: 'tooLong', control: component.formGroupDirective() },
       });
       expect(component.formGroupDirective().status()).toBe('INVALID');
       expect(component.formGroupDirective().valid()).toBeFalsy();

@@ -4,7 +4,7 @@ import { SignalControlDirective } from './../directives/signal-control.directive
 /**
  * Type of a validator.
  */
-export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
+export interface SignalValidator<TValue, TKey extends string, TConfig = undefined> {
   /**
    * Validate function, return true if it is valid.
    */
@@ -16,9 +16,9 @@ export interface SignalValidator<TValue, TKey extends string, TConfig = {}> {
   readonly key: TKey;
 
   /**
-   * Validator configuration. TODO: make optional
+   * Validator configuration.
    */
-  readonly config: Readonly<TConfig>;
+  readonly config?: Readonly<TConfig>;
 
   /**
    * Attributes to apply on host element.
@@ -41,7 +41,7 @@ export interface SignalValidationResult<TKey extends string, TConfig = undefined
   readonly key: TKey;
 
   /**
-   * Validator configuration. TODO: make optional
+   * Validator configuration.
    */
   readonly config: Readonly<TConfig>;
 }
@@ -59,7 +59,7 @@ export type SignalValidatorResults<TValidators extends readonly unknown[]> = TVa
  * Type utility to derive the validator keys from a collection of validators.
  */
 export type SignalValidatorKeys<TValidators extends readonly unknown[]> = TValidators extends (infer TValidator)[]
-  ? TValidator extends SignalValidator<any, infer K>
+  ? TValidator extends SignalValidator<any, infer K, any>
     ? Readonly<K>
     : never
   : never;

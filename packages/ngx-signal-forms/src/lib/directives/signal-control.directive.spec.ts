@@ -94,7 +94,7 @@ describe('SignalControlDirective', () => {
   describe('validity', () => {
     it('should infer correct types', () => {
       const requiredError = component.controlDirective().errors().required satisfies
-        | SignalValidationResult<'required', {}>
+        | SignalValidationResult<'required'>
         | undefined;
       const maxLengthError = component.controlDirective().errors().maxLength satisfies
         | SignalValidationResult<'maxLength', number>
@@ -125,8 +125,8 @@ describe('SignalControlDirective', () => {
 
       expect(component.controlDirective().value()).toBe('');
 
-      expect(component.controlDirective().errors()).toStrictEqual({
-        required: { key: 'required', config: {}, control: component.controlDirective() },
+      expect(component.controlDirective().errors()).toEqual({
+        required: { key: 'required', control: component.controlDirective() },
       });
       expect(component.controlDirective().status()).toBe('INVALID');
       expect(component.controlDirective().valid()).toBeFalsy();

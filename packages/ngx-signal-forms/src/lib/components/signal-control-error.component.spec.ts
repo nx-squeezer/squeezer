@@ -59,7 +59,7 @@ class TestComponent {
     viewChild.required<
       SignalControlDirective<
         string,
-        (SignalValidator<string, 'required', {}> | SignalValidator<string | null | undefined, 'maxLength', number>)[]
+        (SignalValidator<string, 'required'> | SignalValidator<string | null | undefined, 'maxLength', number>)[]
       >
     >(SignalControlDirective);
   readonly errors = viewChildren<string, ElementRef>('errorMsg', { read: ElementRef });
