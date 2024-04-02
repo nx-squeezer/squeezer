@@ -30,6 +30,7 @@
     "ngx-forms",
     "ngx-forms-app",
     "ngx-signal-forms",
+    "ngx-signal-forms-app",
     "ngx-ssr-app",
     "renovate",
     "utils",
