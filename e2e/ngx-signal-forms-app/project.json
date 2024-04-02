@@ -62,11 +62,11 @@
       "executor": "@nx/playwright:playwright",
       "outputs": ["{workspaceRoot}/dist/.playwright/e2e/ngx-signal-forms-app"],
       "options": {
-        "config": "e2e/ngx-signal-forms-app/playwright.config.ts",
-        "skipInstall": true
+        "config": "e2e/ngx-signal-forms-app/playwright.config.ts"
       },
       "configurations": {
         "watch": {
+          "skipInstall": true,
           "ui": true
         }
       }
