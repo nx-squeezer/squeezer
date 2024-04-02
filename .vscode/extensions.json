@@ -7,6 +7,7 @@
     "GitHub.vscode-pull-request-github",
     "GitHub.vscode-github-actions",
     "vivaxy.vscode-conventional-commits",
-    "Wequick.coverage-gutters"
+    "Wequick.coverage-gutters",
+    "ms-playwright.playwright"
   ]
 }
