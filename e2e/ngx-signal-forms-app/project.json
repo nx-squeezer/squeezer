@@ -1,0 +1,62 @@
+{
+  "name": "ngx-signal-forms-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "app",
+  "sourceRoot": "e2e/ngx-signal-forms-app/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/e2e/ngx-signal-forms-app",
+        "index": "e2e/ngx-signal-forms-app/src/index.html",
+        "browser": "e2e/ngx-signal-forms-app/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "e2e/ngx-signal-forms-app/tsconfig.app.json",
+        "assets": ["e2e/ngx-signal-forms-app/src/favicon.ico", "e2e/ngx-signal-forms-app/src/assets"],
+        "styles": ["e2e/ngx-signal-forms-app/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "ngx-signal-forms-app:build:production"
+        },
+        "development": {
+          "buildTarget": "ngx-signal-forms-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
