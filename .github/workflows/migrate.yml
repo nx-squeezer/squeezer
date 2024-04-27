@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4.1.1
+        uses: actions/checkout@v4.1.4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4.0.2
@@ -58,7 +58,7 @@ jobs:
 
       - name: Create Pull Request
         id: pull-request
-        uses: peter-evans/create-pull-request@v6.0.4
+        uses: peter-evans/create-pull-request@v6.0.5
         with:
           token: ${{ secrets.MIGRATE_TOKEN }}
           commit-message: 'chore: :arrow_up: migrate Nx workspace'
@@ -74,7 +74,7 @@ jobs:
         run: |
           gh pr merge ${{ steps.pull-request.outputs.pull-request-number }} --auto --squash
 
-      - uses: dblock/create-a-github-issue@v3.1.1
+      - uses: dblock/create-a-github-issue@v3.2.0
         name: Create Issue
         if: failure()
         env:
