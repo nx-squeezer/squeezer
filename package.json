@@ -88,7 +88,7 @@
     "@schemastore/prettierrc": "0.0.10",
     "@schemastore/tsconfig": "0.0.11",
     "@schematics/angular": "17.3.6",
-    "@swc-node/register": "1.9.0",
+    "@swc-node/register": "1.9.1",
     "@swc/cli": "0.3.12",
     "@swc/core": "1.5.2",
     "@swc/helpers": "0.5.11",
