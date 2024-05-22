@@ -47,7 +47,7 @@
     "@ngrx/signals": "17.2.0",
     "@nx/devkit": "18.3.4",
     "husky": "9.0.11",
-    "lint-staged": "15.2.2",
+    "lint-staged": "15.2.4",
     "ngx-deploy-npm": "8.0.1",
     "node-fetch-commonjs": "3.3.2",
     "prettier": "3.2.5",
