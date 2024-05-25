@@ -51,7 +51,7 @@ jobs:
           nx-key: build
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v4.0.4
+        uses: nrwl/nx-set-shas@v4.0.6
 
       - name: Build
         run: npx nx affected --target=build --parallel=3
@@ -79,7 +79,7 @@ jobs:
           nx-key: lint
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v4.0.4
+        uses: nrwl/nx-set-shas@v4.0.6
 
       - name: Lint
         run: npx nx affected --target=lint --parallel=3
@@ -107,7 +107,7 @@ jobs:
           nx-key: test
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v4.0.4
+        uses: nrwl/nx-set-shas@v4.0.6
 
       - name: Test
         run: npx nx affected --target=test --parallel=3
@@ -143,7 +143,7 @@ jobs:
           nx-key: e2e
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v4.0.4
+        uses: nrwl/nx-set-shas@v4.0.6
 
       - name: e2e
         run: npx nx affected --target=e2e --parallel=1
@@ -171,7 +171,7 @@ jobs:
           nx-key: docs
 
       - name: Nx Set SHAs
-        uses: nrwl/nx-set-shas@v4.0.4
+        uses: nrwl/nx-set-shas@v4.0.6
 
       - name: Docs Coverage
         run: npx nx affected --target=docs --configuration=coverage --parallel=3
