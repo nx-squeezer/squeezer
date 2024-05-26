@@ -82,7 +82,7 @@
     "@nx/plugin": "18.3.4",
     "@nx/webpack": "18.3.4",
     "@nx/workspace": "18.3.4",
-    "@playwright/test": "1.44.0",
+    "@playwright/test": "1.44.1",
     "@schemastore/eslintrc": "0.0.8",
     "@schemastore/package": "0.0.10",
     "@schemastore/prettierrc": "0.0.10",
