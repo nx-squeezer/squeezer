@@ -99,7 +99,7 @@
     "@types/jest": "29.5.12",
     "@types/js-yaml": "4.0.9",
     "@types/node": "20.12.13",
-    "@types/which": "3.0.3",
+    "@types/which": "3.0.4",
     "@typescript-eslint/eslint-plugin": "7.11.0",
     "@typescript-eslint/parser": "7.11.0",
     "autoprefixer": "10.4.19",
