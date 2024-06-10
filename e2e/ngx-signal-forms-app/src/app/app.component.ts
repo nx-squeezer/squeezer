@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [RouterModule],
   selector: 'nx-squeezer-root',
-  template: '<h1>Test</h1><router-outlet/>',
+  template: '<h1>Welcome</h1><router-outlet/>',
 })
 export class AppComponent {
   title = 'ngx-signal-forms-app';
