@@ -40,7 +40,7 @@
   "peerDependencies": {
     "@commitlint/cli": "^19.0.3",
     "@commitlint/config-conventional": "^19.0.3",
-    "@nx/devkit": "^17.0.0 || ^18.0.0",
+    "@nx/devkit": "^17.0.0 || ^18.0.0 || ^19.0.0",
     "@nx-squeezer/devkit": "^2.0.0 || ^3.0.0",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0",

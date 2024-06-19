@@ -44,4 +44,4 @@ migrations.json
 # Docs
 /docs
 
-.nx/cache
+.nx
