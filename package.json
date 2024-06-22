@@ -52,7 +52,7 @@
     "node-fetch-commonjs": "3.3.2",
     "prettier": "3.3.2",
     "radash": "12.1.0",
-    "renovate": "37.407.2",
+    "renovate": "37.412.1",
     "rxjs": "7.8.1",
     "tslib": "2.5.0",
     "which": "4.0.0",
