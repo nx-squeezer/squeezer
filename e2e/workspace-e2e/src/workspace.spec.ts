@@ -29,7 +29,6 @@ describe('workspace', () => {
 
   afterAll(() => {
     // Cleanup the test project
-    execSync(`npx nx reset`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
     rmSync(projectDirectory, { recursive: true, force: true });
   });
 
@@ -40,7 +39,7 @@ describe('workspace', () => {
 
   describe('prettier generator', () => {
     it('should setup prettier with eslint', async () => {
-      execSync('npx nx generate @nx-squeezer/workspace:prettier', {
+      execSync('npx nx generate @nx-squeezer/workspace:prettier --verbose', {
         cwd: projectDirectory,
         stdio: 'inherit',
         env: { NX_DAEMON: 'false' },
