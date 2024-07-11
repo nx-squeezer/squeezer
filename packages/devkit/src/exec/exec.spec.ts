@@ -15,7 +15,7 @@ describe('@nx-squeezer/devkit exec', () => {
     (sync as jest.Mock).mockReturnValue('npm');
 
     expect(exec('npm', ['run', 'test'])).toStrictEqual({ output });
-    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined, shell: true });
   });
 
   it('should execute command with cwd', () => {
@@ -23,7 +23,7 @@ describe('@nx-squeezer/devkit exec', () => {
     (sync as jest.Mock).mockReturnValue('npm');
 
     expect(exec('npm', ['run', 'test'], { cwd: 'folder' })).toStrictEqual({ output });
-    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: 'folder' });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: 'folder', shell: true });
   });
 
   it('should execute command with cwd as an array', () => {
@@ -31,7 +31,7 @@ describe('@nx-squeezer/devkit exec', () => {
     (sync as jest.Mock).mockReturnValue('npm');
 
     expect(exec('npm', ['run', 'test'], { cwd: ['folder', 'subfolder'] })).toStrictEqual({ output });
-    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: 'folder/subfolder' });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: 'folder/subfolder', shell: true });
   });
 
   it('should catch errors', () => {
@@ -42,7 +42,7 @@ describe('@nx-squeezer/devkit exec', () => {
     jest.spyOn(console, 'error').mockImplementation(() => void {});
 
     expect(exec('npm', ['run', 'test'])).toStrictEqual({ output: '', error: new Error('error') });
-    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined, shell: true });
     expect(console.error).toHaveBeenCalledWith(new Error('error'));
   });
 
@@ -54,7 +54,7 @@ describe('@nx-squeezer/devkit exec', () => {
     jest.spyOn(console, 'error').mockImplementation(() => void {});
 
     expect(exec('npm', ['run', 'test'])).toStrictEqual({ output: '', error: new Error('error') });
-    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined });
+    expect(execFileSync).toHaveBeenCalledWith('npm', ['run', 'test'], { cwd: undefined, shell: true });
     expect(console.error).toHaveBeenCalledWith(new Error('error'));
   });
 });

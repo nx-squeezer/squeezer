@@ -1,6 +1,5 @@
 {
   "name": "@nx-squeezer/devkit",
-  "version": "3.1.0",
   "description": "This package contains a set of utilities for creating Nx plugins",
   "keywords": [
     "nx",

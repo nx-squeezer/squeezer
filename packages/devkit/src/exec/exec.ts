@@ -42,7 +42,7 @@ export function exec(file: string, args: ReadonlyArray<string>, options?: ExecOp
   const resolvedFile = basename(whichSync(file));
 
   try {
-    const result = execFileSync(resolvedFile, args, { cwd: normalizedCwd });
+    const result = execFileSync(resolvedFile, args, { cwd: normalizedCwd, shell: true });
     return { output: result.toString() };
   } catch (error) {
     console.error(error);

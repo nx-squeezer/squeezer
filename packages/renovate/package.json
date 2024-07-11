@@ -1,6 +1,5 @@
 {
   "name": "@nx-squeezer/renovate",
-  "version": "3.1.6",
   "description": "Tools to setup Renovate in Nx or Angular monorepos",
   "keywords": [
     "nx",
@@ -40,7 +39,7 @@
   },
   "peerDependencies": {
     "@nx/devkit": "^19.0.0",
-    "@nx-squeezer/devkit": "^3.0.0",
+    "@nx-squeezer/devkit": "*",
     "renovate": "^37.0.0"
   }
 }

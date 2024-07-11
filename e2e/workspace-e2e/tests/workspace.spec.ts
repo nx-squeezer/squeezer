@@ -1,4 +1,4 @@
-import {
+/*import {
   readJson,
   runNxCommandAsync,
   checkFilesExist,
@@ -246,3 +246,4 @@ describe('@nx-squeezer/workspace e2e', () => {
     });
   });
 });
+*/

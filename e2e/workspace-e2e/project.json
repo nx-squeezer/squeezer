@@ -9,13 +9,7 @@
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["workspace-e2e:prepare"]
-    },
-    "prepare": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "nx build workspace --with-deps"
-      }
+      "dependsOn": ["^build"]
     },
     "lint": {
       "executor": "@nx/eslint:lint"

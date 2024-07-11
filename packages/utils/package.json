@@ -1,6 +1,5 @@
 {
   "name": "@nx-squeezer/utils",
-  "version": "1.0.8",
   "description": "This package contains TypeScript utilities for various purposes",
   "keywords": [
     "typescript",
