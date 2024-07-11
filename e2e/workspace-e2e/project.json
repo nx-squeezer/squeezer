@@ -6,9 +6,6 @@
   "targets": {
     "e2e": {
       "executor": "@nx/jest:jest",
-      "options": {
-        "runInBand": true
-      },
       "dependsOn": ["^build"]
     },
     "lint": {

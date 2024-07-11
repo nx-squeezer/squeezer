@@ -1,10 +1,11 @@
 import { execSync } from 'child_process';
 import { mkdirSync, rmSync } from 'fs';
-import { dirname } from 'path';
+import { basename, dirname } from 'path';
 
 import { readJson, tmpProjPath } from '@nx/plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
-import { JSONSchemaForNPMPackageJsonFiles, SchemaForPrettierrc } from '@schemastore/package';
+import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
+import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 
 import { eslintConfigFile, eslintPluginPrettier, prettierConfigJsonFile, prettierPlugin } from '@nx-squeezer/workspace';
 
@@ -18,6 +19,7 @@ describe('workspace', () => {
     // Install the plugin built with the latest source code into the test repo
     execSync(`npm install @nx-squeezer/workspace@e2e`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
     execSync(`npm install @nx-squeezer/devkit@e2e`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
+    execSync(`npm install prettier@3 --save-dev`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
     execSync(`npx nx generate @nx/js:lib mylib --unitTestRunner=jest --bundler=tsc`, {
       cwd: projectDirectory,
       stdio: 'inherit',
@@ -27,7 +29,8 @@ describe('workspace', () => {
 
   afterAll(() => {
     // Cleanup the test project
-    //TODO rmSync(projectDirectory, { recursive: true, force: true });
+    execSync(`npx nx reset`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
+    rmSync(projectDirectory, { recursive: true, force: true });
   });
 
   it('should be installed', () => {
@@ -37,15 +40,16 @@ describe('workspace', () => {
 
   describe('prettier generator', () => {
     it('should setup prettier with eslint', async () => {
-      execSync('npx nx generate @nx-squeezer/workspace:prettier --verbose', {
+      execSync('npx nx generate @nx-squeezer/workspace:prettier', {
         cwd: projectDirectory,
         stdio: 'inherit',
+        env: { NX_DAEMON: 'false' },
       });
 
       const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
       expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
-      expect(eslintConfig.overrides?.[0]).toStrictEqual({
-        files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
+      expect(eslintConfig.overrides?.[eslintConfig.overrides.length - 1]).toStrictEqual({
+        files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.html'],
         extends: ['plugin:prettier/recommended'],
         rules: {},
       });
@@ -78,8 +82,8 @@ describe('workspace', () => {
  * @returns The directory where the test project was created
  */
 function createTestProject() {
-  const projectName = 'test-project';
   const projectDirectory = tmpProjPath();
+  const projectName = basename(projectDirectory);
 
   // Ensure projectDirectory is empty
   rmSync(projectDirectory, { recursive: true, force: true });

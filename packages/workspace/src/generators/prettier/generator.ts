@@ -18,7 +18,7 @@ export default async function prettierGenerator(tree: Tree) {
   }
   addEsLintPlugin(tree, prettierPlugin, '@nx');
   addEsLintRules(tree, {
-    files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
+    files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.html'],
     extends: ['plugin:prettier/recommended'],
     rules: {},
   });
