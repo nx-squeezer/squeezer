@@ -39,11 +39,7 @@ describe('workspace', () => {
 
   describe('prettier generator', () => {
     it('should setup prettier with eslint', async () => {
-      execSync('npx nx generate @nx-squeezer/workspace:prettier --verbose', {
-        cwd: projectDirectory,
-        stdio: 'inherit',
-        env: { NX_DAEMON: 'false' },
-      });
+      execSync('npx nx generate @nx-squeezer/workspace:prettier', { cwd: projectDirectory, stdio: 'inherit' });
 
       const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
       expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
