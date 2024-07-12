@@ -1,12 +1,13 @@
 import { execSync } from 'child_process';
 import { mkdirSync, rmSync } from 'fs';
-import { basename, dirname, parse } from 'path';
+import { basename, dirname } from 'path';
 
 import { checkFilesExist, readFile, readJson, tmpProjPath, updateFile } from '@nx/plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
+import { parse } from 'yaml';
 
 import { ciFile, huskyPath, joinNormalize, readmeFile } from '@nx-squeezer/devkit';
 import {
