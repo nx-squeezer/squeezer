@@ -3,6 +3,7 @@
   "editor.formatOnType": false,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "workbench.colorTheme": "Default Dark Modern",
   "[typescript]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },

@@ -8,6 +8,7 @@
     "GitHub.vscode-github-actions",
     "vivaxy.vscode-conventional-commits",
     "Wequick.coverage-gutters",
-    "ms-playwright.playwright"
+    "ms-playwright.playwright",
+    "Orta.vscode-jest"
   ]
 }
