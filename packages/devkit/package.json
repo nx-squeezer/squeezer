@@ -1,6 +1,5 @@
 {
   "name": "@nx-squeezer/devkit",
-  "version": "3.1.0",
   "description": "This package contains a set of utilities for creating Nx plugins",
   "keywords": [
     "nx",
@@ -36,11 +35,12 @@
     "yaml": "^2.4.5"
   },
   "peerDependencies": {
-    "@nx/devkit": "^17.0.0 || ^18.0.0",
-    "@nx/plugin": "^17.0.0 || ^18.0.0",
-    "@nx/webpack": "^17.0.0 || ^18.0.0",
+    "@nx/devkit": "^19.0.0",
+    "@nx/js": "^19.0.0",
+    "@nx/plugin": "^19.0.0",
+    "@nx/webpack": "^19.0.0",
     "husky": "^9.0.0",
-    "nx": "^17.0.0 || ^18.0.0",
+    "nx": "^19.0.0",
     "radash": "^12.0.0",
     "prettier": "^2.8.0 || ^3.0.0",
     "typescript": "^5.2.0"

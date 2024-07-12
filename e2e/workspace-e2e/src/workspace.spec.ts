@@ -1,68 +1,73 @@
-import {
-  readJson,
-  runNxCommandAsync,
-  checkFilesExist,
-  readFile,
-  runCommandAsync,
-  updateFile,
-} from '@nx/plugin/testing';
+import { execSync } from 'child_process';
+import { mkdirSync, rmSync } from 'fs';
+import { basename, dirname } from 'path';
+
+import { checkFilesExist, readFile, readJson, tmpProjPath, updateFile } from '@nx/plugin/testing';
 import { JSONSchemaForESLintConfigurationFiles } from '@schemastore/eslintrc';
 import { JSONSchemaForNPMPackageJsonFiles } from '@schemastore/package';
 import { SchemaForPrettierrc } from '@schemastore/prettierrc';
 import { JSONSchemaForTheTypeScriptCompilerSConfigurationFile } from '@schemastore/tsconfig';
 import { parse } from 'yaml';
 
-import { readmeFile, joinNormalize, huskyPath, ensureNxProject, ciFile } from '@nx-squeezer/devkit';
+import { ciFile, huskyPath, joinNormalize, readmeFile } from '@nx-squeezer/devkit';
 import {
-  codecovDotFile,
-  eslintConfigFile,
-  eslintPluginPrettier,
-  prettierConfigJsonFile,
-  prettierPlugin,
-  tsConfigDefault,
-  tsConfigFile,
-  lintStagedConfigPath,
-  LintStagedConfig,
-  lintStagedDefaultConfig,
   CommitlintConfig,
+  LintStagedConfig,
+  codecovDotFile,
   commitlintConfigPath,
   commitlintDefaultConfig,
-  typescriptRule,
-  importOrderRule,
-  unusedImportsRule,
   deprecationRule,
   esLintRule,
+  eslintConfigFile,
+  eslintPluginPrettier,
+  importOrderRule,
+  lintStagedConfigPath,
+  lintStagedDefaultConfig,
+  prettierConfigJsonFile,
+  prettierPlugin,
   sonarJSRule,
+  tsConfigDefault,
+  tsConfigFile,
+  typescriptRule,
+  unusedImportsRule,
 } from '@nx-squeezer/workspace';
 
-jest.setTimeout(120_000);
-
 describe('@nx-squeezer/workspace e2e', () => {
-  // Setting up individual workspaces per
-  // test can cause e2e runs to take a long time.
-  // For this reason, we recommend each suite only
-  // consumes 1 workspace. The tests should each operate
-  // on a unique project in the workspace, such that they
-  // are not dependent on one another.
-  beforeAll(async () => {
-    // https://github.com/nrwl/nx/issues/4851#issuecomment-822604801
-    await ensureNxProject('workspace');
+  let projectDirectory: string;
+
+  beforeAll(() => {
+    projectDirectory = createTestProject();
+
+    // The plugin has been built and published to a local registry in the jest globalSetup
+    // Install the plugin built with the latest source code into the test repo
+    execSync(`npm install @nx-squeezer/workspace@e2e`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
+    execSync(`npm install @nx-squeezer/devkit@e2e`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
+    execSync(`npm install prettier@3 --save-dev`, { cwd: projectDirectory, stdio: 'inherit', env: process.env });
+    execSync(`npx nx generate @nx/js:lib mylib --unitTestRunner=jest --bundler=tsc`, {
+      cwd: projectDirectory,
+      stdio: 'inherit',
+      env: process.env,
+    });
   });
 
-  afterAll(async () => {
-    // `nx reset` kills the daemon, and performs
-    // some work which can help clean up e2e leftovers
-    await runNxCommandAsync('reset');
+  afterAll(() => {
+    // Cleanup the test project
+    rmSync(projectDirectory, { recursive: true, force: true });
+  });
+
+  it('should be installed', () => {
+    // npm ls will fail if the package is not installed properly
+    execSync('npm ls @nx-squeezer/workspace', { cwd: projectDirectory, stdio: 'inherit' });
   });
 
   describe('prettier generator', () => {
     it('should setup prettier with eslint', async () => {
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:prettier`);
+      execSync('npx nx generate @nx-squeezer/workspace:prettier', { cwd: projectDirectory, stdio: 'inherit' });
 
       const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
       expect(eslintConfig.plugins?.includes(prettierPlugin)).toBeTruthy();
-      expect(eslintConfig.overrides?.[0]).toStrictEqual({
-        files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
+      expect(eslintConfig.overrides?.[eslintConfig.overrides.length - 1]).toStrictEqual({
+        files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.html'],
         extends: ['plugin:prettier/recommended'],
         rules: {},
       });
@@ -90,10 +95,10 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('tsconfig generator', () => {
-    it('should setup default compiler options', async () => {
+    it('should setup default compiler options', () => {
       updateFile(tsConfigFile, JSON.stringify({ compilerOptions: {} }));
 
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:tsconfig`);
+      execSync('npx nx generate @nx-squeezer/workspace:tsconfig', { cwd: projectDirectory, stdio: 'inherit' });
 
       const tsConfig = readJson<JSONSchemaForTheTypeScriptCompilerSConfigurationFile>(tsConfigFile);
 
@@ -104,8 +109,11 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('github workflow generator', () => {
-    it('should setup GitHub CI workflow and add nx script to package.json', async () => {
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:github-workflow --useNxCloud`);
+    it('should setup GitHub CI workflow and add nx script to package.json', () => {
+      execSync('npx nx generate @nx-squeezer/workspace:github-workflow --useNxCloud', {
+        cwd: projectDirectory,
+        stdio: 'inherit',
+      });
 
       expect(() => checkFilesExist(ciFile)).not.toThrow();
 
@@ -115,7 +123,7 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('eslint workflow generator', () => {
-    it('should setup eslint config', async () => {
+    it('should setup eslint config', () => {
       const flags = [
         'eslintRecommended',
         'sonarJs',
@@ -127,12 +135,13 @@ describe('@nx-squeezer/workspace e2e', () => {
         .map((flag) => `--${flag}`)
         .join(' ');
 
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:eslint ${flags}`);
+      execSync(`npx nx generate @nx-squeezer/workspace:eslint ${flags}`, { cwd: projectDirectory, stdio: 'inherit' });
 
       expect(() => checkFilesExist(ciFile)).not.toThrow();
 
       const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
       expect(eslintConfig.plugins).toStrictEqual([
+        '@nx',
         'prettier',
         'sonarjs',
         'unused-imports',
@@ -147,18 +156,27 @@ describe('@nx-squeezer/workspace e2e', () => {
       });
       expect(eslintConfig.overrides).toStrictEqual([
         {
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
-          extends: ['plugin:prettier/recommended'],
-          rules: {},
-        },
-        {
           files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
           extends: [...(esLintRule.extends ?? []), ...(sonarJSRule.extends ?? [])],
-          rules: {},
+          rules: {
+            '@nx/enforce-module-boundaries': [
+              'error',
+              {
+                enforceBuildableLibDependency: true,
+                allow: [],
+                depConstraints: [
+                  {
+                    sourceTag: '*',
+                    onlyDependOnLibsWithTags: ['*'],
+                  },
+                ],
+              },
+            ],
+          },
         },
         {
           files: ['*.ts', '*.tsx'],
-          extends: [...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
+          extends: ['plugin:@nx/typescript', ...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
           rules: {
             ...unusedImportsRule.rules,
             ...typescriptRule.rules,
@@ -169,13 +187,30 @@ describe('@nx-squeezer/workspace e2e', () => {
             ...importOrderRule.settings,
           },
         },
+        {
+          files: ['*.js', '*.jsx'],
+          extends: ['plugin:@nx/javascript'],
+          rules: {},
+        },
+        {
+          files: ['*.spec.ts', '*.spec.tsx', '*.spec.js', '*.spec.jsx'],
+          env: {
+            jest: true,
+          },
+          rules: {},
+        },
+        {
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.html'],
+          extends: ['plugin:prettier/recommended'],
+          rules: {},
+        },
       ]);
     });
   });
 
   describe('codecov workflow generator', () => {
-    it('should setup Codecov', async () => {
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:codecov`);
+    it('should setup Codecov', () => {
+      execSync(`npx nx generate @nx-squeezer/workspace:codecov`, { cwd: projectDirectory, stdio: 'inherit' });
 
       expect(() => checkFilesExist(codecovDotFile)).not.toThrow();
 
@@ -201,7 +236,15 @@ describe('@nx-squeezer/workspace e2e', () => {
                 target: '50%',
                 threshold: '10%',
               },
+              mylib: {
+                flags: ['mylib'],
+              },
             },
+          },
+        },
+        flags: {
+          mylib: {
+            paths: ['mylib'],
           },
         },
       });
@@ -209,8 +252,8 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('contributors workflow generator', () => {
-    it('should add contributors image to readme', async () => {
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:contributors`);
+    it('should add contributors image to readme', () => {
+      execSync(`npx nx generate @nx-squeezer/workspace:contributors`, { cwd: projectDirectory, stdio: 'inherit' });
 
       const readme = readFile(readmeFile);
 
@@ -219,10 +262,10 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('lint-staged workflow generator', () => {
-    it('should create lint-staged configuration and husky hook', async () => {
-      await runCommandAsync('git init');
+    it('should create lint-staged configuration and husky hook', () => {
+      execSync(`git init`, { cwd: projectDirectory, stdio: 'inherit' });
 
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:lint-staged`);
+      execSync(`npx nx generate @nx-squeezer/workspace:lint-staged`, { cwd: projectDirectory, stdio: 'inherit' });
 
       const lintStagedConfig = readJson<LintStagedConfig>(lintStagedConfigPath);
       expect(lintStagedConfig).toStrictEqual(lintStagedDefaultConfig);
@@ -233,10 +276,10 @@ describe('@nx-squeezer/workspace e2e', () => {
   });
 
   describe('commitlint workflow generator', () => {
-    it('should create commitlint configuration and husky hook', async () => {
-      await runCommandAsync('git init');
+    it('should create commitlint configuration and husky hook', () => {
+      execSync(`git init`, { cwd: projectDirectory, stdio: 'inherit' });
 
-      await runNxCommandAsync(`generate @nx-squeezer/workspace:commitlint`);
+      execSync(`npx nx generate @nx-squeezer/workspace:commitlint`, { cwd: projectDirectory, stdio: 'inherit' });
 
       const commitlintConfig = readJson<CommitlintConfig>(commitlintConfigPath);
       expect(commitlintConfig).toStrictEqual(commitlintDefaultConfig);
@@ -246,3 +289,25 @@ describe('@nx-squeezer/workspace e2e', () => {
     });
   });
 });
+
+/**
+ * Creates a test project with create-nx-workspace and installs the plugin
+ * @returns The directory where the test project was created
+ */
+function createTestProject() {
+  const projectDirectory = tmpProjPath();
+  const projectName = basename(projectDirectory);
+
+  // Ensure projectDirectory is empty
+  rmSync(projectDirectory, { recursive: true, force: true });
+  mkdirSync(dirname(projectDirectory), { recursive: true });
+
+  execSync(`npx --yes create-nx-workspace@latest ${projectName} --preset ts --nxCloud=skip --no-interactive`, {
+    cwd: dirname(projectDirectory),
+    stdio: 'inherit',
+    env: process.env,
+  });
+  console.log(`Created test project in "${projectDirectory}"`);
+
+  return projectDirectory;
+}

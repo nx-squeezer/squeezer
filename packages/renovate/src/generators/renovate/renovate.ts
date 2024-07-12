@@ -1,7 +1,7 @@
 /**
  * Path of Renovate CI workflow.
  */
-export const renovateCiFile = './.github/workflows/renovate.yml';
+export const renovateCiFile = '.github/workflows/renovate.yml';
 
 /**
  * Path of Renovate configuration.

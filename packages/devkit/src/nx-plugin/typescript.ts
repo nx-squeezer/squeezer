@@ -3,7 +3,7 @@
 import { existsSync } from 'fs';
 import { dirname } from 'path';
 
-import { getRootTsConfigPath } from 'nx/src/utils/typescript';
+import { getRootTsConfigPath } from '@nx/js';
 import { ParsedCommandLine } from 'typescript';
 
 /**

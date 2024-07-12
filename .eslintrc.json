@@ -80,7 +80,9 @@
             }
           }
         ],
-        "import/no-unresolved": ["off"]
+        "import/no-unresolved": ["off"],
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
       },
       "settings": {
         "import/resolver": {
@@ -94,7 +96,10 @@
     {
       "files": ["*.js", "*.jsx"],
       "extends": ["plugin:@nx/javascript"],
-      "rules": {}
+      "rules": {
+        "@typescript-eslint/no-extra-semi": "error",
+        "no-extra-semi": "off"
+      }
     },
     {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],

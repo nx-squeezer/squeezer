@@ -216,6 +216,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["default", "^default"]
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/packages/{projectName}"
+      }
     }
   },
   "generators": {
@@ -241,5 +246,17 @@
   },
   "useDaemonProcess": false,
   "nxCloudAccessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ=",
-  "defaultBase": "main"
+  "defaultBase": "main",
+  "release": {
+    "projects": ["workspace", "devkit", "renovate"],
+    "projectsRelationship": "independent",
+    "releaseTagPattern": "{projectName}@{version}",
+    "version": {
+      "generatorOptions": {
+        "packageRoot": "dist/packages/{projectName}",
+        "currentVersionResolver": "git-tag"
+      }
+    }
+  },
+  "includedScripts": []
 }
