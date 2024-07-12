@@ -52,7 +52,7 @@ describe('@nx-squeezer/workspace e2e', () => {
 
   afterAll(() => {
     // Cleanup the test project
-    //rmSync(projectDirectory, { recursive: true, force: true });
+    rmSync(projectDirectory, { recursive: true, force: true });
   });
 
   it('should be installed', () => {
@@ -156,18 +156,27 @@ describe('@nx-squeezer/workspace e2e', () => {
       });
       expect(eslintConfig.overrides).toStrictEqual([
         {
-          files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.md', '*.html'],
-          extends: ['plugin:prettier/recommended'],
-          rules: {},
-        },
-        {
           files: ['*.ts', '*.tsx', '*.js', '*.jsx'],
           extends: [...(esLintRule.extends ?? []), ...(sonarJSRule.extends ?? [])],
-          rules: {},
+          rules: {
+            '@nx/enforce-module-boundaries': [
+              'error',
+              {
+                enforceBuildableLibDependency: true,
+                allow: [],
+                depConstraints: [
+                  {
+                    sourceTag: '*',
+                    onlyDependOnLibsWithTags: ['*'],
+                  },
+                ],
+              },
+            ],
+          },
         },
         {
           files: ['*.ts', '*.tsx'],
-          extends: [...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
+          extends: ['plugin:@nx/typescript', ...(typescriptRule.extends ?? []), ...(importOrderRule.extends ?? [])],
           rules: {
             ...unusedImportsRule.rules,
             ...typescriptRule.rules,
@@ -177,6 +186,23 @@ describe('@nx-squeezer/workspace e2e', () => {
           settings: {
             ...importOrderRule.settings,
           },
+        },
+        {
+          files: ['*.js', '*.jsx'],
+          extends: ['plugin:@nx/javascript'],
+          rules: {},
+        },
+        {
+          files: ['*.spec.ts', '*.spec.tsx', '*.spec.js', '*.spec.jsx'],
+          env: {
+            jest: true,
+          },
+          rules: {},
+        },
+        {
+          files: ['*.ts', '*.tsx', '*.js', '*.jsx', '*.json', '*.html'],
+          extends: ['plugin:prettier/recommended'],
+          rules: {},
         },
       ]);
     });

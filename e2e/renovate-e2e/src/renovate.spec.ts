@@ -32,7 +32,7 @@ on:
 
   afterAll(() => {
     // Cleanup the test project
-    //rmSync(projectDirectory, { recursive: true, force: true });
+    rmSync(projectDirectory, { recursive: true, force: true });
   });
 
   it('should be installed', () => {
