@@ -16,5 +16,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["devkit"]
+  "implicitDependencies": ["devkit", "renovate", "workspace"]
 }
