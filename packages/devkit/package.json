@@ -30,20 +30,16 @@
   "generators": "./generators.json",
   "executors": "./executors.json",
   "dependencies": {
-    "fs-extra": "^11.2.0",
     "which": "^4.0.0",
     "yaml": "^2.4.5"
   },
   "peerDependencies": {
     "@nx/devkit": "^19.0.0",
-    "@nx/js": "^19.0.0",
     "@nx/plugin": "^19.0.0",
-    "@nx/webpack": "^19.0.0",
     "husky": "^9.0.0",
     "nx": "^19.0.0",
     "radash": "^12.0.0",
-    "prettier": "^2.8.0 || ^3.0.0",
-    "typescript": "^5.2.0"
+    "prettier": "^2.8.0 || ^3.0.0"
   },
   "devDependencies": {
     "@schemastore/package": "^0.0.10"
