@@ -9,12 +9,12 @@
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["devkit:build"]
+      "dependsOn": ["^build"]
     },
     "lint": {
       "executor": "@nx/eslint:lint"
     }
   },
   "tags": [],
-  "implicitDependencies": ["devkit"]
+  "implicitDependencies": ["devkit", "renovate", "workspace"]
 }
