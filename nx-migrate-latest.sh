@@ -11,7 +11,7 @@ npx --no-install nx migrate ng-packagr@latest
 npx --no-install nx migrate @angular-eslint/eslint-plugin@latest
 npx --no-install nx migrate @angular-eslint/eslint-plugin-template@latest
 npx --no-install nx migrate @angular-eslint/template-parser@latest
-npx --no-install nx migrate @ngrx/signals@latest
+npx --no-install nx migrate @ngrx/signals@next
 
 # Migrate Plugins
 npx --no-install nx migrate @jscutlery/semver@latest
