@@ -31,7 +31,7 @@ import {
   unusedImportsRule,
 } from '@nx-squeezer/workspace';
 
-describe('workspace', () => {
+describe('@nx-squeezer/workspace e2e', () => {
   let projectDirectory: string;
 
   beforeAll(() => {
@@ -51,7 +51,7 @@ describe('workspace', () => {
 
   afterAll(() => {
     // Cleanup the test project
-    rmSync(projectDirectory, { recursive: true, force: true });
+    //rmSync(projectDirectory, { recursive: true, force: true });
   });
 
   it('should be installed', () => {
@@ -140,6 +140,7 @@ describe('workspace', () => {
 
       const eslintConfig = readJson<JSONSchemaForESLintConfigurationFiles>(eslintConfigFile);
       expect(eslintConfig.plugins).toStrictEqual([
+        '@nx',
         'prettier',
         'sonarjs',
         'unused-imports',
@@ -208,7 +209,15 @@ describe('workspace', () => {
                 target: '50%',
                 threshold: '10%',
               },
+              mylib: {
+                flags: ['mylib'],
+              },
             },
+          },
+        },
+        flags: {
+          mylib: {
+            paths: ['mylib'],
           },
         },
       });

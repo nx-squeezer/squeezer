@@ -248,7 +248,7 @@
   "nxCloudAccessToken": "ZWYyZDY4MDctMzIwYy00NGU2LTg3YmQtNTM2ZjU3OGFiOTRmfHJlYWQ=",
   "defaultBase": "main",
   "release": {
-    "projects": ["workspace", "devkit"],
+    "projects": ["workspace", "devkit", "renovate"],
     "projectsRelationship": "independent",
     "releaseTagPattern": "{projectName}@{version}",
     "version": {

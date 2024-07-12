@@ -9,13 +9,7 @@
       "options": {
         "runInBand": true
       },
-      "dependsOn": ["renovate-e2e:prepare"]
-    },
-    "prepare": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "nx build renovate --with-deps"
-      }
+      "dependsOn": ["^build"]
     },
     "lint": {
       "executor": "@nx/eslint:lint"

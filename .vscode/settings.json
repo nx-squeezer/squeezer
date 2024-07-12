@@ -44,7 +44,7 @@
   "eslint.format.enable": true,
   "eslint.validate": ["json", "jsonc"],
   "jest.runMode": {
-    "type": "on-save",
+    "type": "on-demand",
     "deferred": false
   }
 }
