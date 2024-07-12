@@ -17,6 +17,8 @@ const config: Config = {
     },
   },
   maxWorkers: 1,
+  globalSetup: '../../tools/scripts/start-local-registry.ts',
+  globalTeardown: '../../tools/scripts/stop-local-registry.ts',
 };
 
 export default config;
