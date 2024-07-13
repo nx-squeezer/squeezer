@@ -137,7 +137,7 @@
   },
   "overrides": {
     "@jscutlery/semver": {
-      "@nx/devkit": "^19.3.0"
+      "@nx/devkit": "^19.4.2"
     }
   }
 }
