@@ -46,7 +46,7 @@
     "@jscutlery/semver": "5.2.2",
     "@ngrx/signals": "18.0.0-rc.2",
     "@nx/devkit": "19.4.3",
-    "husky": "9.0.11",
+    "husky": "9.1.0",
     "lint-staged": "15.2.7",
     "ngx-deploy-npm": "8.2.0",
     "node-fetch-commonjs": "3.3.2",
