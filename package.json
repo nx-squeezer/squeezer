@@ -90,7 +90,7 @@
     "@schematics/angular": "18.1.0",
     "@swc-node/register": "1.10.9",
     "@swc/cli": "0.4.0",
-    "@swc/core": "1.6.13",
+    "@swc/core": "1.7.0",
     "@swc/helpers": "0.5.12",
     "@swc/jest": "0.2.36",
     "@testing-library/jest-dom": "6.4.6",
