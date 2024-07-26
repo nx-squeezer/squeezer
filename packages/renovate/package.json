@@ -34,11 +34,8 @@
   "nx-migrations": {
     "migrations": "./nx-migrations.json"
   },
-  "dependencies": {
-    "yaml": "^2.4.5"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "@nx/devkit": "^19.0.0",
     "@nx-squeezer/devkit": "*",
     "renovate": "^37.0.0"
   }

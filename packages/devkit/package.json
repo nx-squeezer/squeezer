@@ -29,16 +29,10 @@
   "main": "src/index.js",
   "generators": "./generators.json",
   "executors": "./executors.json",
-  "dependencies": {
-    "which": "^4.0.0",
-    "yaml": "^2.4.5"
-  },
+  "dependencies": {},
   "peerDependencies": {
-    "@nx/devkit": "^19.0.0",
     "@nx/plugin": "^19.0.0",
     "husky": "^9.0.0",
-    "nx": "^19.0.0",
-    "radash": "^12.0.0",
     "prettier": "^2.8.0 || ^3.0.0"
   },
   "devDependencies": {
