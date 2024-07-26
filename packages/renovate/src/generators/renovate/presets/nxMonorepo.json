@@ -12,8 +12,12 @@
         "@types/jest",
         "^ts-jest",
         "^rxjs",
-        "prettier$",
-        "^@typescript-eslint"
+        "^eslint",
+        "/eslint-config$",
+        "^@angular-eslint/",
+        "^@typescript-eslint/",
+        "^prettier",
+        "/prettier-config$"
       ],
       "matchUpdateTypes": ["major"],
       "enabled": false
