@@ -35,7 +35,7 @@ jobs:
           npx --no-install nx migrate @angular-eslint/eslint-plugin@latest
           npx --no-install nx migrate @angular-eslint/eslint-plugin-template@latest
           npx --no-install nx migrate @angular-eslint/template-parser@latest
-          npx --no-install nx migrate @ngrx/signals@next
+          npx --no-install nx migrate @ngrx/signals@latest
 
       - name: Migrate Plugins
         run: |
@@ -51,6 +51,7 @@ jobs:
           npx --no-install nx migrate --run-migrations --if-exists
           npm install
           rm -f migrations.json
+          npx --no-install nx reset
 
       - name: Format
         run: |

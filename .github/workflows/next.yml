@@ -41,6 +41,7 @@ jobs:
           npx --no-install nx migrate --run-migrations --if-exists
           npm install --force
           rm -f migrations.json
+          npx --no-install nx reset
 
       - name: Lint
         run: npx --no-install nx run-many --target=lint --fix --parallel=3
