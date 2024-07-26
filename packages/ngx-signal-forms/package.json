@@ -1,7 +1,10 @@
 {
   "name": "@nx-squeezer/ngx-signal-forms",
   "version": "0.0.1",
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@angular/core": "^17.2.0 || ^18.0.0",
+    "@angular/common": "^17.2.0 || ^18.0.0"
+  },
   "dependencies": {
     "tslib": "^2.3.0"
   },
