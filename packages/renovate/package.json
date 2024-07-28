@@ -35,7 +35,7 @@
     "migrations": "./nx-migrations.json"
   },
   "dependencies": {
-    "yaml": "^2.4.5"
+    "yaml": "^2.5.0"
   },
   "peerDependencies": {
     "@nx/devkit": "^19.0.0",
