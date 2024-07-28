@@ -133,7 +133,7 @@
     "ts-node": "10.9.2",
     "tslib": "2.5.0",
     "typescript": "5.5.4",
-    "verdaccio": "^5.31.1"
+    "verdaccio": "5.32.0"
   },
   "overrides": {
     "@jscutlery/semver": {
