@@ -34,7 +34,7 @@
   "executors": "./executors.json",
   "dependencies": {
     "node-fetch-commonjs": "^3.3.2",
-    "yaml": "^2.4.5"
+    "yaml": "^2.5.0"
   },
   "peerDependencies": {
     "@commitlint/cli": "^19.0.3",
