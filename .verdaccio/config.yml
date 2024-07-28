@@ -8,6 +8,11 @@ uplinks:
     maxage: 60m
 
 packages:
+  '@nx-squeezer/*':
+    access: $all
+    publish: $all
+    # Don't add proxy, force e2e test to pick local version
+
   '**':
     # give all users (including non-authenticated users) full access
     # because it is a local registry
